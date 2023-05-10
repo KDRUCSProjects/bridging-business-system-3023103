@@ -1,0 +1,28 @@
+{
+  "name": "bradging-business",
+  "version": "1.0.1",
+  "description": "website for Business to Business Communication",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KDRUCSProjects/bridging-business-system-3023103.git"
+  },
+  "keywords": [
+    "KDRUCSProjects",
+    "bridging-business-system-3023103",
+    "Wahab-Adil",
+    "abdulsaboor1500",
+    "safijalazai",
+    "khalidMubaraze",
+    "Haroon500"
+  ],
+  "author": "Wahab-Adil , abdulsaboor1500 , safijalazai , KhalidMubaraze , Haroon500",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KDRUCSProjects/bridging-business-system-3023103/issues"
+  },
+  "homepage": "https://github.com/KDRUCSProjects/bridging-business-system-3023103#readme"
+}
