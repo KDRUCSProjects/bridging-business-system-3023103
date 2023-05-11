@@ -2,7 +2,7 @@
 function App() {
   return (
     <div className="App">
-      React is Ready for Developmentasdfasd
+      React is Ready for fgbhdfghdS
     </div>
   );
 }
