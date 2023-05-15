@@ -13,6 +13,7 @@ import ThemeProvider from './theme';
 
 export default function App() {
   return (
+
     <MotionLazyContainer>
       <ThemeProvider>
         <ThemeSettings>
@@ -25,5 +26,6 @@ export default function App() {
         </ThemeSettings>
       </ThemeProvider>
     </MotionLazyContainer>
+
   );
 }
