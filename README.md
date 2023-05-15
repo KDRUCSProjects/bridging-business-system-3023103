@@ -1,4 +1,3 @@
-# kdrucs-template
 
 # Setup the development environment
 

@@ -12,6 +12,7 @@ import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
 import { IconButtonAnimate } from '../../components/animate';
 import { NavSectionVertical } from '../../components/nav-section';
+import navConfig from './MenuConfig';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ const ListItemStyle = styled(ListItemButton)(({ theme }) => ({
 MenuMobile.propTypes = {
   isOffset: PropTypes.bool,
   isHome: PropTypes.bool,
-  // navConfig: PropTypes.array,
+  navConfig: PropTypes.array,
 };
 
 export default function MenuMobile({ isOffset, isHome }) {
@@ -41,7 +42,6 @@ export default function MenuMobile({ isOffset, isHome }) {
     if (drawerOpen) {
       handleDrawerClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpen = () => {
@@ -79,9 +79,9 @@ export default function MenuMobile({ isOffset, isHome }) {
           <Logo sx={{ mx: 2.5, my: 3 }} />
 
           <List disablePadding>
-            {/* {navConfig.map((link) => (
+            {navConfig.map((link) => (
               <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
-            ))} */}
+            ))}
           </List>
         </Scrollbar>
       </Drawer>
@@ -114,6 +114,7 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
           <Iconify
             icon={isOpen ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
             sx={{ width: 16, height: 16, ml: 1 }}
+  
           />
         </ListItemStyle>
 
@@ -123,7 +124,6 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
               navConfig={children}
               sx={{
                 '& .MuiList-root:last-of-type .MuiListItemButton-root': {
-                  height: 200,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   bgcolor: 'background.neutral',
@@ -139,16 +139,6 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
     );
   }
 
-  if (title === 'Documentation') {
-    return (
-      <Link href={path} target="_blank" rel="noopener" underline="none">
-        <ListItemStyle>
-          <ListItemIcon>{icon}</ListItemIcon>
-          <ListItemText disableTypography primary={title} />
-        </ListItemStyle>
-      </Link>
-    );
-  }
 
   return (
     <ListItemStyle
