@@ -23,8 +23,11 @@ export default function NavSectionVertical({ navConfig, isCollapse, ...other }) 
         <List key={group.subheader} disablePadding sx={{ px: 2 }}>
           <ListSubheaderStyle
             sx={{
+              borderLeft:"1px solid blue" ,
+              marginBottom:".5rem",
               ...(isCollapse && {
                 opacity: 0,
+                
               }),
             }}
           >

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, Tooltip } from '@mui/material';
 // hooks
 import useLocales from '../../../hooks/useLocales';
-// guards
+
 //
 import Iconify from '../../Iconify';
 import { ListItemStyle, ListItemTextStyle, ListItemIconStyle } from './style';
@@ -57,6 +57,7 @@ export default function NavItem({ item, depth, active, open, isCollapse, ...othe
           variant: 'caption',
         }}
       />
+      {title}
 
       {!isCollapse && (
         <>

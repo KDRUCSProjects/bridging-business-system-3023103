@@ -4,7 +4,6 @@ import { forwardRef } from 'react';
 import { Box, Tooltip, ListItemText, ListItemIcon } from '@mui/material';
 // hooks
 import useLocales from '../../../hooks/useLocales';
-
 // config
 import { ICON } from '../../../config';
 //

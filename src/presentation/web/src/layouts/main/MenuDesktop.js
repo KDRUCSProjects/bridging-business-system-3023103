@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { NavLink as RouterLink, useLocation } from 'react-router-dom';
+import { NavLink as RouterLink, useLocation  } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Link, Grid, List, Stack, Popover, ListItem, ListSubheader, CardActionArea } from '@mui/material';
 // components
+import navConfig from './MenuConfig'
 
 
 // ----------------------------------------------------------------------
@@ -25,9 +26,9 @@ const LinkStyle = styled(Link)(({ theme }) => ({
 
 const SubLinkStyle = styled((props) => (
   <ListItem sx={{ p: 0 }}>
-    <Link target="_blank" rel="noopener" {...props}>
+    <RouterLink  {...props}>
       {props.children}
-    </Link>
+    </RouterLink>
   </ListItem>
 ))(({ theme }) => ({
   ...theme.typography.body2,
@@ -71,9 +72,8 @@ export default function MenuDesktop({ isOffset, isHome }) {
   return (
     <Stack direction="row">
 
-      kasdjlfjaslkdf
       
-      {/* {navConfig.map((link) => (
+      {navConfig.map((link) => (
         <MenuDesktopItem
           key={link.title}
           item={link}
@@ -83,7 +83,7 @@ export default function MenuDesktop({ isOffset, isHome }) {
           isOffset={isOffset}
           isHome={isHome}
         />
-      ))} */}
+      ))}
     </Stack>
   );
 }
@@ -172,13 +172,16 @@ function MenuDesktopItem({ item, isHome, isOpen, isOffset, onOpen, onClose }) {
                     {items.map((item) => (
                       <SubLinkStyle
                         key={item.title}
-                        href={item.path}
-                        sx={{
-                          ...(isActive(item.path) && {
-                            color: 'text.primary',
-                            typography: 'subtitle2',
-                          }),
+                        to={item.path}
+                        style={({ isActive, isPending }) => {
+                          return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive  ?'text.primary' : '',
+                           typography: 'subtitle2',
+                           textDecoration:"none",
+                          };
                         }}
+                
                       >
                         {item.title === 'Dashboard' ? (
                           <CardActionArea

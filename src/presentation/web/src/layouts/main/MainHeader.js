@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation , Link as routerLink } from 'react-router-dom';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
@@ -15,8 +15,7 @@ import Label from '../../components/Label';
 //
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
-// import navConfig from './MenuConfig';
-const navConfig = 3; 
+import navConfig from './MenuConfig';
 
 
 
@@ -77,25 +76,26 @@ export default function MainHeader() {
             justifyContent: 'space-between',
           }}
         >
-          <Logo />
-
-          <Link href="https://docs-minimals.vercel.app/changelog" target="_blank" rel="noopener" underline="none">
-            <Label color="info" sx={{ ml: 1 }}>
-              v3.5.0
-            </Label>
-          </Link>
-
+          <Logo  />
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
           <Button
             variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
+            component={routerLink}
+            to={'/login'}
+            sx={{marginRight:isDesktop ? "1.5em":".5em"}}
+            
           >
-            Purchase Now
+            Login
+          </Button>
+          <Button
+            variant="contained"
+            component={routerLink}
+            to={'/login'}
+          >
+            Register
           </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
