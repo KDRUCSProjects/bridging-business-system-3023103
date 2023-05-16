@@ -101,6 +101,7 @@
     "react-i18next": "^11.17.4",
     "react-image-lightbox": "^5.1.4",
     "react-lazy-load-image-component": "^1.5.4",
+    "react-lottie": "^1.2.3",
     "react-map-gl": "^7.0.16",
     "react-markdown": "^8.0.3",
     "react-organizational-chart": "^2.1.1",

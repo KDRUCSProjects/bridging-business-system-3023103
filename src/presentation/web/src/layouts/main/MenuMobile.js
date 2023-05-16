@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // @mui
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled  , useTheme} from '@mui/material/styles';
 import { Box, List, Link, Drawer, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
 // config
 import { NAVBAR } from '../../config';
@@ -104,6 +104,7 @@ MenuMobileItem.propTypes = {
 
 function MenuMobileItem({ item, isOpen, onOpen }) {
   const { title, path, icon, children } = item;
+  const theme=useTheme();
 
   if (children) {
     return (
@@ -124,6 +125,7 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
               navConfig={children}
               sx={{
                 '& .MuiList-root:last-of-type .MuiListItemButton-root': {
+                 borderLeft:`2px solid ${theme.palette.primary.main}`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   bgcolor: 'background.neutral',

@@ -28,6 +28,7 @@ export default function Router() {
       element: <MainLayout />,
       children: [
         { element: <HomePage />, index: true },
+        { path: 'about-us', element: <About /> },
       ],
     },
   ]);
@@ -35,4 +36,7 @@ export default function Router() {
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
+
+// About
+const About  =  Loadable(lazy(()=>import('../pages/About')));
 
