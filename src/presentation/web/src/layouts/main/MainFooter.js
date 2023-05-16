@@ -5,7 +5,7 @@ import { Grid, Link, Divider, Container, Typography, Stack } from '@mui/material
 // routes
 // components
 import Logo from '../../components/Logo';
-// import SocialsButton from '../../components/SocialsButton';
+import SocialsButton from '../../components/SocialsButton';
 
 // ----------------------------------------------------------------------
 
@@ -21,8 +21,8 @@ const LINKS = [
   {
     headline: 'Contact',
     children: [
-      { name: 'support@minimals.cc', href: '#' },
-      { name: 'Los Angeles, 359  Hidden Valley Road', href: '#' },
+      { name: 'support@afghanBusiness.cc', href: '#' },
+      { name: 'Kandahar, 359  Hidden Valley Road', href: '#' },
     ],
   },
 ];
