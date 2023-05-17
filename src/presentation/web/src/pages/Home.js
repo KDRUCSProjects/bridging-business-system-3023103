@@ -1,13 +1,20 @@
 // @mui
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 // components
 import Page from '../components/Page';
 
+// sections
+import { categorySlider } from '../sections/home';
+
+// hooks
+import useResponsive from '../hooks/useResponsive';
+
+import CustomSlider from '../components/CustomSlider';
 
 // ----------------------------------------------------------------------
 
 const ContentStyle = styled('div')(({ theme }) => ({
-  marginTop:"4em",
+  marginTop: '4em',
   overflow: 'hidden',
   position: 'relative',
   backgroundColor: theme.palette.background.default,
@@ -16,11 +23,20 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
+  const theme = useTheme();
+
+  const isMatchMobile = useResponsive('down', 'sm');
+
   return (
     <Page title="Ecommerce Start Here">
-
       <ContentStyle>
-        Home Page
+        {isMatchMobile ? null : (
+          <CustomSlider
+            sliderData={categorySlider().categorySliderData}
+            settings={categorySlider().categorySliderConfig}
+            title={'categories'}
+          />
+        )}
       </ContentStyle>
     </Page>
   );
