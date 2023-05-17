@@ -29,6 +29,7 @@ export default function Router() {
       children: [
         { element: <HomePage />, index: true },
         { path: 'about-us', element: <About /> },
+        { path: 'contact-us', element: <Contact /> },
       ],
     },
   ]);
@@ -39,4 +40,7 @@ const HomePage = Loadable(lazy(() => import('../pages/Home')));
 
 // About
 const About  =  Loadable(lazy(()=>import('../pages/About')));
+
+// contact us
+const Contact  =  Loadable(lazy(()=>import('../pages/Contact')));
 
