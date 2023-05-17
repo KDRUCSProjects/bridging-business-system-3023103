@@ -55,3 +55,50 @@ class ProductImage(models.Model):
     
     def __str__(self):
         return self.url
+
+class Message(models.Model):
+    # sender_id=models.ForeignKey(Business,on_delete=models.CASCADE)
+    # recever_id=models.ForeignKey(Business,on_delete=models.CASCADE)
+    text=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.text
+
+
+class BusinessFavoriteProduct(models.Model):
+    # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
+      product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+
+
+class ContactUs(models.Model):
+    text=models.TextField()
+    # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.text
+
+
+class Ratting(models.Model):
+    # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
+    # product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+      ratting_stars=models.IntegerField(default=0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
