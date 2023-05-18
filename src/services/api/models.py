@@ -54,7 +54,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.business.name + " product " + self.name
 
 
 class ProductColor(models.Model):
@@ -66,38 +66,43 @@ class ProductColor(models.Model):
 
 
 class ProductImage(models.Model):
-    url = models.ImageField(upload_to="image/", blank=True, null=True)
+    image = models.ImageField(upload_to="image/", blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.url
+        return self.image.name
 
 
 class Message(models.Model):
-    # sender_id=models.ForeignKey(Business,on_delete=models.CASCADE)
-    # recever_id=models.ForeignKey(Business,on_delete=models.CASCADE)
+    sender = models.ForeignKey(Business, on_delete=models.CASCADE)
+    recever = models.ForeignKey(Business, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.text
+        return self.sender.name + " to " + self.recever.name
 
 
 class BusinessFavoriteProduct(models.Model):
-    # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.business.name + " favorite " + self.product.name
 
 
 class ContactUs(models.Model):
     text = models.TextField()
-    # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return self.text
+        return self.business.name
 
 
 class Ratting(models.Model):
-    # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
-    # product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    business_id = models.ForeignKey(Business, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     ratting_stars = models.IntegerField(default=0)
 
 
