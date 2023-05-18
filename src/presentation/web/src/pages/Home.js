@@ -4,7 +4,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import Page from '../components/Page';
 
 // sections
-import { categorySlider } from '../sections/home';
+import { categorySlider, TopProductSlider } from '../sections/home';
 
 // hooks
 import useResponsive from '../hooks/useResponsive';
@@ -30,11 +30,21 @@ export default function HomePage() {
   return (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
+        {/* Category */}
         {isMatchMobile ? null : (
           <CustomSlider
             sliderData={categorySlider().categorySliderData}
             settings={categorySlider().categorySliderConfig}
             title={'categories'}
+          />
+        )}
+
+        {/* Top Product  */}
+        {isMatchMobile ? null : (
+          <CustomSlider
+            sliderData={TopProductSlider().TopProductSliderData}
+            settings={TopProductSlider().TopProductSliderConfig}
+            title={'Top Product'}
           />
         )}
       </ContentStyle>
