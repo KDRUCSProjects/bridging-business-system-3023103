@@ -24,54 +24,72 @@ class Address(models.Model):
         return self.province + "-" + self.district
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
+class Business(models.Model):
+    name = models.CharField(max_length=60)
+    business_owner = models.OneToOneField(BusinessOwner, on_delete=models.CASCADE)
+    detial = models.TextField(blank=True, null=True)
+    email = models.EmailField()
+    phone = PhoneNumberField()
+    Business_profile = models.ImageField(upload_to="image/", blank=True, null=True)
+    business_type = models.CharField(max_length=60)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=60)
     description = models.TextField(blank=True)
     quantity = models.IntegerField()
     price = models.FloatField()
-    # business=models.ForeignKey(Business,on_delete=models.CASCADE)
-    # category=models.ForeignKey(Category, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.name
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-
-
-class Category(models.Model):
-    name=models.CharField(max_length=30)
     def __str__(self):
         return self.name
 
 
 class ProductColor(models.Model):
-    name=models.CharField(max_length=30)
-    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name
 
 
 class ProductImage(models.Model):
-    url=models.ImageField(upload_to= "image/")
-    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
-    
+    url = models.ImageField(upload_to="image/", blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.url
+
 
 class Message(models.Model):
     # sender_id=models.ForeignKey(Business,on_delete=models.CASCADE)
     # recever_id=models.ForeignKey(Business,on_delete=models.CASCADE)
-    text=models.TextField()
-    created_at=models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.text
 
 
 class BusinessFavoriteProduct(models.Model):
     # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
-      product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
 class ContactUs(models.Model):
-    text=models.TextField()
+    text = models.TextField()
     # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
     def __str__(self):
         return self.text
@@ -80,25 +98,37 @@ class ContactUs(models.Model):
 class Ratting(models.Model):
     # business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
     # product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
-      ratting_stars=models.IntegerField(default=0)
+    ratting_stars = models.IntegerField(default=0)
 
 
+class Order(models.Model):
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True)
+    total = models.FloatField()
+
+    def __str__(self):
+        return "business-" + str(self.business) + " total-" + str(self.total)
 
 
+class OrderDetail(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order")
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.FloatField()
+
+    @property
+    def total_price(self):
+        return self.quantity * self.price
+
+    def __str__(self):
+        return "product-" + str(self.product) + "quantity-" + str(self.quantity)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class Payment(models.Model):
+    payer_business = models.ForeignKey(
+        Business, on_delete=models.CASCADE, related_name="payer_business"
+    )
+    charged_business = models.ForeignKey(
+        Business, on_delete=models.CASCADE, related_name="charged_business"
+    )
