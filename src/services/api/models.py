@@ -45,24 +45,24 @@ class Business(models.Model):
         return self.name
 
 
+class ProductColor(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=60)
     description = models.TextField(blank=True)
     quantity = models.IntegerField()
     price = models.FloatField()
+    color = models.ManyToManyField(ProductColor, blank=True, null=True)
     business = models.ForeignKey(Business, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.business.name + " product " + self.name
-
-
-class ProductColor(models.Model):
-    name = models.CharField(max_length=30)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
 
 
 class ProductImage(models.Model):
@@ -74,8 +74,12 @@ class ProductImage(models.Model):
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(Business, on_delete=models.CASCADE)
-    recever = models.ForeignKey(Business, on_delete=models.CASCADE)
+    sender = models.ForeignKey(
+        Business, on_delete=models.CASCADE, related_name="sender"
+    )
+    recever = models.ForeignKey(
+        Business, on_delete=models.CASCADE, related_name="recever"
+    )
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -101,8 +105,8 @@ class ContactUs(models.Model):
 
 
 class Ratting(models.Model):
-    business_id = models.ForeignKey(Business, on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     ratting_stars = models.IntegerField(default=0)
 
 
@@ -137,3 +141,4 @@ class Payment(models.Model):
     charged_business = models.ForeignKey(
         Business, on_delete=models.CASCADE, related_name="charged_business"
     )
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
