@@ -4,7 +4,7 @@ export default function CategorySlider() {
   const theme = useTheme();
   return {
     categorySliderConfig: {
-      autoplay: true,
+      autoplay: false,
       slidesToShow: 10,
       arrows: false,
       speed: 100,

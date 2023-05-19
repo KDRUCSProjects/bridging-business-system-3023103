@@ -5,11 +5,13 @@ import Page from '../components/Page';
 
 // sections
 import { categorySlider, TopProductSlider } from '../sections/home';
+import ImageSliderSittings from '../sections/home/ImageSlider';
 
 // hooks
 import useResponsive from '../hooks/useResponsive';
 
 import CustomSlider from '../components/CustomSlider';
+import ImageSlider from '../components/ImageSlider';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +32,13 @@ export default function HomePage() {
   return (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
+        {/* ImageSlider */}
+        {isMatchMobile ? null : (
+          <ImageSlider
+            sliderData={ImageSliderSittings().ImageSliderData}
+            settings={ImageSliderSittings().ImageSliderConfig}
+          />
+        )}
         {/* Category */}
         {isMatchMobile ? null : (
           <CustomSlider
