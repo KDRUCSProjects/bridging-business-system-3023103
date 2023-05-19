@@ -4,7 +4,7 @@ export default function TopProductSlider() {
   const theme = useTheme();
   return {
     TopProductSliderConfig: {
-      autoplay: true,
+      autoplay: false,
       slidesToShow: 7,
       arrows: false,
       speed: 100,
