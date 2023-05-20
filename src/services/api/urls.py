@@ -10,6 +10,7 @@ router.register(r"order", OrderViewSet)
 router.register(r"order_detial", OrderDetailViewSet)
 router.register(r"business", BusinessViewSet)
 router.register(r"business_owner", BusinessOwnerViewSet)
-
+router.register(r"product_color", ProductColorViewSet)
+router.register(r"category", CategoryViewSet)
 
 urlpatterns = [path("", include(router.urls))]
