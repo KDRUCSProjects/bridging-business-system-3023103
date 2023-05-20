@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Product, ProductImage, Order, OrderDetail
+from .models import Product, ProductImage, Business, BusinessOwner, OrderDetail, Order
 from .serializers import (
     ProductSerializer,
     ProductImageSerializer,
+    BusinessSerializer,
+    BusinessOwnerSerializer,
     OrderSerializer,
     OrderDetailSerializer,
 )
@@ -29,3 +32,13 @@ class OrderViewSet(viewsets.ModelViewSet):
 class OrderDetailViewSet(viewsets.ModelViewSet):
     queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailSerializer
+
+
+class BusinessViewSet(viewsets.ModelViewSet):
+    queryset = Business.objects.all()
+    serializer_class = BusinessSerializer
+
+
+class BusinessOwnerViewSet(viewsets.ModelViewSet):
+    queryset = BusinessOwner.objects.all()
+    serializer_class = BusinessOwnerSerializer
