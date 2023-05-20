@@ -11,6 +11,8 @@ from .models import (
     Category,
     Address,
     Message,
+    BusinessFavoriteProduct,
+    Ratting,
 )
 from .serializers import (
     ProductSerializer,
@@ -22,7 +24,9 @@ from .serializers import (
     ProductColorSerializer,
     CategorySeralizer,
     AddressSerializer,
-    MessageSerializer
+    MessageSerializer,
+    BusinessFavoriteProductSerializer,
+    RattingSerializer,
 )
 
 
@@ -73,6 +77,17 @@ class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
+
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+
+
+class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
+    queryset = BusinessFavoriteProduct.objects.all()
+    serializer_class = BusinessFavoriteProductSerializer
+
+
+class RattingViewSet(viewsets.ModelViewSet):
+    queryset = Ratting.objects.all()
+    serializer_class = RattingSerializer

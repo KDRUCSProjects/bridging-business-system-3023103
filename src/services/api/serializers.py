@@ -10,6 +10,8 @@ from .models import (
     Category,
     Address,
     Message,
+    BusinessFavoriteProduct,
+    Ratting,
 )
 
 
@@ -66,7 +68,20 @@ class AddressSerializer(serializers.ModelSerializer):
         model = Address
         fields = "__all__"
 
+
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = "__all__"
+
+
+class BusinessFavoriteProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessFavoriteProduct
+        fiels = "__all__"
+
+
+class RattingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ratting
+        fiels = "__all__"

@@ -12,7 +12,9 @@ router.register(r"business", BusinessViewSet)
 router.register(r"business_owner", BusinessOwnerViewSet)
 router.register(r"product_color", ProductColorViewSet)
 router.register(r"category", CategoryViewSet)
-router.register(r"address",AddressViewSet)
-router.register(r"message",MessageViewSet)
+router.register(r"address", AddressViewSet)
+router.register(r"message", MessageViewSet)
+router.register(r"business_favorite_product", BusinessFavoriteProductViewSet)
+router.register(r"ratting", RattingViewSet)
 
 urlpatterns = [path("", include(router.urls))]
