@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, ProductImage, Order, OrderDetail
+from .models import Product, ProductImage, Order, OrderDetail, Business, BusinessOwner
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -23,4 +23,16 @@ class OrderSerializer(serializers.ModelSerializer):
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderDetail
+        fields = "__all__"
+
+
+class BusinessSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Business
+        fields = "__all__"
+
+
+class BusinessOwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessOwner
         fields = "__all__"
