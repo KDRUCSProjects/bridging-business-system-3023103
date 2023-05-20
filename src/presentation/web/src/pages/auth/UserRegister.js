@@ -1,24 +1,19 @@
+import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography } from '@mui/material';
+import { Box, Card, Link, Container, Typography, Tooltip } from '@mui/material';
 // /lottie
 import Lottie from 'react-lottie';
-// animation
-import birdFlying from '../../animations/auth/login/bird-flying.json';
-import airplane from '../../animations/auth/login/airplane.json';
-//
-import animationSetter from '../../animations/animationSetter';
-
-// routes
-import { PATH_AUTH } from '../../routes/paths';
-// hooks
 import useResponsive from '../../hooks/useResponsive';
+import register from '../../animations/auth/userRegister/register.json';
+import animationSetter from '../../animations/animationSetter';
+import UserRegisterForm from '../../sections/auth/userRegister/RegisterForm'
+
 // components
 import Page from '../../components/Page';
-// sections
-import LoginForm from '../../sections/auth/login/LoginForm';
-
+import Logo from '../../components/Logo';
+import Image from '../../components/Image';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -64,20 +59,21 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Register() {
+
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
 
   return (
-    <Page title="Login">
+    <Page title="Register">
       <RootStyle>
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account?
-              <Link variant="subtitle2" component={RouterLink} to={'/user/register'}>
-                Get started
+              Already have an account? {''}
+              <Link variant="subtitle2" component={RouterLink} to={'/user/login'}>
+                Login
               </Link>
             </Typography>
           )}
@@ -86,37 +82,40 @@ export default function Login() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              <Lottie options={animationSetter(birdFlying)} />
+            <Lottie options={animationSetter(register)} />
             </Typography>
           </SectionStyle>
         )}
 
-        <Container maxWidth="sm">
+        <Container>
           <ContentStyle>
-            <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
+            <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h4" gutterBottom>
-                  Sign in To{' '}
-                  <Typography variant="h4" sx={{ color: 'primary.main' }}>
-                    Afghan
-                  </Typography>{' '}
-                  Business
+                  Get started absolutely free.
                 </Typography>
-                <Box position={'absolute'} top="20px">
-                  <Lottie height={'200px'} width={'100%'} options={animationSetter(airplane)} />
-                </Box>
-
-                {/* <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography> */}
+                <Typography sx={{ color: 'text.secondary' }}>Free forever. No credit card needed.</Typography>
               </Box>
-            </Stack>
+            </Box>
+            <UserRegisterForm />
 
-            <LoginForm />
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+              By registering, I agree to Afghan Business&nbsp;
+              <Link underline="always" color="primary" href="#">
+                Terms of Service
+              </Link>
+              {''}and{''}
+              <Link underline="always" color="primary.main" href="#">
+                Privacy Policy
+              </Link>
+              .
+            </Typography>
 
             {!smUp && (
-              <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have an account?{' '}
-                <Link variant="subtitle2" component={RouterLink} to={'register'}>
-                  Get started
+              <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
+                Already have an account?{' '}
+                <Link variant="subtitle2" component={RouterLink} to={'login'}>
+                  Login
                 </Link>
               </Typography>
             )}
