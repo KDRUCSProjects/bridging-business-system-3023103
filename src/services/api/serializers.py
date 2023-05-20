@@ -12,6 +12,8 @@ from .models import (
     Message,
     BusinessFavoriteProduct,
     Ratting,
+    ContactUs,
+    Payment,
 )
 
 
@@ -54,13 +56,13 @@ class BusinessOwnerSerializer(serializers.ModelSerializer):
 class ProductColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductColor
-        fiels = "__all__"
+        fields = "__all__"
 
 
 class CategorySeralizer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fiels = "__all__"
+        fields = "__all__"
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -78,10 +80,22 @@ class MessageSerializer(serializers.ModelSerializer):
 class BusinessFavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessFavoriteProduct
-        fiels = "__all__"
+        fields = "__all__"
 
 
 class RattingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ratting
-        fiels = "__all__"
+        fields = "__all__"
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
+        fields = "__all__"

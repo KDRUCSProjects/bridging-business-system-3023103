@@ -13,6 +13,8 @@ from .models import (
     Message,
     BusinessFavoriteProduct,
     Ratting,
+    ContactUs,
+    Payment,
 )
 from .serializers import (
     ProductSerializer,
@@ -27,6 +29,8 @@ from .serializers import (
     MessageSerializer,
     BusinessFavoriteProductSerializer,
     RattingSerializer,
+    PaymentSerializer,
+    ContactUsSerializer,
 )
 
 
@@ -90,4 +94,14 @@ class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
 
 class RattingViewSet(viewsets.ModelViewSet):
     queryset = Ratting.objects.all()
+    serializer_class = RattingSerializer
+
+
+class PaymentViewSet(viewsets.ModelViewSet):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+
+class ContectUsViewSet(viewsets.ModelViewSet):
+    queryset = ContactUs.objects.all()
     serializer_class = RattingSerializer

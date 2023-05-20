@@ -16,5 +16,7 @@ router.register(r"address", AddressViewSet)
 router.register(r"message", MessageViewSet)
 router.register(r"business_favorite_product", BusinessFavoriteProductViewSet)
 router.register(r"ratting", RattingViewSet)
+router.register(r"payment", PaymentViewSet)
+router.register(r"contact_us", ContectUsViewSet)
 
 urlpatterns = [path("", include(router.urls))]
