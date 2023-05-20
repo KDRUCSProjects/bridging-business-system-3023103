@@ -9,6 +9,8 @@ from .models import (
     Order,
     ProductColor,
     Category,
+    Address,
+    Message,
 )
 from .serializers import (
     ProductSerializer,
@@ -19,6 +21,8 @@ from .serializers import (
     OrderDetailSerializer,
     ProductColorSerializer,
     CategorySeralizer,
+    AddressSerializer,
+    MessageSerializer
 )
 
 
@@ -63,3 +67,12 @@ class ProductColorViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySeralizer
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer

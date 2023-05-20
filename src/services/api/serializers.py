@@ -8,6 +8,8 @@ from .models import (
     BusinessOwner,
     ProductColor,
     Category,
+    Address,
+    Message,
 )
 
 
@@ -57,3 +59,14 @@ class CategorySeralizer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fiels = "__all__"
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = "__all__"
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = "__all__"
