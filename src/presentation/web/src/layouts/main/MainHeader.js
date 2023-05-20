@@ -1,7 +1,7 @@
-import { useLocation , Link as routerLink } from 'react-router-dom';
+import { useLocation, Link as routerLink } from 'react-router-dom';
 import { useState } from 'react';
 // @mui
-import { styled, useTheme , alpha } from '@mui/material/styles';
+import { styled, useTheme, alpha } from '@mui/material/styles';
 import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
@@ -15,11 +15,13 @@ import { HEADER } from '../../config';
 // components
 import Logo from '../../components/Logo';
 
+// paths
+import { PATH_AUTH } from '../../routes/paths';
+
 //
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
-
 
 // ----------------------------------------------------------------------
 const Search = styled('div')(({ theme }) => ({
@@ -72,7 +74,6 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
-
 const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   left: 0,
   right: 0,
@@ -98,20 +99,19 @@ export default function MainHeader(props) {
   const isDesktop = useResponsive('up', 'md');
 
   const isHome = pathname === '/';
-// ------------------ Searching  --------------------------------
+  // ------------------ Searching  --------------------------------
   const [search, setSearch] = useState('');
 
   const handleSearch = (e) => {
     setSearch({
-        ...search,
-        [e.target.name]: e.target.value,
+      ...search,
+      [e.target.name]: e.target.value,
     });
-};
+  };
 
-const handleSearchForm = (e) => {
-  e.preventDefault();
- 
-};
+  const handleSearchForm = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
@@ -131,41 +131,34 @@ const handleSearchForm = (e) => {
             justifyContent: 'space-between',
           }}
         >
-          <Logo  />
+          <Logo />
           <Box sx={{ flexGrow: 1 }} />
 
           {/* Searching input field */}
-          <form
-                action="#"
-                onSubmit={handleSearchForm}>
+          <form action="#" onSubmit={handleSearchForm}>
             <Search sx={{ background: 'lightGrey' }}>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledSearch
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                    name="searchField"
-                    onChange={handleSearch}
-                />
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledSearch
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                name="searchField"
+                onChange={handleSearch}
+              />
             </Search>
-            </form>
+          </form>
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
           <Button
             variant="contained"
             component={routerLink}
-            to={'/login'}
-            sx={{marginRight:isDesktop ? "1.5em":".5em"}}
-            
+            to={PATH_AUTH.login}
+            sx={{ marginRight: isDesktop ? '1.5em' : '.5em' }}
           >
             Login
           </Button>
-          <Button
-            variant="contained"
-            component={routerLink}
-            to={'/login'}
-          >
+          <Button variant="contained" component={routerLink} to={PATH_AUTH.login}>
             Register
           </Button>
 
