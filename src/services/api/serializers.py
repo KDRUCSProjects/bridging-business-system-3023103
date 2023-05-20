@@ -26,7 +26,16 @@ class CategorySerializer(serializers.ModelSerializer):
         fiels="__all__"
 
 
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fiels = "__all__"
 
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fiels = "__all__"
 
 
 

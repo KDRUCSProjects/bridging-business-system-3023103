@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Product, ProductImage,ProductColor,Category,Message,Address
-from .serializers import ProductSerializer, ProductImageSerializer,ProductColorSerializer,CategorySerializer
+from .serializers import ProductSerializer, ProductImageSerializer,ProductColorSerializer,CategorySerializer,AddressSerializer,MessageSerializer
 
 # Create your views here.
 
@@ -25,3 +25,13 @@ class ProductColorViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
