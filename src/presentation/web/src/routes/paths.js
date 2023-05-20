@@ -13,6 +13,7 @@ const PATH_PAGE_ROOT = '/';
 // Auth
 export const PATH_AUTH = {
   login: path(ROOTS_AUTH, '/login'),
+  register: path(ROOTS_AUTH, '/register'),
 };
 
 // Root Pages
