@@ -3,6 +3,8 @@ import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
 import MainLayout from '../layouts/main';
 
+// path
+import { PATH_PAGE, PATH_AUTH } from './paths';
 
 // components
 import LoadingScreen from '../components/LoadingScreen';
@@ -10,11 +12,8 @@ import LoadingScreen from '../components/LoadingScreen';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component) => (props) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { pathname } = useLocation();
-
   return (
-    <Suspense fallback={<LoadingScreen isDashboard={pathname.includes('/dashboard')} />}>
+    <Suspense fallback={<LoadingScreen />}>
       <Component {...props} />
     </Suspense>
   );
@@ -22,14 +21,25 @@ const Loadable = (Component) => (props) => {
 
 export default function Router() {
   return useRoutes([
+    // User AUTH
+    {
+      path: '/user',
+      children: [
+        {
+          path: PATH_AUTH.login,
+          element: <Login />,
+        },
+      ],
+    },
 
+    // Home routes
     {
       path: '/',
       element: <MainLayout />,
       children: [
         { element: <HomePage />, index: true },
-        { path: 'about-us', element: <About /> },
-        { path: 'contact-us', element: <Contact /> },
+        { path: PATH_PAGE.about, element: <About /> },
+        { path: PATH_PAGE.contact, element: <Contact /> },
       ],
     },
   ]);
@@ -39,8 +49,10 @@ export default function Router() {
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
 
 // About
-const About  =  Loadable(lazy(()=>import('../pages/About')));
+const About = Loadable(lazy(() => import('../pages/About')));
 
 // contact us
-const Contact  =  Loadable(lazy(()=>import('../pages/Contact')));
+const Contact = Loadable(lazy(() => import('../pages/Contact')));
 
+// Login
+const Login = Loadable(lazy(() => import('../pages/auth/Login')));

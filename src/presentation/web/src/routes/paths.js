@@ -6,9 +6,17 @@ function path(root, sublink) {
 
 // ----------------------------------------------------------------------
 
-export const PATH_PAGE = {
-  about: '/about-us',
-  contact: '/contact-us',
+const ROOTS_AUTH = '/user';
+const PATH_PAGE_ROOT = '/';
+
+// ----------------------------------------------------------------------
+// Auth
+export const PATH_AUTH = {
+  login: path(ROOTS_AUTH, '/login'),
 };
 
-
+// Root Pages
+export const PATH_PAGE = {
+  about: path(PATH_PAGE_ROOT, 'about-us'),
+  contact: path(PATH_PAGE_ROOT, 'contact-us'),
+};
