@@ -13,6 +13,9 @@ import useResponsive from '../hooks/useResponsive';
 import CustomSlider from '../components/CustomSlider';
 import ImageSlider from '../components/ImageSlider';
 
+// Card
+import ShopProductList from '../sections/shop/ShopProductList';
+
 // ----------------------------------------------------------------------
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -56,6 +59,8 @@ export default function HomePage() {
             title={'Top Product'}
           />
         )}
+
+        <ShopProductList />
       </ContentStyle>
     </Page>
   );
