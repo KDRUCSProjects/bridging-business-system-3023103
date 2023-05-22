@@ -6,7 +6,7 @@ from .models import (
     ProductColor,
     ProductImage,
     Category,
-    Business,
+    BusinessProfile,
     Order,
     OrderDetail,
     Payment,
@@ -27,11 +27,11 @@ class BusinessOwnerAdmin(admin.ModelAdmin):
         model = BusinessOwner
 
 
-class BussinessAdmin(admin.ModelAdmin):
+class BusinessProfileAdmin(admin.ModelAdmin):
     list_display = ["user", "business_owner", "business_type", "phone"]
 
     class Meta:
-        model = Business
+        model = BusinessProfile
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -123,4 +123,4 @@ admin.site.register(BusinessFavoriteProduct)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(ContactUs, ContactUsAdmin)
 admin.site.register(Order, OrderAdmin)
-admin.site.register(Business, BussinessAdmin)
+admin.site.register(BusinessProfile, BusinessProfileAdmin)

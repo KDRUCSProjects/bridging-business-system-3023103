@@ -4,7 +4,7 @@ from .models import (
     ProductImage,
     Order,
     OrderDetail,
-    Business,
+    BusinessProfile,
     BusinessOwner,
     ProductColor,
     Category,
@@ -41,9 +41,9 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class BusinessSerializer(serializers.ModelSerializer):
+class BusinessProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Business
+        model = BusinessProfile
         fields = "__all__"
 
 
