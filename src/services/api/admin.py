@@ -28,7 +28,7 @@ class BusinessOwnerAdmin(admin.ModelAdmin):
 
 
 class BussinessAdmin(admin.ModelAdmin):
-    list_display = ["name", "business_owner", "business_type", "email", "phone"]
+    list_display = ["user", "business_owner", "business_type", "phone"]
 
     class Meta:
         model = Business
@@ -61,7 +61,7 @@ class ProductColorAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "category", "quantity", "price", "business"]
+    list_display = ["name", "category", "quantity", "price", "user"]
     inlines = [ProductImageAdmin]
 
     class Meta:
@@ -76,21 +76,21 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 class BusinessFavoriteProductAdmin(admin.ModelAdmin):
-    list_display = ["business", "product"]
+    list_display = ["user", "product"]
 
     class Meta:
         model = BusinessFavoriteProduct
 
 
 class ContactUsAdmin(admin.ModelAdmin):
-    list_display = ["business", "create_at", "text"]
+    list_display = ["user", "create_at", "text"]
 
     class Meta:
         model = ContactUs
 
 
 class RattingAdmin(admin.ModelAdmin):
-    list_display = ["business", "product", "ratting_stars"]
+    list_display = ["user", "product", "ratting_stars"]
 
     class Meta:
         model = Ratting
