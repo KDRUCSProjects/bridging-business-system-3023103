@@ -33,6 +33,10 @@ export default function Router() {
           path: PATH_AUTH.register,
           element: <UserRegister />,
         },
+        {
+          path: PATH_AUTH.adproduct,
+          element: <AddProduct />,
+        },
       ],
     },
 
@@ -63,3 +67,6 @@ const Login = Loadable(lazy(() => import('../pages/auth/Login')));
 
 // Register
 const UserRegister = Loadable(lazy(() => import('../pages/auth/UserRegister')));
+
+// adProduct page
+const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
