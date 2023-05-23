@@ -32,7 +32,7 @@ class Category(models.Model):
         return self.name
 
 
-class Business(models.Model):
+class BusinessProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     business_owner = models.OneToOneField(BusinessOwner, on_delete=models.CASCADE)
     detial = models.TextField(blank=True, null=True)

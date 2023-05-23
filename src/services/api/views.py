@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
+from django.contrib.auth import login
+from knox.views import LoginView as KnoxLoginView
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from .models import (
     Product,
     ProductImage,
-    Business,
+    BusinessProfile,
     BusinessOwner,
     OrderDetail,
     Order,
@@ -19,7 +22,7 @@ from .models import (
 from .serializers import (
     ProductSerializer,
     ProductImageSerializer,
-    BusinessSerializer,
+    BusinessProfileSerializer,
     BusinessOwnerSerializer,
     OrderSerializer,
     OrderDetailSerializer,
@@ -57,9 +60,9 @@ class OrderDetailViewSet(viewsets.ModelViewSet):
     serializer_class = OrderDetailSerializer
 
 
-class BusinessViewSet(viewsets.ModelViewSet):
-    queryset = Business.objects.all()
-    serializer_class = BusinessSerializer
+class BusinessProfileViewSet(viewsets.ModelViewSet):
+    queryset = BusinessProfile.objects.all()
+    serializer_class = BusinessProfileSerializer
 
 
 class BusinessOwnerViewSet(viewsets.ModelViewSet):
@@ -105,3 +108,14 @@ class PaymentViewSet(viewsets.ModelViewSet):
 class ContectUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()
     serializer_class = RattingSerializer
+
+
+class UserLoginView(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        login(request, user)
+        return super(UserLoginView, self).post(request, format=None)
