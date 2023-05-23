@@ -14,7 +14,6 @@ const PATH_PAGE_ROOT = '/';
 export const PATH_AUTH = {
   login: path(ROOTS_AUTH, '/login'),
   register: path(ROOTS_AUTH, '/register'),
-  adproduct: path(ROOTS_AUTH, '/adproduct'),
 };
 
 // Root Pages
