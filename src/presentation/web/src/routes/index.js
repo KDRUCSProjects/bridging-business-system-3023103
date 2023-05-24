@@ -48,6 +48,7 @@ export default function Router() {
         { element: <HomePage />, index: true },
         { path: PATH_PAGE.about, element: <About /> },
         { path: PATH_PAGE.contact, element: <Contact /> },
+        { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
       ],
     },
   ]);
@@ -65,9 +66,14 @@ const Contact = Loadable(lazy(() => import('../pages/Contact')));
 // Login
 const Login = Loadable(lazy(() => import('../pages/auth/Login')));
 
+
+// businessProfile
+const BusinessProfile = Loadable(lazy(() => import('../pages/BusinessProfile')));
+
 // Register
 const UserRegister = Loadable(lazy(() => import('../pages/auth/UserRegister')));
 
 
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
+

@@ -105,8 +105,6 @@ export default function Login() {
                 <Box position={'absolute'} top="20px">
                   <Lottie height={'200px'} width={'100%'} options={animationSetter(airplane)} />
                 </Box>
-
-                {/* <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography> */}
               </Box>
             </Stack>
 

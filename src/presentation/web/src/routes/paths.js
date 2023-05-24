@@ -21,4 +21,5 @@ export const PATH_AUTH = {
 export const PATH_PAGE = {
   about: path(PATH_PAGE_ROOT, 'about-us'),
   contact: path(PATH_PAGE_ROOT, 'contact-us'),
+  businessProfile: path(PATH_PAGE_ROOT, 'profile'),
 };

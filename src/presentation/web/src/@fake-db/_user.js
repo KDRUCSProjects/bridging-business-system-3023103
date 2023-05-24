@@ -1,40 +1,23 @@
 import _mock from './_mock';
 import { randomNumberRange, randomInArray } from './funcs';
+import writingFeather from '../animations/profile/feather-writing.json';
 
 // ----------------------------------------------------------------------
 
 export const _userAbout = {
   id: _mock.id(1),
-  cover: _mock.image.cover(1),
-  position: 'UI Designer',
-  follower: randomNumberRange(999, 99999),
-  following: randomNumberRange(999, 99999),
-  quote: 'Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer..',
-  country: _mock.address.country(1),
-  email: _mock.email(1),
-  company: _mock.company(1),
-  school: _mock.company(2),
-  role: 'Manager',
-  facebookLink: `https://www.facebook.com/caitlyn.kerluke`,
-  instagramLink: `https://www.instagram.com/caitlyn.kerluke`,
-  linkedinLink: `https://www.linkedin.com/in/caitlyn.kerluke`,
-  twitterLink: `https://www.twitter.com/caitlyn.kerluke`,
+  position: 'Business Manager',
+  quote: 'I am the Business Man in Afghanistan and I like To share My Product to yours ',
+  country: _mock.address.country(0),
+  email: _mock.email(0),
+  company: _mock.company(0),
+  school: _mock.company(0),
+  role: 'Business Manager',
+  facebookLink: `https://www.facebook.com/Afghan-Business`,
+  instagramLink: `https://www.instagram.com/Afghan-Business`,
+  linkedinLink: `https://www.linkedin.com/in/Afghan-Business`,
+  twitterLink: `https://www.twitter.com/Afghan-Business`,
 };
-
-export const _userFollowers = [...Array(18)].map((_, index) => ({
-  id: _mock.id(index),
-  avatarUrl: _mock.image.avatar(index),
-  name: _mock.name.fullName(index),
-  country: _mock.address.country(index),
-  isFollowed: _mock.boolean(index),
-}));
-
-export const _userFriends = [...Array(18)].map((_, index) => ({
-  id: _mock.id(index),
-  avatarUrl: _mock.image.avatar(index),
-  name: _mock.name.fullName(index),
-  role: _mock.role(index),
-}));
 
 export const _userGallery = [...Array(12)].map((_, index) => ({
   id: _mock.id(index),
