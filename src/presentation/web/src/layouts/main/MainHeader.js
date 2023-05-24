@@ -158,7 +158,7 @@ export default function MainHeader(props) {
           >
             Login
           </Button>
-          <Button variant="contained" component={routerLink} to={PATH_AUTH.login}>
+          <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
             Register
           </Button>
 
