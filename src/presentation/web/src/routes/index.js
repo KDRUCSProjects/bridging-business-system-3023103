@@ -68,5 +68,6 @@ const Login = Loadable(lazy(() => import('../pages/auth/Login')));
 // Register
 const UserRegister = Loadable(lazy(() => import('../pages/auth/UserRegister')));
 
+
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));

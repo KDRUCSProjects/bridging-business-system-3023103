@@ -21,7 +21,6 @@ export default function AdProduct() {
           heading="Create a new product"
           links={[
             { name: 'Home', },
-            
           ]}
         />
         <AdProductForm />

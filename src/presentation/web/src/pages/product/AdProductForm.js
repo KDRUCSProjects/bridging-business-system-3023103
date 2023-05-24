@@ -24,6 +24,7 @@ import animationSetter from '../../animations/animationSetter';
 // ----------------------------------------------------------------------
 
 
+
 const CATEGORY_OPTION = [
   { group: 'Clothing', classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather'] },
   { group: 'Tailored', classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats'] },
