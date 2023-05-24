@@ -10,7 +10,6 @@ import SocialsButton from '../../components/SocialsButton';
 // ----------------------------------------------------------------------
 
 const LINKS = [
-
   {
     headline: 'Legal',
     children: [
@@ -21,8 +20,8 @@ const LINKS = [
   {
     headline: 'Contact',
     children: [
-      { name: 'support@afghanBusiness.cc', href: '#' },
-      { name: 'Kandahar, 359  Hidden Valley Road', href: '#' },
+      { name: 'support@afghanBusiness.com', href: '#' },
+      { name: 'Kandahar, 8Block Loya Wala', href: '#' },
     ],
   },
 ];
@@ -51,8 +50,7 @@ export default function MainFooter() {
 
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI
-              ©, ready to be customized to your style.
+              Afghan Business, The Best Website For Business groving up
             </Typography>
 
             <Stack
