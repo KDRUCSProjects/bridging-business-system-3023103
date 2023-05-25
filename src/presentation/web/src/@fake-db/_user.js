@@ -1,6 +1,5 @@
 import _mock from './_mock';
 import { randomNumberRange, randomInArray } from './funcs';
-import writingFeather from '../animations/profile/feather-writing.json';
 
 // ----------------------------------------------------------------------
 

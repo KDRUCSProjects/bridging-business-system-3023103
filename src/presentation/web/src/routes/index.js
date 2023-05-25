@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Navigate, useRoutes, useLocation } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 // layouts
 import MainLayout from '../layouts/main';
 
@@ -34,6 +34,10 @@ export default function Router() {
           element: <UserRegister />,
         },
         {
+          path: PATH_AUTH.resetPassword,
+          element: <ResetPassword />,
+        },
+        {
           path: PATH_AUTH.adproduct,
           element: <AddProduct />,
         },
@@ -66,11 +70,14 @@ const Contact = Loadable(lazy(() => import('../pages/Contact')));
 // Login
 const Login = Loadable(lazy(() => import('../pages/auth/Login')));
 
-// businessProfile
-const BusinessProfile = Loadable(lazy(() => import('../pages/BusinessProfile')));
-
 // Register
 const UserRegister = Loadable(lazy(() => import('../pages/auth/UserRegister')));
+
+// reset Password
+const ResetPassword = Loadable(lazy(() => import('../pages/auth/ResetPassword')));
+
+// businessProfile
+const BusinessProfile = Loadable(lazy(() => import('../pages/BusinessProfile')));
 
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
