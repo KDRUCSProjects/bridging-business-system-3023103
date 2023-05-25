@@ -119,3 +119,48 @@ class UserLoginView(KnoxLoginView):
         user = serializer.validated_data["user"]
         login(request, user)
         return super(UserLoginView, self).post(request, format=None)
+
+
+
+def decrease_cart(request,pk):
+    item=get_object_or_404(product,pk=pk)
+    order_qs=order.objects.filter(user=request.user,ordered=False)
+    if order_qs.exists():
+        order=order_qs[0]
+        if order.orderiteam.filter(item=item).exists():
+            order_item=cart.objects.filter(item=item,user=request.user,purchased=false)
+            if order_item.quantity > 1:
+                order_item.quantity -= 1
+                order_item.save()
+                return redirect('order:cart')
+            else:
+                order.orderitem.remove(order_item)
+                order_item.delete()
+                return redirect('store:index')
+        else:
+            return redirect('store:index')
+    else:
+        return redirect('store:index') 
+
+        
+
+
+def increase_cart(request,pk):
+    item=get_object_or_404(product,pk=pk)
+    order_qs=order.objects.filter(user=request.user,ordered=False)
+    if order_qs.exists():
+        order=order_qs[0]
+        if order.orderiteam.filter(item=item).exists():
+            order_item=cart.objects.filter(item=item,user=request.user,purchased=false)
+            if order_item.quantity >= 1:
+                order_item.quantity += 1
+                order_item.save()
+                return redirect('order:cart')
+            else:
+                return redirect('store:index')
+        else:
+            return redirect('store:index')
+    else:
+        return redirect('store:index') 
+    
+
