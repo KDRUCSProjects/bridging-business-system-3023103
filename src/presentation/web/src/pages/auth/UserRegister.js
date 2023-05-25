@@ -1,19 +1,17 @@
-import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography, Tooltip } from '@mui/material';
+import { Box, Card, Link, Container, Typography } from '@mui/material';
 // /lottie
 import Lottie from 'react-lottie';
 import useResponsive from '../../hooks/useResponsive';
-import register from '../../animations/auth/userRegister/register.json';
+import register from '../../animations/auth/userRegister/feather-writing.json';
 import animationSetter from '../../animations/animationSetter';
-import UserRegisterForm from '../../sections/auth/userRegister/RegisterForm'
+import UserRegisterForm from '../../sections/auth/userRegister/RegisterForm';
 
 // components
 import Page from '../../components/Page';
-import Logo from '../../components/Logo';
-import Image from '../../components/Image';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -60,7 +58,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Register() {
-
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
@@ -81,9 +78,7 @@ export default function Register() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            <Lottie options={animationSetter(register)} />
-            </Typography>
+            <Lottie options={animationSetter(register)} width={'100%'} height={'100%'} />
           </SectionStyle>
         )}
 
