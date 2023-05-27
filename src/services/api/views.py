@@ -5,6 +5,7 @@ from knox.models import AuthToken
 from django.contrib.auth import login, get_user_model
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework import viewsets, status
 from .models import (
     Product,
     ProductImage,
@@ -61,6 +62,27 @@ class OrderViewSet(viewsets.ModelViewSet):
 class OrderDetailViewSet(viewsets.ModelViewSet):
     queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        product = serializer.validated_data["product"]
+        if product.quantity < serializer.validated_data["quantity"]:
+            return Response(
+                "Stock quantity: "
+                + str(product.quantity)
+                + " Entry quantity: "
+                + str(serializer.validated_data["quantity"]),
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            )
+        print(product)
+        product.quantity -= serializer.validated_data["quantity"]
+        product.save()
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
 
 class BusinessProfileViewSet(viewsets.ModelViewSet):
