@@ -26,7 +26,7 @@ export default function ColorPreview({ colors, sx }) {
   console.log('array of colors', colors);
   return (
     <RootStyle component="span" sx={sx}>
-      alskjd
+  
       {colors.map((color, index) => (
         <IconStyle key={color + index} sx={{ bgcolor: color }} />
       ))}
