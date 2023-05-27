@@ -23,21 +23,6 @@ export default function ShopProductCard({ product }) {
   return (
     <Card>
       <Box sx={{ position: 'relative' }}>
-        {status && (
-          <Label
-            variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
-            sx={{
-              top: 16,
-              right: 16,
-              zIndex: 9,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-            {status}
-          </Label>
-        )}
 
         <Image alt={name} src={cover} ratio="1/1" />
       </Box>
@@ -53,12 +38,7 @@ export default function ShopProductCard({ product }) {
           <ColorPreview colors={colors} />
 
           <Stack direction="row" spacing={0.5}>
-            {priceSale && (
-              <Typography component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
-                {fCurrency(priceSale)}
-              </Typography>
-            )}
-
+    
             <Typography variant="subtitle1">{fCurrency(price)}</Typography>
           </Stack>
         </Stack>
