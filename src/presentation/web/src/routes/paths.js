@@ -24,4 +24,6 @@ export const PATH_PAGE = {
   contact: path(PATH_PAGE_ROOT, 'contact-us'),
   businessProfile: path(PATH_PAGE_ROOT, 'profile'),
   payment: path(PATH_PAGE_ROOT, 'payment'),
+  prodcutdetails: path(PATH_PAGE_ROOT, 'product/details'),
+
 };

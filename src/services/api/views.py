@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from rest_framework.response import Response
 from rest_framework import viewsets, permissions
-from django.contrib.auth import login
+from knox.models import AuthToken
+from django.contrib.auth import login, get_user_model
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from .models import (
@@ -34,6 +36,7 @@ from .serializers import (
     RattingSerializer,
     PaymentSerializer,
     ContactUsSerializer,
+    UserSerializer,
 )
 
 
@@ -108,6 +111,27 @@ class PaymentViewSet(viewsets.ModelViewSet):
 class ContectUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()
     serializer_class = RattingSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
+
+    def create(self, request):
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        token = AuthToken.objects.create(user)[1]
+        return Response(
+            {
+                "user_info": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                },
+                "token": token,
+            }
+        )
 
 
 class UserLoginView(KnoxLoginView):
