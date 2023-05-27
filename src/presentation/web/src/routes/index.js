@@ -53,6 +53,7 @@ export default function Router() {
         { path: PATH_PAGE.about, element: <About /> },
         { path: PATH_PAGE.contact, element: <Contact /> },
         { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
+        { path: PATH_PAGE.payment, element: <PaymentPage /> },
       ],
     },
   ]);
@@ -78,6 +79,9 @@ const ResetPassword = Loadable(lazy(() => import('../pages/auth/ResetPassword'))
 
 // businessProfile
 const BusinessProfile = Loadable(lazy(() => import('../pages/BusinessProfile')));
+
+// businessProfile
+const PaymentPage = Loadable(lazy(() => import('../pages/Payment')));
 
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
