@@ -53,6 +53,7 @@ export default function Router() {
         { path: PATH_PAGE.about, element: <About /> },
         { path: PATH_PAGE.contact, element: <Contact /> },
         { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
+        { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
       ],
     },
   ]);
@@ -81,3 +82,6 @@ const BusinessProfile = Loadable(lazy(() => import('../pages/BusinessProfile')))
 
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
+
+// adProduct page
+const ProductDetails = Loadable(lazy(() => import('../pages/product/ProductDetails')));
