@@ -7,8 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
 import { Box, Link, Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
-// routes
-// import { PATH_DASHBOARD } from '../../../../routes/paths';
+
 // utils
 import { fShortenNumber, fCurrency } from '../../utils/formatNumber';
 // components
@@ -16,8 +15,7 @@ import Label from '../../components/Label';
 import Iconify from '../../components/Iconify';
 import { ColorSinglePicker } from '../../components/color-utils';
 import RHFSelect from '../../components/hook-form/RHFSelect';
-import  FormProvider from '../../components/hook-form/FormProvider';
-
+import FormProvider from '../../components/hook-form/FormProvider';
 
 // ----------------------------------------------------------------------
 
@@ -54,19 +52,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
   const navigate = useNavigate();
 
-  const {
-    id,
-    name,
-    sizes,
-    price,
-    cover,
-    status,
-    colors,
-    available,
-    totalRating,
-    totalReview,
-    inventoryType,
-  } = product;
+  const { id, name, sizes, price, cover, status, colors, available, totalRating, totalReview, inventoryType } = product;
 
   const alreadyProduct = cart.map((item) => item.id).includes(id);
 
@@ -100,7 +86,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         });
       }
       onGotoStep(0);
-      // navigate(PATH_DASHBOARD.eCommerce.checkout);
     } catch (error) {
       console.error(error);
     }
@@ -243,13 +228,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             Add to Cart
           </Button>
 
-          <Button 
-            fullWidth 
-            size="large" 
-            type="submit" 
-            startIcon={<Person2Icon />}
-            variant="contained"
-            >
+          <Button fullWidth size="large" type="submit" startIcon={<Person2Icon />} variant="contained">
             View Profile
           </Button>
         </Stack>

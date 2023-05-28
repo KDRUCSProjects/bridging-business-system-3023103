@@ -1,7 +1,5 @@
 // @mui
 import { Container } from '@mui/material';
-// routes
-// import { PATH_DASHBOARD } from '../../routes/paths';
 
 // components
 import Page from '../../components/Page';
@@ -16,13 +14,8 @@ export default function AdProduct() {
 
   return (
     <Page title="Ecommerce: Create a new product">
-      <Container maxWidth={themeStretch ? false : 'lg'} >
-        <HeaderBreadcrumbs
-          heading="Create a new product"
-          links={[
-            { name: 'Home', },
-          ]}
-        />
+      <Container maxWidth={themeStretch ? false : 'lg'}>
+        <HeaderBreadcrumbs heading="Create a new product" links={[{ name: 'Home' }]} />
         <AdProductForm />
       </Container>
     </Page>

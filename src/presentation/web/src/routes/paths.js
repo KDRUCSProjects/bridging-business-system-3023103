@@ -23,7 +23,7 @@ export const PATH_PAGE = {
   about: path(PATH_PAGE_ROOT, 'about-us'),
   contact: path(PATH_PAGE_ROOT, 'contact-us'),
   businessProfile: path(PATH_PAGE_ROOT, 'profile'),
+  createProfile: path(PATH_PAGE_ROOT, 'create/profile'),
   payment: path(PATH_PAGE_ROOT, 'payment'),
   prodcutdetails: path(PATH_PAGE_ROOT, 'product/details'),
-
 };
