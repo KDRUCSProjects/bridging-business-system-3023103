@@ -54,6 +54,7 @@ export default function Router() {
         { path: PATH_PAGE.contact, element: <Contact /> },
         { path: PATH_PAGE.createProfile, element: <CreateProfile /> },
         { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
+        { path: PATH_PAGE.updateProfile, element: <UpdateProfile /> },
         { path: PATH_PAGE.payment, element: <PaymentPage /> },
 
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
@@ -85,6 +86,9 @@ const BusinessProfile = Loadable(lazy(() => import('../pages/profile/BusinessPro
 
 // createProfile
 const CreateProfile = Loadable(lazy(() => import('../pages/profile/create/CreateProfile')));
+
+// UpdateProfile
+const UpdateProfile = Loadable(lazy(() => import('../pages/profile/update/UpdateProfile')));
 
 // businessProfile
 const PaymentPage = Loadable(lazy(() => import('../pages/Payment')));

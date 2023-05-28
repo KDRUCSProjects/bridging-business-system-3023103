@@ -6,10 +6,10 @@ import useSettings from '../../../hooks/useSettings';
 // components
 import Page from '../../../components/Page';
 // sections
-import ProfileForm from '../../../sections/profile/create/ProfileForm';
+import ProfileForm from '../../../sections/profile/update/ProfileForm';
 // ----------------------------------------------------------------------
 
-export default function CreateProfile() {
+export default function UpdateProfile() {
   const { themeStretch } = useSettings();
 
   return (

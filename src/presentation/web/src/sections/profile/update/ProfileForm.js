@@ -8,7 +8,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 // animation
 import Lottie from 'react-lottie';
-import userAnimation from '../../../animations/profile/116915-waves.json';
+import userAnimation from '../../../animations/profile/update/cosmos-planets.json';
 import animationSetter from '../../../animations/animationSetter';
 // fake-db
 import { countries } from '../../../@fake-db';
@@ -33,19 +33,19 @@ export default function ProfileForm() {
 
   const defaultValues = useMemo(
     () => ({
-      name: '',
-      email: '',
-      phoneNumber: '',
-      address: '',
-      country: '',
-      state: '',
-      city: '',
-      zipCode: '',
-      avatarUrl: '',
+      name: 'Adiljan',
+      email: 'wahab.cs238@gmail.com',
+      phoneNumber: '0745180238',
+      address: 'helmand-afghanistan',
+      country: 'afghanistan',
+      state: 'helmand',
+      city: 'lash-kargah',
+      zipCode: '1000',
+      avatarUrl: 'this is link of the Avatar',
       isVerified: true,
-      status: '',
-      company: '',
-      role: '',
+      status: 'single',
+      company: 'No company',
+      role: 'Admin',
     }),
     []
   );
@@ -84,7 +84,7 @@ export default function ProfileForm() {
       <Grid container spacing={3} mb="3em">
         <Grid item xs={12} md={4}>
           <Card sx={{ py: 10, px: 3 }}>
-            <Box mt="-3em">
+            <Box mt="-5em" mb="-5em">
               <Lottie options={animationSetter(userAnimation)} />
             </Box>
             <Box sx={{ mb: 5 }}>
