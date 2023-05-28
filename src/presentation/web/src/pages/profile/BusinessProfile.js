@@ -4,15 +4,15 @@ import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Tab, Box, Card, Tabs, Container } from '@mui/material';
 
-import useTabs from '../hooks/useTabs';
-import useSettings from '../hooks/useSettings';
+import useTabs from '../../hooks/useTabs';
+import useSettings from '../../hooks/useSettings';
 // _mock_
-import { _userAbout, _userFeeds, _userGallery } from '../@fake-db';
+import { _userAbout, _userFeeds, _userGallery } from '../../@fake-db';
 // components
-import Page from '../components/Page';
-import Iconify from '../components/Iconify';
+import Page from '../../components/Page';
+import Iconify from '../../components/Iconify';
 // sections
-import { Profile, ProfileCover, ProfileProductList } from '../sections/profile';
+import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
 
 // ----------------------------------------------------------------------
 
