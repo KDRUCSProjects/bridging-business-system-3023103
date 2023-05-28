@@ -70,7 +70,7 @@ export default function BusinessProfile() {
 
   return (
     <Page title="User: Profile">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lg'} sx={{marginTop:"6rem" , marginBottom:"3rem" }}>
         <Card
           sx={{
             mb: 3,
