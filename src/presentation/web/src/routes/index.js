@@ -58,6 +58,7 @@ export default function Router() {
         { path: PATH_PAGE.payment, element: <PaymentPage /> },
 
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
+        { path: PATH_PAGE.invoicecreate, element: <InvoiceCreate /> },
       ],
     },
   ]);
@@ -96,5 +97,8 @@ const PaymentPage = Loadable(lazy(() => import('../pages/Payment')));
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
 
-// adProduct page
+// ProductDetails page
 const ProductDetails = Loadable(lazy(() => import('../pages/product/ProductDetails')));
+
+// create bill page
+const InvoiceCreate = Loadable(lazy(() => import('../pages/invoice/InvoiceCreate')));
