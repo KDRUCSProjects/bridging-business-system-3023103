@@ -19,28 +19,70 @@ from .models import (
 )
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = "__all__"
-
-
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
         fields = "__all__"
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Order
+        model = Address
         fields = "__all__"
+
+
+class ProductColorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductColor
+        fields = "__all__"
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True)
+    color = ProductColorSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+    def create(self, validated_data):
+        images = validated_data.pop("images")
+        product = Product.objects.create(**validated_data)
+        for image in images:
+            ProductImage.objects.create(product=product, **image)
+
+        return product
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderDetail
         fields = "__all__"
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    order_details = OrderDetailSerializer(many=True, read_only=True)
+    uploaded_order_products = serializers.ListField(write_only=True)
+    address = AddressSerializer()
+
+    class Meta:
+        model = Order
+        fields = "__all__"
+
+    def create(self, validated_data):
+        ordered_products = validated_data.pop("uploaded_order_products")
+        address = validated_data.pop("address")
+        address = Address.objects.create(**address)
+        order = Order.objects.create(address=address, **validated_data)
+        for ordered_product in ordered_products:
+            product = Product.objects.get(pk=ordered_product["product"])
+            OrderDetail.objects.create(
+                order=order,
+                product=product,
+                quantity=ordered_product["quantity"],
+                price=ordered_product["price"],
+            )
+        return order
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
@@ -55,21 +97,9 @@ class BusinessOwnerSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ProductColorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductColor
-        fields = "__all__"
-
-
 class CategorySeralizer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
-
-
-class AddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Address
         fields = "__all__"
 
 

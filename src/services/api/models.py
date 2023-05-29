@@ -57,7 +57,9 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     quantity = models.IntegerField()
     price = models.FloatField()
-    color = models.ManyToManyField(ProductColor, blank=True, null=True)
+    color = models.ManyToManyField(
+        ProductColor, blank=True, null=True, related_name="colors"
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
@@ -67,7 +69,9 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     image = models.ImageField(upload_to="image/", blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="images"
+    )
 
     def __str__(self):
         return self.image.name
@@ -108,7 +112,9 @@ class Ratting(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    address = models.ForeignKey(
+        Address, on_delete=models.CASCADE, related_name="address"
+    )
     create_at = models.DateTimeField(auto_now_add=True)
     total = models.FloatField()
 
@@ -117,8 +123,10 @@ class Order(models.Model):
 
 
 class OrderDetail(models.Model):
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name="order_details"
+    )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order")
     quantity = models.PositiveIntegerField(default=1)
     price = models.FloatField()
 
