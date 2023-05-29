@@ -27,4 +27,5 @@ export const PATH_PAGE = {
   updateProfile: path(PATH_PAGE_ROOT, 'update/profile'),
   payment: path(PATH_PAGE_ROOT, 'payment'),
   prodcutdetails: path(PATH_PAGE_ROOT, 'product/details'),
+  invoicecreate: path(PATH_PAGE_ROOT, 'invoice/create'),
 };
