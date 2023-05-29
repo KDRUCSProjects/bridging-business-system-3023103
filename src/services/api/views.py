@@ -57,7 +57,7 @@ class PrdocutViewSet(viewsets.ModelViewSet):
 
 
 class ProductImageViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer
 
@@ -68,13 +68,13 @@ class PrdocutViewSet(viewsets.ModelViewSet):
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 
 class OrderDetailViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailSerializer
 
