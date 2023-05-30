@@ -9,6 +9,8 @@ import register from '../../animations/auth/userRegister/feather-writing.json';
 import animationSetter from '../../animations/animationSetter';
 import UserRegisterForm from '../../sections/auth/userRegister/RegisterForm';
 
+// hooks
+import useLocales from '../../hooks/useLocales';
 // components
 import Page from '../../components/Page';
 
@@ -58,6 +60,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Register() {
+  const { translate } = useLocales();
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
@@ -70,7 +73,7 @@ export default function Register() {
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               Already have an account? {''}
               <Link variant="subtitle2" component={RouterLink} to={'/user/login'}>
-                Login
+                {translate('login')}
               </Link>
             </Typography>
           )}
