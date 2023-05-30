@@ -19,6 +19,7 @@ import Logo from '../../components/Logo';
 import { PATH_AUTH } from '../../routes/paths';
 
 //
+import LanguagePopover from './LanguagePopover';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
@@ -150,6 +151,7 @@ export default function MainHeader(props) {
           </form>
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+          <LanguagePopover />
           <Button
             variant="contained"
             component={routerLink}

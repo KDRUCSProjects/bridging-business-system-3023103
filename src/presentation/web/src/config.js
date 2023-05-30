@@ -1,6 +1,9 @@
 // @mui
-import { enUS, frFR, zhCN, viVN, arSD } from '@mui/material/locale';
+import { faIR, ptPT, enUS } from '@mui/material/locale';
 
+// Icons
+import USA from './assets/flags/usaFlag.svg';
+import AFG from './assets/flags/afgFlag.svg';
 
 export const HEADER = {
   MOBILE_HEIGHT: 64,
@@ -45,35 +48,23 @@ export const defaultSettings = {
 
 export const allLangs = [
   {
+    label: 'Pashto',
+    value: 'ps',
+    systemValue: ptPT,
+    icon: AFG,
+  },
+  {
+    label: 'Dari',
+    value: 'fa',
+    systemValue: faIR,
+    icon: AFG,
+  },
+  {
     label: 'English',
     value: 'en',
     systemValue: enUS,
-    icon: '/assets/icons/flags/ic_flag_en.svg',
-  },
-  {
-    label: 'French',
-    value: 'fr',
-    systemValue: frFR,
-    icon: '/assets/icons/flags/ic_flag_fr.svg',
-  },
-  {
-    label: 'Vietnamese',
-    value: 'vn',
-    systemValue: viVN,
-    icon: '/assets/icons/flags/ic_flag_vn.svg',
-  },
-  {
-    label: 'Chinese',
-    value: 'cn',
-    systemValue: zhCN,
-    icon: '/assets/icons/flags/ic_flag_cn.svg',
-  },
-  {
-    label: 'Arabic (Sudan)',
-    value: 'ar',
-    systemValue: arSD,
-    icon: '/assets/icons/flags/ic_flag_sa.svg',
+    icon: USA,
   },
 ];
 
-export const defaultLang = allLangs[0]; // English
+export const defaultLang = allLangs[2]; // Pashto
