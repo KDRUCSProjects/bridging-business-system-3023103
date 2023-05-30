@@ -72,8 +72,10 @@ export default function CarouselArrows({
             {leftIcon(customIcon, isRTL)}
           </ArrowStyle>
         </Box>
+        <Box sx={{marginLeft: "3rem" , marginRight:"3rem"}}>
 
         {children}
+        </Box>
 
         <Box className="arrow right" sx={{ ...style, right: 0 }}>
           <ArrowStyle filled={filled} onClick={onNext}>

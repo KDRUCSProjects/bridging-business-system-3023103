@@ -44,7 +44,7 @@ export default function CustomSlider(props) {
         <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
           <Slider ref={carouselRef} {...settings}>
             {sliderData.map((item) => (
-              <Box key={item.title + item.subTitle} component={m.div} variants={varFade().in} sx={{ mr: '-2em' }}>
+              <Box key={item.title + item.subTitle} component={m.div} variants={varFade().in}>
                 <MemberCard member={item} />
               </Box>
             ))}
