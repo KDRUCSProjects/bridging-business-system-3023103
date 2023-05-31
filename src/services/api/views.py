@@ -39,6 +39,9 @@ from .serializers import (
     PaymentSerializer,
     ContactUsSerializer,
     UserSerializer,
+    BusinessFavoriteProductPostSerializer,
+    ContactUsPostSerializer,
+    MessagePostSerializer,
 )
 
 # Permition:
@@ -129,10 +132,22 @@ class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
+    def get_serializer_class(self):
+        if self.action == "create" or self.action == "update":
+            return MessagePostSerializer
+        else:
+            return MessageSerializer
+
 
 class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
     queryset = BusinessFavoriteProduct.objects.all()
     serializer_class = BusinessFavoriteProductSerializer
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return BusinessFavoriteProductPostSerializer
+        else:
+            return BusinessFavoriteProductSerializer
 
 
 class RattingViewSet(viewsets.ModelViewSet):
@@ -147,7 +162,13 @@ class PaymentViewSet(viewsets.ModelViewSet):
 
 class ContectUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()
-    serializer_class = RattingSerializer
+    serializer_class = ContactUsSerializer
+
+    def get_serializer_class(self):
+        if self.action == "create" or self.action == "update":
+            return ContactUsPostSerializer
+        else:
+            return ContactUsSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
