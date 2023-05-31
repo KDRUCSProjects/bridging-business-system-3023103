@@ -80,7 +80,6 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-<<<<<<< HEAD
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "Bridging-Businesses",
@@ -88,15 +87,6 @@ DATABASES = {
         "PASSWORD": "brdging@123",
         "HOST": "localhost",
         "PORT": "5432",
-=======
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Bridging-Businesses',
-        'USER': 'postgres',
-        'PASSWORD': 'ghiasi',
-        'HOST': 'localhost',
-        'PORT': '5432'
->>>>>>> image URL setted
     }
 }
 
