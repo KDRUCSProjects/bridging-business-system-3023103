@@ -1,19 +1,23 @@
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography } from '@mui/material';
+import { Box, Card, Stack, Link, Container, Typography } from '@mui/material';
+
 // /lottie
 import Lottie from 'react-lottie';
 // animation
 import birdFlying from '../../animations/auth/login/bird-flying.json';
 import airplane from '../../animations/auth/login/airplane.json';
+
 //
 import animationSetter from '../../animations/animationSetter';
 
 // routes
 import { PATH_AUTH } from '../../routes/paths';
+
 // hooks
 import useResponsive from '../../hooks/useResponsive';
+
 // components
 import Page from '../../components/Page';
 // sections

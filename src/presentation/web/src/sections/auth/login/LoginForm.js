@@ -1,55 +1,80 @@
-import * as Yup from 'yup';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-// form
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+
 // @mui
-import { Link, Stack, Alert, IconButton, InputAdornment } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Button, Link, Stack, IconButton, InputAdornment, Alert, TextField } from '@mui/material';
+// import { LoadingButton } from '@mui/lab';
+
+// Formik & yup
+import * as yup from 'yup';
+import { useFormik } from 'formik';
 
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
+const loginSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup
+    .string()
+    .required('Please enter your password')
+    .matches(
+      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+      'Password must contain at least 8 characters, one uppercase, one number and one special case character or @'
+    ),
+});
 
 export default function LoginForm() {
   const Navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  // validation
 
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
-  });
-
-  const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
-    remember: true,
+  // Collect Data from the Inputs
+  const initialValues = {
+    email: '',
+    password: '',
   };
 
-  const methods = useForm({
-    resolver: yupResolver(LoginSchema),
-    defaultValues,
+  const {
+    values,
+    errors: formError,
+    handleBlur,
+    touched,
+    handleChange,
+  } = useFormik({
+    initialValues,
+    validationSchema: loginSchema,
   });
 
-  const onSubmit = async (data) => {
-    Alert('SUBMIT');
+  const FormiFunction = async (e) => {
+    e.preventDefault();
+    console.log('This is the Function of the OnSubmit');
   };
-
   return (
-    <FormProvider methods={methods} onSubmit={onSubmit}>
+    <form onSubmit={FormiFunction}>
       <Stack spacing={3}>
-        {/* {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>} */}
+        <TextField
+          value={values.email}
+          name="email"
+          onBlur={handleBlur}
+          onChange={handleChange}
+          label="Email"
+          placeholder={'exmple@gamil.com'}
+          error={formError.email && touched.email}
+          helperText={formError.email}
+        />
 
-        <RHFTextField name="email" label="Email address" />
-
-        <RHFTextField
+        <TextField
+          value={values.password}
           name="password"
           label="Password"
+          placeholder={'exmple123'}
+          onBlur={handleBlur}
+          onChange={handleChange}
           type={showPassword ? 'text' : 'password'}
+          error={formError.password && touched.password}
+          helperText={formError.password}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -68,9 +93,9 @@ export default function LoginForm() {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={'LOADING'}>
+      <Button type="submit" fullWidth size="large" variant="contained" loading={'LOADING'}>
         Login
-      </LoadingButton>
-    </FormProvider>
+      </Button>
+    </form>
   );
 }
