@@ -5,10 +5,11 @@
 
 // ----------------------------------------------------------------------
 import Home from './Home';
+import contactUS from "./ContactUs";
 
 const english = {
+  ...contactUS,
   ...Home,
- 
 };
 
 export default english;
