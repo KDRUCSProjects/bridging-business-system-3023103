@@ -4,12 +4,11 @@
 // We are happy if you can help improve the translation by sending an email to support@minimals.cc.
 
 // ----------------------------------------------------------------------
+import Home from './Home';
 
 const english = {
-  home: `Home English`,
-  page: `Page English`,
-  register: `Resister English`,
-  login: `Login  English`,
+  ...Home,
+ 
 };
 
 export default english;

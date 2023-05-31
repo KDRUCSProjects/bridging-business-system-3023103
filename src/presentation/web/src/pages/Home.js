@@ -8,6 +8,7 @@ import { categorySlider, TopProductSlider } from '../sections/home';
 import ImageSliderSittings from '../sections/home/ImageSlider';
 
 // hooks
+import useLocales from '../hooks/useLocales';
 import useResponsive from '../hooks/useResponsive';
 
 import CustomSlider from '../components/CustomSlider';
@@ -15,6 +16,7 @@ import ImageSlider from '../components/ImageSlider';
 
 // Card
 import ShopProductList from '../sections/shop/ShopProductList';
+
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +31,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function HomePage() {
   const theme = useTheme();
-
+  const {translate}= useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
 
   return (
@@ -47,16 +49,17 @@ export default function HomePage() {
           <CustomSlider
             sliderData={categorySlider().categorySliderData}
             settings={categorySlider().categorySliderConfig}
-            title={'categories'}
+            title={translate('categories')}
           />
         )}
 
         {/* Top Product  */}
+
         {isMatchMobile ? null : (
           <CustomSlider
             sliderData={TopProductSlider().TopProductSliderData}
             settings={TopProductSlider().TopProductSliderConfig}
-            title={'Top Product'}
+            title={translate('Top_Product')}
           />
         )}
 

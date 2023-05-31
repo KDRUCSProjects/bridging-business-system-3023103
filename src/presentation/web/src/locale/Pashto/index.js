@@ -4,12 +4,12 @@
 // We are happy if you can help improve the translation by sending an email to support@minimals.cc.
 
 // ----------------------------------------------------------------------
+import Home from './Home';
+
 
 const pashto = {
-  home: `kor`,
-  page: `safha `,
-  register: `saft kawal`,
-  login: `zan dakhil kawal`,
+  ...Home,
+  
 };
 
 export default pashto;
