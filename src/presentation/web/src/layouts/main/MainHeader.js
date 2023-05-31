@@ -6,6 +6,8 @@ import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 // hooks
+
+import useLocales from '../../hooks/useLocales';
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
 // utils
@@ -91,6 +93,8 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainHeader(props) {
+  const {translate} = useLocales();
+
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
   const theme = useTheme();
@@ -142,7 +146,7 @@ export default function MainHeader(props) {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledSearch
-                placeholder="Search…"
+                placeholder={translate('Search')}
                 inputProps={{ 'aria-label': 'search' }}
                 name="searchField"
                 onChange={handleSearch}
@@ -158,10 +162,11 @@ export default function MainHeader(props) {
             to={PATH_AUTH.login}
             sx={{ marginRight: isDesktop ? '1.5em' : '.5em' }}
           >
-            Login
+            {translate('login')}
           </Button>
           <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
-            Register
+          {translate('register')}
+          
           </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}

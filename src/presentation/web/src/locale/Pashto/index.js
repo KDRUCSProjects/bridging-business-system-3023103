@@ -5,13 +5,11 @@
 
 // ----------------------------------------------------------------------
 import contactUS from "./ContactUs";
+import Home from './Home';
 
 const pashto = {
-
-  
-  ...contactUS,
-
-
+  ...Home,
+  ...contactUS, 
 };
 
 export default pashto;
