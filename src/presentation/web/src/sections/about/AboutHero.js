@@ -5,7 +5,7 @@ import { styled  , useTheme} from '@mui/material/styles';
 import { Box, Container, Typography  , Grid , useMediaQuery} from '@mui/material';
 // ----------------------------------------------------------------------
 // lottie
-import Lottie  from 'react-lottie';
+import Lottie from 'react-lottie';
 // animtion
 import welcome from '../../animations/about/welcome.json'
 

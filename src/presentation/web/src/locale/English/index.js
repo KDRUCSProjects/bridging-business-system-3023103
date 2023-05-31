@@ -5,11 +5,14 @@
 
 // ----------------------------------------------------------------------
 
+
+import contactUS from "./ContactUs";
+
 const english = {
-  home: `Home English`,
-  page: `Page English`,
-  register: `Resister English`,
-  login: `Login  English`,
+
+  
+  ...contactUS,
+
 };
 
 export default english;

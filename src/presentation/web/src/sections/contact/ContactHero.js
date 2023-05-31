@@ -8,6 +8,8 @@ import Lottie from 'react-lottie';
 import { TextAnimate, MotionContainer, varFade } from '../../components/animate';
 
 import contactUsAnimation from '../../animations/contact/contactUS.json' 
+// hooks
+import useLocales from '../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +47,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ContactHero() {
+
+  const { translate } = useLocales();
    // lottie configration
    const contactUsAnimationConfig = {
     loop: true,
@@ -68,14 +72,14 @@ export default function ContactHero() {
           {CONTACTS.map((contact) => (
               <Grid key={contact.country} item xs={12} sm={6} md={3} lg={2} sx={{ pr: { md: 5 } }}>
                 <m.div variants={varFade().in}>
-                  <Typography variant="h6" paragraph>
-                    {contact.country}
+                  <Typography variant="h4" paragraph>
+                  {translate('country')}
                   </Typography>
                 </m.div>
                 <m.div variants={varFade().inRight}>
-                  <Typography variant="body2">
-                    {contact.address}
-                    <br /> {contact.phoneNumber}
+                  <Typography variant="h6">
+                  {translate('address')}
+                    <br /> {translate('phoneNumber')}
                   </Typography>
                 </m.div>
               </Grid>
