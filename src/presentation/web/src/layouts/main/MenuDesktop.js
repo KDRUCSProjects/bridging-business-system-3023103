@@ -9,6 +9,7 @@ import { Box, Link, Grid, List, Stack, Popover, ListItem, ListSubheader, CardAct
 import navConfig from './MenuConfig'
 
 
+
 // ----------------------------------------------------------------------
 
 const LinkStyle = styled(Link)(({ theme }) => ({
@@ -52,6 +53,8 @@ MenuDesktop.propTypes = {
 export default function MenuDesktop({ isOffset, isHome }) {
   const { pathname } = useLocation();
 
+
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -73,7 +76,7 @@ export default function MenuDesktop({ isOffset, isHome }) {
     <Stack direction="row">
 
       
-      {navConfig.map((link) => (
+      {navConfig().map((link) => (
         <MenuDesktopItem
           key={link.title}
           item={link}

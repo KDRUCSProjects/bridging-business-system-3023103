@@ -79,7 +79,7 @@ export default function MenuMobile({ isOffset, isHome }) {
           <Logo sx={{ mx: 2.5, my: 3 }} />
 
           <List disablePadding>
-            {navConfig.map((link) => (
+            {navConfig().map((link) => (
               <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
             ))}
           </List>
