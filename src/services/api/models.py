@@ -68,10 +68,15 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
+<<<<<<< HEAD
     image = models.ImageField(upload_to="image/", blank=True, null=True)
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images"
     )
+=======
+    image = models.ImageField(blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+>>>>>>> image URL setted
 
     def __str__(self):
         return self.image.name

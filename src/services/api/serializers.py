@@ -38,20 +38,20 @@ class ProductColorSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    images = ProductImageSerializer(many=True)
-    color = ProductColorSerializer(many=True, read_only=True)
+    # images = ProductImageSerializer(many=True)
+    # color = ProductColorSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
         fields = "__all__"
 
-    def create(self, validated_data):
-        images = validated_data.pop("images")
-        product = Product.objects.create(**validated_data)
-        for image in images:
-            ProductImage.objects.create(product=product, **image)
+    # def create(self, validated_data):
+    #     images = validated_data.pop("images")
+    #     product = Product.objects.create(**validated_data)
+    #     for image in images:
+    #         ProductImage.objects.create(product=product, **image)
 
-        return product
+    #     return product
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -116,18 +116,6 @@ class CategorySeralizer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Message
-        fields = "__all__"
-
-
-class BusinessFavoriteProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BusinessFavoriteProduct
-        fields = "__all__"
-
-
 class RattingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ratting
@@ -137,12 +125,6 @@ class RattingSerializer(serializers.ModelSerializer):
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = "__all__"
-
-
-class ContactUsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ContactUs
         fields = "__all__"
 
 
@@ -189,3 +171,47 @@ class UserSerializer(serializers.ModelSerializer):
             email=email,
         )
         return user
+
+
+class BusinessFavoriteProductSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    product = ProductSerializer(read_only=True)
+
+    class Meta:
+        model = BusinessFavoriteProduct
+        fields = "__all__"
+
+
+class BusinessFavoriteProductPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessFavoriteProduct
+        fields = "__all__"
+
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = ContactUs
+        fields = "__all__"
+
+
+class ContactUsPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
+        fields = "__all__"
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    sender = UserSerializer(read_only=True)
+    recever = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Message
+        fields = "__all__"
+
+
+class MessagePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = "__all__"
