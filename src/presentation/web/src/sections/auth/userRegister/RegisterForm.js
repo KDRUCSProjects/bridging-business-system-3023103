@@ -1,62 +1,109 @@
-import * as Yup from 'yup';
 import { useState } from 'react';
 // form
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yepResolver } from '@hookform/resolvers/yep';
 // @mui
-import { Stack, IconButton, InputAdornment, Alert } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+// Formik & yep
+import * as yup from 'yup';
+import { useFormik } from 'formik';
 
 // components
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
+const RegisterSchema = yup.object().shape({
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  email: yup.string().email().required(),
+  number: yup.number().required(),
+  password: yup
+  .string()
+  .required('Please enter your password')
+  .matches(
+  /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+  'Password must contain at least 8 characters, one uppercase, one number and one special case character or @'
+  ),
+  });
 
 export default function RegisterForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
-  });
 
-  const defaultValues = {
+  const initialValues = {
     firstName: '',
     lastName: '',
+    number: '',
     email: '',
     password: '',
   };
 
-  const methods = useForm({
-    resolver: yupResolver(RegisterSchema),
-    defaultValues,
-  });
-
   const {
-    reset,
-    setError,
+    values,
+    errors: formError,
+    handleBlur,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = methods;
+    touched,
+    handleChange,
+    } = useFormik({
+    initialValues,
+    validationSchema: RegisterSchema,
+    });
   
   return (
-    <FormProvider methods={methods} >
+    <FormProvider onSubmit={handleSubmit}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
-
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
+          <TextField 
+          value={values.firstName}
+          name="firstName" 
+          onBlur={handleBlur}
+          onChange={handleChange}
+          placeholder='First Name'
+          error={formError.firstName && touched.firstName}
+          helperText={formError.firstName}
+          label="First name" />
+          <TextField 
+          value={values.lastName}
+          name="lastName" 
+          onBlur={handleBlur}
+          onChange={handleChange}
+          placeholder='last Name'
+          error={formError.lastName && touched.lastName}
+          helperText={formError.lastName}
+          label="Last name" />
         </Stack>
 
-        <RHFTextField name="email" label="Email address" />
-        <RHFTextField name="number" label="Phone number" />
+        <TextField 
+        value={values.email}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        placeholder='Email Address'
+        error={formError.email && touched.email}
+        helperText={formError.email}
+        name="email"
+        label="Email address" />
 
-        <RHFTextField
+        <TextField 
+        value={values.number}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        placeholder='Phone Number'
+        error={formError.number && touched.number}
+        helperText={formError.number}
+        name="number" 
+        label="Phone number" />
+
+        <TextField
+          value={values.password}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          placeholder='password'
+          error={formError.password && touched.password}
+          helperText={formError.password}
           name="password"
           label="Password"
           type={showPassword ? 'text' : 'password'}
@@ -71,7 +118,7 @@ export default function RegisterForm() {
           }}
         />
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        <LoadingButton fullWidth size="large" type="submit" variant="contained" >
           Register
         </LoadingButton>
       </Stack>
