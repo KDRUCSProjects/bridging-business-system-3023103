@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from rest_framework.settings import api_settings
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -147,3 +148,14 @@ REST_KNOX = {
     "TOKEN_LIMIT_PER_USER": None,
     "AUTO_REFRESH": False,
 }
+
+
+STATIC_URL='/static/'
+
+MEDIA_URL='/images/'
+
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,'static')
+]
+
+MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')

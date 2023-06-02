@@ -37,7 +37,7 @@ class BusinessProfile(models.Model):
     business_owner = models.OneToOneField(BusinessOwner, on_delete=models.CASCADE)
     detial = models.TextField(blank=True, null=True)
     phone = PhoneNumberField()
-    avator = models.ImageField(upload_to="image/", blank=True, null=True)
+    avator = models.ImageField( blank=True, null=True)
     business_type = models.CharField(max_length=60)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
 
@@ -68,10 +68,8 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to="image/", blank=True, null=True)
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="images"
-    )
+    image = models.ImageField(blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.image.name

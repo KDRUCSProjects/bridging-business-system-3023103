@@ -54,7 +54,7 @@ from .serializers import (
 
 
 class PrdocutViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
