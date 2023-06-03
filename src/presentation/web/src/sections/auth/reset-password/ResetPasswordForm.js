@@ -7,6 +7,7 @@ import { Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -26,14 +27,16 @@ export default function ResetPasswordForm() {
   } = methods;
 
   const onSubmit = async () => {};
+  const {translate }=useLocales()
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="email" label={translate('Email address')} />
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-          Send Request
+          {translate('send request')}
+    
         </LoadingButton>
       </Stack>
     </FormProvider>

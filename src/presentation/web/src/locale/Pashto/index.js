@@ -6,10 +6,13 @@
 // ----------------------------------------------------------------------
 import contactUS from "./ContactUs";
 import Home from './Home';
+import resetPassword from './resetPassword';
 
-const pashto = {
-  ...Home,
-  ...contactUS, 
+  const pashto = {
+    ...Home,
+    ...contactUS, 
+    ...resetPassword,
+  
 };
 
 export default pashto;

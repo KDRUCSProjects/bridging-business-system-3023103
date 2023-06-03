@@ -3,8 +3,14 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Container, Typography, Box } from '@mui/material';
 
+
 // Lottie
 import Lottie from 'react-lottie';
+
+// hooks
+import useLocales from '../../hooks/useLocales';
+
+
 import resetPasswordAnimation from '../../animations/auth/resetPassword/sailing-boat.json';
 import animationSetter from '../../animations/animationSetter';
 // layouts
@@ -15,6 +21,8 @@ import { PATH_AUTH } from '../../routes/paths';
 import Page from '../../components/Page';
 // sections
 import { ResetPasswordForm } from '../../sections/auth/reset-password';
+
+
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +39,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ResetPassword() {
+
+ const {translate} = useLocales();
+
   return (
     <Page title="Reset Password">
       <LogoOnlyLayout />
@@ -40,15 +51,16 @@ export default function ResetPassword() {
             <Lottie options={animationSetter(resetPasswordAnimation)} />
           </Box>
           <Typography mt={-5} variant="h3" paragraph>
-            Forgot your password?
+           {translate('Forgot your password?')}
           </Typography>
           <Typography sx={{ color: 'text.secondary', mb: 2 }}>
-            Please enter the email address associated with your account and We will email you a link to reset your
-            password.
+            {translate('Please enter the email address associated with your account and We will email you a link to reset your password.')}
+          
           </Typography>
           <ResetPasswordForm />
           <Button fullWidth size="large" component={RouterLink} to={PATH_AUTH.login}>
-            Back
+            {translate('Back')}
+        
           </Button>
         </ContentStyle>
       </Container>
