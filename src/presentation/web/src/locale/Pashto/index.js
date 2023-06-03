@@ -6,20 +6,13 @@
 // ----------------------------------------------------------------------
 import contactUS from "./ContactUs";
 import Home from './Home';
-<<<<<<< Updated upstream
-
-const pashto = {
-  ...Home,
-  ...contactUS, 
-=======
 import resetPassword from './resetPassword';
 
-const pashto = {
-  ...Home,
-  ...resetPassword,
+  const pashto = {
+    ...Home,
+    ...contactUS, 
+    ...resetPassword,
   
-  
->>>>>>> Stashed changes
 };
 
 export default pashto;
