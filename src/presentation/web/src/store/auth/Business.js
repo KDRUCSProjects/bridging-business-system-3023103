@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseUri } from '../../base';
 
 // Import BusinessProfile From index
 
@@ -10,7 +11,7 @@ const token = localStorage.getItem('accessToken');
 
 export const Business = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api-demoPath-url',
+    baseUrl: baseUri,
     prepareHeaders: (header) => {
       header.set('Authorization', `token ${token}`);
     },
