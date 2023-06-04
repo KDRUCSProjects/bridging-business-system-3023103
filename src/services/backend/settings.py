@@ -135,6 +135,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # authentication package
 
+AUTHENTICATION_BACKENDS = [
+    "backend.custom_authentication.CustomAuthenticationBackend",
+]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
@@ -150,12 +153,10 @@ REST_KNOX = {
 }
 
 
-STATIC_URL='/static/'
+STATIC_URL = "/static/"
 
-MEDIA_URL='/images/'
+MEDIA_URL = "/images/"
 
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
