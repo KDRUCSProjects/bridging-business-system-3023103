@@ -16,6 +16,7 @@ export const PATH_AUTH = {
   register: path(ROOTS_AUTH, '/register'),
   resetPassword: path(ROOTS_AUTH, '/reset-password'),
   adproduct: path(ROOTS_AUTH, '/ad/product'),
+  checkOut: path(ROOTS_AUTH, '/checkout'),
 };
 
 // Root Pages
