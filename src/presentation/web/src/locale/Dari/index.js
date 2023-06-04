@@ -5,11 +5,14 @@
 
 // ----------------------------------------------------------------------
 
+import contactUS from "./ContactUs";
+import Home from './Home';
+import resetPassword from './resetPassword';
+
 const dari = {
-  home: `khana`,
-  page: `sapha`,
-  register: `saft kardan`,
-  login: `dakhil shodan`,
+    ...Home,
+    ...contactUS, 
+    ...resetPassword,
 };
 
 export default dari;
