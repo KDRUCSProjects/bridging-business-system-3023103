@@ -103,11 +103,5 @@ const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
 // ProductDetails page
 const ProductDetails = Loadable(lazy(() => import('../pages/product/ProductDetails')));
 
-<<<<<<< Updated upstream
-=======
-// create bill page
-const InvoiceCreate = Loadable(lazy(() => import('../pages/invoice/InvoiceCreate')));
-
 // checkout page
 const CheckoutPage = Loadable(lazy(() => import('../pages/checkout/Checkout')));
->>>>>>> Stashed changes
