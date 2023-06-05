@@ -4,6 +4,10 @@ import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Tab, Box, Card, Tabs, Container } from '@mui/material';
 
+
+// hook
+import useLocales from '../../hooks/useLocales';
+
 import useTabs from '../../hooks/useTabs';
 import useSettings from '../../hooks/useSettings';
 // _mock_
@@ -11,6 +15,7 @@ import { _userAbout, _userFeeds, _userGallery } from '../../@fake-db';
 // components
 import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
+
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
 
@@ -35,7 +40,10 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function BusinessProfile() {
+
+  const {translate} = useLocales();
   const { themeStretch } = useSettings();
+
 
   const { currentTab, onChangeTab } = useTabs('profile');
 
@@ -64,7 +72,7 @@ export default function BusinessProfile() {
     {
       value: 'Proucts',
       icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
-      component: <ProfileProductList gallery={_userGallery} />,
+      component: <ProfileProductList  gallery={_userGallery} />,
     },
   ];
 
@@ -89,7 +97,7 @@ export default function BusinessProfile() {
               onChange={onChangeTab}
             >
               {PROFILE_TABS.map((tab) => (
-                <Tab disableRipple key={tab.value} value={tab.value} icon={tab.icon} label={capitalCase(tab.value)} />
+                <Tab disableRipple key={tab.value} value={tab.value} icon={tab.icon} label={tab.value} />
               ))}
             </Tabs>
           </TabsWrapperStyle>

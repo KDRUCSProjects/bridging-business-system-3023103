@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Link, Card, Typography, CardHeader, Stack } from '@mui/material';
+import useLocales from '../../hooks/useLocales';
 // components
 import Iconify from '../../components/Iconify';
 
@@ -22,11 +23,13 @@ ProfileAbout.propTypes = {
 };
 
 export default function ProfileAbout({ profile }) {
+const {translate} = useLocales();
+
   const { quote, country, email, role, company, school: Business } = profile;
 
   return (
     <Card>
-      <CardHeader title="About" />
+      <CardHeader title= {translate('About me')} />
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Typography variant="body2">{quote}</Typography>

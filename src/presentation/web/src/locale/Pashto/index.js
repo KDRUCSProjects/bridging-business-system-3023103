@@ -7,11 +7,14 @@
 import contactUS from "./ContactUs";
 import Home from './Home';
 import resetPassword from './resetPassword';
+import CardDetails from './CardDetails';
+import profilepage from "./profilepage";
 
   const pashto = {
     ...Home,
     ...contactUS, 
     ...resetPassword,
+    ...profilepage,
   
 };
 
