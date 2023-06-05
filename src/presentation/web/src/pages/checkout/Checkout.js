@@ -13,6 +13,9 @@ import useSettings from '../../hooks/useSettings';
 import { useDispatch, useSelector } from '../../store/store';
 import { getCart, createBilling } from '../../store/checkout/checkout';
 
+// sections
+import { CheckoutCart, CheckoutOrderComplete } from '../../sections/checkout';
+
 // components
 import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
@@ -113,7 +116,7 @@ export default function Checkout() {
             </Stepper>
           </Grid>
         </Grid>
-        Components
+        {!isComplete ? <>{activeStep === 0 && <CheckoutCart />}</> : <CheckoutOrderComplete open={isComplete} />}
       </Container>
     </Page>
   );
