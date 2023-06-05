@@ -16,6 +16,7 @@ import Iconify from '../../components/Iconify';
 import { ColorSinglePicker } from '../../components/color-utils';
 import RHFSelect from '../../components/hook-form/RHFSelect';
 import FormProvider from '../../components/hook-form/FormProvider';
+import useLocales from '../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +49,7 @@ ProductDetailsSummary.propTypes = {
 };
 
 export default function ProductDetailsSummary({ cart, product, onAddCart, onGotoStep, ...other }) {
+  const { translate} =useLocales();
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -133,7 +135,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
           <Rating value={totalRating} precision={0.1} readOnly />
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             ({fShortenNumber(totalReview)}
-            reviews)
+            {translate('reviews')} )
           </Typography>
         </Stack>
 
@@ -145,7 +147,8 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-            Color
+           {translate('Color')}
+          
           </Typography>
 
           <Controller
@@ -169,7 +172,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-            Size
+           {translate('Size')} 
           </Typography>
 
           <RHFSelect
@@ -181,7 +184,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             }}
             helperText={
               <Link underline="always" color="text.secondary">
-                Size Chart
+               {translate('Size Chart')} 
               </Link>
             }
           >
@@ -195,7 +198,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-            Quantity
+            {translate('Quantity')}
           </Typography>
 
           <div>
@@ -207,7 +210,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
               onDecrementQuantity={() => setValue('quantity', values.quantity - 1)}
             />
             <Typography variant="caption" component="div" sx={{ mt: 1, textAlign: 'right', color: 'text.secondary' }}>
-              Available: {available}
+              {translate('Available')} 
             </Typography>
           </div>
         </Stack>
@@ -225,11 +228,12 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             onClick={handleAddCart}
             sx={{ whiteSpace: 'nowrap' }}
           >
-            Add to Cart
+  
+         {translate('Add to Cart')} 
           </Button>
 
           <Button fullWidth size="large" type="submit" startIcon={<Person2Icon />} variant="contained">
-            View Profile
+           {translate(' View Profile')} 
           </Button>
         </Stack>
       </FormProvider>

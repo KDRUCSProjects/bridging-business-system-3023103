@@ -4,6 +4,11 @@ import Lottie from 'react-lottie';
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Tab, Card, Grid, Divider, Container, Typography } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
+
+
+
+import useLocales from '../../hooks/useLocales';
+
 // components
 import Page from '../../components/Page';
 
@@ -35,10 +40,13 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ProductDetails() {
+
+ const {translate} =useLocales();
  
   const product = {  
       id : "1",
      available : 1,
+     
      colors : [
       "yello",
       "black",
@@ -53,7 +61,7 @@ export default function ProductDetails() {
       "44",
       "42"
      ],
-     status : "available",
+     status :  translate("AVAILABLE") ,
      totalRating : 4,
      totalReview : 5,
     images : [
@@ -68,14 +76,9 @@ export default function ProductDetails() {
   const [value, setValue] = useState('1');
 
   return (
-    <Page title="Ecommerce: Product Details">
+    <Page title="Product Details">
       <Container sx={{marginTop:"6em"}}>
-        <HeaderBreadcrumbs
-          heading="Product Details"
-          links={[
-            { name: 'Home' },
-          ]}
-        />
+       <Typography variant={'h3'} gutterBottom > {translate('Product Details')} </Typography>
         {product && (
           <>
             <Card>
@@ -96,7 +99,7 @@ export default function ProductDetails() {
                 <TabContext value={value}>
                   <Box sx={{ px: 3, bgcolor: 'background.neutral'}}>
                     <TabList onChange={(e, value) => setValue(value)}>
-                      <Tab disableRipple value="1" label="Description" />
+                      <Tab disableRipple value="1" label={translate('discription')} />
                     </TabList>
                   </Box>
                   <Divider />
