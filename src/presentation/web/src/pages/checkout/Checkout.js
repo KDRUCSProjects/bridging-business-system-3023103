@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from '../../store/store';
 import { getCart, createBilling } from '../../store/checkout/checkout';
 
 // sections
-import { CheckoutCart, CheckoutOrderComplete } from '../../sections/checkout';
+import { CheckoutCart, CheckoutOrderComplete, CheckoutNewAddressForm } from '../../sections/checkout';
 
 // components
 import Page from '../../components/Page';
@@ -116,7 +116,14 @@ export default function Checkout() {
             </Stepper>
           </Grid>
         </Grid>
-        {!isComplete ? <>{activeStep === 0 && <CheckoutCart />}</> : <CheckoutOrderComplete open={isComplete} />}
+        {!isComplete ? (
+          <>
+            {/* {activeStep === 0 && <CheckoutCart />} */}
+            {activeStep === 0 && <CheckoutNewAddressForm />}
+          </>
+        ) : (
+          <CheckoutOrderComplete open={isComplete} />
+        )}
       </Container>
     </Page>
   );
