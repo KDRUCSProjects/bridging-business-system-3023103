@@ -14,7 +14,8 @@ import { useDispatch, useSelector } from '../../store/store';
 import { getCart, createBilling } from '../../store/checkout/checkout';
 
 // sections
-import { CheckoutCart, CheckoutOrderComplete, CheckoutNewAddressForm } from '../../sections/checkout';
+import Payment from '../Payment';
+import { CheckoutOrderComplete, CheckoutNewAddressForm } from '../../sections/checkout';
 
 // components
 import Page from '../../components/Page';
@@ -119,7 +120,8 @@ export default function Checkout() {
         {!isComplete ? (
           <>
             {/* {activeStep === 0 && <CheckoutCart />} */}
-            {activeStep === 0 && <CheckoutNewAddressForm />}
+            {/* {activeStep === 1 && <CheckoutNewAddressForm />} */}
+            {activeStep === 0 && <Payment />}
           </>
         ) : (
           <CheckoutOrderComplete open={isComplete} />

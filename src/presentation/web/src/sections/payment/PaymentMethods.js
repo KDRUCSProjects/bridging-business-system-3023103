@@ -105,6 +105,7 @@ export default function PaymentMethods() {
               <OptionStyle
                 key={title}
                 sx={{
+                  pb: '2em',
                   ...(isSelected && {
                     boxShadow: (theme) => theme.customShadows.z20,
                   }),
@@ -142,15 +143,6 @@ export default function PaymentMethods() {
                         </option>
                       ))}
                     </TextField>
-
-                    <Button
-                      size="small"
-                      startIcon={<Iconify icon={'eva:plus-fill'} width={20} height={20} />}
-                      onClick={handleCollapseIn}
-                      sx={{ my: 3 }}
-                    >
-                      Add new card
-                    </Button>
 
                     <Collapse in={show}>
                       <PaymentNewCardForm onCancel={handleCollapseOut} />
