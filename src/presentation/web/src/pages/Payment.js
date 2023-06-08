@@ -23,7 +23,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 const AnimationBox = styled('Box')(({ theme }) => ({
   position: 'absolute',
-  top: '33%',
+  top: '53%',
   left: '53%',
   zIndex: -1,
   transform: `translate(-${50}%,-${50}%)`,
