@@ -10,7 +10,9 @@ import resetPassword from './resetPassword';
 import CardDetails from './CardDetails';
 
 import profilepage from "./profilepage";
+
 import creatprofile from "./creatprofile";
+
 
 
 
@@ -20,6 +22,7 @@ import creatprofile from "./creatprofile";
     ...contactUS, 
     ...resetPassword,
     ...creatprofile,
+
     ...profilepage,
   
 };

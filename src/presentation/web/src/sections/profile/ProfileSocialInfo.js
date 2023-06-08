@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Link, Card, CardHeader, Stack } from '@mui/material';
+import useLocales from '../../hooks/useLocales';
 // components
 import Iconify from '../../components/Iconify';
 
@@ -22,6 +23,7 @@ ProfileSocialInfo.propTypes = {
 };
 
 export default function ProfileSocialInfo({ profile }) {
+  const {translate}= useLocales();
   const { facebookLink, instagramLink, linkedinLink, twitterLink } = profile;
 
   const SOCIALS = [
@@ -49,7 +51,7 @@ export default function ProfileSocialInfo({ profile }) {
 
   return (
     <Card>
-      <CardHeader title="Social" />
+      <CardHeader title= {translate( 'Social')} />
       <Stack spacing={2} sx={{ p: 3 }}>
         {SOCIALS.map((link) => (
           <Stack key={link.name} direction="row" alignItems="center">
