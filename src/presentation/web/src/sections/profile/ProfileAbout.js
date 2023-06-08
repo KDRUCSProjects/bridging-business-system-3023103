@@ -37,7 +37,7 @@ const {translate} = useLocales();
         <Stack direction="row">
           <IconStyle icon={'eva:pin-fill'} />
           <Typography variant="body2">
-            Location &nbsp;
+          {translate('Location')} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {country}
             </Link>
@@ -52,17 +52,7 @@ const {translate} = useLocales();
         <Stack direction="row">
           <IconStyle icon={'ic:round-business-center'} />
           <Typography variant="body2">
-            {role} at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              {company}
-            </Link>
-          </Typography>
-        </Stack>
-
-        <Stack direction="row">
-          <IconStyle icon={'ic:round-business-center'} />
-          <Typography variant="body2">
-            Business at &nbsp;
+          {translate('Business at')}&nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {Business}
             </Link>
