@@ -11,12 +11,18 @@ import CardDetails from './CardDetails';
 
 import profilepage from "./profilepage";
 
+import creatprofile from "./creatprofile";
+
+
+
 
   const pashto = {
     ...Home,
     ...CardDetails,
     ...contactUS, 
     ...resetPassword,
+    ...creatprofile,
+
     ...profilepage,
   
 };
