@@ -119,8 +119,8 @@ export default function Checkout() {
         </Grid>
         {!isComplete ? (
           <>
-            {/* {activeStep === 0 && <CheckoutCart />} */}
-            {/* {activeStep === 1 && <CheckoutNewAddressForm />} */}
+            {activeStep === 0 && <CheckoutCart />}
+            {activeStep === 1 && <CheckoutNewAddressForm />}
             {activeStep === 0 && <Payment />}
           </>
         ) : (
