@@ -29,4 +29,5 @@ export const PATH_PAGE = {
   payment: path(PATH_PAGE_ROOT, 'payment'),
   prodcutdetails: path(PATH_PAGE_ROOT, 'product/details'),
   invoicecreate: path(PATH_PAGE_ROOT, 'invoice/create'),
+  notFound: path(PATH_PAGE_ROOT, '404'),
 };

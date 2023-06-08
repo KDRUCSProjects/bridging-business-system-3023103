@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { useRoutes } from 'react-router-dom';
+import { useRoutes, useNavigate } from 'react-router-dom';
 // layouts
 import MainLayout from '../layouts/main';
 
@@ -8,6 +8,7 @@ import { PATH_PAGE, PATH_AUTH } from './paths';
 
 // components
 import LoadingScreen from '../components/LoadingScreen';
+import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,7 @@ const Loadable = (Component) => (props) => {
 };
 
 export default function Router() {
+  const Navigate = useNavigate();
   return useRoutes([
     // User AUTH
     {
@@ -60,9 +62,15 @@ export default function Router() {
         { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
         { path: PATH_PAGE.updateProfile, element: <UpdateProfile /> },
         { path: PATH_PAGE.payment, element: <PaymentPage /> },
-
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
       ],
+    },
+
+    // Not Found
+    {
+      path: '*',
+      element: <LogoOnlyLayout />,
+      children: [{ path: '*', element: <NotFoundPage /> }],
     },
   ]);
 }
@@ -105,3 +113,6 @@ const ProductDetails = Loadable(lazy(() => import('../pages/product/ProductDetai
 
 // checkout page
 const CheckoutPage = Loadable(lazy(() => import('../pages/checkout/Checkout')));
+
+// Not Found page
+const NotFoundPage = Loadable(lazy(() => import('../pages/Page404')));
