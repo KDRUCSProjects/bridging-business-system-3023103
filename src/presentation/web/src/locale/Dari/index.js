@@ -8,11 +8,13 @@
 import contactUS from "./ContactUs";
 import Home from './Home';
 import resetPassword from './resetPassword';
+import profilepage from './profilepage'
 
 const dari = {
     ...Home,
     ...contactUS, 
     ...resetPassword,
+    ...profilepage,
 };
 
 export default dari;
