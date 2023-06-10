@@ -45,10 +45,10 @@ export default function ImageSlider(props) {
         <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
           <Slider ref={carouselRef} {...settings}>
             {sliderData.map((item) => (
-              <Box key={item.title + item.subTitle} component={m.div} variants={varFade().in} sx={{ mr: '-2em'}}>
+              <Box key={item.title + item.subTitle} component={m.div} variants={varFade().in}>
                 {/* <MemberCard member={item} /> */}
                 <img
-                                src={'https://www.google.com/url?sa=i&url=https%3A%2F%2Fdailyhive.com%2Fvancouver%2Fhot-girl-walk-vancouver&psig=AOvVaw1_6VCn7PqFMwC_hGABaxZY&ust=1684601728608000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCNiGh8_sgf8CFQAAAAAdAAAAABAF'}
+                                src={item.image}
                                 alt={'nothing for showing'}
                                 style={{
                                     width: '100%',
