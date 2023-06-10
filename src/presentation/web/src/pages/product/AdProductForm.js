@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
 import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Container } from '@mui/material';
+import useLocales from '../../hooks/useLocales';
 
 import PostingProduct from '../../animations/product/postingproduct.json'
 
@@ -53,6 +54,7 @@ AdProductForm.propTypes = {
 };
 
 export default function AdProductForm({ isEdit, currentProduct }) {
+  const {translate}= useLocales();
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -151,10 +153,10 @@ export default function AdProductForm({ isEdit, currentProduct }) {
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
-              <RHFTextField name="name" label="Product Name" />
+              <RHFTextField name="name" label={translate('Product Name')} />
 
               <div>
-                <LabelStyle>Description</LabelStyle>
+                <LabelStyle>{translate('Description')} </LabelStyle>
                 <RHFEditor simple name="description" />
               </div>
             </Stack>
@@ -168,17 +170,18 @@ export default function AdProductForm({ isEdit, currentProduct }) {
             <Card sx={{ p: 3 }}>
               <Stack spacing={3} mt={2}>
                 <Typography>
-                  Select multiple Images
+                 {translate('Select multiple Images')} 
                 </Typography>
               <input
                  accept="image/*"
                  type="file"
                  multiple
+                
                 />
 
-                <RHFTextField name="quantity" label="Product quantity" type='number'/>
+                <RHFTextField name="quantity" label={translate('Product quantity')}  type='number'/>
 
-                <RHFSelect name="category" label="Category">
+                <RHFSelect name="category" label= {translate('Category')} >
                   {CATEGORY_OPTION.map((category) => (
                     <optgroup key={category.group} label={category.group}>
                       {category.classify.map((classify) => (
@@ -191,7 +194,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                 </RHFSelect>
 
                 <Controller
-                  name="colors"
+                  name= "color"
                   control={control}
                   render={({ field }) => (
                     <Autocomplete
@@ -205,7 +208,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                           <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
                         ))
                       }
-                      renderInput={(params) => <TextField label="Colors" {...params} />}
+                      renderInput={(params) => <TextField label={translate('Colors')} {...params} />}
                     />
                   )}
                 />
@@ -216,7 +219,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
               <Stack spacing={3} mb={2}>
                 <RHFTextField
                   name="price"
-                  label="product Price"
+                  label={translate('product Price')} 
                   placeholder="0.00"
                   value={getValues('price') === 0 ? '' : getValues('price')}
                   onChange={(event) => setValue('price', Number(event.target.value))}
@@ -232,7 +235,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
             </Card>
 
             <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
-              {!isEdit ? 'Create Product' : 'Save Changes'}
+              {!isEdit ? translate('Create Product') : translate('Save Changes')}
             </LoadingButton>
           </Stack>
         </Grid>
