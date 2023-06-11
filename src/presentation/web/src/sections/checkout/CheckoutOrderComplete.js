@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Divider, Typography, Stack } from '@mui/material';
 // redux
 import { useDispatch } from '../../store/store';
-import { resetCart } from '../../store/checkout/checkout';
+import { resetCart } from '../../store/slices/checkout/checkout';
 
 // components
 import Iconify from '../../components/Iconify';

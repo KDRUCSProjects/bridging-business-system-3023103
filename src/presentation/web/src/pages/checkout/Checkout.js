@@ -11,11 +11,13 @@ import useSettings from '../../hooks/useSettings';
 
 // redux
 import { useDispatch, useSelector } from '../../store/store';
-import { getCart, createBilling } from '../../store/checkout/checkout';
+import { getCart, createBilling } from '../../store/slices/checkout/checkout';
 
 // sections
 import Payment from '../Payment';
-import { CheckoutOrderComplete, CheckoutNewAddressForm , CheckoutCart} from '../../sections/checkout';
+
+import { CheckoutOrderComplete, CheckoutNewAddressForm, CheckoutCart } from '../../sections/checkout';
+
 
 // components
 import Page from '../../components/Page';
