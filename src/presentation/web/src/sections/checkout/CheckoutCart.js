@@ -10,7 +10,7 @@ import {
   applyDiscount,
   increaseQuantity,
   decreaseQuantity,
-} from '../../store/checkout/checkout';
+} from '../../store/slices/checkout/checkout';
 
 // components
 import Iconify from '../../components/Iconify';

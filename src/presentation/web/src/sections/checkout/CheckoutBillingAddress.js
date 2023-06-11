@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Box, Grid, Card, Button, Typography } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../store/store';
-import { onBackStep, onNextStep, createBilling } from '../../store/checkout/checkout';
+import { onBackStep, onNextStep, createBilling } from '../../store/slices/checkout/checkout';
 // @fake-db
 import { _addressBooks } from '../../@fake-db';
 // components

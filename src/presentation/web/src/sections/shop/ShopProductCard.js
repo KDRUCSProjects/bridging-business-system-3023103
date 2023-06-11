@@ -18,12 +18,10 @@ ShopProductCard.propTypes = {
 
 export default function ShopProductCard({ product }) {
   const { name, cover, price, colors, status, priceSale } = product;
-  console.log(colors);
 
   return (
     <Card>
       <Box sx={{ position: 'relative' }}>
-
         <Image alt={name} src={cover} ratio="1/1" />
       </Box>
 
@@ -38,7 +36,6 @@ export default function ShopProductCard({ product }) {
           <ColorPreview colors={colors} />
 
           <Stack direction="row" spacing={0.5}>
-    
             <Typography variant="subtitle1">{fCurrency(price)}</Typography>
           </Stack>
         </Stack>

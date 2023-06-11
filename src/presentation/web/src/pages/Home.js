@@ -17,6 +17,8 @@ import ImageSlider from '../components/ImageSlider';
 // Card
 import ShopProductList from '../sections/shop/ShopProductList';
 
+// store
+import BaseApi from '../store/BaseApi';
 
 // ----------------------------------------------------------------------
 
@@ -30,10 +32,11 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
+  const { data } = BaseApi.useGetBusinessProfileQuery('/api/category');
   const theme = useTheme();
-  const {translate}= useLocales();
+  const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
-
+  console.log('product data', data);
   return (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
@@ -52,9 +55,7 @@ export default function HomePage() {
             title={translate('categories')}
           />
         )}
-
         {/* Top Product  */}
-
         {isMatchMobile ? null : (
           <CustomSlider
             sliderData={TopProductSlider().TopProductSliderData}
@@ -62,7 +63,6 @@ export default function HomePage() {
             title={translate('Top_Product')}
           />
         )}
-
         <ShopProductList />
       </ContentStyle>
     </Page>
