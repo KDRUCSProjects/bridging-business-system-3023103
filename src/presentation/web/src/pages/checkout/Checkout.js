@@ -15,7 +15,9 @@ import { getCart, createBilling } from '../../store/slices/checkout/checkout';
 
 // sections
 import Payment from '../Payment';
+
 import { CheckoutOrderComplete, CheckoutNewAddressForm, CheckoutCart } from '../../sections/checkout';
+
 
 // components
 import Page from '../../components/Page';

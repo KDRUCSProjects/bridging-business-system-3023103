@@ -30,13 +30,13 @@ export default function ImageSlider() {
     },
     ImageSliderData: [
       {
-        image: '../../images/first.jpg',
+        image: 'https://cdn.pixabay.com/photo/2014/02/27/16/10/flowers-276014_1280.jpg',
       },
       {
-        image: '../../images/second.jpg',
+        image: 'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
       },
       {
-        image: '../../images/third.jpg',
+        image: 'https://www.accesseye.com/wp-content/uploads/2022/12/Image.png',
       },
     ],
   };
