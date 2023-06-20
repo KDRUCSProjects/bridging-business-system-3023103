@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "api.User"
+
 
 # Application definition
 
@@ -132,6 +134,23 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_COOKIE_NAME = "XCSRF-TOKEN"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -140,9 +159,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # authentication package
 
-AUTHENTICATION_BACKENDS = [
-    "backend.custom_authentication.CustomAuthenticationBackend",
-]
+# AUTHENTICATION_BACKENDS = [
+#     "backend.custom_authentication.CustomAuthenticationBackend",
+# ]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
@@ -165,3 +184,11 @@ MEDIA_URL = "/images/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "project120project@gmail.com"
+EMAIL_HOST_PASSWORD = "vrnnyyjeaezfokou"

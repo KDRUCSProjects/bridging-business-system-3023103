@@ -23,6 +23,7 @@ router.register(r"users", UserViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("verify/", userVerificationAPIView.as_view()),
     # path("login/", knox_views.LoginView.as_view(), name="login"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", knox_views.LogoutView.as_view(), name="logout"),
