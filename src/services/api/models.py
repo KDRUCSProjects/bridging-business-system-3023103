@@ -4,6 +4,32 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import uuid
+from .manager import UserManager
+
+
+class User(AbstractUser):
+    username = None
+    email = models.EmailField(unique=True)
+    is_verified = models.BooleanField(default=False)
+    otp = models.CharField(max_length=6, null=True, blank=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+    def name(self):
+        return self.first_name + " " + self.last_name
+
+    def __str__(self):
+        return self.email
+
 
 class BusinessOwner(models.Model):
     name = models.CharField(max_length=60)
@@ -37,7 +63,7 @@ class BusinessProfile(models.Model):
     business_owner = models.OneToOneField(BusinessOwner, on_delete=models.CASCADE)
     detial = models.TextField(blank=True, null=True)
     phone = PhoneNumberField()
-    avator = models.ImageField( blank=True, null=True)
+    avator = models.ImageField(blank=True, null=True)
     business_type = models.CharField(max_length=60)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
 

@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "api.User"
+
 
 # Application definition
 
@@ -139,9 +141,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # authentication package
 
-AUTHENTICATION_BACKENDS = [
-    "backend.custom_authentication.CustomAuthenticationBackend",
-]
+# AUTHENTICATION_BACKENDS = [
+#     "backend.custom_authentication.CustomAuthenticationBackend",
+# ]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
@@ -164,3 +166,11 @@ MEDIA_URL = "/images/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "project120project@gmail.com"
+EMAIL_HOST_PASSWORD = "vrnnyyjeaezfokou"

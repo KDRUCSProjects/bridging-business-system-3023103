@@ -131,19 +131,19 @@ class PaymentSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ["id", "username", "first_name", "last_name", "email", "password"]
+        fields = ["id", "first_name", "last_name", "email", "password"]
 
         extra_kwargs = {
             "password": {"write_only": True, "required": True},
-            "username": {
-                "required": True,
-                "allow_blank": False,
-                "validators": [
-                    validators.UniqueValidator(
-                        get_user_model().objects.all(), "username already exists"
-                    )
-                ],
-            },
+            # "username": {
+            #     "required": True,
+            #     "allow_blank": False,
+            #     "validators": [
+            #         validators.UniqueValidator(
+            #             get_user_model().objects.all(), "username already exists"
+            #         )
+            #     ],
+            # },
             "email": {
                 "required": True,
                 "allow_blank": False,
@@ -157,20 +157,25 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        username = validated_data.get("username")
+        # username = validated_data.get("username")
         password = validated_data.get("passsword")
         first_name = validated_data.get("first_name")
         last_name = validated_data.get("last_name")
         email = validated_data.get("email")
 
         user = get_user_model().objects.create_user(
-            username=username,
+            # username=username,
             password=password,
             first_name=first_name,
             last_name=last_name,
             email=email,
         )
         return user
+
+
+class UserVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
 
 
 class BusinessFavoriteProductSerializer(serializers.ModelSerializer):
