@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware"
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -78,7 +78,8 @@ TEMPLATES = [
         },
     },
 ]
-
+CORS_ORIGIN_WHITELIST=['http://localhost:3000']
+DEFAULT_PERMISSION_CLASSES= [   'rest_framework.permissions.AllowAny' ]
 WSGI_APPLICATION = "backend.wsgi.application"
 
 
