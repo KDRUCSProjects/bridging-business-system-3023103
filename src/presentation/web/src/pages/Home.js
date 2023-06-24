@@ -36,7 +36,7 @@ export default function HomePage() {
   const theme = useTheme();
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
-  console.log('product data', data);
+  console.log('product data !', data);
   return (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
