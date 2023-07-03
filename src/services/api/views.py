@@ -47,6 +47,7 @@ from .serializers import (
     MessagePostSerializer,
     UserVerificationSerializer,
 )
+from django_filters.rest_framework import DjangoFilterBackend
 
 # Permition:
 # isAuthuticated
@@ -61,17 +62,14 @@ class PrdocutViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAdminUser]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["user"]
 
 
 class ProductImageViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer
-
-
-class PrdocutViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
