@@ -48,6 +48,7 @@ from .serializers import (
     UserVerificationSerializer,
 )
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 # Permition:
 # isAuthuticated
@@ -62,8 +63,9 @@ class PrdocutViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAdminUser]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ["user"]
+    search_fields = ["name", "description"]
 
 
 class ProductImageViewSet(viewsets.ModelViewSet):
