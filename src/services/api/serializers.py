@@ -38,20 +38,24 @@ class ProductColorSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    # images = ProductImageSerializer(many=True)
-    # color = ProductColorSerializer(many=True, read_only=True)
+    images = ProductImageSerializer(many=True, read_only=True)
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(
+            max_length=1000000, allow_empty_file=False, use_url=False
+        ),
+        write_only=True,
+    )
 
     class Meta:
         model = Product
         fields = "__all__"
 
-    # def create(self, validated_data):
-    #     images = validated_data.pop("images")
-    #     product = Product.objects.create(**validated_data)
-    #     for image in images:
-    #         ProductImage.objects.create(product=product, **image)
-
-    #     return product
+    def create(self, validated_data):
+        prodcut_image_data = validated_data.pop("uploaded_images")
+        product = Product.objects.create(**validated_data)
+        for product_image in prodcut_image_data:
+            ProductImage.objects.create(product=product, image=product_image)
+        return product
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
