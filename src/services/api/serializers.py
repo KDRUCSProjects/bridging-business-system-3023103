@@ -37,7 +37,17 @@ class ProductColorSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class RattingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ratting
+        fields = "__all__"
+
+
 class ProductSerializer(serializers.ModelSerializer):
+    product_ratting = RattingSerializer(many=True, read_only=True)
+    ratting = serializers.SerializerMethodField(
+        method_name="calculated_ratting", read_only=True
+    )
     images = ProductImageSerializer(many=True, read_only=True)
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(
@@ -56,6 +66,17 @@ class ProductSerializer(serializers.ModelSerializer):
         for product_image in prodcut_image_data:
             ProductImage.objects.create(product=product, image=product_image)
         return product
+
+    # for ratting calculations
+    def calculated_ratting(self, instance):
+        rattings = Ratting.objects.filter(product=instance.id)
+        total_stars = 0
+        total_user = 0
+        for ratting in rattings:
+            total_stars = total_stars + ratting.ratting_stars
+            total_user += 1
+
+        return total_stars / total_user
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -117,12 +138,6 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
 class CategorySeralizer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
-
-
-class RattingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ratting
         fields = "__all__"
 
 

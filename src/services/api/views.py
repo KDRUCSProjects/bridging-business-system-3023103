@@ -157,6 +157,8 @@ class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
 class RattingViewSet(viewsets.ModelViewSet):
     queryset = Ratting.objects.all()
     serializer_class = RattingSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["product"]
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
