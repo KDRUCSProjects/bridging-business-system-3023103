@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 // @mui
 import { Link } from 'react-router-dom';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Button } from '@mui/material';
 // components
 import { SkeletonProductItem } from '../../components/skeleton';
 
 //
 import ShopProductCard from './ShopProductCard';
 import Page from '../../components/Page';
-
 
 const products = [
   {
@@ -92,12 +91,14 @@ export default function ShopProductList() {
           }}
         >
           {products.map((product, index) => (
-            <Link
-            to={`/product/details`}    //   /${product.id}
-            style={{ textDecoration: 'none' }}
-        >
-          <ShopProductCard key={product.id} product={product} />
-        </Link>
+            <Button
+              component={Link}
+              key={product + index}
+              to={`/product/details`} //   /${product.id}
+              style={{ textDecoration: 'none' }}
+            >
+              <ShopProductCard key={product.id} product={product} />
+            </Button>
           ))}
         </Box>
       </Container>
