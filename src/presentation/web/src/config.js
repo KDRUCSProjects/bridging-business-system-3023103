@@ -48,13 +48,13 @@ export const defaultSettings = {
 
 export const allLangs = [
   {
-    label: 'Pashto',
+    label: 'پښتو',
     value: 'ps',
     systemValue: ptPT,
     icon: AFG,
   },
   {
-    label: 'Dari',
+    label: 'دری',
     value: 'fa',
     systemValue: faIR,
     icon: AFG,
@@ -67,4 +67,4 @@ export const allLangs = [
   },
 ];
 
-export const defaultLang = allLangs[2]; // Pashto
+export const defaultLang = allLangs[0]; // Pashto
