@@ -18,7 +18,6 @@ import Payment from '../Payment';
 
 import { CheckoutOrderComplete, CheckoutNewAddressForm, CheckoutCart } from '../../sections/checkout';
 
-
 // components
 import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
@@ -81,19 +80,13 @@ export default function Checkout() {
   const isMountedRef = useIsMountedRef();
   const { checkout } = useSelector((store) => store.checkout);
   const { cart, billing, activeStep } = checkout;
-  const isComplete = activeStep === STEPS.length;
+  const isComplete = 3;
 
   useEffect(() => {
     if (isMountedRef.current) {
       dispatch(getCart(cart));
     }
   }, [dispatch, isMountedRef, cart]);
-
-  useEffect(() => {
-    if (activeStep === 1) {
-      dispatch(createBilling(null));
-    }
-  }, [dispatch, activeStep]);
 
   return (
     <Page title="Afghan Business: Checkout">
@@ -119,15 +112,11 @@ export default function Checkout() {
             </Stepper>
           </Grid>
         </Grid>
-        {!isComplete ? (
-          <>
-            {activeStep === 0 && <CheckoutCart />}
-            {activeStep === 1 && <CheckoutNewAddressForm />}
-            {activeStep === 0 && <Payment />}
-          </>
-        ) : (
-          <CheckoutOrderComplete open={isComplete} />
-        )}
+
+        {activeStep === 0 && <CheckoutCart />}
+        {activeStep === 1 && <CheckoutNewAddressForm />}
+        {activeStep === 2 && <Payment />}
+        {activeStep === 3 && <CheckoutOrderComplete />}
       </Container>
     </Page>
   );

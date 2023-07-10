@@ -21,10 +21,10 @@ const RootStyle = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(10),
 }));
 
-const AnimationBox = styled('Box')(({ theme }) => ({
+const AnimationBox = styled('div')(({ theme }) => ({
   position: 'absolute',
-  top: '53%',
-  left: '53%',
+  top: '33%',
+  left: '50%',
   zIndex: -1,
   transform: `translate(-${50}%,-${50}%)`,
 }));
@@ -38,7 +38,7 @@ export default function Payment() {
     <Page title="Payment">
       <RootStyle>
         <Container>
-          <Box sx={{ mb: 5 }}>
+          <Box sx={{ mt: -13 }}>
             <AnimationBox>
               <Lottie options={animationSetter(paymentAnimation)} height={'300px'} width={'100%'} />
             </AnimationBox>
