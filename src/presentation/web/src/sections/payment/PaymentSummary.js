@@ -5,6 +5,12 @@ import { LoadingButton } from '@mui/lab';
 
 // Lottie
 import Lottie from 'react-lottie';
+
+// store
+import { useDispatch } from 'react-redux';
+import { onNextStep } from '../../store/slices/checkout/checkout';
+
+// animations
 import paymentAnimation from '../../animations/payment/payment.json';
 import animationSetter from '../../animations/animationSetter';
 
@@ -23,6 +29,12 @@ const RootStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function PaymentSummary() {
+  const dispatch = useDispatch();
+  const onNextToComplete = () => {
+    console.log('Clicked');
+    dispatch(onNextStep());
+  };
+
   return (
     <RootStyle>
       <Grid container flexDirection="row" justifyContent="center" alignItems="flex-start">
@@ -49,7 +61,7 @@ export default function PaymentSummary() {
 
         <Divider sx={{ borderStyle: 'dashed', mb: 1 }} />
       </Stack>
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" sx={{ mt: 5, mb: 3 }}>
+      <LoadingButton fullWidth size="large" onClick={onNextToComplete} variant="contained" sx={{ mt: 5, mb: 3 }}>
         Pay Me
       </LoadingButton>
 

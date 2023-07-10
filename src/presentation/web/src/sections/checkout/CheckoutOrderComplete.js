@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Divider, Typography, Stack } from '@mui/material';
 // redux
 import { useDispatch } from '../../store/store';
-import { resetCart } from '../../store/slices/checkout/checkout';
+import { onGotoStep } from '../../store/slices/checkout/checkout';
 
 // components
 import Iconify from '../../components/Iconify';
@@ -25,18 +25,21 @@ const DialogStyle = styled(DialogAnimate)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function CheckoutOrderComplete({ ...other }) {
+export default function CheckoutOrderComplete() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const handleResetStep = () => {
-    dispatch(resetCart());
-    navigate('goingToHome');
+    dispatch(onGotoStep(0));
+    navigate('/user/checkout');
+  };
+  const handleToNextBuy = () => {
+    navigate('/');
   };
 
   return (
-    <DialogStyle fullScreen {...other}>
+    <DialogStyle fullScreen open>
       <Box sx={{ p: 4, maxWidth: 480, margin: 'auto' }}>
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="h4" paragraph>
@@ -63,9 +66,9 @@ export default function CheckoutOrderComplete({ ...other }) {
           <Button
             variant="contained"
             startIcon={<Iconify icon={'ant-design:file-pdf-filled'} />}
-            onClick={handleResetStep}
+            onClick={handleToNextBuy}
           >
-            Download as PDF
+            Let's Buy More
           </Button>
         </Stack>
       </Box>
