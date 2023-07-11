@@ -93,7 +93,7 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainHeader(props) {
-  const {translate} = useLocales();
+  const { translate } = useLocales();
 
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
@@ -108,10 +108,10 @@ export default function MainHeader(props) {
   const [search, setSearch] = useState('');
 
   const handleSearch = (e) => {
-    setSearch({
-      ...search,
-      [e.target.name]: e.target.value,
+    const result = products.filter((product) => {
+      return product.name.toLowerCase().includes(e.target.value.toLowerCase());
     });
+    console.log(result);
   };
 
   const handleSearchForm = (e) => {
@@ -165,8 +165,7 @@ export default function MainHeader(props) {
             {translate('login')}
           </Button>
           <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
-          {translate('register')}
-          
+            {translate('register')}
           </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
