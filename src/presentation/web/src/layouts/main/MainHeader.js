@@ -109,6 +109,15 @@ export default function MainHeader(props) {
   // ------------------ Searching  --------------------------------
   const [search, setSearch] = useState('');
 
+
+  const handleSearch = (e) => {
+    const result = products.filter((product) => {
+      return product.name.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    console.log(result);
+  };
+
+
   const handleSearchForm = (e) => {
     e.preventDefault();
   };
