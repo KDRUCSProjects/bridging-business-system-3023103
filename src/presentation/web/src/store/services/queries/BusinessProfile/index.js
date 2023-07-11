@@ -1,7 +1,7 @@
-const getProfile = {
+const GetProfile = {
   query: (path) => ({
     url: path,
   }),
 };
 
-export const ProfileQueries = { getProfile };
+export const ProfileQueries = { GetProfile };
