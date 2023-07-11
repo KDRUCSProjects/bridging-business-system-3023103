@@ -5,6 +5,8 @@ import { styled, useTheme, alpha } from '@mui/material/styles';
 import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+
+import products from '../../@fake-db/products.json';
 // hooks
 
 import useLocales from '../../hooks/useLocales';
@@ -93,7 +95,7 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainHeader(props) {
-  const {translate} = useLocales();
+  const { translate } = useLocales();
 
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
@@ -106,13 +108,6 @@ export default function MainHeader(props) {
   const isHome = pathname === '/';
   // ------------------ Searching  --------------------------------
   const [search, setSearch] = useState('');
-
-  const handleSearch = (e) => {
-    setSearch({
-      ...search,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleSearchForm = (e) => {
     e.preventDefault();
@@ -152,6 +147,11 @@ export default function MainHeader(props) {
                 onChange={handleSearch}
               />
             </Search>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
           </form>
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
@@ -165,8 +165,7 @@ export default function MainHeader(props) {
             {translate('login')}
           </Button>
           <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
-          {translate('register')}
-          
+            {translate('register')}
           </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
