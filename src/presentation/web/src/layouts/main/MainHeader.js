@@ -5,6 +5,8 @@ import { styled, useTheme, alpha } from '@mui/material/styles';
 import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+
+import products from '../../@fake-db/products.json';
 // hooks
 
 import useLocales from '../../hooks/useLocales';
@@ -107,12 +109,14 @@ export default function MainHeader(props) {
   // ------------------ Searching  --------------------------------
   const [search, setSearch] = useState('');
 
+
   const handleSearch = (e) => {
     const result = products.filter((product) => {
       return product.name.toLowerCase().includes(e.target.value.toLowerCase());
     });
     console.log(result);
   };
+
 
   const handleSearchForm = (e) => {
     e.preventDefault();
@@ -152,6 +156,11 @@ export default function MainHeader(props) {
                 onChange={handleSearch}
               />
             </Search>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
+            <div>asdfasfd</div>
           </form>
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}

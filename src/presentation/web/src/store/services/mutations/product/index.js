@@ -30,4 +30,4 @@ const DeleteProduct = {
   }),
 };
 
-export const ProductMutations = { CreateProfile, UpdateProduct, DeleteProduct };
+export const ProductMutations = { CreateProduct, UpdateProduct, DeleteProduct };
