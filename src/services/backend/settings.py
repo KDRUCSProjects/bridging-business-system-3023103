@@ -162,9 +162,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # authentication package
 
-# AUTHENTICATION_BACKENDS = [
-#     "backend.custom_authentication.CustomAuthenticationBackend",
-# ]
+AUTHENTICATION_BACKENDS = [
+    "backend.custom_authentication.CustomAuthenticationBackend",
+]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }

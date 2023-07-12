@@ -191,6 +191,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 "description": "verify user using otp code, check your email for otp code",
                 "user_info": {
                     "id": user.id,
+                    "username": user.username,
                     "email": user.email,
                     "is_verified": user.is_verified,
                 },
@@ -226,6 +227,7 @@ class userVerificationAPIView(APIView):
                     {
                         "verified user": {
                             "id": user.id,
+                            "username": user.username,
                             "email": user.email,
                             "is_verified": user.is_verified,
                         },
