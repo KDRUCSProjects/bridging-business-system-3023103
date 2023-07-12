@@ -49,6 +49,7 @@ from .serializers import (
 )
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
+from .access_policies.category import CategoryAccessPolicy
 
 # Permition:
 # isAuthuticated
@@ -123,6 +124,7 @@ class ProductColorViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    permission_classes = (CategoryAccessPolicy,)
     queryset = Category.objects.all()
     serializer_class = CategorySeralizer
 
