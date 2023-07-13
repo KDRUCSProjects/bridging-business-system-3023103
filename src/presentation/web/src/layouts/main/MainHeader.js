@@ -153,11 +153,6 @@ export default function MainHeader(props) {
                 onChange={handleSearch}
               />
             </Search>
-            <div>asdfasfd</div>
-            <div>asdfasfd</div>
-            <div>asdfasfd</div>
-            <div>asdfasfd</div>
-            <div>asdfasfd</div>
           </form>
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
