@@ -50,6 +50,7 @@ from .serializers import (
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from .access_policies.category import CategoryAccessPolicy
+from .pagination import ProductPagination
 
 # Permition:
 # isAuthuticated
@@ -67,6 +68,7 @@ class PrdocutViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ["user"]
     search_fields = ["name", "description"]
+    pagination_class = ProductPagination
 
 
 class ProductImageViewSet(viewsets.ModelViewSet):
