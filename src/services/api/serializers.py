@@ -72,11 +72,14 @@ class ProductSerializer(serializers.ModelSerializer):
         rattings = Ratting.objects.filter(product=instance.id)
         total_stars = 0
         total_user = 0
-        for ratting in rattings:
-            total_stars = total_stars + ratting.ratting_stars
-            total_user += 1
+        try:
+            for ratting in rattings:
+                total_stars = total_stars + ratting.ratting_stars
+                total_user += 1
 
-        return total_stars / total_user
+            return total_stars / total_user
+        except:
+            return 0
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
