@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import { alpha, styled } from '@mui/material/styles';
 import { Tooltip, Badge, Box } from '@mui/material';
 import { ShoppingCartRounded } from '@mui/icons-material';
+import { PATH_AUTH } from '../../routes/paths';
 import cssStyles from '../../utils/cssStyles';
 import { IconButtonAnimate } from '../animate';
 
@@ -35,7 +37,7 @@ const Cart = () => {
           }}
         >
           <Badge badgeContent="30" anchorOrigin={{ color: 'error.main', vertical: 'top', horizontal: 'left' }}>
-            <Box sx={{ padding: '3px' }}>
+            <Box sx={{ padding: '3px' }} component={Link} to={PATH_AUTH.checkOut}>
               <ShoppingCartRounded sx={{ color: 'primary.main' }} />
             </Box>
           </Badge>
