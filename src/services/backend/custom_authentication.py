@@ -1,14 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import BaseBackend
-from django.contrib.auth.models import User
 from django.db.models import Q
 
 
 class CustomAuthenticationBackend(BaseBackend):
     def get_user(self, user_id):
+        user = get_user_model()
         try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
+            return user.objects.get(pk=user_id)
+        except user.DoesNotExist:
             return None
 
     def authenticate(self, request, username=None, password=None, *kwargs):

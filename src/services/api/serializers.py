@@ -37,21 +37,49 @@ class ProductColorSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class RattingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ratting
+        fields = "__all__"
+
+
 class ProductSerializer(serializers.ModelSerializer):
-    # images = ProductImageSerializer(many=True)
-    # color = ProductColorSerializer(many=True, read_only=True)
+    product_ratting = RattingSerializer(many=True, read_only=True)
+    ratting = serializers.SerializerMethodField(
+        method_name="calculated_ratting", read_only=True
+    )
+    images = ProductImageSerializer(many=True, read_only=True)
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(
+            max_length=1000000, allow_empty_file=False, use_url=False
+        ),
+        write_only=True,
+    )
 
     class Meta:
         model = Product
         fields = "__all__"
 
-    # def create(self, validated_data):
-    #     images = validated_data.pop("images")
-    #     product = Product.objects.create(**validated_data)
-    #     for image in images:
-    #         ProductImage.objects.create(product=product, **image)
+    def create(self, validated_data):
+        prodcut_image_data = validated_data.pop("uploaded_images")
+        product = Product.objects.create(**validated_data)
+        for product_image in prodcut_image_data:
+            ProductImage.objects.create(product=product, image=product_image)
+        return product
 
-    #     return product
+    # for ratting calculations
+    def calculated_ratting(self, instance):
+        rattings = Ratting.objects.filter(product=instance.id)
+        total_stars = 0
+        total_user = 0
+        try:
+            for ratting in rattings:
+                total_stars = total_stars + ratting.ratting_stars
+                total_user += 1
+
+            return total_stars / total_user
+        except:
+            return 0
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -116,12 +144,6 @@ class CategorySeralizer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class RattingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ratting
-        fields = "__all__"
-
-
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
@@ -158,7 +180,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         username = validated_data.get("username")
-        password = validated_data.get("passsword")
+        password = validated_data.get("password")
         first_name = validated_data.get("first_name")
         last_name = validated_data.get("last_name")
         email = validated_data.get("email")
@@ -171,6 +193,11 @@ class UserSerializer(serializers.ModelSerializer):
             email=email,
         )
         return user
+
+
+class UserVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
 
 
 class BusinessFavoriteProductSerializer(serializers.ModelSerializer):

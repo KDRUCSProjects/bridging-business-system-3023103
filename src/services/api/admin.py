@@ -14,6 +14,7 @@ from .models import (
     BusinessFavoriteProduct,
     Message,
     ContactUs,
+    User,
 )
 
 
@@ -124,3 +125,4 @@ admin.site.register(Message, MessageAdmin)
 admin.site.register(ContactUs, ContactUsAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(BusinessProfile, BusinessProfileAdmin)
+admin.site.register(User)

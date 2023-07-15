@@ -2,9 +2,11 @@ import { useLocation, Link as routerLink } from 'react-router-dom';
 import { useState } from 'react';
 // @mui
 import { styled, useTheme, alpha } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Container, Autocomplete, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+
+import products from '../../@fake-db/products.json';
 // hooks
 
 import useLocales from '../../hooks/useLocales';
@@ -36,6 +38,7 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
+
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
@@ -45,23 +48,24 @@ const Search = styled('div')(({ theme }) => ({
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
+  marginRight: '1em',
   height: '100%',
-  position: 'absolute',
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-evenly',
 }));
 
-const StyledSearch = styled(InputBase)(({ theme }) => ({
+const StyledAutoComplete = styled(Autocomplete)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
     },
   },
 }));
@@ -93,7 +97,7 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainHeader(props) {
-  const {translate} = useLocales();
+  const { translate } = useLocales();
 
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
@@ -106,18 +110,14 @@ export default function MainHeader(props) {
   const isHome = pathname === '/';
   // ------------------ Searching  --------------------------------
   const [search, setSearch] = useState('');
-
-  const handleSearch = (e) => {
-    setSearch({
-      ...search,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSearchForm = (e) => {
     e.preventDefault();
   };
 
+  const handleSelectedOption = (event, value) => {
+    setSearch(value);
+  };
+  console.log(search);
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
       <ToolbarStyle
@@ -141,17 +141,41 @@ export default function MainHeader(props) {
 
           {/* Searching input field */}
           <form action="#" onSubmit={handleSearchForm}>
-            <Search sx={{ background: 'lightGrey' }}>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledSearch
-                placeholder={translate('Search')}
-                inputProps={{ 'aria-label': 'search' }}
-                name="searchField"
-                onChange={handleSearch}
-              />
-            </Search>
+            <StyledAutoComplete
+              limitTags={11}
+              initial
+              freeSolo
+              id="free-solo-2-demo"
+              disableClearable
+              options={products.map((option, i) => {
+                return option.name;
+              })}
+              renderOption={(props, option, index) => {
+                const key = `listItem-${props.id}-${props.key}`;
+                return (
+                  <li {...props} key={key}>
+                    {option}
+                  </li>
+                );
+              }}
+              onChange={handleSelectedOption}
+              renderInput={(params) => (
+                <>
+                  <SearchIconWrapper>
+                    <TextField
+                      sx={{ width: (theme) => (theme.breakpoints.down('md') ? '15rem' : '20rem') }}
+                      {...params}
+                      label="Search input"
+                      InputProps={{
+                        ...params.InputProps,
+                        type: 'search',
+                      }}
+                    />
+                    <SearchIcon sx={{ marginLeft: -5 }} />
+                  </SearchIconWrapper>
+                </>
+              )}
+            />
           </form>
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
@@ -165,8 +189,7 @@ export default function MainHeader(props) {
             {translate('login')}
           </Button>
           <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
-          {translate('register')}
-          
+            {translate('register')}
           </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}

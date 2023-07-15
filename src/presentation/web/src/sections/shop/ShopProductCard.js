@@ -18,27 +18,22 @@ ShopProductCard.propTypes = {
 
 export default function ShopProductCard({ product }) {
   const { name, cover, price, colors, status, priceSale } = product;
-  console.log(colors);
 
   return (
     <Card>
       <Box sx={{ position: 'relative' }}>
-
         <Image alt={name} src={cover} ratio="1/1" />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to={'linkTo'} color="inherit" component={RouterLink}>
-          <Typography variant="subtitle2" noWrap>
-            {name}
-          </Typography>
-        </Link>
+        <Typography variant="subtitle2" noWrap>
+          {name}
+        </Typography>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <ColorPreview colors={colors} />
 
           <Stack direction="row" spacing={0.5}>
-    
             <Typography variant="subtitle1">{fCurrency(price)}</Typography>
           </Stack>
         </Stack>

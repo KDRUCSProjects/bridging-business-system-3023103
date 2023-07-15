@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from knox.models import AuthToken
 from django.contrib.auth import login, get_user_model
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework import viewsets, status
+from .email import send_otp_via_email
 from .models import (
     Product,
     ProductImage,
@@ -22,6 +24,7 @@ from .models import (
     Ratting,
     ContactUs,
     Payment,
+    User,
 )
 from .serializers import (
     ProductSerializer,
@@ -42,7 +45,12 @@ from .serializers import (
     BusinessFavoriteProductPostSerializer,
     ContactUsPostSerializer,
     MessagePostSerializer,
+    UserVerificationSerializer,
 )
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from .access_policies.category import CategoryAccessPolicy
+from .pagination import ProductPagination
 
 # Permition:
 # isAuthuticated
@@ -57,17 +65,16 @@ class PrdocutViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAdminUser]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ["user"]
+    search_fields = ["name", "description"]
+    pagination_class = ProductPagination
 
 
 class ProductImageViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer
-
-
-class PrdocutViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -119,6 +126,7 @@ class ProductColorViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    permission_classes = (CategoryAccessPolicy,)
     queryset = Category.objects.all()
     serializer_class = CategorySeralizer
 
@@ -144,7 +152,7 @@ class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
     serializer_class = BusinessFavoriteProductSerializer
 
     def get_serializer_class(self):
-        if self.action == "create":
+        if self.action == "create" or self.action == "update":
             return BusinessFavoriteProductPostSerializer
         else:
             return BusinessFavoriteProductSerializer
@@ -153,6 +161,8 @@ class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
 class RattingViewSet(viewsets.ModelViewSet):
     queryset = Ratting.objects.all()
     serializer_class = RattingSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["product"]
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
@@ -179,17 +189,59 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        token = AuthToken.objects.create(user)[1]
+        send_otp_via_email(user.email)
         return Response(
             {
+                "description": "verify user using otp code, check your email for otp code",
                 "user_info": {
                     "id": user.id,
                     "username": user.username,
                     "email": user.email,
+                    "is_verified": user.is_verified,
                 },
-                "token": token,
-            }
+            },
         )
+
+
+class userVerificationAPIView(APIView):
+    def post(self, request):
+        try:
+            data = request.data
+            serializer = UserVerificationSerializer(data=data)
+            if serializer.is_valid():
+                email = serializer.data["email"]
+                otp = serializer.data["otp"]
+                user = User.objects.filter(email=email)
+                if not user.exists():
+                    return Response(
+                        "user doesn't exist with this email",
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                if user[0].otp != otp:
+                    return Response(
+                        "invalid otp code", status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                user = get_user_model().objects.get(id=user[0].id)
+                user.is_verified = True
+                user.otp = ""
+                user.save()
+                token = AuthToken.objects.create(user)[1]
+                return Response(
+                    {
+                        "verified user": {
+                            "id": user.id,
+                            "username": user.username,
+                            "email": user.email,
+                            "is_verified": user.is_verified,
+                        },
+                        "token": token,
+                    },
+                    status=status.HTTP_200_OK,
+                )
+
+        except:
+            return Response("some thing went ronge")
 
 
 class UserLoginView(KnoxLoginView):

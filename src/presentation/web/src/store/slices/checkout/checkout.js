@@ -2,9 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import sum from 'lodash/sum';
 import uniqBy from 'lodash/uniqBy';
 // utils
-import axios from '../../utils/axios';
+import axios from '../../../utils/axios';
 //
-import { dispatch } from '../store';
+import { dispatch } from '../../store';
+import myProducts from '../../../@fake-db/products.json';
 
 // ----------------------------------------------------------------------
 
@@ -211,14 +212,9 @@ export const {
 // ----------------------------------------------------------------------
 
 export function getProducts() {
-  return async () => {
+  return () => {
     dispatch(checkoutSlice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/products');
-      dispatch(checkoutSlice.actions.getProductsSuccess(response.data.products));
-    } catch (error) {
-      dispatch(checkoutSlice.actions.hasError(error));
-    }
+    dispatch(checkoutSlice.actions.getProductsSuccess(myProducts));
   };
 }
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // @mui
-import { alpha, styled  , useTheme} from '@mui/material/styles';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import { Box, List, Link, Drawer, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
 // config
 import { NAVBAR } from '../../config';
@@ -28,7 +28,7 @@ const ListItemStyle = styled(ListItemButton)(({ theme }) => ({
 MenuMobile.propTypes = {
   isOffset: PropTypes.bool,
   isHome: PropTypes.bool,
-  navConfig: PropTypes.array,
+  navConfig: PropTypes.func,
 };
 
 export default function MenuMobile({ isOffset, isHome }) {
@@ -104,7 +104,7 @@ MenuMobileItem.propTypes = {
 
 function MenuMobileItem({ item, isOpen, onOpen }) {
   const { title, path, icon, children } = item;
-  const theme=useTheme();
+  const theme = useTheme();
 
   if (children) {
     return (
@@ -115,7 +115,6 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
           <Iconify
             icon={isOpen ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
             sx={{ width: 16, height: 16, ml: 1 }}
-  
           />
         </ListItemStyle>
 
@@ -125,7 +124,7 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
               navConfig={children}
               sx={{
                 '& .MuiList-root:last-of-type .MuiListItemButton-root': {
-                 borderLeft:`2px solid ${theme.palette.primary.main}`,
+                  borderLeft: `2px solid ${theme.palette.primary.main}`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   bgcolor: 'background.neutral',
@@ -140,7 +139,6 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
       </>
     );
   }
-
 
   return (
     <ListItemStyle

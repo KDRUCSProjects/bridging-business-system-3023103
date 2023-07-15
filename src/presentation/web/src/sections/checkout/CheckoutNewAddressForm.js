@@ -9,7 +9,8 @@ import { LoadingButton } from '@mui/lab';
 // _mock
 import { countries } from '../../@fake-db';
 import { FormProvider, RHFCheckbox, RHFSelect, RHFTextField } from '../../components/hook-form';
-
+import { onNextStep, onBackStep } from '../../store/slices/checkout/checkout';
+import { useDispatch } from '../../store/store';
 // ----------------------------------------------------------------------
 
 CheckoutNewAddressForm.propTypes = {
@@ -19,7 +20,8 @@ CheckoutNewAddressForm.propTypes = {
   onCreateBilling: PropTypes.func,
 };
 
-export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCreateBilling }) {
+export default function CheckoutNewAddressForm() {
+  const dispatch = useDispatch();
   const NewAddressSchema = Yup.object().shape({
     receiver: Yup.string().required('Fullname is required'),
     phone: Yup.string().required('Phone is required'),
@@ -49,21 +51,12 @@ export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCr
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data) => {
-    try {
-      onNextStep();
-      onCreateBilling({
-        receiver: data.receiver,
-        phone: data.phone,
-        fullAddress: `${data.address}, ${data.city}, ${data.state}, ${data.country}, ${data.zipcode}`,
-        addressType: data.addressType,
-        isDefault: data.isDefault,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+  const onSubmit = () => {
+    dispatch(onNextStep());
   };
-
+  const onPreStep = () => {
+    dispatch(onBackStep());
+  };
   return (
     <>
       <Typography gutterBottom variant="h4" textTransform={'capitalize'}>
@@ -113,7 +106,7 @@ export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCr
         <LoadingButton sx={{ mr: '1em' }} type="submit" variant="contained" loading={isSubmitting}>
           Deliver to this Address
         </LoadingButton>
-        <Button color="inherit" variant="outlined" onClick={onClose}>
+        <Button color="inherit" variant="outlined" onClick={onPreStep}>
           Cancel
         </Button>
       </FormProvider>
