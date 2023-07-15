@@ -15,13 +15,23 @@ const BaseApi = createApi({
     UpdateProduct: builder.mutation(allServices.mutations.UpdateProduct),
     DeleteProduct: builder.mutation(allServices.mutations.DeleteProduct),
 
+    // Category
+    CreateCategory: builder.mutation(allServices.mutations.CreateCategory),
+    UpdateCategory: builder.mutation(allServices.mutations.UpdateCategory),
+    DeleteCategory: builder.mutation(allServices.mutations.DeleteCategory),
+
     // -----------------------------Queries-------------------------------
 
     // profile
     GetBusinessProfile: builder.query(allServices.queries.GetProfile),
 
     // Product
-    GetProduct: builder.query(allServices.queries.GetProduct),
+    GetAllProducts: builder.query(allServices.queries.GetAllProducts),
+    GetSpecificProduct: builder.query(allServices.queries.GetSpecificProduct),
+
+    // Category
+    GetAllCategories: builder.query(allServices.queries.GetAllCategories),
+    GetSpecificCategory: builder.query(allServices.queries.GetSpecificCategory),
   }),
 });
 
