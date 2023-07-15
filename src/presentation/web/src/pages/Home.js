@@ -12,6 +12,7 @@ import useLocales from '../hooks/useLocales';
 import useResponsive from '../hooks/useResponsive';
 
 import CustomSlider from '../components/CustomSlider';
+import Cart from '../components/Cart';
 import ImageSlider from '../components/ImageSlider';
 
 // Card
@@ -63,6 +64,7 @@ export default function HomePage() {
             title={translate('Top_Product')}
           />
         )}
+        <Cart />
         <ShopProductList />
       </ContentStyle>
     </Page>
