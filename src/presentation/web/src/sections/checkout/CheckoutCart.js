@@ -79,11 +79,7 @@ export default function CheckoutCart(activeStep) {
               />
             </Scrollbar>
           ) : (
-            <EmptyContent
-              title="Cart is empty"
-              description="Look like you have no items in your shopping cart."
-              img="/assets/illustrations/illustration_empty_cart.svg"
-            />
+            <EmptyContent title="Cart is empty" description="Look like you have no items in your shopping cart." />
           )}
         </Card>
 
