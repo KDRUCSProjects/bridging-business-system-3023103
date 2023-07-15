@@ -21,7 +21,8 @@ const BaseApi = createApi({
     GetBusinessProfile: builder.query(allServices.queries.GetProfile),
 
     // Product
-    GetProduct: builder.query(allServices.queries.GetProduct),
+    GetAllProducts: builder.query(allServices.queries.GetAllProducts),
+    GetSpecificProduct: builder.query(allServices.queries.GetSpecificProduct),
   }),
 });
 
