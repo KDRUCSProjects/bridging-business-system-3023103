@@ -12,7 +12,7 @@ const CreateProduct = {
 const UpdateProduct = {
   query: (path, body) => ({
     url: path,
-    method: 'PATCH',
+    method: 'PUT',
     body,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
