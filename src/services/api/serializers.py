@@ -17,6 +17,7 @@ from .models import (
     ContactUs,
     Payment,
 )
+from .email import send_otp_via_email
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -198,6 +199,70 @@ class UserSerializer(serializers.ModelSerializer):
 class UserVerificationSerializer(serializers.Serializer):
     email = serializers.EmailField()
     otp = serializers.CharField()
+    # class Meta: needed
+
+
+class ForgetPasswordEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    class Meta:
+        fields = ["email"]
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        if get_user_model().objects.filter(email=email).exists():
+            send_otp_via_email(email, "verification code for reset password")
+            return attrs
+        else:
+            raise serializers.ValidationError("you are not register")
+
+
+class ForgetPasswordVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
+
+    class Meta:
+        fields = ["emial", "otp"]
+
+    def validate(self, attrs):
+        otp = attrs.get("otp")
+        email = attrs.get("email")
+        user = get_user_model().objects.get(email=email)
+        if user:
+            if user.otp == otp:
+                user.is_password_changable = True
+                user.save()
+                return attrs
+            else:
+                serializers.ValidationError("your otp is wrong")
+        else:
+            serializers.ValidationError("your not register")
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
+    password = serializers.CharField(style={"input_type": "password"})
+
+    def validate(self, attrs):
+        otp = attrs.get("otp")
+        email = attrs.get("email")
+        password = attrs.get("password")
+        user = get_user_model().objects.get(email=email)
+        if user:
+            if user.otp == otp:
+                if user.is_password_changable:
+                    user.set_password(password)
+                    user.is_password_changable = False
+                    user.otp = ""
+                    user.save()
+                    return attrs
+                else:
+                    serializers.ValidationError("changing password isn't verified")
+            else:
+                serializers.ValidationError("your otp is wrong")
+        else:
+            serializers.ValidationError("your not register")
 
 
 class BusinessFavoriteProductSerializer(serializers.ModelSerializer):
