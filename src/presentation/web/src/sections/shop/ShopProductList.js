@@ -5,7 +5,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 // @mui
 import { Link } from 'react-router-dom';
-import { Box, Container, Button } from '@mui/material';
+import { Box, Container, Button , Card} from '@mui/material';
 // components
 import { SkeletonProductItem } from '../../components/skeleton';
 
@@ -116,7 +116,7 @@ const products = [
 ];
 export default function ShopProductList() {
   const [currentPage, setCurrentPage] = useState(1);
-    const divStyle = { position: 'relative', left: '45%' };
+    const divStyle = { position: 'relative', left: '45%' , top:"7px" };
 
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
@@ -129,7 +129,7 @@ export default function ShopProductList() {
         <Box
           sx={{
             display: 'grid',
-            // gap: 3,
+            gap: 3,
             gridTemplateColumns: {
               xs: 'repeat(1, 1fr)',
               sm: 'repeat(2, 1fr)',
@@ -139,14 +139,14 @@ export default function ShopProductList() {
           }}
         >
           {products.map((product, index) => (
-            <Button
+            <Card
               component={Link}
               key={product + index}
               to={`/product/details`} //   /${product.id}
               style={{ textDecoration: 'none' }}
             >
               <ShopProductCard key={product.id} product={product} />
-            </Button>
+            </Card>
           ))}
         </Box>
         {/* pagination in frontend */}
