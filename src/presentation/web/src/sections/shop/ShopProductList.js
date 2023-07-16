@@ -149,7 +149,6 @@ export default function ShopProductList() {
             </Button>
           ))}
         </Box>
-        <h1> currentPage : {currentPage}</h1>
         {/* pagination in frontend */}
         <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >
           <Pagination count={5} color='primary' onChange={handlePageChange}/>
