@@ -16,12 +16,12 @@ const MenuConfig= () =>{
   const {translate} = useLocales();
   return [
     {
-      title: translate('Home'),
+      title: translate('home'),
       icon: <Iconify icon={'eva:home-fill'} {...ICON_SIZE} />,
       path: '/',
     },
     {
-      title: translate('Pages'),
+      title: translate('pages'),
       path: '/pages',
       icon: <Iconify icon={'eva:file-fill'} {...ICON_SIZE} />,
       children: [

@@ -165,7 +165,7 @@ export default function MainHeader(props) {
                     <TextField
                       sx={{ width: (theme) => (theme.breakpoints.down('md') ? '15rem' : '20rem') }}
                       {...params}
-                      label="Search input"
+                      label={translate('Search')}
                       InputProps={{
                         ...params.InputProps,
                         type: 'search',

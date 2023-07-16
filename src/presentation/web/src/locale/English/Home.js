@@ -4,7 +4,7 @@
 
 const Home = {
     home: `Home`,
-    page: `Pages `,
+    pages: `Pages `,
     register: `Resister`,
     login: `Login `,
     
