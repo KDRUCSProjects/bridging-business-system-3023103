@@ -16,6 +16,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     is_verified = models.BooleanField(default=False)
     otp = models.CharField(max_length=6, null=True, blank=True)
+    is_password_changable = models.BooleanField(default=False)
 
     def name(self):
         return self.first_name + " " + self.last_name

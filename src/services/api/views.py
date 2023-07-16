@@ -46,6 +46,9 @@ from .serializers import (
     ContactUsPostSerializer,
     MessagePostSerializer,
     UserVerificationSerializer,
+    ForgetPasswordEmailSerializer,
+    ForgetPasswordVerificationSerializer,
+    ChangePasswordSerializer,
 )
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
@@ -189,7 +192,7 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        send_otp_via_email(user.email)
+        send_otp_via_email(user.email, "Your account verification email")
         return Response(
             {
                 "description": "verify user using otp code, check your email for otp code",
@@ -242,6 +245,33 @@ class userVerificationAPIView(APIView):
 
         except:
             return Response("some thing went ronge")
+
+
+class ForgetPasswordEmailView(APIView):
+    def post(self, request):
+        serializer = ForgetPasswordEmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response("otp code is sended to your email", status=status.HTTP_200_OK)
+
+
+class ForgetPasswordVerificationView(APIView):
+    def post(self, request):
+        serializer = ForgetPasswordVerificationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response("otp code is verified", status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(APIView):
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response("your password is changed", status=status.HTTP_200_OK)
+
+
+#   def post(self, request, format=None):
+#     serializer = SendPasswordResetEmailSerializer(data=request.data)
+#     serializer.is_valid(raise_exception=True)
+#     return Respo
 
 
 class UserLoginView(KnoxLoginView):
