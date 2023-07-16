@@ -58,14 +58,18 @@ function SettingsProvider({ children }) {
     themeColorPresets: initialState.themeColorPresets,
   });
 
-  const isArabic = localStorage.getItem('i18nextLng') === 'ar';
+  const isDari = localStorage.getItem('i18nextLng') === 'fa';
+  const isPashto = localStorage.getItem('i18nextLng') === 'ps';
 
   useEffect(() => {
-    if (isArabic) {
-      onChangeDirectionByLang('ar');
+    if (isDari) {
+      onChangeDirectionByLang('fa');
+    } else if (isPashto) {
+      onChangeDirectionByLang('ps');
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isArabic]);
+  }, [isDari, isPashto]);
 
   // Mode
 
@@ -102,7 +106,7 @@ function SettingsProvider({ children }) {
   const onChangeDirectionByLang = (lang) => {
     setSettings({
       ...settings,
-      themeDirection: lang === 'ar' ? 'rtl' : 'ltr',
+      themeDirection: lang === 'fa' || lang === 'ps' ? 'rtl' : 'ltr',
     });
   };
 
