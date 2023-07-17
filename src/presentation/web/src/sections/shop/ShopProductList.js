@@ -1,124 +1,20 @@
 import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 // @mui
 import { Link } from 'react-router-dom';
-import { Box, Container, Button , Card} from '@mui/material';
+import { Box, Container , Card} from '@mui/material';
 // components
-import { SkeletonProductItem } from '../../components/skeleton';
 
 //
 import ShopProductCard from './ShopProductCard';
 import Page from '../../components/Page';
 import BaseApi from '../../store/BaseApi';
 
-const productsList = [
-  {
-    id: 1,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 2,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 3,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 4,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 5,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 6,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 7,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 8,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 9,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 10,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 11,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-];
 export default function ShopProductList() {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const { isSuccess,data , isError ,isLoading} = BaseApi.useGetSpecificProductQuery(`api/product/?page=${currentPage}`);
+  const { isSuccess,data , isError ,isLoading ,totalPages} = BaseApi.useGetSpecificProductQuery(`api/product/?page=${currentPage}`);
     const divStyle = { position: 'relative', left: '45%' , top:"7px" };
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
@@ -161,7 +57,7 @@ export default function ShopProductList() {
         </Box>
         {/* pagination in frontend */}
         <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >
-          <Pagination count={data.total_pages} color='primary' onChange={handlePageChange}/>
+          <Pagination count={totalPages} color='primary' onChange={handlePageChange}/>
         </div>
       </Container>
     </Page>

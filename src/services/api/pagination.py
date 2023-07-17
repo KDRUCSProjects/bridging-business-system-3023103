@@ -11,7 +11,7 @@ class ProductPagination(pagination.PageNumberPagination):
             {
                 "next": self.get_next_link(),
                 "previous": self.get_previous_link(),
-                "total_pages": self.page.paginator.num_pages,
+                "totalPages": self.page.paginator.num_pages,
                 "results": data,
             }
         )
