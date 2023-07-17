@@ -1,15 +1,17 @@
-const CardDetails = {
-    'Product Details': `Product Details`,
-    AVAILABLE: `Available`,
-    Color: `Color`,
-    'reviews':'Reviews',
-    Size: 'Size',
-    'Size Chart':'Size Chart',
 
-    Quantity:'Quantity',
-    Available:'Available',
-    'Add to Cart':'Add to Cart',
-    ' View Profile': 'View Profile',
+
+
+const CardDetails = {
+    'product details': `Product Details`,
+    color: `Color`,
+    'reviews':'Reviews',
+    size: 'Size',
+    'size chart':'Size Chart',
+
+    quantity:'Quantity',
+    available:'Available',
+    'add to cart':`Add to Cart`,
+    'view profile': 'View Profile',
     discription:'Discription',
   };
   

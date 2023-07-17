@@ -147,7 +147,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('Color')}
+           {translate('color')}
           
           </Typography>
 
@@ -172,7 +172,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('Size')} 
+           {translate('size')} 
           </Typography>
 
           <RHFSelect
@@ -184,7 +184,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             }}
             helperText={
               <Link underline="always" color="text.secondary">
-               {translate('Size Chart')} 
+               {translate('size chart')} 
               </Link>
             }
           >
@@ -198,7 +198,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-            {translate('Quantity')}
+            {translate('quantity')}
           </Typography>
 
           <div>
@@ -210,7 +210,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
               onDecrementQuantity={() => setValue('quantity', values.quantity - 1)}
             />
             <Typography variant="caption" component="div" sx={{ mt: 1, textAlign: 'right', color: 'text.secondary' }}>
-              {translate('Available')} 
+              {translate('available')} 
             </Typography>
           </div>
         </Stack>
@@ -229,11 +229,11 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             sx={{ whiteSpace: 'nowrap' }}
           >
   
-         {translate('Add to Cart')} 
+         {translate('add to cart')} 
           </Button>
 
           <Button fullWidth size="large" type="submit" startIcon={<Person2Icon />} variant="contained">
-           {translate(' View Profile')} 
+           {translate('view profile')} 
           </Button>
         </Stack>
       </FormProvider>

@@ -1,16 +1,18 @@
-const CardDetails = {
-    'Product Details': `د محصول توضیحات `,
-    Home: `کور `,
-    AVAILABLE: `د لاسرسی وړ `,
-    Color: `رنګ  `,
-    'reviews':' لیدونکی ',
-    Size: ' اندازه   ',
-    'Size Chart':'اندازه ',
 
-    Quantity:'تعداد ',
-    Available:'د لاسرسی وړ ',
-    'Add to Cart':'کارټ ته یی اضافه کړۍ',
-    ' View Profile': 'پروفایل یې وګورۍ',
+
+
+const CardDetails = {
+
+    'product details': `د محصول توضیحات`,
+    color: `رنګ`,
+    'reviews':'لیدونکی',
+    size:'اندازه',
+    'size chart':'اندازه',
+
+    quantity:'تعداد',
+    available:'د لاسرسی وړ',
+    'add to cart':`کارټ ته یی اضافه کړۍ`,
+    'view profile': 'پروفایل یې وګورۍ',
     discription:'توضیحات',
   };
   

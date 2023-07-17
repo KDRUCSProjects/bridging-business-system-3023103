@@ -6,8 +6,16 @@
 // ----------------------------------------------------------------------
 import Home from './Home';
 import contactUS from "./ContactUs";
+import resetPassword from './resetPassword';
+import profilepage from './profilepage';
+import creatprofile from './creatprofile';
+import CardDetails from './CardDetails';
 
 const english = {
+  ...CardDetails,
+  ...creatprofile,
+  ...profilepage,
+  ...resetPassword,
   ...contactUS,
   ...Home,
 };

@@ -78,7 +78,7 @@ export default function ProductDetails() {
   return (
     <Page title="Product Details">
       <Container sx={{marginTop:"6em"}}>
-       <Typography variant={'h3'} gutterBottom > {translate('Product Details')} </Typography>
+       <Typography variant={'h3'} gutterBottom > {translate('product details')} </Typography>
         {product && (
           <>
             <Card>
