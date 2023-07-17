@@ -12,6 +12,7 @@ import CardDetails from './CardDetails';
 import profilepage from "./profilepage";
 
 import creatprofile from "./creatprofile";
+import AddProduct from "./AddProduct";
 
 
 
@@ -22,8 +23,8 @@ import creatprofile from "./creatprofile";
     ...contactUS, 
     ...resetPassword,
     ...creatprofile,
-
     ...profilepage,
+    ...AddProduct,
   
 };
 
