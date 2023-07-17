@@ -14,7 +14,7 @@ import ShopProductCard from './ShopProductCard';
 import Page from '../../components/Page';
 import BaseApi from '../../store/BaseApi';
 
-const products = [
+const productsList = [
   {
     id: 1,
     name: 'product1',
@@ -118,16 +118,20 @@ const products = [
 export default function ShopProductList() {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const { data  , isError ,isLoading} = BaseApi.useGetSpecificProductQuery(`api/product/${currentPage}`);
+  const { isSuccess,data , isError ,isLoading} = BaseApi.useGetSpecificProductQuery(`api/product/?page=${currentPage}`);
     const divStyle = { position: 'relative', left: '45%' , top:"7px" };
-
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
     };
+    if(isError){
+     <h1>Error</h1>
+    }
+    else if(isLoading){
+      <h1>loading...</h1>
+    }
+ 
 
-    console.log(data);
 
-    // const adPageQuery = useQuery(['pages', currentPage], () => getObjectsByPageNumber(currentPage));
   return (
     <Page title="Ecommerce: Shop">
       <Container>
@@ -143,16 +147,17 @@ export default function ShopProductList() {
             },
           }}
         >
-          {products.map((product, index) => (
+          {isSuccess ?  data.results?.map((product) => (
+
             <Card
               component={Link}
-              key={product + index}
+              key={product.id}
               to={`/product/details`} //   /${product.id}
               style={{ textDecoration: 'none' }}
             >
               <ShopProductCard key={product.id} product={product} />
             </Card>
-          ))}
+          )): 'NO data'}
         </Box>
         {/* pagination in frontend */}
         <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >

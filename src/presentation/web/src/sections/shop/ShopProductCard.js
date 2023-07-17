@@ -17,25 +17,25 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+  const { name } = product;
 
   return (
     <Card>
       <Box sx={{ position: 'relative' }}>
-        <Image alt={name} src={cover} ratio="1/1" />
+        <Image alt={name} src={'path of the image'} ratio="1/1" />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Typography variant="subtitle2" noWrap>
           {name}
         </Typography>
-
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+          {/* <ColorPreview colors={"colors"} /> */}
+
 
           <Stack direction="row" spacing={0.5}>
-            <Typography variant="subtitle1">{fCurrency(price)}</Typography>
-          </Stack>
+            <Typography variant="subtitle1">{fCurrency("price")}</Typography>
+          </Stack> 
         </Stack>
       </Stack>
     </Card>
