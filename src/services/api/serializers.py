@@ -265,6 +265,32 @@ class ChangePasswordSerializer(serializers.Serializer):
             serializers.ValidationError("your not register")
 
 
+class PasswordResetSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    old_password = serializers.CharField(style={"input_type": "password"})
+    password1 = serializers.CharField(style={"input_type": "password"})
+    password2 = serializers.CharField(style={"input_type": "password"})
+
+    class Meta:
+        fields = ["old_password", "password1", "password2"]
+
+    def validate(self, attrs):
+        user_id = attrs.get("user_id")
+        old_password = attrs.get("old_password")
+        password1 = attrs.get("password1")
+        password2 = attrs.get("password2")
+        user = get_user_model().objects.get(pk=user_id)
+        if user.check_password(old_password):
+            if password1 == password2:
+                user.set_password(password1)
+                user.save()
+                return attrs
+            else:
+                serializers.ValidationError("your otp is wrong")
+        else:
+            serializers.ValidationError("your not register")
+
+
 class BusinessFavoriteProductSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     product = ProductSerializer(read_only=True)

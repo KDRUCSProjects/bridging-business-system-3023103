@@ -49,6 +49,7 @@ from .serializers import (
     ForgetPasswordEmailSerializer,
     ForgetPasswordVerificationSerializer,
     ChangePasswordSerializer,
+    PasswordResetSerializer,
 )
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
@@ -268,10 +269,11 @@ class ChangePasswordView(APIView):
         return Response("your password is changed", status=status.HTTP_200_OK)
 
 
-#   def post(self, request, format=None):
-#     serializer = SendPasswordResetEmailSerializer(data=request.data)
-#     serializer.is_valid(raise_exception=True)
-#     return Respo
+class PasswordResetView(APIView):
+    def post(self, request):
+        serializer = PasswordResetSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response("your password is reseted", status=status.HTTP_200_OK)
 
 
 class UserLoginView(KnoxLoginView):
