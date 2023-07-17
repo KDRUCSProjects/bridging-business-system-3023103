@@ -12,6 +12,7 @@ import { SkeletonProductItem } from '../../components/skeleton';
 //
 import ShopProductCard from './ShopProductCard';
 import Page from '../../components/Page';
+import BaseApi from '../../store/BaseApi';
 
 const products = [
   {
@@ -115,12 +116,16 @@ const products = [
   },
 ];
 export default function ShopProductList() {
+
   const [currentPage, setCurrentPage] = useState(1);
+  const { data  , isError ,isLoading} = BaseApi.useGetSpecificProductQuery(`api/product/${currentPage}`);
     const divStyle = { position: 'relative', left: '45%' , top:"7px" };
 
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
     };
+
+    console.log(data);
 
     // const adPageQuery = useQuery(['pages', currentPage], () => getObjectsByPageNumber(currentPage));
   return (
