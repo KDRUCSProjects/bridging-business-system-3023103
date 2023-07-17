@@ -129,7 +129,7 @@ export default function ShopProductList() {
     else if(isLoading){
       <h1>loading...</h1>
     }
- 
+//  console.log(data.results)
 
 
   return (
@@ -161,7 +161,7 @@ export default function ShopProductList() {
         </Box>
         {/* pagination in frontend */}
         <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >
-          <Pagination count={5} color='primary' onChange={handlePageChange}/>
+          <Pagination count={data.total_pages} color='primary' onChange={handlePageChange}/>
         </div>
       </Container>
     </Page>
