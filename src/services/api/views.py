@@ -276,12 +276,6 @@ class PasswordResetView(APIView):
         return Response("your password is reseted", status=status.HTTP_200_OK)
 
 
-#   def post(self, request, format=None):
-#     serializer = SendPasswordResetEmailSerializer(data=request.data)
-#     serializer.is_valid(raise_exception=True)
-#     return Respo
-
-
 class UserLoginView(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
 
