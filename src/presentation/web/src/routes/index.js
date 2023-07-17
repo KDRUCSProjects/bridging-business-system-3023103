@@ -64,6 +64,7 @@ export default function Router() {
         { path: PATH_PAGE.payment, element: <PaymentPage /> },
         { path: PATH_PAGE.addToCart, element: <AddToCart /> },
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
+        { path: PATH_PAGE.ConfirmPassword, element: <ConfirmPassword /> },
       ],
     },
 
@@ -120,3 +121,6 @@ const AddToCart = Loadable(lazy(() => import('../pages/Cart/ProductList')));
 
 // Not Found page
 const NotFoundPage = Loadable(lazy(() => import('../pages/Page404')));
+
+// confirm passowrd 
+const ConfirmPassword = Loadable(lazy(() => import('../pages/auth/ConfirmPassword')));

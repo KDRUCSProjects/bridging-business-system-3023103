@@ -30,5 +30,6 @@ export const PATH_PAGE = {
   prodcutdetails: path(PATH_PAGE_ROOT, 'product/details'),
   invoicecreate: path(PATH_PAGE_ROOT, 'invoice/create'),
   addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),
+  ConfirmPassword: path(PATH_PAGE_ROOT, 'confirm/password'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };
