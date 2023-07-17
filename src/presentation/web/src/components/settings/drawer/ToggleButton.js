@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 // @mui
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import { Tooltip } from '@mui/material';
 // utils
 import cssStyles from '../../../utils/cssStyles';
@@ -13,6 +13,20 @@ import { IconButtonAnimate } from '../../animate';
 const RootStyle = styled('span')(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
   right: 0,
+  top: '50%',
+  position: 'fixed',
+  marginTop: theme.spacing(-3),
+  padding: theme.spacing(0.5),
+  zIndex: theme.zIndex.drawer + 2,
+  borderRadius: '24px 0 20px 24px',
+  boxShadow: `-12px 12px 32px -4px ${alpha(
+    theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.common.black,
+    0.36
+  )}`,
+}));
+const RootStyleRtl = styled('span')(({ theme }) => ({
+  ...cssStyles(theme).bgBlur({ opacity: 0.64 }),
+  left: 0,
   top: '50%',
   position: 'fixed',
   marginTop: theme.spacing(-3),
@@ -44,26 +58,52 @@ ToggleButton.propTypes = {
 };
 
 export default function ToggleButton({ notDefault, open, onToggle }) {
+  const theme = useTheme();
   return (
-    <RootStyle>
-      {notDefault && !open && <DotStyle />}
+    <>
+      {theme.direction === 'rtl' ? (
+        <RootStyleRtl>
+          {notDefault && !open && <DotStyle />}
 
-      <Tooltip title="Settings" placement="left">
-        <IconButtonAnimate
-          color="inherit"
-          onClick={onToggle}
-          sx={{
-            p: 1.25,
-            transition: (theme) => theme.transitions.create('all'),
-            '&:hover': {
-              color: 'primary.main',
-              bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
-            },
-          }}
-        >
-          <Iconify icon="eva:options-2-fill" width={20} height={20} />
-        </IconButtonAnimate>
-      </Tooltip>
-    </RootStyle>
+          <Tooltip title="Settings" placement="left">
+            <IconButtonAnimate
+              color="inherit"
+              onClick={onToggle}
+              sx={{
+                p: 1.25,
+                transition: (theme) => theme.transitions.create('all'),
+                '&:hover': {
+                  color: 'primary.main',
+                  bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+                },
+              }}
+            >
+              <Iconify icon="eva:options-2-fill" width={20} height={20} />
+            </IconButtonAnimate>
+          </Tooltip>
+        </RootStyleRtl>
+      ) : (
+        <RootStyle>
+          {notDefault && !open && <DotStyle />}
+
+          <Tooltip title="Settings" placement="left">
+            <IconButtonAnimate
+              color="inherit"
+              onClick={onToggle}
+              sx={{
+                p: 1.25,
+                transition: (theme) => theme.transitions.create('all'),
+                '&:hover': {
+                  color: 'primary.main',
+                  bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+                },
+              }}
+            >
+              <Iconify icon="eva:options-2-fill" width={20} height={20} />
+            </IconButtonAnimate>
+          </Tooltip>
+        </RootStyle>
+      )}
+    </>
   );
 }
