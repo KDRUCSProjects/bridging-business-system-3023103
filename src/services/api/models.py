@@ -89,8 +89,8 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, null=True )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name="images")
 
     def __str__(self):
         return self.image.name

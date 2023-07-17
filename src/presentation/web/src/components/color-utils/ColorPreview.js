@@ -26,7 +26,7 @@ export default function ColorPreview({ colors, sx }) {
   return (
     <RootStyle component="span" sx={sx}>
       {colors.map((color, index) => (
-        <IconStyle key={color + index} sx={{ bgcolor: color }} />
+        <IconStyle key={color + index} sx={{ bgcolor: color.name }} />
       ))}
     </RootStyle>
   );
