@@ -1,5 +1,11 @@
 // @mui
+import React from 'react';
+import { Button, Snackbar, Box } from '@mui/material';
+
 import { styled, useTheme } from '@mui/material/styles';
+
+import animation from '../animations/shared/circulerCycle.json';
+
 // components
 import Page from '../components/Page';
 
@@ -14,6 +20,7 @@ import useResponsive from '../hooks/useResponsive';
 import CustomSlider from '../components/CustomSlider';
 import Cart from '../components/Cart';
 import ImageSlider from '../components/ImageSlider';
+import Snack from '../components/SnackBar';
 
 // Card
 import ShopProductList from '../sections/shop/ShopProductList';
@@ -32,11 +39,10 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
-
- 
   const theme = useTheme();
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
+
   return (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
@@ -64,6 +70,7 @@ export default function HomePage() {
           />
         )}
         <Cart />
+        <Snack message={'hi adil'} animation={animation} />
         <ShopProductList />
       </ContentStyle>
     </Page>
