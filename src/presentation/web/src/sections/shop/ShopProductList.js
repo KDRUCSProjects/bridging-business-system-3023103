@@ -44,15 +44,6 @@ export default function ShopProductList() {
           }}
         >
           {isSuccess ?  data.results?.map((product) => (
-
-            // <Card
-            //   component={Link}
-            //   key={product.id}
-            //   to={`/product/details/${product.id}`} //   /${product.id}
-            //   style={{ textDecoration: 'none' }}
-            // >
-            //   <ShopProductCard key={product.id} product={product} />
-            // </Card>
             <Link to={`product/details/${product.id}/`} style={{ textDecoration: 'none' }}>
                   <ShopProductCard key={product.id} product={product} />
             </Link>

@@ -43,11 +43,13 @@ export default function HomePage() {
       image : item.image
     }
   ))  
-  
-  console.log(sliderData)
+ 
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
   return (
+    (isSuccess?
+    
+    
     <Page title="Ecommerce Start Here">
       <ContentStyle>
         {/* ImageSlider */}
@@ -58,6 +60,7 @@ export default function HomePage() {
           />
         )}
         {/* Category */}
+
         {isMatchMobile ? null : (
           <CustomSlider
             sliderData={sliderData}
@@ -76,6 +79,6 @@ export default function HomePage() {
         <Cart />
         <ShopProductList />
       </ContentStyle>
-    </Page>
+    </Page>:"Data Not Found")
   );
 }

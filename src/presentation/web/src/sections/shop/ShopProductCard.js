@@ -27,7 +27,7 @@ export default function ShopProductCard({ product }) {
           <Image alt={name} src={image.image}  ratio="1/1" />
       ))} */}
 
-      <Image alt={name} src={"https://cdn.shopify.com/s/files/1/2303/2711/files/2_e822dae0-14df-4cb8-b145-ea4dc0966b34.jpg?v=1617059123"}  ratio="1/1" />
+      <Image alt={name} src={images.image}  ratio="1/1" />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
