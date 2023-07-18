@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Slider from 'react-slick';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography , Link} from '@mui/material';
 
 // components
 import Image from './Image';
@@ -20,6 +20,12 @@ export default function TopProductSlider(props) {
     const { isSuccess,data , isError ,isLoading} = BaseApi.useGetAllProductsQuery('api/product/');
   const { settings, title } = props;
  
+  if(isError){
+    <h1>Error </h1>
+  }
+  else if(isLoading){
+    <h1>Loading</h1>
+  }
   const carouselRef = useRef(null);
 
   const theme = useTheme();
@@ -45,7 +51,7 @@ export default function TopProductSlider(props) {
             <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
               <Slider ref={carouselRef} {...settings}>
                 {data.results.map((item) => (
-                  <Box key={item.title + item.subTitle} component={m.div} variants={varFade().in}>
+                  <Box key={item.name + item.id} component={m.div} variants={varFade().in}>
                     <MemberCard member={item} />
                   </Box>
                 ))}
@@ -68,11 +74,10 @@ MemberCard.propTypes = {
 };
 
 function MemberCard({ member }) {
-  const { name, image } = member;
-  console.log(image)
+  const { name, images } = member;
   return (
-    <Box key={name + image} sx={{ px: 0.5, mx: 0.5 }}>
-      <Image alt={name + image} src={image} ratio="1/1" sx={{ borderRadius: 1 }} />
+    <Box key={name + images} sx={{ px: 0.5, mx: 0.5 }}>
+      <Image alt={name + images} src={images[0]?.image} ratio="1/1" sx={{ borderRadius: 1 }} />
       <Typography variant="subtitle1" sx={{ mt: 2, mb: 0.5, color: 'primary.dark', fontSize: '80%' }}>
         {name}
       </Typography>
