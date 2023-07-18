@@ -6,10 +6,20 @@
 // ----------------------------------------------------------------------
 import Home from './Home';
 import contactUS from "./ContactUs";
+import CardDetails from './CardDetails';
+import creatprofile from './creatprofile';
+import profilepage from './profilepage';
+import resetPassword from './resetPassword';
+import UserRegister from './UserRegister';
 
 const english = {
   ...contactUS,
   ...Home,
+  ...CardDetails,
+  ...creatprofile,
+  ...profilepage,
+  ...resetPassword,
+  ...UserRegister,
 };
 
 export default english;

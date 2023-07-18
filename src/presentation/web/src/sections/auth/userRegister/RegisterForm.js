@@ -13,8 +13,11 @@ import { useFormik } from 'formik';
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
+import useLocales from '../../hooks/useLocales';
+
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({
+ 
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
@@ -30,6 +33,7 @@ const RegisterSchema = yup.object().shape({
 
 export default function RegisterForm() {
 
+  const { translate } = useLocales();
   const [showPassword, setShowPassword] = useState(false);
 
 
@@ -62,7 +66,7 @@ export default function RegisterForm() {
           name="firstName" 
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder='First Name'
+          placeholder={translate('First Name')}
           error={formError.firstName && touched.firstName}
           helperText={formError.firstName}
           label="First name" />
@@ -71,7 +75,7 @@ export default function RegisterForm() {
           name="lastName" 
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder='last Name'
+          placeholder={translate('last Name')}
           error={formError.lastName && touched.lastName}
           helperText={formError.lastName}
           label="Last name" />
@@ -81,7 +85,7 @@ export default function RegisterForm() {
         value={values.email}
         onBlur={handleBlur}
         onChange={handleChange}
-        placeholder='Email Address'
+        placeholder={translate('Email Address')}
         error={formError.email && touched.email}
         helperText={formError.email}
         name="email"
@@ -91,7 +95,7 @@ export default function RegisterForm() {
         value={values.number}
         onBlur={handleBlur}
         onChange={handleChange}
-        placeholder='Phone Number'
+        placeholder={translate('Phone Number')}
         error={formError.number && touched.number}
         helperText={formError.number}
         name="number" 
@@ -101,7 +105,7 @@ export default function RegisterForm() {
           value={values.password}
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder='password'
+          placeholder={translate('password')}
           error={formError.password && touched.password}
           helperText={formError.password}
           name="password"
@@ -119,7 +123,7 @@ export default function RegisterForm() {
         />
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-          Register
+          {translate('Register')}
         </LoadingButton>
       </Stack>
     </FormProvider>

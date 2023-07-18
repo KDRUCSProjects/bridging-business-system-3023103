@@ -5,8 +5,8 @@ from knox import views as knox_views
 
 router = routers.DefaultRouter()
 
-router.register(r"product", PrdocutViewSet)
-router.register(r"product_image", ProductImageViewSet)
+router.register(r"product", PrdocutViewSet,basename="product")
+router.register(r"product_image", ProductImageViewSet,basename='product_image')
 router.register(r"order", OrderViewSet)
 # router.register(r"order_detial", OrderDetailViewSet)
 router.register(r"business_profile", BusinessProfileViewSet)
