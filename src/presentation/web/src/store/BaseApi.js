@@ -23,6 +23,10 @@ const BaseApi = createApi({
     // Product
     GetAllProducts: builder.query(allServices.queries.GetAllProducts),
     GetSpecificProduct: builder.query(allServices.queries.GetSpecificProduct),
+
+    // category
+    GetAllCategories: builder.query(allServices.queries.GetAllCategories),
+    GetSpecificCategory: builder.query(allServices.queries.GetSpecificCategory),
   }),
 });
 

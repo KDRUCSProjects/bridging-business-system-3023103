@@ -19,6 +19,7 @@ import ImageSlider from '../components/ImageSlider';
 import ShopProductList from '../sections/shop/ShopProductList';
 
 // store
+import BaseApi from '../store/BaseApi';
 
 // ----------------------------------------------------------------------
 
@@ -33,8 +34,17 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function HomePage() {
 
- 
+  const { isSuccess,data , isError ,isLoading} = BaseApi.useGetAllCategoriesQuery('api/category/');
   const theme = useTheme();
+  
+  const sliderData = data?.map((item)=>(
+    {
+      title : item.name ,
+      image : item.image
+    }
+  ))  
+  
+  console.log(sliderData)
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
   return (
@@ -50,7 +60,7 @@ export default function HomePage() {
         {/* Category */}
         {isMatchMobile ? null : (
           <CustomSlider
-            sliderData={categorySlider().categorySliderData}
+            sliderData={sliderData}
             settings={categorySlider().categorySliderConfig}
             title={translate('categories')}
           />
