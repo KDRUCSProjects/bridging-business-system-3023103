@@ -45,7 +45,7 @@ class RattingSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    product_ratting = RattingSerializer(many=True, read_only=True)
+    productRatting = RattingSerializer(many=True, read_only=True)
     ratting = serializers.SerializerMethodField(
         method_name="calculated_ratting", read_only=True
     )

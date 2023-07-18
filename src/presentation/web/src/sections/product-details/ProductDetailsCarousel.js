@@ -90,7 +90,6 @@ export default function ProductDetailsCarousel({ product }) {
   const handleNext = () => {
     slider2.current?.slickNext();
   };
-
   return (
     <RootStyle>
       <Box sx={{ p: 1 }}>
@@ -100,7 +99,7 @@ export default function ProductDetailsCarousel({ product }) {
               <Image
                 key={img}
                 alt="large image"
-                src={img}
+                src={img.image}
                 ratio="1/1"
                 onClick={() => handleOpenLightbox(img)}
                 sx={{ cursor: 'zoom-in' }}
@@ -150,7 +149,7 @@ export default function ProductDetailsCarousel({ product }) {
               <Image
                 disabledEffect
                 alt="thumb image"
-                src={img}
+                src={img.image}
                 sx={{
                   width: THUMB_SIZE,
                   height: THUMB_SIZE,
