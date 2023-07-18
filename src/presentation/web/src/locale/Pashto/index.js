@@ -13,16 +13,18 @@ import profilepage from "./profilepage";
 
 import creatprofile from "./creatprofile";
 import AddProduct from "./AddProduct";
+import UserRegister from "./UserRegister";
 
 
 
 
-  const pashto = {
+const pashto = {
     ...Home,
     ...CardDetails,
     ...contactUS, 
     ...resetPassword,
     ...creatprofile,
+    ...UserRegister,
     ...profilepage,
     ...AddProduct,
   
