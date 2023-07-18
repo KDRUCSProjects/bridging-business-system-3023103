@@ -28,7 +28,7 @@ export default function SettingMode() {
     <RadioGroup name="themeMode" value={themeMode} onChange={onChangeMode}>
       <Grid dir="ltr" container spacing={2.5}>
         {['light', 'dark'].map((mode, index) => {
-          const isSelected = themeMode === mode;
+          const isSelected = themeMode === 'light';
 
           return (
             <Grid key={mode} item xs={6}>
