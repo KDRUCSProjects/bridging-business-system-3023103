@@ -12,17 +12,18 @@ import CardDetails from './CardDetails';
 import profilepage from "./profilepage";
 
 import creatprofile from "./creatprofile";
+import UserRegister from "./UserRegister";
 
 
 
 
-  const pashto = {
+const pashto = {
     ...Home,
     ...CardDetails,
     ...contactUS, 
     ...resetPassword,
     ...creatprofile,
-
+    ...UserRegister,
     ...profilepage,
   
 };
