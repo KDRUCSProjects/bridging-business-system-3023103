@@ -19,15 +19,13 @@ ShopProductCard.propTypes = {
 export default function ShopProductCard({ product }) {
   const { name , price , color , images} = product;
 
+  console.log(images)
+
   return (
     <Card>
       <Box sx={{ position: 'relative' }}>
 
-        {/* {images?.map((image, index) => (
-          <Image alt={name} src={image.image}  ratio="1/1" />
-      ))} */}
-
-      <Image alt={name} src={images.image}  ratio="1/1" />
+      <Image alt={name} src={images[0]?.image}  ratio="1/1" />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
