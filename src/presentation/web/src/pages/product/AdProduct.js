@@ -8,7 +8,7 @@ import AdProductForm from './AdProductForm';
 import useSettings from '../../hooks/useSettings';
 
 // ----------------------------------------------------------------------
-
+console.log("")
 export default function AdProduct() {
   const { themeStretch } = useSettings();
 

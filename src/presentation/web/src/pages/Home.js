@@ -28,6 +28,7 @@ import Snack from '../components/Snack';
 import ShopProductList from '../sections/shop/ShopProductList';
 
 // store
+import BaseApi from '../store/BaseApi';
 
 // ----------------------------------------------------------------------
 
@@ -42,8 +43,16 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function HomePage() {
 
- 
+  const { isSuccess,data , isError ,isLoading} = BaseApi.useGetAllCategoriesQuery('api/category/');
   const theme = useTheme();
+  
+  const sliderData = data?.map((item)=>(
+    {
+      title : item.name ,
+      image : item.image
+    }
+  ))  
+ 
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
 
@@ -63,6 +72,9 @@ export default function HomePage() {
   };
 
   return (
+    (isSuccess?
+    
+    
     <Page title="Ecommerce Start Here">
       <ContentStyle>
         {/* ImageSlider */}
@@ -73,9 +85,10 @@ export default function HomePage() {
           />
         )}
         {/* Category */}
+
         {isMatchMobile ? null : (
           <CustomSlider
-            sliderData={categorySlider().categorySliderData}
+            sliderData={sliderData}
             settings={categorySlider().categorySliderConfig}
             title={translate('categories')}
           />
@@ -103,6 +116,6 @@ export default function HomePage() {
         />
         <ShopProductList />
       </ContentStyle>
-    </Page>
+    </Page>:"Data Not Found")
   );
 }
