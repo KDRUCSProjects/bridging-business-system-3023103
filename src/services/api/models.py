@@ -128,7 +128,7 @@ class Ratting(models.Model):
         User, on_delete=models.CASCADE, related_name="ratting_bussiness"
     )
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="product_ratting"
+        Product, on_delete=models.CASCADE, related_name="productRatting"
     )
     ratting_stars = models.IntegerField(default=0)
 
