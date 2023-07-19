@@ -6,10 +6,11 @@
 // ----------------------------------------------------------------------
 import Home from './Home';
 import contactUS from "./ContactUs";
-import resetPassword from './resetPassword';
-import profilepage from './profilepage';
-import creatprofile from './creatprofile';
 import CardDetails from './CardDetails';
+import creatprofile from './creatprofile';
+import profilepage from './profilepage';
+import resetPassword from './resetPassword';
+import UserRegister from './UserRegister';
 
 const english = {
   ...CardDetails,
@@ -18,6 +19,11 @@ const english = {
   ...resetPassword,
   ...contactUS,
   ...Home,
+  ...CardDetails,
+  ...creatprofile,
+  ...profilepage,
+  ...resetPassword,
+  ...UserRegister,
 };
 
 export default english;

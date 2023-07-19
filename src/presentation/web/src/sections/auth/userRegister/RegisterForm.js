@@ -1,20 +1,19 @@
 import { useState } from 'react';
-// form
-import { useForm } from 'react-hook-form';
-// import { yepResolver } from '@hookform/resolvers/yep';
 // @mui
 import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // Formik & yep
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField } from '../../../components/hook-form';
+import { FormProvider } from '../../../components/hook-form';
+
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({
+ 
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
@@ -30,6 +29,7 @@ const RegisterSchema = yup.object().shape({
 
 export default function RegisterForm() {
 
+  const { translate } = useLocales();
   const [showPassword, setShowPassword] = useState(false);
 
 
@@ -62,50 +62,50 @@ export default function RegisterForm() {
           name="firstName" 
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder='First Name'
+          placeholder={translate('First Name')}
           error={formError.firstName && touched.firstName}
           helperText={formError.firstName}
-          label="First name" />
+          label={translate("First Name")} />
           <TextField 
           value={values.lastName}
           name="lastName" 
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder='last Name'
+          placeholder={translate('last Name')}
           error={formError.lastName && touched.lastName}
           helperText={formError.lastName}
-          label="Last name" />
+          label={translate("last Name")} />
         </Stack>
 
         <TextField 
         value={values.email}
         onBlur={handleBlur}
         onChange={handleChange}
-        placeholder='Email Address'
+        placeholder={translate('Email Address')}
         error={formError.email && touched.email}
         helperText={formError.email}
         name="email"
-        label="Email address" />
+        label={translate("Email Address")} />
 
         <TextField 
         value={values.number}
         onBlur={handleBlur}
         onChange={handleChange}
-        placeholder='Phone Number'
+        placeholder={translate('Phone Number')}
         error={formError.number && touched.number}
         helperText={formError.number}
         name="number" 
-        label="Phone number" />
+        label={translate("Phone Number")} />
 
         <TextField
           value={values.password}
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder='password'
+          placeholder={translate('password')}
           error={formError.password && touched.password}
           helperText={formError.password}
           name="password"
-          label="Password"
+          label={translate("password")}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -119,7 +119,7 @@ export default function RegisterForm() {
         />
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-          Register
+          {translate('Register')}
         </LoadingButton>
       </Stack>
     </FormProvider>

@@ -71,7 +71,7 @@ export default function Register() {
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Already have an account? {''}
+              {translate('Already have an account?')} {''}
               <Link variant="subtitle2" component={RouterLink} to={'/user/login'}>
                 {translate('login')}
               </Link>
@@ -90,30 +90,30 @@ export default function Register() {
             <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h4" gutterBottom>
-                  Get started absolutely free.
+                  {translate('Get started absolutely free.')}
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>Free forever. No credit card needed.</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>{translate('Free forever. No credit card needed.')}</Typography>
               </Box>
             </Box>
             <UserRegisterForm />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By registering, I agree to Afghan Business&nbsp;
+              {translate('By registering, I agree to Afghan Business')}&nbsp;
               <Link underline="always" color="primary" href="#">
-                Terms of Service
+                {translate('Terms of Service')}
               </Link>
-              {''}and{''}
+              {''}{translate('and')}{''}
               <Link underline="always" color="primary.main" href="#">
-                Privacy Policy
+                {translate('Privacy Policy')}
               </Link>
               .
             </Typography>
 
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
-                Already have an account?{' '}
+                {translate('Already have an account?')}{' '}
                 <Link variant="subtitle2" component={RouterLink} to={'login'}>
-                  Login
+                  {translate('Login')}
                 </Link>
               </Typography>
             )}
