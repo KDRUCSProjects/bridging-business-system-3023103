@@ -1,81 +1,31 @@
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import Pagination from '@mui/material/Pagination';
+import { useState } from 'react';
 // @mui
 import { Link } from 'react-router-dom';
-import { Box, Container } from '@mui/material';
+import { Box, Container , Card} from '@mui/material';
 // components
-import { SkeletonProductItem } from '../../components/skeleton';
 
 //
 import ShopProductCard from './ShopProductCard';
 import Page from '../../components/Page';
+import BaseApi from '../../store/BaseApi';
 
-
-const products = [
-  {
-    id: 1,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 2,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 3,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 4,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 5,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 6,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-  {
-    id: 7,
-    name: 'product1',
-    cover: 'yellow',
-    price: '200$',
-    colors: ['white', 'green', 'red', 'yellow'],
-    status: 'sold',
-    priceSale: '400$',
-  },
-];
 export default function ShopProductList() {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const { isSuccess,data , isError ,isLoading ,totalPages} = BaseApi.useGetSpecificProductQuery(`api/product/?page=${currentPage}`);
+    const divStyle = { position: 'relative', left: '45%' , top:"7px" };
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
+    if(isError){
+     <h1>Error</h1>
+    }
+    else if(isLoading){
+      <h1>loading...</h1>
+    }
+
   return (
     <Page title="Ecommerce: Shop">
       <Container>
@@ -91,16 +41,18 @@ export default function ShopProductList() {
             },
           }}
         >
-          {products.map((product, index) => (
-            <Link
-            to={`/product/details`}    //   /${product.id}
-            style={{ textDecoration: 'none' }}
-        >
-          <ShopProductCard key={product.id} product={product} />
-        </Link>
-          ))}
+          {isSuccess ?  data.results?.map((product) => (
+            <Link to={`product/details/${product.id}/`} style={{ textDecoration: 'none' }}>
+                  <ShopProductCard key={product.id} product={product} />
+            </Link>
+          )): 'NO data'}
         </Box>
+        {/* pagination in frontend */}
+        <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >
+          <Pagination count={totalPages} color='primary' onChange={handlePageChange}/>
+        </div>
       </Container>
     </Page>
+    
   );
 }

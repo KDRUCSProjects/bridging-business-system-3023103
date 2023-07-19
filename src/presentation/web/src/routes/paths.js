@@ -19,6 +19,7 @@ export const PATH_AUTH = {
   checkOut: path(ROOTS_AUTH, '/checkout'),
 };
 
+
 // Root Pages
 export const PATH_PAGE = {
   about: path(PATH_PAGE_ROOT, 'about-us'),
@@ -27,7 +28,9 @@ export const PATH_PAGE = {
   createProfile: path(PATH_PAGE_ROOT, 'create/profile'),
   updateProfile: path(PATH_PAGE_ROOT, 'update/profile'),
   payment: path(PATH_PAGE_ROOT, 'payment'),
-  prodcutdetails: path(PATH_PAGE_ROOT, 'product/details'),
+  prodcutdetails: path(PATH_PAGE_ROOT, `product/details/:id/`),
   invoicecreate: path(PATH_PAGE_ROOT, 'invoice/create'),
+  addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),
+  ConfirmPassword: path(PATH_PAGE_ROOT, 'confirm/password'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };

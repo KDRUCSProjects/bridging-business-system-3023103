@@ -49,7 +49,6 @@ export default function LoginForm() {
 
   const FormiFunction = async (e) => {
     e.preventDefault();
-    console.log('This is the Function of the OnSubmit');
   };
   return (
     <form onSubmit={FormiFunction}>

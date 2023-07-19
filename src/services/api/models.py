@@ -4,6 +4,26 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import uuid
+
+
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    is_verified = models.BooleanField(default=False)
+    otp = models.CharField(max_length=6, null=True, blank=True)
+    is_password_changable = models.BooleanField(default=False)
+
+    def name(self):
+        return self.first_name + " " + self.last_name
+
+    def __str__(self):
+        return self.username
+
 
 class BusinessOwner(models.Model):
     name = models.CharField(max_length=60)
@@ -27,6 +47,7 @@ class Address(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
+    image = models.ImageField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -37,7 +58,7 @@ class BusinessProfile(models.Model):
     business_owner = models.OneToOneField(BusinessOwner, on_delete=models.CASCADE)
     detial = models.TextField(blank=True, null=True)
     phone = PhoneNumberField()
-    avator = models.ImageField( blank=True, null=True)
+    avator = models.ImageField(blank=True, null=True)
     business_type = models.CharField(max_length=60)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
 
@@ -68,8 +89,8 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, null=True )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name="images")
 
     def __str__(self):
         return self.image.name
@@ -103,8 +124,12 @@ class ContactUs(models.Model):
 
 
 class Ratting(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="ratting_bussiness"
+    )
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="productRatting"
+    )
     ratting_stars = models.IntegerField(default=0)
 
 

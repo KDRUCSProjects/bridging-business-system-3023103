@@ -10,7 +10,7 @@ import {
   applyDiscount,
   increaseQuantity,
   decreaseQuantity,
-} from '../../store/checkout/checkout';
+} from '../../store/slices/checkout/checkout';
 
 // components
 import Iconify from '../../components/Iconify';
@@ -22,7 +22,7 @@ import CheckoutProductList from './CheckoutProductList';
 
 // ----------------------------------------------------------------------
 
-export default function CheckoutCart() {
+export default function CheckoutCart(activeStep) {
   const dispatch = useDispatch();
 
   const { checkout } = useSelector((store) => store.checkout);
@@ -79,11 +79,7 @@ export default function CheckoutCart() {
               />
             </Scrollbar>
           ) : (
-            <EmptyContent
-              title="Cart is empty"
-              description="Look like you have no items in your shopping cart."
-              img="/assets/illustrations/illustration_empty_cart.svg"
-            />
+            <EmptyContent title="Cart is empty" description="Look like you have no items in your shopping cart." />
           )}
         </Card>
 
@@ -110,7 +106,7 @@ export default function CheckoutCart() {
           size="large"
           type="submit"
           variant="contained"
-          disabled={cart.length === 0}
+          disabled={cart.length === 1}
           onClick={handleNextStep}
         >
           Check Out

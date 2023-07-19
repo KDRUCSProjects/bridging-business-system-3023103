@@ -17,6 +17,7 @@ from .models import (
     ContactUs,
     Payment,
 )
+from .email import send_otp_via_email
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -37,21 +38,50 @@ class ProductColorSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class RattingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ratting
+        fields = "__all__"
+
+
 class ProductSerializer(serializers.ModelSerializer):
-    # images = ProductImageSerializer(many=True)
-    # color = ProductColorSerializer(many=True, read_only=True)
+    productRatting = RattingSerializer(many=True, read_only=True)
+    ratting = serializers.SerializerMethodField(
+        method_name="calculated_ratting", read_only=True
+    )
+    color=ProductColorSerializer(many=True,read_only=True)
+    images = ProductImageSerializer(many=True, read_only=True)
+    # uploaded_images = serializers.ListField(
+    #     child=serializers.ImageField(
+    #         max_length=1000000, allow_empty_file=False, use_url=False
+    #     ),
+    #     write_only=True,
+    # )
 
     class Meta:
         model = Product
         fields = "__all__"
 
     # def create(self, validated_data):
-    #     images = validated_data.pop("images")
+    #     prodcut_image_data = validated_data.pop("uploaded_images")
     #     product = Product.objects.create(**validated_data)
-    #     for image in images:
-    #         ProductImage.objects.create(product=product, **image)
-
+    #     for product_image in prodcut_image_data:
+    #         ProductImage.objects.create(product=product, image=product_image)
     #     return product
+
+    # for ratting calculations
+    def calculated_ratting(self, instance):
+        rattings = Ratting.objects.filter(product=instance.id)
+        total_stars = 0
+        total_user = 0
+        try:
+            for ratting in rattings:
+                total_stars = total_stars + ratting.ratting_stars
+                total_user += 1
+
+            return total_stars / total_user
+        except:
+            return 0
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -116,12 +146,6 @@ class CategorySeralizer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class RattingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ratting
-        fields = "__all__"
-
-
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
@@ -158,7 +182,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         username = validated_data.get("username")
-        password = validated_data.get("passsword")
+        password = validated_data.get("password")
         first_name = validated_data.get("first_name")
         last_name = validated_data.get("last_name")
         email = validated_data.get("email")
@@ -171,6 +195,101 @@ class UserSerializer(serializers.ModelSerializer):
             email=email,
         )
         return user
+
+
+class UserVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
+    # class Meta: needed
+
+
+class ForgetPasswordEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    class Meta:
+        fields = ["email"]
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        if get_user_model().objects.filter(email=email).exists():
+            send_otp_via_email(email, "verification code for reset password")
+            return attrs
+        else:
+            raise serializers.ValidationError("you are not register")
+
+
+class ForgetPasswordVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
+
+    class Meta:
+        fields = ["emial", "otp"]
+
+    def validate(self, attrs):
+        otp = attrs.get("otp")
+        email = attrs.get("email")
+        user = get_user_model().objects.get(email=email)
+        if user:
+            if user.otp == otp:
+                user.is_password_changable = True
+                user.save()
+                return attrs
+            else:
+                serializers.ValidationError("your otp is wrong")
+        else:
+            serializers.ValidationError("your not register")
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
+    password = serializers.CharField(style={"input_type": "password"})
+
+    def validate(self, attrs):
+        otp = attrs.get("otp")
+        email = attrs.get("email")
+        password = attrs.get("password")
+        user = get_user_model().objects.get(email=email)
+        if user:
+            if user.otp == otp:
+                if user.is_password_changable:
+                    user.set_password(password)
+                    user.is_password_changable = False
+                    user.otp = ""
+                    user.save()
+                    return attrs
+                else:
+                    serializers.ValidationError("changing password isn't verified")
+            else:
+                serializers.ValidationError("your otp is wrong")
+        else:
+            serializers.ValidationError("your not register")
+
+
+class PasswordResetSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    old_password = serializers.CharField(style={"input_type": "password"})
+    password1 = serializers.CharField(style={"input_type": "password"})
+    password2 = serializers.CharField(style={"input_type": "password"})
+
+    class Meta:
+        fields = ["old_password", "password1", "password2"]
+
+    def validate(self, attrs):
+        user_id = attrs.get("user_id")
+        old_password = attrs.get("old_password")
+        password1 = attrs.get("password1")
+        password2 = attrs.get("password2")
+        user = get_user_model().objects.get(pk=user_id)
+        if user.check_password(old_password):
+            if password1 == password2:
+                user.set_password(password1)
+                user.save()
+                return attrs
+            else:
+                serializers.ValidationError("your otp is wrong")
+        else:
+            serializers.ValidationError("your not register")
 
 
 class BusinessFavoriteProductSerializer(serializers.ModelSerializer):

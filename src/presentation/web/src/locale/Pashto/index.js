@@ -12,6 +12,7 @@ import CardDetails from './CardDetails';
 import profilepage from "./profilepage";
 
 import creatprofile from "./creatprofile";
+import AddProduct from "./AddProduct";
 import UserRegister from "./UserRegister";
 
 
@@ -25,6 +26,7 @@ const pashto = {
     ...creatprofile,
     ...UserRegister,
     ...profilepage,
+    ...AddProduct,
   
 };
 

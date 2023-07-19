@@ -23,12 +23,10 @@ const IconStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ColorPreview({ colors, sx }) {
-  console.log('array of colors', colors);
   return (
     <RootStyle component="span" sx={sx}>
-  
       {colors.map((color, index) => (
-        <IconStyle key={color + index} sx={{ bgcolor: color }} />
+        <IconStyle key={color + index} sx={{ bgcolor: color.name }} />
       ))}
     </RootStyle>
   );

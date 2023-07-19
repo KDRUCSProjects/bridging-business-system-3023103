@@ -1,16 +1,17 @@
-const CardDetails = {
-    'Product Details': `توضیحات`,
-    Home: `صفحه اصلی `,
-    AVAILABLE: `قابل دسترس `,
-    Color: `رنگ  `,
-    'reviews':' بیننده ها ',
-    Size: ' اندازه   ',
-    'Size Chart':' چارت اندازه ',
 
-    Quantity:'تعداد ',
-    Available:'قابل دسترس ',
-    'Add to Cart':'به کارت اضافه کنید',
-    ' View Profile': 'پروفایل را ببینید',
+
+
+const CardDetails = {
+    'product details': `توضیحات`,
+    color: `رنگ  `,
+    'reviews':' بیننده ها',
+    size: ' اندازه   ',
+    'size chart':'چارت اندازه',
+
+    quantity:'تعداد ',
+    available:'قابل دسترس ',
+    'add to cart' : `به کارت اضافه کنید` ,
+    'view profile': 'پروفایل را ببینید',
     discription:'توضیحات',
   };
   

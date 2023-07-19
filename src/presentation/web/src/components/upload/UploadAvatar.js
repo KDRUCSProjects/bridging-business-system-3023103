@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import Image from '../Image';
 import Iconify from '../Iconify';
 import RejectionFiles from './RejectionFiles';
-import uselocale from 
+// import uselocale from 
 
 // ----------------------------------------------------------------------
 

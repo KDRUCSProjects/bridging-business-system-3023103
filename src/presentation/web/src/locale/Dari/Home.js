@@ -1,8 +1,8 @@
 
 
 const Home = {
-    Home: `صفحه اصلی`,
-    Pages: `صفحات`,
+    home: `صفحه اصلی`,
+    pages: `صفحات`,
     register: `ثبت کردن`,
     login: `داخل شدن `,
     

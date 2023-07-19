@@ -1,8 +1,8 @@
 
 
 const Home = {
-    Home: `کور پاڼه `,
-    Pages: `صفحې `,
+    home: `کور پاڼه `,
+    pages: `صفحې `,
     register: `ثبت کول `,
     login: `دا خلیدل  `,
     

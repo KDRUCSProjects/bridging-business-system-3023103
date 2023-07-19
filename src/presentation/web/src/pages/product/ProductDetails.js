@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Lottie from 'react-lottie';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Tab, Card, Grid, Divider, Container, Typography } from '@mui/material';
@@ -7,21 +6,18 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 
 
+import { useParams } from 'react-router';
 import useLocales from '../../hooks/useLocales';
 
 // components
 import Page from '../../components/Page';
 
-import animationSetter from '../../animations/animationSetter';
-import userprofile from '../../animations/profile/user-profile.json';
-
-import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // // sections
 import {
   ProductDetailsSummary,
   ProductDetailsCarousel,
 } from '../../sections/product-details';
-
+import BaseApi from '../../store/BaseApi';
 // // ----------------------------------------------------------------------
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -40,9 +36,12 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ProductDetails() {
+  
+  const { id } = useParams();
+  const { isSuccess,data , isError ,isLoading } = BaseApi.useGetSpecificProductQuery(`api/product/${id}`);
 
  const {translate} =useLocales();
- 
+ console.log(data)
   const product = {  
       id : "1",
      available : 1,
@@ -76,19 +75,20 @@ export default function ProductDetails() {
   const [value, setValue] = useState('1');
 
   return (
+    (isSuccess?
     <Page title="Product Details">
       <Container sx={{marginTop:"6em"}}>
-       <Typography variant={'h3'} gutterBottom > {translate('Product Details')} </Typography>
+       <Typography variant={'h3'} gutterBottom > {translate('product details')} </Typography>
         {product && (
           <>
             <Card>
               <Grid container sx={{marginBottom:"3em"}}>
                 <Grid item xs={12} md={6} lg={7}>
-                  <ProductDetailsCarousel product={product} />
+                  <ProductDetailsCarousel product={data} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={5}>
                   <ProductDetailsSummary
-                    product={product}
+                    product={data}
                     cart={cart}
                   />
                 </Grid>
@@ -105,7 +105,7 @@ export default function ProductDetails() {
                   <Divider />
                   <TabPanel value="1">
                     <Box sx={{ p: 3 }}>
-                      <Typography>{product.description}</Typography>
+                      <Typography>{data.description}</Typography>
                     </Box>
                   </TabPanel>
                 </TabContext>
@@ -114,6 +114,6 @@ export default function ProductDetails() {
           </>
         )}
       </Container>
-    </Page>
+    </Page>:"No Data Found")
   );
 }

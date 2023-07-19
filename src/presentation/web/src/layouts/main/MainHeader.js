@@ -1,10 +1,12 @@
 import { useLocation, Link as routerLink } from 'react-router-dom';
 import { useState } from 'react';
+
 // @mui
 import { styled, useTheme, alpha } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container, Link } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Container, Autocomplete, TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
+
+import products from '../../@fake-db/products.json';
 // hooks
 
 import useLocales from '../../hooks/useLocales';
@@ -36,6 +38,7 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
+
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
@@ -44,25 +47,61 @@ const Search = styled('div')(({ theme }) => ({
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  marginRight: '1em',
+  marginTop: '-2em',
   height: '100%',
-  position: 'absolute',
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-evenly',
+}));
+const SearchIconWrapperMobile = styled('div')(({ theme }) => ({
+  // marginLeft: '-180px',
+  marginTop: '2em',
+  marginBottom: '3em',
+  height: '20px',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-evenly',
 }));
 
-const StyledSearch = styled(InputBase)(({ theme }) => ({
+const StyledAutoComplete = styled(Autocomplete)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
     },
+  },
+}));
+const StyledAutoCompleteMobile = styled(Autocomplete)(({ theme }) => ({
+  color: 'inherit',
+  padding: 0,
+  '& .MuiInputBase-input': {
+    padding: 0,
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '80%',
+    height: '30px',
+  },
+}));
+const StyledAutoCompleteRtl = styled(Autocomplete)(({ theme }) => ({
+  color: 'inherit',
+  marginTop: '-1em',
+  marginRight: '10em',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '60%',
+  },
+  [theme.breakpoints.down('md')]: {
+    marginRight: '3em',
   },
 }));
 
@@ -93,87 +132,246 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainHeader(props) {
-  const {translate} = useLocales();
+  const { translate } = useLocales();
 
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
   const theme = useTheme();
+  const isRTL = theme.direction === 'rtl';
 
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'md');
+  const isMobile = useResponsive('down', 'sm');
+  const isMobileUp = useResponsive('up', 'sm');
 
   const isHome = pathname === '/';
   // ------------------ Searching  --------------------------------
   const [search, setSearch] = useState('');
-
-  const handleSearch = (e) => {
-    setSearch({
-      ...search,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSearchForm = (e) => {
     e.preventDefault();
   };
 
+  const handleSelectedOption = (event, value) => {
+    setSearch(value);
+  };
+  console.log(search);
   return (
-    <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
-      <ToolbarStyle
-        disableGutters
-        sx={{
-          ...(isOffset && {
-            ...cssStyles(theme).bgBlur(),
-            height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
-          }),
-        }}
-      >
-        <Container
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Logo />
-          <Box sx={{ flexGrow: 1 }} />
-
-          {/* Searching input field */}
-          <form action="#" onSubmit={handleSearchForm}>
-            <Search sx={{ background: 'lightGrey' }}>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledSearch
-                placeholder={translate('Search')}
-                inputProps={{ 'aria-label': 'search' }}
-                name="searchField"
-                onChange={handleSearch}
-              />
-            </Search>
-          </form>
-
-          {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-          <LanguagePopover />
-          <Button
-            variant="contained"
-            component={routerLink}
-            to={PATH_AUTH.login}
-            sx={{ marginRight: isDesktop ? '1.5em' : '.5em' }}
+    <>
+      {theme.direction === 'rtl' ? (
+        <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
+          <ToolbarStyle
+            disableGutters
+            sx={{
+              ...(isOffset && {
+                ...cssStyles(theme).bgBlur(),
+                height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
+              }),
+            }}
           >
-            {translate('login')}
-          </Button>
-          <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
-          {translate('register')}
-          
-          </Button>
+            <Container
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              {isMobile && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
-          {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-        </Container>
-      </ToolbarStyle>
+              {isMobile ? (
+                <StyledAutoCompleteMobile
+                  limitTags={11}
+                  initial
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  options={products.map((option, i) => {
+                    return option.name;
+                  })}
+                  renderOption={(props, option, index) => {
+                    const key = `listItem-${props.id}-${props.key}`;
+                    return (
+                      <li {...props} key={key}>
+                        {option}
+                      </li>
+                    );
+                  }}
+                  onChange={handleSelectedOption}
+                  renderInput={(params) => (
+                    <SearchIconWrapperMobile>
+                      <TextField
+                        variant="standard"
+                        hiddenLabel
+                        size="small"
+                        placeholder="search..."
+                        sx={{ width: (theme) => (isMobile ? '10rem' : '20rem'), padding: 0, fontSize: '.5em' }}
+                        {...params}
+                        InputProps={{
+                          ...params.InputProps,
+                          type: 'search',
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </SearchIconWrapperMobile>
+                  )}
+                />
+              ) : (
+                <>
+                  {' '}
+                  <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
+                    {translate('register')}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    component={routerLink}
+                    to={PATH_AUTH.login}
+                    sx={{ marginRight: isDesktop ? '-3.5em' : '1.5em', marginLeft: isDesktop ? '-3.5em' : '1.5em' }}
+                  >
+                    {translate('login')}
+                  </Button>
+                  <LanguagePopover />
+                </>
+              )}
 
-      {isOffset && <ToolbarShadowStyle />}
-    </AppBar>
+              {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+              {/* <Box sx={{ flexGrow: 1 }} /> */}
+              {/* Searching input field */}
+              {isMobileUp ? (
+                <StyledAutoCompleteRtl
+                  limitTags={11}
+                  initial
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  options={products.map((option, i) => {
+                    return option.name;
+                  })}
+                  renderOption={(props, option, index) => {
+                    const key = `listItem-${props.id}-${props.key}`;
+                    return (
+                      <li {...props} key={key}>
+                        {option}
+                      </li>
+                    );
+                  }}
+                  onChange={handleSelectedOption}
+                  renderInput={(params) => (
+                    <SearchIconWrapper>
+                      <TextField
+                        variant="standard"
+                        hiddenLabel
+                        size="small"
+                        placeholder="search..."
+                        sx={{ width: (theme) => (isMobile ? '10rem' : '12rem'), padding: 0, fontSize: '.5em' }}
+                        {...params}
+                        InputProps={{
+                          ...params.InputProps,
+                          type: 'search',
+                          startAdornment: (
+                            <InputAdornment position="end">
+                              <SearchIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </SearchIconWrapper>
+                  )}
+                />
+              ) : null}
+
+              <Logo sx={{ marginTop: !isDesktop ? '1em' : undefined }} />
+            </Container>
+          </ToolbarStyle>
+          {isOffset && <ToolbarShadowStyle />}
+        </AppBar>
+      ) : (
+        <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
+          <ToolbarStyle
+            disableGutters
+            sx={{
+              ...(isOffset && {
+                ...cssStyles(theme).bgBlur(),
+                height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
+              }),
+            }}
+          >
+            <Container
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Logo />
+              <Box sx={{ flexGrow: 1 }} />
+              {/* Searching input field */}
+              <form action="#" onSubmit={handleSearchForm}>
+                <StyledAutoComplete
+                  limitTags={11}
+                  initial
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  options={products.map((option, i) => {
+                    return option.name;
+                  })}
+                  renderOption={(props, option, index) => {
+                    const key = `listItem-${props.id}-${props.key}`;
+                    return (
+                      <li {...props} key={key}>
+                        {option}
+                      </li>
+                    );
+                  }}
+                  onChange={handleSelectedOption}
+                  renderInput={(params) => (
+                    <>
+                      <SearchIconWrapper>
+                        <TextField
+                          hiddenLabel
+                          variant="standard"
+                          size="small"
+                          placeholder="search..."
+                          sx={{ width: (theme) => (theme.breakpoints.down('md') ? '15rem' : '20rem') }}
+                          {...params}
+                          InputProps={{
+                            ...params.InputProps,
+                            type: 'search',
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <SearchIcon edge="end" />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </SearchIconWrapper>
+                    </>
+                  )}
+                />
+              </form>
+              {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+              <LanguagePopover />
+              <Button
+                variant="contained"
+                component={routerLink}
+                to={PATH_AUTH.login}
+                sx={{ marginRight: isDesktop ? '1.5em' : '.5em' }}
+              >
+                {translate('login')}
+              </Button>
+              <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
+                {translate('register')}
+              </Button>
+              {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+            </Container>
+          </ToolbarStyle>
+          {isOffset && <ToolbarShadowStyle />}
+        </AppBar>
+      )}
+    </>
   );
 }

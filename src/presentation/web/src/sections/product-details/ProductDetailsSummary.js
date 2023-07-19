@@ -41,10 +41,10 @@ ProductDetailsSummary.propTypes = {
     inventoryType: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.number,
-    sizes: PropTypes.arrayOf(PropTypes.string),
+    // sizes: PropTypes.arrayOf(PropTypes.string),
     status: PropTypes.string,
     totalRating: PropTypes.number,
-    totalReview: PropTypes.number,
+    // totalReview: PropTypes.number,
   }),
 };
 
@@ -54,21 +54,19 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
   const navigate = useNavigate();
 
-  const { id, name, sizes, price, cover, status, colors, available, totalRating, totalReview, inventoryType } = product;
+  const { id,color, name , quantity , price ,productRatting , ratting } = product;
 
   const alreadyProduct = cart.map((item) => item.id).includes(id);
 
-  const isMaxQuantity = cart.filter((item) => item.id === id).map((item) => item.quantity)[0] >= available;
-
+  const sizes = [
+    43, 44 , 45 , 56 , 47
+  ]
   const defaultValues = {
     id,
     name,
-    cover,
-    available,
     price,
-    color: colors[0],
+    color: color[0],
     size: sizes[4],
-    quantity: available < 1 ? 0 : 1,
   };
 
   const methods = useForm({
@@ -92,6 +90,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       console.error(error);
     }
   };
+ 
 
   const handleAddCart = async () => {
     try {
@@ -109,10 +108,10 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={inventoryType === 'in_stock' ? 'success' : 'error'}
+          // color={color}
           sx={{ textTransform: 'uppercase' }}
         >
-          {sentenceCase(inventoryType || '')}
+          {/* {sentenceCase(inventoryType || '')} */}
         </Label>
 
         <Typography
@@ -121,10 +120,10 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             mt: 2,
             mb: 1,
             display: 'block',
-            color: status === 'sale' ? 'error.main' : 'info.main',
+            // color: status === 'sale' ? 'error.main' : 'info.main',
           }}
         >
-          {status}
+          {/* {status} */}
         </Typography>
 
         <Typography variant="h5" paragraph>
@@ -132,9 +131,9 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         </Typography>
 
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-          <Rating value={totalRating} precision={0.1} readOnly />
+          <Rating value={productRatting} precision={0.1} readOnly />
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            ({fShortenNumber(totalReview)}
+            ({fShortenNumber(productRatting)}
             {translate('reviews')} )
           </Typography>
         </Stack>
@@ -147,7 +146,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('Color')}
+           {translate('color')}
           
           </Typography>
 
@@ -156,11 +155,11 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             control={control}
             render={({ field }) => (
               <ColorSinglePicker
-                colors={colors}
+                colors={color}
                 value={field.value}
                 onChange={field.onChange}
                 sx={{
-                  ...(colors.length > 4 && {
+                  ...(color.length > 4 && {
                     maxWidth: 144,
                     justifyContent: 'flex-end',
                   }),
@@ -172,7 +171,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('Size')} 
+           {translate('size')} 
           </Typography>
 
           <RHFSelect
@@ -184,7 +183,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             }}
             helperText={
               <Link underline="always" color="text.secondary">
-               {translate('Size Chart')} 
+               {translate('size chart')} 
               </Link>
             }
           >
@@ -198,19 +197,13 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-            {translate('Quantity')}
+            {translate('quantity')}
           </Typography>
 
           <div>
-            <Incrementer
-              name="quantity"
-              quantity={values.quantity}
-              available={available}
-              onIncrementQuantity={() => setValue('quantity', values.quantity + 1)}
-              onDecrementQuantity={() => setValue('quantity', values.quantity - 1)}
-            />
+            <Typography>{product.quantity}</Typography>
             <Typography variant="caption" component="div" sx={{ mt: 1, textAlign: 'right', color: 'text.secondary' }}>
-              {translate('Available')} 
+              {translate('available')} 
             </Typography>
           </div>
         </Stack>
@@ -220,7 +213,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         <Stack direction="row" spacing={2} sx={{ mt: 5 }}>
           <Button
             fullWidth
-            disabled={isMaxQuantity}
+            // disabled={isMaxQuantity}
             size="large"
             color="warning"
             variant="contained"
@@ -229,11 +222,11 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             sx={{ whiteSpace: 'nowrap' }}
           >
   
-         {translate('Add to Cart')} 
+         {translate('add to cart')} 
           </Button>
 
           <Button fullWidth size="large" type="submit" startIcon={<Person2Icon />} variant="contained">
-           {translate(' View Profile')} 
+           {translate('view profile')} 
           </Button>
         </Stack>
       </FormProvider>

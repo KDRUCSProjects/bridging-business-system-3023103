@@ -20,9 +20,15 @@ router.register(r"ratting", RattingViewSet)
 router.register(r"payment", PaymentViewSet)
 router.register(r"contact_us", ContectUsViewSet)
 router.register(r"users", UserViewSet)
+# router.register(r"forget-password-email", ForgetPasswordEmailView)
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("verify/", userVerificationAPIView.as_view()),
+    path("forget/password/email/", ForgetPasswordEmailView.as_view()),
+    path("forget/password/opt/verify/", ForgetPasswordVerificationView.as_view()),
+    path("change/password/", ChangePasswordView.as_view()),
+    path("rest/password/", PasswordResetView.as_view()),
     # path("login/", knox_views.LoginView.as_view(), name="login"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", knox_views.LogoutView.as_view(), name="logout"),
