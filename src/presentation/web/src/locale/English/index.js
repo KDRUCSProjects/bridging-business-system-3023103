@@ -10,6 +10,7 @@ import resetPassword from './resetPassword';
 import profilepage from './profilepage';
 import creatprofile from './creatprofile';
 import CardDetails from './CardDetails';
+import Login from './Login';
 
 const english = {
   ...CardDetails,
@@ -18,6 +19,7 @@ const english = {
   ...resetPassword,
   ...contactUS,
   ...Home,
+  ...Login,
 };
 
 export default english;
