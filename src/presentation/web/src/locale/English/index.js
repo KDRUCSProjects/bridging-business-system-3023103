@@ -7,6 +7,7 @@
 import Home from './Home';
 import contactUS from "./ContactUs";
 import CardDetails from './CardDetails';
+import ConfirmPassword from './ConfirmPassword';
 import Login from './Login';
 import creatprofile from './creatprofile';
 import profilepage from './profilepage';
@@ -20,6 +21,7 @@ const english = {
   ...resetPassword,
   ...contactUS,
   ...Home,
+  ...ConfirmPassword,
   ...Login,
   ...CardDetails,
   ...creatprofile,
