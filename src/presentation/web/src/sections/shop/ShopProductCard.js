@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
-import { paramCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
 // @mui
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { Box, Card, Typography, Stack } from '@mui/material';
 // routes
 import { fCurrency } from '../../utils/formatNumber';
 // components
-import Label from '../../components/Label';
 import Image from '../../components/Image';
 import { ColorPreview } from '../../components/color-utils';
 
@@ -18,9 +15,6 @@ ShopProductCard.propTypes = {
 
 export default function ShopProductCard({ product }) {
   const { name , price , color , images} = product;
-
-  console.log(images)
-
   return (
     <Card>
       <Box sx={{ position: 'relative' }}>
