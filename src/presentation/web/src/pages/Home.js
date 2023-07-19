@@ -1,8 +1,18 @@
 import { useState } from 'react';
 
 // @mui
+import React from 'react';
+import Lottie from 'react-lottie';
+import { Button, Box } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
+
 import { Button, TextField } from '@mui/material';
+
+import animationSetter from '../animations/animationSetter';
+
+
+import animation from '../animations/shop/cart (2).json';
+
 
 // components
 import Page from '../components/Page';
@@ -19,7 +29,11 @@ import useResponsive from '../hooks/useResponsive';
 import CustomSlider from '../components/CustomSlider';
 import Cart from '../components/Cart';
 import ImageSlider from '../components/ImageSlider';
+
 import TopProductSlider from '../components/TopProductSlider';
+
+import Snack from '../components/Snack';
+
 
 // Card
 import ShopProductList from '../sections/shop/ShopProductList';
@@ -58,6 +72,22 @@ export default function HomePage() {
  
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
+
+  const [snackOptions, setSnackOptions] = React.useState({
+    open: true,
+    vertical: 'top',
+    horizontal: 'center',
+    backgroundColor:theme.palette.primary.main,
+    color:theme.palette.text.primary,
+    animation:<Lottie options={animationSetter(animation)} width='12em' height='4em' />,
+    message:'yes this is Dynamic One !',
+    animationPosition:{marginLeft:"-4em"}
+  });
+
+  const handleSnackClose = () => {
+    setSnackOptions({ ...snackOptions, open: false });
+  };
+
   return (
     (isSuccess?
     
@@ -88,6 +118,18 @@ export default function HomePage() {
         )}
         
         <Cart />
+        <Snack
+        vertical={snackOptions.vertical}
+        horizontal={snackOptions.horizontal}
+        open={snackOptions.open}
+        onClose={handleSnackClose}
+          message={snackOptions.message}
+          animation={snackOptions.animation}
+          autoHideDuration={5000}
+          backgroundColor={snackOptions.backgroundColor}
+          color={snackOptions.color}
+          animationPosition={snackOptions.animationPosition}
+        />
         <ShopProductList />
       </ContentStyle>
     </Page>:"Data Not Found")
