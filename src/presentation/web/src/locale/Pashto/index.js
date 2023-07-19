@@ -13,6 +13,7 @@ import creatprofile from "./creatprofile";
 import AddProduct from "./AddProduct";
 import UserRegister from "./UserRegister";
 import ConfirmPassword from "./ConfirmPassword";
+import Login from "./Login"
 
 const pashto = {
     ...Home,
@@ -24,6 +25,7 @@ const pashto = {
     ...profilepage,
     ...AddProduct,
     ...ConfirmPassword,
+    ...Login,
   
 };
 

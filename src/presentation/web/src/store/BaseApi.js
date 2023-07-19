@@ -6,6 +6,8 @@ const BaseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseUri }),
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
+    // Auth
+    RegisterUser: builder.mutation(allServices.mutations.RegisterUser),
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),
@@ -27,6 +29,10 @@ const BaseApi = createApi({
     // category
     GetAllCategories: builder.query(allServices.queries.GetAllCategories),
     GetSpecificCategory: builder.query(allServices.queries.GetSpecificCategory),
+
+       // User
+       GetAllUsers: builder.query(allServices.queries.GetAllUsers),
+       GetSpecificUser: builder.query(allServices.queries.GetSpecificUser),
   }),
 });
 

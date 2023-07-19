@@ -24,7 +24,7 @@ export const PATH_AUTH = {
 export const PATH_PAGE = {
   about: path(PATH_PAGE_ROOT, 'about-us'),
   contact: path(PATH_PAGE_ROOT, 'contact-us'),
-  businessProfile: path(PATH_PAGE_ROOT, 'profile'),
+  businessProfile: path(PATH_PAGE_ROOT, 'profile/:id/'),
   createProfile: path(PATH_PAGE_ROOT, 'create/profile'),
   updateProfile: path(PATH_PAGE_ROOT, 'update/profile'),
   payment: path(PATH_PAGE_ROOT, 'payment'),
@@ -32,5 +32,6 @@ export const PATH_PAGE = {
   invoicecreate: path(PATH_PAGE_ROOT, 'invoice/create'),
   addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),
   ConfirmPassword: path(PATH_PAGE_ROOT, 'confirm/password'),
+  NewPassword: path(PATH_PAGE_ROOT, 'new/password'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };
