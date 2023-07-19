@@ -22,10 +22,10 @@ ProfileAbout.propTypes = {
   profile: PropTypes.object,
 };
 
-export default function ProfileAbout({ profile }) {
+export default function ProfileAbout({ profile , profiledata}) {
 const {translate} = useLocales();
-
-  const { quote, country, email, role, company, school: Business } = profile;
+  const { email } = profiledata;
+  const { quote, country, role, company, school: Business } = profile;
 
   return (
     <Card>
