@@ -117,6 +117,8 @@ class OrderDetailViewSet(viewsets.ModelViewSet):
 class BusinessProfileViewSet(viewsets.ModelViewSet):
     queryset = BusinessProfile.objects.all()
     serializer_class = BusinessProfileSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["user"]
 
 
 class BusinessOwnerViewSet(viewsets.ModelViewSet):

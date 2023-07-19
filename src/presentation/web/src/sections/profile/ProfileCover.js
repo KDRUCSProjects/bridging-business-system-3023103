@@ -3,15 +3,10 @@ import Lottie from 'react-lottie';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-
 import animationSetter from '../../animations/animationSetter';
 import CoverWaveAnimation from '../../animations/profile/116915-waves.json';
-// utils
-import cssStyles from '../../utils/cssStyles';
-
 // components
 import MyAvatar from '../../components/MyAvatar';
-import Image from '../../components/Image';
 
 // ----------------------------------------------------------------------
 
@@ -62,6 +57,7 @@ export default function ProfileCover({ myProfile }) {
             width: { xs: 80, md: 128 },
             height: { xs: 80, md: 128 },
           }}
+          myphoto={myProfile[0].avator}
         />
         <Box
           sx={{
@@ -71,8 +67,8 @@ export default function ProfileCover({ myProfile }) {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          <Typography variant="h4">{'Adil'}</Typography>
-          <Typography sx={{ opacity: 0.72 }}>{position}</Typography>
+          <Typography variant="h4">{myProfile[0].business_owner.name}</Typography>
+          <Typography sx={{ opacity: 0.72 }}>{myProfile[0].business_owner.bio}</Typography>
         </Box>
       </InfoStyle>
       <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>

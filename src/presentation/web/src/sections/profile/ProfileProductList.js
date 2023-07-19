@@ -10,7 +10,7 @@ import cssStyles from '../../utils/cssStyles';
 import Image from '../../components/Image';
 import Iconify from '../../components/Iconify';
 import LightboxModal from '../../components/LightboxModal';
-
+import BaseApi from '../../store/BaseApi';
 // ----------------------------------------------------------------------
 
 const CaptionStyle = styled(CardContent)(({ theme }) => ({
@@ -30,13 +30,15 @@ ProfileGallery.propTypes = {
   gallery: PropTypes.array.isRequired,
 };
 
-export default function ProfileGallery({ gallery }) {
+export default function ProfileGallery({ gallery , newdata}) {
+  // console.log('I am a man',gallery[0].user)
+  // const user = gallery[0].user
+    // const {data , isError ,isSuccess , isLoading } = BaseApi.useGetAllProductsQuery(`api/product/?user=${gallery[0].user}`);
+  const data = newdata.results;
   const [openLightbox, setOpenLightbox] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(0);
-
-  const imagesLightbox = gallery.map((img) => img.imageUrl);
-
+  const imagesLightbox = data.map((item) => item.images[0]?.image);
   const handleOpenLightbox = (url) => {
     const selectedImage = imagesLightbox.findIndex((index) => index === url);
     setOpenLightbox(true);
@@ -60,8 +62,8 @@ export default function ProfileGallery({ gallery }) {
             },
           }}
         >
-          {gallery.map((image) => (
-            <GalleryItem key={image.id} image={image} onOpenLightbox={handleOpenLightbox} />
+          {data.map((item) => (
+            <GalleryItem key={item.id} item={item} onOpenLightbox={handleOpenLightbox} />
           ))}
         </Box>
 
@@ -85,17 +87,17 @@ GalleryItem.propTypes = {
   onOpenLightbox: PropTypes.func,
 };
 
-function GalleryItem({ image, onOpenLightbox }) {
-  const { imageUrl, title, postAt } = image;
+function GalleryItem({ item, onOpenLightbox }) {
+  const { id, images, name } = item;
   return (
     <Card sx={{ cursor: 'pointer', position: 'relative' }}>
-      <Image alt="gallery image" ratio="1/1" src={imageUrl} onClick={() => onOpenLightbox(imageUrl)} />
+      <Image alt="gallery image" ratio="1/1" src={images[0]?.image} onClick={() => onOpenLightbox(images[0]?.image)} />
 
       <CaptionStyle>
         <div>
-          <Typography variant="subtitle1">{title}</Typography>
+          <Typography variant="subtitle1">{name}</Typography>
           <Typography variant="body2" sx={{ opacity: 0.72 }}>
-            {fDate(postAt)}
+            {"fDate(postAt)"}
           </Typography>
         </div>
         <IconButton color="inherit">

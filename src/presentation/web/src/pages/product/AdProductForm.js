@@ -178,9 +178,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                  multiple
                 
                 />
-
                 <RHFTextField name="quantity" label={translate('Product quantity')}  type='number'/>
-
                 <RHFSelect name="category" label= {translate('Category')} >
                   {CATEGORY_OPTION.map((category) => (
                     <optgroup key={category.group} label={category.group}>
