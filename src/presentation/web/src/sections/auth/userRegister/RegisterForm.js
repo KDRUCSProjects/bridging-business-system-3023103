@@ -1,7 +1,5 @@
 import { useState } from 'react';
 // form
-import { useForm } from 'react-hook-form';
-// import { yepResolver } from '@hookform/resolvers/yep';
 // @mui
 import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -69,7 +67,7 @@ export default function RegisterForm() {
           placeholder={translate('First Name')}
           error={formError.firstName && touched.firstName}
           helperText={formError.firstName}
-          label="First name" />
+          label={translate("First name")} />
           <TextField 
           value={values.lastName}
           name="lastName" 
@@ -78,7 +76,7 @@ export default function RegisterForm() {
           placeholder={translate('last Name')}
           error={formError.lastName && touched.lastName}
           helperText={formError.lastName}
-          label="Last name" />
+          label={translate("Last name")} />
         </Stack>
 
         <TextField 
@@ -89,7 +87,7 @@ export default function RegisterForm() {
         error={formError.email && touched.email}
         helperText={formError.email}
         name="email"
-        label="Email address" />
+        label={translate("Email address")} />
 
         <TextField 
         value={values.number}
@@ -99,7 +97,7 @@ export default function RegisterForm() {
         error={formError.number && touched.number}
         helperText={formError.number}
         name="number" 
-        label="Phone number" />
+        label={translate("Phone number")} />
 
         <TextField
           value={values.password}
@@ -109,7 +107,7 @@ export default function RegisterForm() {
           error={formError.password && touched.password}
           helperText={formError.password}
           name="password"
-          label="Password"
+          label={translate("Password")}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
