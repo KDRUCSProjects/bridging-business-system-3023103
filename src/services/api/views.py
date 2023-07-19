@@ -67,7 +67,7 @@ from .pagination import ProductPagination
 
 
 class PrdocutViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, ProductAccessPolicy]
+    permission_classes = [ProductAccessPolicy]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
@@ -284,13 +284,11 @@ class UserLoginView(KnoxLoginView):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
+        print(user.is_verified)
+        if user.is_verified == False:
+            return Response(
+                {"detail": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
         login(request, user)
         return super(UserLoginView, self).post(request, format=None)
-
-
-class PostView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def post(self, request):
-        print(request.user)
-        return Response("done")

@@ -4,13 +4,18 @@ from rest_access_policy import AccessPolicy
 class ProductAccessPolicy(AccessPolicy):
     statements = [
         {
-            "action": ["list", "retrieve", "create"],
+            "action": ["list", "retrieve"],
             "principal": "*",
             "effect": "allow",
         },
         {
+            "action": ["create"],
+            "principal": "authenticated",
+            "effect": "allow",
+        },
+        {
             "action": ["destroy", "update"],
-            "principal": "*",
+            "principal": "authenticated",
             "effect": "allow",
             "condition": "is_author",
         },
