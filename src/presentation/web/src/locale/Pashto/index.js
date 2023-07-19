@@ -8,15 +8,11 @@ import contactUS from "./ContactUs";
 import Home from './Home';
 import resetPassword from './resetPassword';
 import CardDetails from './CardDetails';
-
 import profilepage from "./profilepage";
-
 import creatprofile from "./creatprofile";
 import AddProduct from "./AddProduct";
 import UserRegister from "./UserRegister";
-
-
-
+import ConfirmPassword from "./ConfirmPassword";
 
 const pashto = {
     ...Home,
@@ -27,6 +23,7 @@ const pashto = {
     ...UserRegister,
     ...profilepage,
     ...AddProduct,
+    ...ConfirmPassword,
   
 };
 
