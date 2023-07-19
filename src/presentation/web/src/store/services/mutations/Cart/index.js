@@ -1,8 +1,8 @@
 const AddToCartService = {
-  query: (Cart) => ({
-    url: '/auth/demo',
+  query: (query) => ({
+    url: query.path,
     method: 'POST',
-    body: Cart,
+    body: query.data
   }),
 };
 
