@@ -1,17 +1,15 @@
 import { useState } from 'react';
-// form
 // @mui
 import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // Formik & yep
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField } from '../../../components/hook-form';
+import { FormProvider } from '../../../components/hook-form';
 
-import useLocales from '../../hooks/useLocales';
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({
@@ -67,7 +65,7 @@ export default function RegisterForm() {
           placeholder={translate('First Name')}
           error={formError.firstName && touched.firstName}
           helperText={formError.firstName}
-          label={translate("First name")} />
+          label={translate("First Name")} />
           <TextField 
           value={values.lastName}
           name="lastName" 
@@ -76,7 +74,7 @@ export default function RegisterForm() {
           placeholder={translate('last Name')}
           error={formError.lastName && touched.lastName}
           helperText={formError.lastName}
-          label={translate("Last name")} />
+          label={translate("last Name")} />
         </Stack>
 
         <TextField 
@@ -87,7 +85,7 @@ export default function RegisterForm() {
         error={formError.email && touched.email}
         helperText={formError.email}
         name="email"
-        label={translate("Email address")} />
+        label={translate("Email Address")} />
 
         <TextField 
         value={values.number}
@@ -97,7 +95,7 @@ export default function RegisterForm() {
         error={formError.number && touched.number}
         helperText={formError.number}
         name="number" 
-        label={translate("Phone number")} />
+        label={translate("Phone Number")} />
 
         <TextField
           value={values.password}
@@ -107,7 +105,7 @@ export default function RegisterForm() {
           error={formError.password && touched.password}
           helperText={formError.password}
           name="password"
-          label={translate("Password")}
+          label={translate("password")}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (

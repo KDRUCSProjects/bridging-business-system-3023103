@@ -11,10 +11,6 @@ import creatprofile from './creatprofile';
 import profilepage from './profilepage';
 import resetPassword from './resetPassword';
 import UserRegister from './UserRegister';
-import resetPassword from './resetPassword';
-import profilepage from './profilepage';
-import creatprofile from './creatprofile';
-import CardDetails from './CardDetails';
 
 const english = {
   ...CardDetails,
