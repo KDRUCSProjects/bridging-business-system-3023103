@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom';
+
 // @mui
 import { styled } from '@mui/material/styles';
 import { Button, Container, Typography, Box ,TextField , Stack } from '@mui/material';
@@ -13,17 +13,9 @@ import useLocales from '../../hooks/useLocales';
 
 import confirmpasswordanimation from '../../animations/auth/code1.json';
 import animationSetter from '../../animations/animationSetter';
-// layouts
-import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
-// routes
-import { PATH_AUTH } from '../../routes/paths';
 // components
 import Page from '../../components/Page';
 // sections
-import { ResetPasswordForm } from '../../sections/auth/reset-password';
-import LoadingButton from '../../theme/overrides/LoadingButton';
-
-
 
 
 
@@ -63,8 +55,8 @@ export default function ResetPassword() {
           {/* <ResetPasswordForm /> */}
           <FormProvider>
             <Stack>
-                <TextField name='confirmpassowrd' label={'Confirm Password'} />
-                <Button sx={{marginTop:1 , marginBottom:1}} type="submit" fullWidth size="large" variant="contained">Confirm</Button>
+                <TextField name='confirmpassowrd' label={translate('Confirm Password')} />
+                <Button sx={{marginTop:1 , marginBottom:1}} type="submit" fullWidth size="large" variant="contained">{translate('Confirm')}</Button>
             </Stack>
           </FormProvider>
           <Button fullWidth size="large" >
