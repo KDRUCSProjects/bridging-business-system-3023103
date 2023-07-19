@@ -12,6 +12,8 @@ import { useFormik } from 'formik';
 // components
 import Iconify from '../../../components/Iconify';
 
+import useLocales from '../../../hooks/useLocales';
+
 // ----------------------------------------------------------------------
 const loginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -26,7 +28,7 @@ const loginSchema = yup.object().shape({
 
 export default function LoginForm() {
   const Navigate = useNavigate();
-
+  const {translate}= useLocales();
   const [showPassword, setShowPassword] = useState(false);
   // validation
 
@@ -58,7 +60,7 @@ export default function LoginForm() {
           name="email"
           onBlur={handleBlur}
           onChange={handleChange}
-          label="Email"
+          label={translate("Email")}
           placeholder={'exmple@gamil.com'}
           error={formError.email && touched.email}
           helperText={formError.email}
@@ -67,7 +69,7 @@ export default function LoginForm() {
         <TextField
           value={values.password}
           name="password"
-          label="Password"
+          label={translate("Password")}
           placeholder={'exmple123'}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -88,12 +90,12 @@ export default function LoginForm() {
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         <Link component={RouterLink} variant="subtitle2" to={'reset-password'}>
-          Forgot password?
+          {translate('Forgot password?')}
         </Link>
       </Stack>
 
       <Button type="submit" fullWidth size="large" variant="contained" loading={'LOADING'}>
-        Login
+        {translate('Login')}
       </Button>
     </form>
   );

@@ -11,7 +11,9 @@ import resetPassword from './resetPassword';
 import profilepage from './profilepage';
 import creatprofile from './creatprofile';
 import CardDetails from './CardDetails';
+import Login from "./Login";
 import UserRegister from "./UserRegister";
+
 
 const dari = {
     ...Home,
@@ -20,7 +22,9 @@ const dari = {
     ...profilepage,
     ...creatprofile,
     ...CardDetails,
+    ...Login,
     ...UserRegister,
+
 };
 
 export default dari;
