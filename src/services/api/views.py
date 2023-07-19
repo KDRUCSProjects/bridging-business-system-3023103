@@ -54,6 +54,7 @@ from .serializers import (
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from .access_policies.category import CategoryAccessPolicy
+from .access_policies.Product import ProductAccessPolicy
 from .pagination import ProductPagination
 
 # Permition:
@@ -66,7 +67,7 @@ from .pagination import ProductPagination
 
 
 class PrdocutViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAdminUser]
+    permission_classes = [ProductAccessPolicy]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
@@ -285,5 +286,11 @@ class UserLoginView(KnoxLoginView):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
+        print(user.is_verified)
+        if user.is_verified == False:
+            return Response(
+                {"detail": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
         login(request, user)
         return super(UserLoginView, self).post(request, format=None)

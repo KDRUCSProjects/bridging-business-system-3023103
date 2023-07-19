@@ -5,8 +5,8 @@ from knox import views as knox_views
 
 router = routers.DefaultRouter()
 
-router.register(r"product", PrdocutViewSet,basename="product")
-router.register(r"product_image", ProductImageViewSet,basename='product_image')
+router.register(r"product", PrdocutViewSet, basename="product")
+router.register(r"product_image", ProductImageViewSet, basename="product_image")
 router.register(r"order", OrderViewSet)
 # router.register(r"order_detial", OrderDetailViewSet)
 router.register(r"business_profile", BusinessProfileViewSet)
@@ -20,7 +20,7 @@ router.register(r"ratting", RattingViewSet)
 router.register(r"payment", PaymentViewSet)
 router.register(r"contact_us", ContectUsViewSet)
 router.register(r"users", UserViewSet)
-# router.register(r"forget-password-email", ForgetPasswordEmailView)
+
 
 urlpatterns = [
     path("", include(router.urls)),
@@ -29,7 +29,6 @@ urlpatterns = [
     path("forget/password/opt/verify/", ForgetPasswordVerificationView.as_view()),
     path("change/password/", ChangePasswordView.as_view()),
     path("rest/password/", PasswordResetView.as_view()),
-    # path("login/", knox_views.LoginView.as_view(), name="login"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", knox_views.LogoutView.as_view(), name="logout"),
     path("logout/all/", knox_views.LogoutAllView.as_view(), name="logout_all"),

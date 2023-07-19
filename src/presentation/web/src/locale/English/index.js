@@ -7,6 +7,7 @@
 import Home from './Home';
 import contactUS from "./ContactUs";
 import CardDetails from './CardDetails';
+import Login from './Login';
 import creatprofile from './creatprofile';
 import profilepage from './profilepage';
 import resetPassword from './resetPassword';
@@ -19,6 +20,7 @@ const english = {
   ...resetPassword,
   ...contactUS,
   ...Home,
+  ...Login,
   ...CardDetails,
   ...creatprofile,
   ...profilepage,
