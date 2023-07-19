@@ -1,37 +1,29 @@
+import React, { useState } from 'react';
 // @mui
-import React from 'react';
 import Lottie from 'react-lottie';
-import { Button, Box } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import animationSetter from '../animations/animationSetter';
-
-
 import animation from '../animations/shop/cart (2).json';
-
 // components
 import Page from '../components/Page';
-
 // sections
-import { categorySlider, TopProductSlider } from '../sections/home';
+import { categorySlider } from '../sections/home';
 import ImageSliderSittings from '../sections/home/ImageSlider';
-
+import TopProductSliderSettings from '../sections/home/TopProductSliderSettings';
 // hooks
 import useLocales from '../hooks/useLocales';
 import useResponsive from '../hooks/useResponsive';
-
 import CustomSlider from '../components/CustomSlider';
 import Cart from '../components/Cart';
 import ImageSlider from '../components/ImageSlider';
+import TopProductSlider from '../components/TopProductSlider';
 import Snack from '../components/Snack';
-
 // Card
 import ShopProductList from '../sections/shop/ShopProductList';
-
 // store
 import BaseApi from '../store/BaseApi';
 
 // ----------------------------------------------------------------------
-
 const ContentStyle = styled('div')(({ theme }) => ({
   marginTop: '4em',
   overflow: 'hidden',
@@ -42,39 +34,34 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
+  const { isSuccess, data, isError, isLoading } = BaseApi.useGetAllCategoriesQuery('api/category/');
+  const sliderData = data?.map((item) => ({
+    title: item.name,
+    image: item.image,
+  }));
 
-  const { isSuccess,data , isError ,isLoading} = BaseApi.useGetAllCategoriesQuery('api/category/');
-  const theme = useTheme();
-  
-  const sliderData = data?.map((item)=>(
-    {
-      title : item.name ,
-      image : item.image
-    }
-  ))  
- 
+  const [nweImage, setnewImage] = useState('');
+  const handleimage = (e) => {
+    e.preventDefault();
+    setnewImage(e.target.files);
+  };
+
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
-
   const [snackOptions, setSnackOptions] = React.useState({
     open: true,
     vertical: 'top',
     horizontal: 'center',
-    backgroundColor:theme.palette.primary.main,
-    color:theme.palette.text.primary,
-    animation:<Lottie options={animationSetter(animation)} width='12em' height='4em' />,
-    message:'yes this is Dynamic One !',
-    animationPosition:{marginLeft:"-4em"}
+    animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+    message: 'yes this is Dynamic One !',
+    animationPosition: { marginLeft: '-4em' },
   });
 
   const handleSnackClose = () => {
     setSnackOptions({ ...snackOptions, open: false });
   };
 
-  return (
-    (isSuccess?
-    
-    
+  return isSuccess ? (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
         {/* ImageSlider */}
@@ -85,7 +72,6 @@ export default function HomePage() {
           />
         )}
         {/* Category */}
-
         {isMatchMobile ? null : (
           <CustomSlider
             sliderData={sliderData}
@@ -95,18 +81,18 @@ export default function HomePage() {
         )}
         {/* Top Product  */}
         {isMatchMobile ? null : (
-          <CustomSlider
-            sliderData={TopProductSlider().TopProductSliderData}
-            settings={TopProductSlider().TopProductSliderConfig}
+          <TopProductSlider
+            settings={TopProductSliderSettings().TopProductSliderConfig}
             title={translate('Top_Product')}
           />
         )}
+
         <Cart />
         <Snack
-        vertical={snackOptions.vertical}
-        horizontal={snackOptions.horizontal}
-        open={snackOptions.open}
-        onClose={handleSnackClose}
+          vertical={snackOptions.vertical}
+          horizontal={snackOptions.horizontal}
+          open={snackOptions.open}
+          onClose={handleSnackClose}
           message={snackOptions.message}
           animation={snackOptions.animation}
           autoHideDuration={5000}
@@ -116,6 +102,8 @@ export default function HomePage() {
         />
         <ShopProductList />
       </ContentStyle>
-    </Page>:"Data Not Found")
+    </Page>
+  ) : (
+    'Data Not Found'
   );
 }

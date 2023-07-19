@@ -1,8 +1,10 @@
 import { useState } from 'react';
+
 // Lottie
 import Lottie from 'react-lottie';
 // form
 // import { yepResolver } from '@hookform/resolvers/yep';
+
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
@@ -11,6 +13,7 @@ import { LoadingButton } from '@mui/lab';
 // Formik & yep
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+
 
 // animation
 import animationSetter from '../../../animations/animationSetter';
@@ -30,6 +33,7 @@ const RegisterSchema = yup.object().shape({
   username: yup.string().required(),
   first_name: yup.string().required(),
   last_name: yup.string().required(),
+
   email: yup.string().email().required(),
   number: yup.number().required(),
   password: yup
@@ -61,6 +65,7 @@ export default function RegisterForm() {
     setSnackOptions({ ...snackOptions, open: false });
   };
 
+  const { translate } = useLocales();
   const [showPassword, setShowPassword] = useState(false);
 
 
@@ -133,6 +138,7 @@ export default function RegisterForm() {
       />
       <Stack spacing={3}>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+
           <TextField
             value={values.username}
             name="username"
@@ -172,15 +178,16 @@ export default function RegisterForm() {
           name="email"
           label="Email Address" />
 
+
         <TextField
           value={values.password}
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder='password'
+          placeholder={translate('password')}
           error={formError.password && touched.password}
           helperText={formError.password}
           name="password"
-          label="Password"
+          label={translate("password")}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -194,8 +201,10 @@ export default function RegisterForm() {
         />
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" >
+
           {isLoading  ? ( <Lottie options={animationSetter(animation)} width='15em' height='10em' />):('Register')}
           
+
         </LoadingButton>
       </Stack>
     </FormProvider>

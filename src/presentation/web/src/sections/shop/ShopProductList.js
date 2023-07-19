@@ -25,8 +25,6 @@ export default function ShopProductList() {
     else if(isLoading){
       <h1>loading...</h1>
     }
-//  console.log(data.results)
-
 
   return (
     <Page title="Ecommerce: Shop">

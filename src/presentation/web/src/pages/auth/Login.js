@@ -12,11 +12,10 @@ import airplane from '../../animations/auth/login/airplane.json';
 //
 import animationSetter from '../../animations/animationSetter';
 
-// routes
-import { PATH_AUTH } from '../../routes/paths';
 
 // hooks
 import useResponsive from '../../hooks/useResponsive';
+import useLocales from '../../hooks/useLocales';
 
 // components
 import Page from '../../components/Page';
@@ -69,6 +68,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+  const {translate}= useLocales();
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
@@ -79,9 +79,9 @@ export default function Login() {
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account?
+              {translate('Don’t have an account?')}
               <Link variant="subtitle2" component={RouterLink} to={'/user/register'}>
-                Get started
+                {translate('Get started')}
               </Link>
             </Typography>
           )}
@@ -100,11 +100,11 @@ export default function Login() {
             <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h4" gutterBottom>
-                  Sign in To{' '}
+                  {translate('Sign in To')}{' '}
                   <Typography variant="h4" sx={{ color: 'primary.main' }}>
-                    Afghan
+                    {translate('Afghan')}
                   </Typography>{' '}
-                  Business
+                  {translate('Business')}
                 </Typography>
                 <Box position={'absolute'} top="20px">
                   <Lottie height={'200px'} width={'100%'} options={animationSetter(airplane)} />
@@ -116,9 +116,9 @@ export default function Login() {
 
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have an account?{' '}
+                {translate('Don’t have an account?')}{' '}
                 <Link variant="subtitle2" component={RouterLink} to={'register'}>
-                  Get started
+                  {translate('Get started')}
                 </Link>
               </Typography>
             )}
