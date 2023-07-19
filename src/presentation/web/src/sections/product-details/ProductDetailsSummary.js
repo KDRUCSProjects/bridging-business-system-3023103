@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { sentenceCase } from 'change-case';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link  } from 'react-router-dom';
 import Person2Icon from '@mui/icons-material/Person2';
 // form
 import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Box, Link, Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
+import { Box,Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
 
 // utils
 import { fShortenNumber, fCurrency } from '../../utils/formatNumber';
@@ -54,10 +54,9 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
   const navigate = useNavigate();
 
-  const { id,color, name , quantity , price ,productRatting , ratting } = product;
+  const { id,color, name , quantity , price ,productRatting , user, ratting } = product;
 
   const alreadyProduct = cart.map((item) => item.id).includes(id);
-
   const sizes = [
     43, 44 , 45 , 56 , 47
   ]
@@ -102,30 +101,9 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       console.error(error);
     }
   };
-
   return (
     <RootStyle {...other}>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          // color={color}
-          sx={{ textTransform: 'uppercase' }}
-        >
-          {/* {sentenceCase(inventoryType || '')} */}
-        </Label>
-
-        <Typography
-          variant="overline"
-          sx={{
-            mt: 2,
-            mb: 1,
-            display: 'block',
-            // color: status === 'sale' ? 'error.main' : 'info.main',
-          }}
-        >
-          {/* {status} */}
-        </Typography>
-
         <Typography variant="h5" paragraph>
           {name}
         </Typography>
@@ -181,11 +159,11 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             FormHelperTextProps={{
               sx: { textAlign: 'right', margin: 0, mt: 1 },
             }}
-            helperText={
-              <Link underline="always" color="text.secondary">
-               {translate('size chart')} 
-              </Link>
-            }
+            // helperText={
+            //   <Link underline="always" color="text.secondary">
+            //    {translate('size chart')} 
+            //   </Link>
+            // }
           >
             {sizes.map((size) => (
               <option key={size} value={size}>
@@ -209,11 +187,10 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <Stack direction="row" spacing={2} sx={{ mt: 5 }}>
+      </FormProvider>
+      <Stack direction="row" spacing={2} sx={{ mt: 5 }}>
           <Button
             fullWidth
-            // disabled={isMaxQuantity}
             size="large"
             color="warning"
             variant="contained"
@@ -223,13 +200,11 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
           >
   
          {translate('add to cart')} 
-          </Button>
-
-          <Button fullWidth size="large" type="submit" startIcon={<Person2Icon />} variant="contained">
+          </Button>    
+          <Button  component={Link} to={`/profile/${user}/`}  fullWidth size="large"  startIcon={<Person2Icon />} variant="contained">
            {translate('view profile')} 
           </Button>
         </Stack>
-      </FormProvider>
     </RootStyle>
   );
 }

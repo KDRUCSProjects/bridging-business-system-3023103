@@ -29,6 +29,10 @@ const BaseApi = createApi({
     // category
     GetAllCategories: builder.query(allServices.queries.GetAllCategories),
     GetSpecificCategory: builder.query(allServices.queries.GetSpecificCategory),
+
+       // User
+       GetAllUsers: builder.query(allServices.queries.GetAllUsers),
+       GetSpecificUser: builder.query(allServices.queries.GetSpecificUser),
   }),
 });
 
