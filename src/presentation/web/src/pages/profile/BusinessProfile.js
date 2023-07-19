@@ -71,7 +71,6 @@ export default function BusinessProfile() {
   ];
   return (
     (isSuccess?
-      
     <Page title="User: Profile">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{marginTop:"6rem" , marginBottom:"3rem" }}>
         <Card
@@ -82,7 +81,6 @@ export default function BusinessProfile() {
           }}
         >
           <ProfileCover myProfile={data} />
-
           <TabsWrapperStyle>
             <Tabs
               allowScrollButtonsMobile
