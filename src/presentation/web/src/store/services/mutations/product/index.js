@@ -1,8 +1,8 @@
 const CreateProduct = {
-  query: (path, body) => ({
-    url: path,
+  query: ( query) => ({
+    url: query.path,
     method: 'POST',
-    body,
+    body:query.data,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
@@ -10,20 +10,20 @@ const CreateProduct = {
 };
 
 const UpdateProduct = {
-  query: (path, body) => ({
-    url: path,
+  query: (query) => ({
+    url: query.path,
     method: 'PUT',
-    body,
+    body:query.data,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
   }),
 };
 const DeleteProduct = {
-  query: (path, body) => ({
-    url: path,
+  query: (query) => ({
+    url: query.path,
     method: 'DELETE',
-    body,
+    body:query.data,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },

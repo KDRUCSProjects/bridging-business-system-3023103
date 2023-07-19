@@ -1,9 +1,9 @@
 // Demo
 const CreateProfile = {
-  query: (path, body) => ({
-    url: path,
+  query: (query) => ({
+    url: query.path,
     method: 'POST',
-    body,
+    body:query.data,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
