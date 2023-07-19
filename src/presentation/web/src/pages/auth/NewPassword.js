@@ -6,10 +6,11 @@ import Lottie from 'react-lottie';
 import { FormProvider } from '../../components/hook-form';
 // hooks
 import useLocales from '../../hooks/useLocales';
-import confirmpasswordanimation from '../../animations/auth/code1.json';
+import newpassword from '../../animations/auth/newpassword.json';
 import animationSetter from '../../animations/animationSetter';
 // components
 import Page from '../../components/Page';
+// ----------------------------------------------------------------------
 
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 480,
@@ -20,34 +21,30 @@ const ContentStyle = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   padding: theme.spacing(12, 0),
 }));
+
 // ----------------------------------------------------------------------
 
-export default function ConfirmPassowrd() {
+export default function NewPassword() {
 
  const {translate} = useLocales();
 
   return (
-    <Page title="Reset Password">
+    <Page title="NewPassword Password">
       <Container>
         <ContentStyle sx={{ textAlign: 'center' }}>
-          <Box mb={8} textAlign="center" height="200px">
-            <Lottie options={animationSetter(confirmpasswordanimation)} />
+          <Box mb={8} textAlign="center" height="300px" width={'500px'}>
+            <Lottie options={animationSetter(newpassword)} />
           </Box>
           <Typography mt={-5} variant="h3" paragraph>
-           {translate('Enter One Time Passoword')}
-          </Typography>
-          <Typography sx={{ color: 'text.secondary', mb: 2 }}>
-            {translate('A one time password has been sent to your Email Address.')}
+           {translate('Enter New Passoword')}
           </Typography>
           <FormProvider>
             <Stack>
-                <TextField name='confirmpassowrd' label={'Confirm Password'} />
+                <TextField sx={{marginTop:1 , marginBottom:1}} name='newpassword' type='number' label={'new Password'} />
+                <TextField name='confirmpassowrd' type='number' label={'Confirm Password'} />
                 <Button sx={{marginTop:1 , marginBottom:1}} type="submit" fullWidth size="large" variant="contained">Confirm</Button>
             </Stack>
           </FormProvider>
-          <Button fullWidth size="large" >
-            {translate('Resend code')}
-          </Button>
         </ContentStyle>
       </Container>
     </Page>
