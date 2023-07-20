@@ -1,7 +1,8 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { m } from 'framer-motion';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Container, Typography, Box } from '@mui/material';
+import { Button, Container, Typography, Box  } from '@mui/material';
 
 
 // Lottie
@@ -19,9 +20,10 @@ import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
 import { PATH_AUTH } from '../../routes/paths';
 // components
 import Page from '../../components/Page';
+
 // sections
 import { ResetPasswordForm } from '../../sections/auth/reset-password';
-
+import { MotionContainer, varBounce } from '../../components/animate';
 
 
 // ----------------------------------------------------------------------
@@ -45,11 +47,14 @@ export default function ResetPassword() {
   return (
     <Page title="Reset Password">
       <LogoOnlyLayout />
-      <Container>
+      <Container component={MotionContainer}>
         <ContentStyle sx={{ textAlign: 'center' }}>
+        <m.div variants={varBounce().inLeft}>
+
           <Box mt={-8} textAlign="center" height="300px">
             <Lottie options={animationSetter(resetPasswordAnimation)} />
           </Box>
+        </m.div>
           <Typography mt={-5} variant="h3" paragraph>
            {translate('Forgot your password?')}
           </Typography>
@@ -57,7 +62,10 @@ export default function ResetPassword() {
             {translate('Please enter the email address associated with your account and We will email you a link to reset your password.')}
           
           </Typography>
+          <m.div variants={varBounce().inRight}>
+
           <ResetPasswordForm />
+          </m.div>
           <Button fullWidth size="large" component={RouterLink} to={PATH_AUTH.login}>
             {translate('Back')}
         
