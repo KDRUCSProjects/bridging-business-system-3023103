@@ -106,7 +106,7 @@ export default function CheckoutCart(activeStep) {
           size="large"
           type="submit"
           variant="contained"
-          disabled={cart.length === 1}
+          disabled={cart.length === 0}
           onClick={handleNextStep}
         >
           Check Out

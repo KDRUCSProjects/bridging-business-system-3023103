@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { m } from 'framer-motion';
 // Lottie
 import Lottie from 'react-lottie';
@@ -12,12 +13,9 @@ import { LoadingButton } from '@mui/lab';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 
-
 // animation
 import animationSetter from '../../../animations/animationSetter';
 import animation from '../../../animations/shared/hms-loading.json';
-
-
 
 // components
 import Iconify from '../../../components/Iconify';
@@ -27,6 +25,8 @@ import { MotionContainer, varBounce } from '../../../components/animate';
 // store
 import BaseApi from '../../../store/BaseApi';
 import useLocales from '../../../hooks/useLocales';
+// store
+import { onNextStep } from '../../../store/slices/checkout/checkout';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({
@@ -46,7 +46,12 @@ const RegisterSchema = yup.object().shape({
 });
 
 export default function RegisterForm() {
-  const theme = useTheme()
+  const dispatch = useDispatch();
+  const handleNextStep = () => {
+    dispatch(onNextStep());
+  };
+
+  const theme = useTheme();
   const [RegisterUser, { isLoading }] = BaseApi.useRegisterUserMutation();
   const [snackOptions, setSnackOptions] = useState({
     open: false,
@@ -56,10 +61,8 @@ export default function RegisterForm() {
     color: undefined,
     animation: undefined,
     message: undefined,
-    animationPosition: undefined
+    animationPosition: undefined,
   });
-
-
 
   const handleSnackClose = () => {
     setSnackOptions({ ...snackOptions, open: false });
@@ -67,7 +70,6 @@ export default function RegisterForm() {
 
   const { translate } = useLocales();
   const [showPassword, setShowPassword] = useState(false);
-
 
   const initialValues = {
     username: '',
@@ -89,9 +91,9 @@ export default function RegisterForm() {
     // validationSchema: RegisterSchema,
     onSubmit: async () => {
       const query = {
-        path: "/api/users/",
-        data: values
-      }
+        path: '/api/users/',
+        data: values,
+      };
       const res = await RegisterUser(query);
       if (res.error) {
         setSnackOptions({
@@ -100,31 +102,32 @@ export default function RegisterForm() {
           horizontal: 'center',
           backgroundColor: theme.palette.error.main,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width='12em' height='4em' />,
+          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
           message: 'Something Went Wrong',
-          animationPosition: { marginLeft: "-4em" }
-        })
-      }
-      else if (res.data) {
+          animationPosition: { marginLeft: '-4em' },
+        });
+      } else if (res.data) {
         setSnackOptions({
           open: true,
           vertical: 'top',
           horizontal: 'center',
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width='12em' height='4em' />,
+          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
           message: 'User Created SuccessFully !',
-          animationPosition: { marginLeft: "-4em" }
-        })
+          animationPosition: { marginLeft: '-4em' },
+        });
+        setTimeout(() => {
+          handleNextStep();
+        }, 2000);
       }
-    }
+    },
   });
-
 
   return (
     <Container component={MotionContainer}>
       <m.div variants={varBounce().inLeft}>
-        <FormProvider onSubmit={handleSubmit} >
+        <FormProvider onSubmit={handleSubmit}>
           <Snack
             vertical={snackOptions.vertical}
             horizontal={snackOptions.horizontal}
@@ -146,22 +149,23 @@ export default function RegisterForm() {
                   name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder='UserName'
+                  placeholder="UserName"
                   error={formError.username && touched.username}
                   helperText={formError.username}
-                  label="UserName" />
+                  label="UserName"
+                />
               </m.div>
               <m.div variants={varBounce().inLeft}>
-
                 <TextField
                   value={values.first_name}
                   name="first_name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder='First Name'
+                  placeholder="First Name"
                   error={formError.first_name && touched.first_name}
                   helperText={formError.first_name}
-                  label="First Name" />
+                  label="First Name"
+                />
               </m.div>
               <m.div variants={varBounce().inRight}>
                 <TextField
@@ -169,10 +173,11 @@ export default function RegisterForm() {
                   name="last_name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder='last Name'
+                  placeholder="last Name"
                   error={formError.last_name && touched.last_name}
                   helperText={formError.last_name}
-                  label="Last Name" />
+                  label="Last Name"
+                />
               </m.div>
             </Stack>
             <m.div variants={varBounce().inLeft}>
@@ -181,11 +186,12 @@ export default function RegisterForm() {
                 value={values.email}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder='Email Address'
+                placeholder="Email Address"
                 error={formError.email && touched.email}
                 helperText={formError.email}
                 name="email"
-                label="Email Address" />
+                label="Email Address"
+              />
             </m.div>
             <m.div variants={varBounce().inUp}>
               <TextField
@@ -193,7 +199,7 @@ export default function RegisterForm() {
                 value={values.password}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder='password'
+                placeholder="password"
                 error={formError.password && touched.password}
                 helperText={formError.password}
                 name="password"
@@ -211,17 +217,13 @@ export default function RegisterForm() {
               />
             </m.div>
             <m.div variants={varBounce().inDowm}>
-              <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-                {isLoading ? (<Lottie options={animationSetter(animation)} width='15em' height='10em' />) : ('Register')}
-
+              <LoadingButton fullWidth size="large" type="submit" variant="contained">
+                {isLoading ? <Lottie options={animationSetter(animation)} width="15em" height="10em" /> : 'Register'}
               </LoadingButton>
             </m.div>
-
           </Stack>
         </FormProvider>
       </m.div>
-
     </Container>
-
   );
 }
