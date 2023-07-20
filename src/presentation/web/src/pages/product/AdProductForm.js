@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { m } from 'framer-motion'
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
@@ -15,12 +16,13 @@ import useLocales from '../../hooks/useLocales';
 
 import PostingProduct from '../../animations/product/postingproduct.json'
 
-import   FormProvider from '../../components/hook-form/FormProvider';
-import   RHFSelect from '../../components/hook-form/RHFSelect';
-import   RHFSwitch from '../../components/hook-form/RHFSwitch';
-import   RHFEditor from '../../components/hook-form/RHFEditor';
-import   RHFTextField from '../../components/hook-form/RHFTextField';
-import   RHFRadioGroup from '../../components/hook-form/RHFRadioGroup';
+import FormProvider from '../../components/hook-form/FormProvider';
+import RHFSelect from '../../components/hook-form/RHFSelect';
+import RHFSwitch from '../../components/hook-form/RHFSwitch';
+import RHFEditor from '../../components/hook-form/RHFEditor';
+import RHFTextField from '../../components/hook-form/RHFTextField';
+import RHFRadioGroup from '../../components/hook-form/RHFRadioGroup'
+import { MotionContainer, varBounce } from '../../components/animate';
 import animationSetter from '../../animations/animationSetter';
 // ----------------------------------------------------------------------
 
@@ -54,7 +56,7 @@ AdProductForm.propTypes = {
 };
 
 export default function AdProductForm({ isEdit, currentProduct }) {
-  const {translate}= useLocales();
+  const { translate } = useLocales();
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -149,97 +151,107 @@ export default function AdProductForm({ isEdit, currentProduct }) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
-          <Card sx={{ p: 3 }}>
+      <Container component={MotionContainer}>
+
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
+            <Card sx={{ p: 3 }}>
+              <Stack spacing={3}>
+                <m.div variants={varBounce().inLeft}>
+                  <RHFTextField name="name" label={translate('Product Name')} />
+                </m.div>
+
+                <div>
+                  <LabelStyle>{translate('Description')} </LabelStyle>
+                  <RHFEditor simple name="description" />
+                </div>
+              </Stack>
+            </Card>
+            <Lottie options={animationSetter(PostingProduct)} width={"700px"} height={"300px"} />
+
+          </Grid>
+
+          <Grid item xs={12} md={4}>
             <Stack spacing={3}>
-              <RHFTextField name="name" label={translate('Product Name')} />
+              <Card sx={{ p: 3 }}>
+                <Stack spacing={3} mt={2}>
+                  <Typography>
+                    {translate('Select multiple Images')}
+                  </Typography>
+                  <input
+                    accept="image/*"
+                    type="file"
+                    multiple
 
-              <div>
-                <LabelStyle>{translate('Description')} </LabelStyle>
-                <RHFEditor simple name="description" />
-              </div>
-            </Stack>
-          </Card>
-          <Lottie options={animationSetter(PostingProduct)} width={"700px"} height={"300px"} />
+                  />
+                  <m.div variants={varBounce().inLeft}>
 
-        </Grid>
+                    <RHFTextField name="quantity" label={translate('Product quantity')} type='number' />
+                  </m.div>
 
-        <Grid item xs={12} md={4}>
-          <Stack spacing={3}>
-            <Card sx={{ p: 3 }}>
-              <Stack spacing={3} mt={2}>
-                <Typography>
-                 {translate('Select multiple Images')} 
-                </Typography>
-              <input
-                 accept="image/*"
-                 type="file"
-                 multiple
-                
-                />
-
-                <RHFTextField name="quantity" label={translate('Product quantity')}  type='number'/>
-
-                <RHFSelect name="category" label= {translate('Category')} >
-                  {CATEGORY_OPTION.map((category) => (
-                    <optgroup key={category.group} label={category.group}>
-                      {category.classify.map((classify) => (
-                        <option key={classify} value={classify}>
-                          {classify}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </RHFSelect>
-
-                <Controller
-                  name= "color"
-                  control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      {...field}
-                      multiple
-                      freeSolo
-                      onChange={(event, newValue) => field.onChange(newValue)}
-                      options={COLOR_OPTION.map((option) => option)}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
-                        ))
-                      }
-                      renderInput={(params) => <TextField label={translate('Colors')} {...params} />}
+                  <RHFSelect name="category" label={translate('Category')} >
+                    {CATEGORY_OPTION.map((category) => (
+                      <optgroup key={category.group} label={category.group}>
+                        {category.classify.map((classify) => (
+                          <option key={classify} value={classify}>
+                            {classify}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </RHFSelect>
+                  <m.div variants={varBounce().inLeft}>
+                    <Controller
+                      name="color"
+                      control={control}
+                      render={({ field }) => (
+                        <Autocomplete
+                          {...field}
+                          multiple
+                          freeSolo
+                          onChange={(event, newValue) => field.onChange(newValue)}
+                          options={COLOR_OPTION.map((option) => option)}
+                          renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                              <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+                            ))
+                          }
+                          renderInput={(params) => <TextField label={translate('Colors')} {...params} />}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </Stack>
-            </Card>
+                  </m.div>
 
-            <Card sx={{ p: 3 }}>
-              <Stack spacing={3} mb={2}>
-                <RHFTextField
-                  name="price"
-                  label={translate('product Price')} 
-                  placeholder="0.00"
-                  value={getValues('price') === 0 ? '' : getValues('price')}
-                  onChange={(event) => setValue('price', Number(event.target.value))}
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">AF</InputAdornment>,
-                    type: 'number',
-                  }}
-                />
+                </Stack>
+              </Card>
 
-               
-              </Stack>
-            </Card>
-
-            <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
-              {!isEdit ? translate('Create Product') : translate('Save Changes')}
-            </LoadingButton>
-          </Stack>
+              <Card sx={{ p: 3 }}>
+                <Stack spacing={3} mb={2}>
+                  <m.div variants={varBounce().inLeft}>
+                    <RHFTextField
+                      name="price"
+                      label={translate('product Price')}
+                      placeholder="0.00"
+                      value={getValues('price') === 0 ? '' : getValues('price')}
+                      onChange={(event) => setValue('price', Number(event.target.value))}
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start">AF</InputAdornment>,
+                        type: 'number',
+                      }}
+                    />
+                  </m.div>
+                </Stack>
+              </Card>
+              <m.div variants={varBounce().inUp}>
+                <LoadingButton fullWidth type="submit" variant="contained" size="large" loading={isSubmitting}>
+                  {!isEdit ? translate('Create Product') : translate('Save Changes')}
+                </LoadingButton>
+              </m.div>
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </FormProvider>
   );
 }
