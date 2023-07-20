@@ -222,7 +222,7 @@ export default function MainHeader(props) {
               ) : (
                 <>
                   {' '}
-                  <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
+                  <Button variant="contained" component={routerLink} to={PATH_AUTH.registerComplete}>
                     {translate('register')}
                   </Button>
                   <Button
@@ -363,7 +363,7 @@ export default function MainHeader(props) {
               >
                 {translate('login')}
               </Button>
-              <Button variant="contained" component={routerLink} to={PATH_AUTH.register}>
+              <Button variant="contained" component={routerLink} to={PATH_AUTH.registerComplete}>
                 {translate('register')}
               </Button>
               {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
