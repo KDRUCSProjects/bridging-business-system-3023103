@@ -47,6 +47,10 @@ export default function Router() {
           path: PATH_AUTH.checkOut,
           element: <CheckoutPage />,
         },
+        {
+          path: PATH_AUTH.registerComplete,
+          element: <RegisterComplete />,
+        },
       ],
     },
 
@@ -123,8 +127,11 @@ const AddToCart = Loadable(lazy(() => import('../pages/Cart/ProductList')));
 // Not Found page
 const NotFoundPage = Loadable(lazy(() => import('../pages/Page404')));
 
-// confirm passowrd 
+// confirm passowrd
 const ConfirmPassword = Loadable(lazy(() => import('../pages/auth/ConfirmPassword')));
 
-// new passowrd 
+// new passowrd
 const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
+
+// new passowrd
+const RegisterComplete = Loadable(lazy(() => import('../pages/auth/stepper')));
