@@ -1,4 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
+
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Card, Link, Container, Typography } from '@mui/material';
@@ -13,6 +14,9 @@ import UserRegisterForm from '../../sections/auth/userRegister/RegisterForm';
 import useLocales from '../../hooks/useLocales';
 // components
 import Page from '../../components/Page';
+
+// store
+import { onNextStep } from '../../store/slices/checkout/checkout';
 
 // ----------------------------------------------------------------------
 
@@ -70,7 +74,7 @@ export default function Register() {
       <RootStyle>
         <HeaderStyle>
           {smUp && (
-            <Typography variant="body2" sx={{ mt: { md: -2 } }}>
+            <Typography variant="body2" sx={{ mt: { md: 13 } }}>
               {translate('Already have an account?')} {''}
               <Link variant="subtitle2" component={RouterLink} to={'/user/login'}>
                 {translate('login')}
@@ -92,7 +96,9 @@ export default function Register() {
                 <Typography variant="h4" gutterBottom>
                   {translate('Get started absolutely free.')}
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>{translate('Free forever. No credit card needed.')}</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {translate('Free forever. No credit card needed.')}
+                </Typography>
               </Box>
             </Box>
             <UserRegisterForm />
@@ -102,7 +108,9 @@ export default function Register() {
               <Link underline="always" color="primary" href="#">
                 {translate('Terms of Service')}
               </Link>
-              {''}{translate('and')}{''}
+              {''}
+              {translate('and')}
+              {''}
               <Link underline="always" color="primary.main" href="#">
                 {translate('Privacy Policy')}
               </Link>
