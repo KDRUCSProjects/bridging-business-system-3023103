@@ -4,13 +4,11 @@ import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Card, IconButton, Typography, CardContent } from '@mui/material';
 // utils
-import { fDate } from '../../utils/formatTime';
 import cssStyles from '../../utils/cssStyles';
 // components
 import Image from '../../components/Image';
 import Iconify from '../../components/Iconify';
 import LightboxModal from '../../components/LightboxModal';
-import BaseApi from '../../store/BaseApi';
 // ----------------------------------------------------------------------
 
 const CaptionStyle = styled(CardContent)(({ theme }) => ({
@@ -30,10 +28,7 @@ ProfileGallery.propTypes = {
   gallery: PropTypes.array.isRequired,
 };
 
-export default function ProfileGallery({ gallery , newdata}) {
-  // console.log('I am a man',gallery[0].user)
-  // const user = gallery[0].user
-    // const {data , isError ,isSuccess , isLoading } = BaseApi.useGetAllProductsQuery(`api/product/?user=${gallery[0].user}`);
+export default function ProfileGallery({ gallery, newdata }) {
   const data = newdata.results;
   const [openLightbox, setOpenLightbox] = useState(false);
 
@@ -97,7 +92,7 @@ function GalleryItem({ item, onOpenLightbox }) {
         <div>
           <Typography variant="subtitle1">{name}</Typography>
           <Typography variant="body2" sx={{ opacity: 0.72 }}>
-            {"fDate(postAt)"}
+            {'fDate(postAt)'}
           </Typography>
         </div>
         <IconButton color="inherit">

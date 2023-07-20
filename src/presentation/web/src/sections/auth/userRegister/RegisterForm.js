@@ -27,6 +27,7 @@ import Snack from '../../../components/Snack';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
 // store
 import BaseApi from '../../../store/BaseApi';
+souimport useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({

@@ -27,14 +27,11 @@ export default function ProductDetailsReview({ product }) {
   return (
     <>
       <ProductDetailsReviewOverview product={product} onOpen={handleOpenReviewBox} />
-
       <Divider />
-
       <Collapse in={reviewBox}>
         <ProductDetailsReviewForm onClose={handleCloseReviewBox} id="move_add_review" />
         <Divider />
       </Collapse>
-
       <ProductDetailsReviewList product={product} />
     </>
   );

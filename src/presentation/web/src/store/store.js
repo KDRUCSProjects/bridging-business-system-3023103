@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
 // redux Toolkit
 import checkoutSlice from './slices/checkout/checkout';
-
 // Rtk Query
 import BaseApi from './BaseApi';
 // Store

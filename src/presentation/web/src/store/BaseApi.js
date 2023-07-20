@@ -18,7 +18,6 @@ const BaseApi = createApi({
     DeleteProduct: builder.mutation(allServices.mutations.DeleteProduct),
 
     // -----------------------------Queries-------------------------------
-
     // profile
     GetBusinessProfile: builder.query(allServices.queries.GetProfile),
 
