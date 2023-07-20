@@ -47,6 +47,7 @@ export default function ShopProductList() {
             </Link>
           )): 'NO data'}
         </Box>
+        <Link to={`/profile`} style={{ textDecoration: 'none' }}><div>safi</div></Link>
         {/* pagination in frontend */}
         <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >
           <Pagination count={totalPages} color='primary' onChange={handlePageChange}/>

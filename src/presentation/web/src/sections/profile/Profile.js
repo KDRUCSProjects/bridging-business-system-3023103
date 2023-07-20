@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Grid, Stack } from '@mui/material';
 //
 import ProfileAbout from './ProfileAbout';
-import ProfileSocialInfo from './ProfileSocialInfo';
 
 // ----------------------------------------------------------------------
 
@@ -14,13 +13,12 @@ Profile.propTypes = {
 
 export default function Profile({ myProfile, posts }) {
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={4}>
-        <Stack spacing={3}>
-          <ProfileAbout profile={myProfile} />
-          <ProfileSocialInfo profile={myProfile} />
-        </Stack>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={4}>
+          <Stack spacing={3}>
+            <ProfileAbout profile={myProfile} />
+          </Stack>
+        </Grid>
       </Grid>
-    </Grid>
   );
 }

@@ -156,6 +156,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <Card sx={{ p: 3 }}>
+
               <Stack spacing={3}>
                 <m.div variants={varBounce().inLeft}>
                   <RHFTextField name="name" label={translate('Product Name')} />
@@ -165,6 +166,50 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                   <LabelStyle>{translate('Description')} </LabelStyle>
                   <RHFEditor simple name="description" />
                 </div>
+
+              <Stack spacing={3} mt={2}>
+                <Typography>
+                 {translate('Select multiple Images')} 
+                </Typography>
+              <input
+                 accept="image/*"
+                 type="file"
+                 multiple
+                
+                />
+                <RHFTextField name="quantity" label={translate('Product quantity')}  type='number'/>
+                <RHFSelect name="category" label= {translate('Category')} >
+                  {CATEGORY_OPTION.map((category) => (
+                    <optgroup key={category.group} label={category.group}>
+                      {category.classify.map((classify) => (
+                        <option key={classify} value={classify}>
+                          {classify}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </RHFSelect>
+
+                <Controller
+                  name= "color"
+                  control={control}
+                  render={({ field }) => (
+                    <Autocomplete
+                      {...field}
+                      multiple
+                      freeSolo
+                      onChange={(event, newValue) => field.onChange(newValue)}
+                      options={COLOR_OPTION.map((option) => option)}
+                      renderTags={(value, getTagProps) =>
+                        value.map((option, index) => (
+                          <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+                        ))
+                      }
+                      renderInput={(params) => <TextField label={translate('Colors')} {...params} />}
+                    />
+                  )}
+                />
+
               </Stack>
             </Card>
             <Lottie options={animationSetter(PostingProduct)} width={"700px"} height={"300px"} />

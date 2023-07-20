@@ -41,33 +41,6 @@ export default function ProductDetails() {
   const { isSuccess,data , isError ,isLoading } = BaseApi.useGetSpecificProductQuery(`api/product/${id}`);
 
  const {translate} =useLocales();
- console.log(data)
-  const product = {  
-      id : "1",
-     available : 1,
-     
-     colors : [
-      "yello",
-      "black",
-      "red"
-     ],
-     cover : "",
-     inventoryType : "",
-     name : "shoe",
-     price : 3434,
-     sizes : [
-      "43",
-      "44",
-      "42"
-     ],
-     status :  translate("AVAILABLE") ,
-     totalRating : 4,
-     totalReview : 5,
-    images : [
-      "image1", "image2" , "image3"
-    ],
-    description: "hello my name is abdul saboor hemat "
-  }
   const cart = [
     "one"
   ]
@@ -79,7 +52,7 @@ export default function ProductDetails() {
     <Page title="Product Details">
       <Container sx={{marginTop:"6em"}}>
        <Typography variant={'h3'} gutterBottom > {translate('product details')} </Typography>
-        {product && (
+        {data && (
           <>
             <Card>
               <Grid container sx={{marginBottom:"3em"}}>

@@ -1,3 +1,4 @@
+
 // @mui
 import { styled } from '@mui/material/styles';
 import { Button, Container, Typography, Box ,TextField , Stack } from '@mui/material';
@@ -41,8 +42,8 @@ export default function ConfirmPassowrd() {
           </Typography>
           <FormProvider>
             <Stack>
-                <TextField name='confirmpassowrd' label={'Confirm Password'} />
-                <Button sx={{marginTop:1 , marginBottom:1}} type="submit" fullWidth size="large" variant="contained">Confirm</Button>
+                <TextField name='confirmpassowrd' label={translate('Confirm Password')} />
+                <Button sx={{marginTop:1 , marginBottom:1}} type="submit" fullWidth size="large" variant="contained">{translate('Confirm')}</Button>
             </Stack>
           </FormProvider>
           <Button fullWidth size="large" >
