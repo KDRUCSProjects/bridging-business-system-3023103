@@ -166,8 +166,8 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                   <LabelStyle>{translate('Description')} </LabelStyle>
                   <RHFEditor simple name="description" />
                 </div>
-
-              <Stack spacing={3} mt={2}>
+                </Stack>
+              {/* <Stack spacing={3} mt={2}>
                 <Typography>
                  {translate('Select multiple Images')} 
                 </Typography>
@@ -210,7 +210,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                   )}
                 />
 
-              </Stack>
+              </Stack> */}
             </Card>
             <Lottie options={animationSetter(PostingProduct)} width={"700px"} height={"300px"} />
 

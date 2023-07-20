@@ -1,15 +1,7 @@
 import { useState } from 'react';
-<<<<<<< Updated upstream
-
-// Lottie
-import Lottie from 'react-lottie';
-// form
-// import { yepResolver } from '@hookform/resolvers/yep';
-=======
 import { m } from 'framer-motion';
 // Lottie
 import Lottie from 'react-lottie';
->>>>>>> Stashed changes
 
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -34,7 +26,7 @@ import { FormProvider, RHFTextField } from '../../../components/hook-form';
 import { MotionContainer, varBounce } from '../../../components/animate';
 // store
 import BaseApi from '../../../store/BaseApi';
-souimport useLocales from '../../../hooks/useLocales';
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({
@@ -146,51 +138,6 @@ export default function RegisterForm() {
             animationPosition={snackOptions.animationPosition}
           />
 
-<<<<<<< Updated upstream
-      <Snack
-        vertical={snackOptions.vertical}
-        horizontal={snackOptions.horizontal}
-        open={snackOptions.open}
-        onClose={handleSnackClose}
-        message={snackOptions.message}
-        animation={snackOptions.animation}
-        autoHideDuration={5000}
-        backgroundColor={snackOptions.backgroundColor}
-        color={snackOptions.color}
-        animationPosition={snackOptions.animationPosition}
-      />
-      <Stack spacing={3}>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-
-          <TextField
-            value={values.username}
-            name="username"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder='UserName'
-            error={formError.username && touched.username}
-            helperText={formError.username}
-            label="UserName" />
-          <TextField
-            value={values.first_name}
-            name="first_name"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder='First Name'
-            error={formError.first_name && touched.first_name}
-            helperText={formError.first_name}
-            label="First Name" />
-          <TextField
-            value={values.last_name}
-            name="last_name"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder='last Name'
-            error={formError.last_name && touched.last_name}
-            helperText={formError.last_name}
-            label="Last Name" />
-        </Stack>
-=======
           <Stack spacing={3}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <m.div variants={varBounce().inRight}>
@@ -205,7 +152,6 @@ export default function RegisterForm() {
                   label="UserName" />
               </m.div>
               <m.div variants={varBounce().inLeft}>
->>>>>>> Stashed changes
 
                 <TextField
                   value={values.first_name}
@@ -268,38 +214,6 @@ export default function RegisterForm() {
               <LoadingButton fullWidth size="large" type="submit" variant="contained" >
                 {isLoading ? (<Lottie options={animationSetter(animation)} width='15em' height='10em' />) : ('Register')}
 
-<<<<<<< Updated upstream
-
-        <TextField
-          value={values.password}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          placeholder={translate('password')}
-          error={formError.password && touched.password}
-          helperText={formError.password}
-          name="password"
-          label={translate("password")}
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}>
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-
-          {isLoading  ? ( <Lottie options={animationSetter(animation)} width='15em' height='10em' />):('Register')}
-          
-
-        </LoadingButton>
-      </Stack>
-    </FormProvider>
-=======
               </LoadingButton>
             </m.div>
 
@@ -309,6 +223,5 @@ export default function RegisterForm() {
 
     </Container>
 
->>>>>>> Stashed changes
   );
 }
