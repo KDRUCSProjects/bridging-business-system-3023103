@@ -1,4 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { m } from 'framer-motion'
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Card, Stack, Link, Container, Typography } from '@mui/material';
@@ -19,6 +20,7 @@ import useLocales from '../../hooks/useLocales';
 
 // components
 import Page from '../../components/Page';
+import { MotionContainer, varBounce } from '../../components/animate';
 // sections
 import LoginForm from '../../sections/auth/login/LoginForm';
 
@@ -88,14 +90,15 @@ export default function Login() {
         </HeaderStyle>
 
         {mdUp && (
-          <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              <Lottie options={animationSetter(birdFlying)} />
-            </Typography>
-          </SectionStyle>
+
+            <SectionStyle>
+              <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+                <Lottie options={animationSetter(birdFlying)} />
+              </Typography>
+            </SectionStyle>
         )}
 
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" component={MotionContainer}>
           <ContentStyle>
             <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
               <Box sx={{ flexGrow: 1 }}>
@@ -106,13 +109,16 @@ export default function Login() {
                   </Typography>{' '}
                   {translate('Business')}
                 </Typography>
+
                 <Box position={'absolute'} top="20px">
                   <Lottie height={'200px'} width={'100%'} options={animationSetter(airplane)} />
                 </Box>
+
               </Box>
             </Stack>
-
-            <LoginForm />
+            <m.div variants={varBounce().inLeft}>
+              <LoginForm />
+            </m.div>
 
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
