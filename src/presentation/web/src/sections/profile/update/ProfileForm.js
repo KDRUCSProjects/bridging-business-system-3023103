@@ -15,9 +15,12 @@ import { countries } from '../../../@fake-db';
 // components
 import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
 
+import useLocales from '../../../hooks/useLocales';
+
 // ----------------------------------------------------------------------
 
 export default function ProfileForm() {
+  const {translate}= useLocales();
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
@@ -85,7 +88,7 @@ export default function ProfileForm() {
               <RHFUploadAvatar name="avatarUrl" maxSize={3145728} onDrop={handleDrop} />
             </Box>
             <Box>
-              <Typography sx={{ color: 'primary.main' }}>Upload Image</Typography>
+              <Typography sx={{ color: 'primary.main' }}>{translate('Upload Image')}</Typography>
             </Box>
           </Card>
         </Grid>
@@ -100,11 +103,11 @@ export default function ProfileForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
+              <RHFTextField name="name" label={translate("Full Name")} />
+              <RHFTextField name="email" label={translate("Email Address")} />
+              <RHFTextField name="phoneNumber" label={translate("Phone Number")} />
 
-              <RHFSelect name="country" label="Country" placeholder="Country">
+              <RHFSelect name="country" label={translate("Country")} placeholder={translate("Country")}>
                 <option value="" />
                 {countries.map((option) => (
                   <option key={option.code} value={option.label}>
@@ -113,17 +116,17 @@ export default function ProfileForm() {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="address" label="Address" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
-              <RHFTextField name="company" label="Company" />
-              <RHFTextField name="role" label="Role" />
+              <RHFTextField name="state" label={translate("State/Region")} />
+              <RHFTextField name="city" label={translate("City")} />
+              <RHFTextField name="address" label={translate("Address")} />
+              <RHFTextField name="zipCode" label={translate("Zip/Code")} />
+              <RHFTextField name="company" label={translate("Company")} />
+              <RHFTextField name="role" label={translate("Role")} />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                Create User
+                {translate('Create User')}
               </LoadingButton>
             </Stack>
           </Card>
