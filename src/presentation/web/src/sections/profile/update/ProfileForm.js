@@ -30,7 +30,6 @@ export default function ProfileForm() {
     role: Yup.string().required('Role Number is required'),
     avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
   });
-
   const defaultValues = useMemo(
     () => ({
       name: 'Adiljan',
@@ -49,7 +48,6 @@ export default function ProfileForm() {
     }),
     []
   );
-
   const methods = useForm({
     resolver: yupResolver(NewUserSchema),
     defaultValues,
@@ -60,13 +58,10 @@ export default function ProfileForm() {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
   const onSubmit = async () => {};
-
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
-
       if (file) {
         setValue(
           'avatarUrl',
@@ -78,7 +73,6 @@ export default function ProfileForm() {
     },
     [setValue]
   );
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} mb="3em">

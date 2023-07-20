@@ -52,7 +52,6 @@ export default function ProductDetailsReviewForm({ onClose, id, ...other }) {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = methods;
-
   const onSubmit = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -62,18 +61,15 @@ export default function ProductDetailsReviewForm({ onClose, id, ...other }) {
       console.error(error);
     }
   };
-
   const onCancel = () => {
     onClose();
     reset();
   };
-
   return (
     <RootStyle {...other} id={id}>
       <Typography variant="subtitle1" gutterBottom>
         Add Review
       </Typography>
-
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3}>
           <div>
@@ -88,13 +84,9 @@ export default function ProductDetailsReviewForm({ onClose, id, ...other }) {
             </Stack>
             {!!errors.rating && <FormHelperText error> {errors.rating?.message}</FormHelperText>}
           </div>
-
           <RHFTextField name="review" label="Review *" multiline rows={3} />
-
           <RHFTextField name="name" label="Name *" />
-
           <RHFTextField name="email" label="Email *" />
-
           <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
             <Button color="inherit" variant="outlined" onClick={onCancel}>
               Cancel

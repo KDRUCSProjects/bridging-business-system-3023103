@@ -34,6 +34,7 @@ import { FormProvider, RHFTextField } from '../../../components/hook-form';
 import { MotionContainer, varBounce } from '../../../components/animate';
 // store
 import BaseApi from '../../../store/BaseApi';
+souimport useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({

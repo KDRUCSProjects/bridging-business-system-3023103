@@ -4,15 +4,12 @@ import { useState } from 'react';
 // @mui
 import { Link } from 'react-router-dom';
 import { Box, Container , Card} from '@mui/material';
-// components
-
 //
 import ShopProductCard from './ShopProductCard';
 import Page from '../../components/Page';
 import BaseApi from '../../store/BaseApi';
 
 export default function ShopProductList() {
-
   const [currentPage, setCurrentPage] = useState(1);
   const { isSuccess,data , isError ,isLoading ,totalPages} = BaseApi.useGetSpecificProductQuery(`api/product/?page=${currentPage}`);
     const divStyle = { position: 'relative', left: '45%' , top:"7px" };
@@ -25,7 +22,6 @@ export default function ShopProductList() {
     else if(isLoading){
       <h1>loading...</h1>
     }
-
   return (
     <Page title="Ecommerce: Shop">
       <Container>
@@ -47,13 +43,11 @@ export default function ShopProductList() {
             </Link>
           )): 'NO data'}
         </Box>
-        <Link to={`/profile`} style={{ textDecoration: 'none' }}><div>safi</div></Link>
         {/* pagination in frontend */}
         <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >
           <Pagination count={totalPages} color='primary' onChange={handlePageChange}/>
         </div>
       </Container>
-    </Page>
-    
+    </Page> 
   );
 }

@@ -23,19 +23,18 @@ ProfileAbout.propTypes = {
 };
 
 export default function ProfileAbout({ profile }) {
-const {translate} = useLocales();
-  const { quote, country,email, role, company, school: Business } = profile;
+  const { translate } = useLocales();
+  const { quote, country, email, role, company, school: Business } = profile;
   return (
     <Card>
-      <CardHeader title= {translate('About me')} />
-
+      <CardHeader title={translate('About me')} />
       <Stack spacing={2} sx={{ p: 3 }}>
         <Typography variant="body2">{profile[0].detial}</Typography>
 
         <Stack direction="row">
           <IconStyle icon={'eva:pin-fill'} />
           <Typography variant="body2">
-          {translate('Location')} &nbsp;
+            {translate('Location')} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {profile[0].address.area + profile[0].address.street + profile[0].address.district}
             </Link>
@@ -50,7 +49,7 @@ const {translate} = useLocales();
         <Stack direction="row">
           <IconStyle icon={'ic:round-business-center'} />
           <Typography variant="body2">
-          {translate('Business at')}&nbsp;
+            {translate('Business at')}&nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {profile[0].address.province}
             </Link>
