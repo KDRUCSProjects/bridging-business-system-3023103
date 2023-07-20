@@ -24,10 +24,6 @@ const english = {
   ...Home,
   ...ConfirmPassword,
   ...Login,
-  ...CardDetails,
-  ...creatprofile,
-  ...profilepage,
-  ...resetPassword,
   ...UserRegister,
   ...updateProfile,
 };
