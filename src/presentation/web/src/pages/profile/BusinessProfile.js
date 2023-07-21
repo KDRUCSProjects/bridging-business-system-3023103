@@ -15,6 +15,8 @@ import Iconify from '../../components/Iconify';
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
 import BaseApi from '../../store/BaseApi';
+import AccountChangePassword from '../../sections/@dashboard/user/account/AccountChangePassword';
+
 // ----------------------------------------------------------------------
 const TabsWrapperStyle = styled('div')(({ theme }) => ({
   zIndex: 9,
@@ -62,10 +64,15 @@ export default function BusinessProfile() {
       icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
       component: <ProfileProductList gallery={_userGallery} newdata={newdata} />,
     },
+    // {
+    //   value: 'Security',
+    //   icon: <Iconify icon={'eva:people-fill'} width={20} height={20} />,
+    //   component: 'Security',
+    // },
     {
-      value: 'Security',
-      icon: <Iconify icon={'eva:people-fill'} width={20} height={20} />,
-      component: 'Security',
+      value: 'change_password',
+      icon: <Iconify icon={'ic:round-vpn-key'} width={20} height={20} />,
+      component: <AccountChangePassword />,
     },
   ];
   return isSuccess ? (
