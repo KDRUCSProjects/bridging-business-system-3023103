@@ -15,6 +15,7 @@ import resetPassword from './resetPassword';
 import UserRegister from './UserRegister';
 import updateProfile from './updateProfile';
 import checkoutCart from './checkoutCart';
+import AddProduct from './AddProduct';
 
 const english = {
   ...CardDetails,
@@ -28,6 +29,7 @@ const english = {
   ...UserRegister,
   ...updateProfile,
   ...checkoutCart,
+  ...AddProduct,
 };
 
 export default english;
