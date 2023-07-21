@@ -16,7 +16,6 @@ import useLocales from '../../hooks/useLocales';
 import Page from '../../components/Page';
 
 // store
-import { onNextStep } from '../../store/slices/checkout/checkout';
 
 // ----------------------------------------------------------------------
 
@@ -91,13 +90,10 @@ export default function Register() {
 
         <Container>
           <ContentStyle>
-            <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
               <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="h4"  textAlign='center'>
                   {translate('Get started absolutely free.')}
-                </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
-                  {translate('Free forever. No credit card needed.')}
                 </Typography>
               </Box>
             </Box>

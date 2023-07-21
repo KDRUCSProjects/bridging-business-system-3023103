@@ -19,9 +19,10 @@ import animation from '../../animations/shared/arrow-left.json';
 // components
 import Page from '../../components/Page';
 import BaseApi from '../../store/BaseApi';
+import Snack from '../../components/Snack';
 
 // store
-import { onNextStep } from '../../store/slices/checkout/checkout';
+import { onNextStep } from '../../store/slices/auth/completeAuth';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +37,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 const RegisterSchema = yup.object().shape({
-  otp: yup.number().min(6).required(),
+  otp: yup
+  .string('otp must be number')
+  .required('Please enter Otp')
+  .matches(
+    /^\d{4}$/,  
+    '4 digit required'
+  ).length(4, 'please Enter exactly 4 digit !'),
 });
 
 // ----------------------------------------------------------------------
@@ -50,9 +57,9 @@ export default function VerifyUser() {
   };
 
   const theme = useTheme();
-  const [RegisterUser, { isLoading }] = BaseApi.useRegisterUserMutation();
+  const [UserVerify, { isLoading }] = BaseApi.useVerifyUserMutation();
   const [snackOptions, setSnackOptions] = useState({
-    open: false,
+    open: true,
     vertical: 'top',
     horizontal: 'center',
     backgroundColor: undefined,
@@ -67,7 +74,7 @@ export default function VerifyUser() {
   };
 
   const initialValues = {
-    otp: null,
+    otp: undefined,
   };
 
   const {
@@ -81,11 +88,13 @@ export default function VerifyUser() {
     initialValues,
     validationSchema: RegisterSchema,
     onSubmit: async () => {
+      const email  = localStorage.getItem('userEmail');
+      const data ={otp:values.otp, email}
       const query = {
-        path: '/api/users/',
-        data: values,
-      };
-      const res = await RegisterUser(query);
+        path: '/api/verify/',
+        data
+      };    
+      const res = await UserVerify(query);
       if (res.error) {
         setSnackOptions({
           open: true,
@@ -94,10 +103,14 @@ export default function VerifyUser() {
           backgroundColor: theme.palette.error.main,
           color: theme.palette.text.primary,
           animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: 'Something Went Wrong',
+          message: res.error.data,
           animationPosition: { marginLeft: '-4em' },
         });
       } else if (res.data) {
+        localStorage.setItem('Token', res.data.token)
+        localStorage.setItem('user_id', res.data.verified_user.id)
+        console.log(localStorage.getItem('Token'))
+        console.log(localStorage.getItem('user_id'))
         setSnackOptions({
           open: true,
           vertical: 'top',
@@ -105,7 +118,7 @@ export default function VerifyUser() {
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.text.primary,
           animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: 'User Created SuccessFully !',
+          message: 'successful !',
           animationPosition: { marginLeft: '-4em' },
         });
         setTimeout(() => {
@@ -118,6 +131,18 @@ export default function VerifyUser() {
   return (
     <Page title="Verify User">
       <Container>
+      <Snack
+            vertical={snackOptions.vertical}
+            horizontal={snackOptions.horizontal}
+            open={snackOptions.open}
+            onClose={handleSnackClose}
+            message={snackOptions.message}
+            animation={snackOptions.animation}
+            autoHideDuration={5000}
+            backgroundColor={snackOptions.backgroundColor}
+            color={snackOptions.color}
+            animationPosition={snackOptions.animationPosition}
+          />
         <ContentStyle sx={{ textAlign: 'center' }}>
           <Box mb={8} textAlign="center" height="300px" width={'500px'}>
             <Lottie options={animationSetter(newpassword)} />
@@ -134,7 +159,7 @@ export default function VerifyUser() {
                 onChange={handleChange}
                 placeholder="OTP"
                 error={formError.otp && touched.otp}
-                helperText={formError.otp ? 'Otp must number & equal to 6 digits' : undefined}
+                helperText={formError.otp ? formError.otp : undefined}
                 label="OTP"
               />
               <Button
@@ -143,9 +168,8 @@ export default function VerifyUser() {
                 fullWidth
                 size="large"
                 variant="contained"
-                onClick={handleNextStep}
               >
-                Confirm
+                {isLoading ?  <Lottie options={animationSetter(animation)} /> : ' Confirm' }
               </Button>
             </Stack>
           </FormProvider>
