@@ -29,9 +29,13 @@ const BaseApi = createApi({
     GetAllCategories: builder.query(allServices.queries.GetAllCategories),
     GetSpecificCategory: builder.query(allServices.queries.GetSpecificCategory),
 
-       // User
-       GetAllUsers: builder.query(allServices.queries.GetAllUsers),
-       GetSpecificUser: builder.query(allServices.queries.GetSpecificUser),
+    // User
+    GetAllUsers: builder.query(allServices.queries.GetAllUsers),
+    GetSpecificUser: builder.query(allServices.queries.GetSpecificUser),
+
+    // color
+    GetAllColors: builder.query(allServices.queries.GetAllColors),
+    GetSpecificColor: builder.query(allServices.queries.GetSpecificColor),
   }),
 });
 
