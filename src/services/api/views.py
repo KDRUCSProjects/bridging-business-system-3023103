@@ -67,7 +67,7 @@ from .pagination import ProductPagination
 
 
 class PrdocutViewSet(viewsets.ModelViewSet):
-    permission_classes = [ProductAccessPolicy]
+    # permission_classes = [ProductAccessPolicy]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
