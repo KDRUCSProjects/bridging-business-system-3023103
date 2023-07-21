@@ -19,17 +19,16 @@ const IconStyle = styled(Iconify)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 ProfileAbout.propTypes = {
-  profile: PropTypes.object,
+  profile: PropTypes.array,
 };
 
-export default function ProfileAbout({ profile }) {
+export default function ProfileAbout({ profile , about }) {
   const { translate } = useLocales();
   const { quote, country, email, role, company, school: Business } = profile;
   return (
     <Card>
-      <CardHeader title={translate('About me')} />
+      <CardHeader title={translate('About Me')} />
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">{profile[0].detial}</Typography>
 
         <Stack direction="row">
           <IconStyle icon={'eva:pin-fill'} />
