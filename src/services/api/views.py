@@ -13,7 +13,6 @@ from .models import (
     Product,
     ProductImage,
     BusinessProfile,
-    BusinessOwner,
     OrderDetail,
     Order,
     ProductColor,
@@ -30,7 +29,6 @@ from .serializers import (
     ProductSerializer,
     ProductImageSerializer,
     BusinessProfileSerializer,
-    BusinessOwnerSerializer,
     OrderSerializer,
     OrderDetailSerializer,
     ProductColorSerializer,
@@ -120,11 +118,6 @@ class BusinessProfileViewSet(viewsets.ModelViewSet):
     serializer_class = BusinessProfileSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["user"]
-
-
-class BusinessOwnerViewSet(viewsets.ModelViewSet):
-    queryset = BusinessOwner.objects.all()
-    serializer_class = BusinessOwnerSerializer
 
 
 class ProductColorViewSet(viewsets.ModelViewSet):

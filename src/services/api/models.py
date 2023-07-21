@@ -25,16 +25,6 @@ class User(AbstractUser):
         return self.username
 
 
-class BusinessOwner(models.Model):
-    name = models.CharField(max_length=60)
-    bio = models.TextField(blank=True, null=True)
-    phone = PhoneNumberField(blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Address(models.Model):
     province = models.CharField(max_length=60)
     district = models.CharField(max_length=60)
@@ -55,8 +45,9 @@ class Category(models.Model):
 
 class BusinessProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    business_owner = models.OneToOneField(BusinessOwner, on_delete=models.CASCADE)
-    detial = models.TextField(blank=True, null=True)
+    owner_phone = PhoneNumberField()
+    owner_bio = models.TextField(blank=True, null=True)
+    detials = models.TextField(blank=True, null=True)
     phone = PhoneNumberField()
     avator = models.ImageField(blank=True, null=True)
     business_type = models.CharField(max_length=60)
@@ -89,8 +80,10 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(blank=True, null=True )
-    product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name="images")
+    image = models.ImageField(blank=True, null=True)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="images"
+    )
 
     def __str__(self):
         return self.image.name

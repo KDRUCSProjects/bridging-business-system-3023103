@@ -7,7 +7,6 @@ from .models import (
     Order,
     OrderDetail,
     BusinessProfile,
-    BusinessOwner,
     ProductColor,
     Category,
     Address,
@@ -49,7 +48,6 @@ class ProductSerializer(serializers.ModelSerializer):
     ratting = serializers.SerializerMethodField(
         method_name="calculated_ratting", read_only=True
     )
-    # color = ProductColorSerializer(read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(
@@ -117,14 +115,7 @@ class OrderSerializer(serializers.ModelSerializer):
         return order
 
 
-class BusinessOwnerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BusinessOwner
-        fields = "__all__"
-
-
 class BusinessProfileSerializer(serializers.ModelSerializer):
-    business_owner = BusinessOwnerSerializer()
     address = AddressSerializer()
 
     class Meta:
@@ -132,12 +123,10 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-        business_owner = validated_data.pop("business_owner")
         address = validated_data.pop("address")
-        business_owner_obj = BusinessOwner.objects.create(**business_owner)
         address_obj = Address.objects.create(**address)
         business_profile = BusinessProfile.objects.create(
-            business_owner=business_owner_obj, address=address_obj, **validated_data
+            address=address_obj, **validated_data
         )
         return business_profile
 
