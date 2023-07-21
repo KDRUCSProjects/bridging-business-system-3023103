@@ -9,11 +9,12 @@ const AddProduct = {
     'Product quantity': 'د محصول مقدار ',
     Category:'طبفه بندی کول ',
     Colors: 'رنګ',
-   'product Price':'د محصول قیمت ',
-   'Create Product': 'محصول اضافه کړی ',
-
-    
-
+    'product Price':'د محصول قیمت ',
+    'Create Product': 'محصول اضافه کړی ',
+    'Drop or Select file': 'ډراپ یا فایل غوره کړئ',
+    'Drop files here or click': 'دلته فایلونه پریږدئ یا کلیک وکړئ',
+    browse: 'انتخاب',
+    'thorough your machine': 'ستاسو دستگاه له لاري',
   };
   
   export default AddProduct;

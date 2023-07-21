@@ -16,6 +16,7 @@ import Login from "./Login";
 import UserRegister from "./UserRegister";
 import updateProfile from "./updateProfile";
 import checkoutCart from "./checkoutCart";
+import AddProduct from "./AddProduct";
 
 const dari = {
     ...Home,
@@ -29,6 +30,7 @@ const dari = {
     ...UserRegister,
     ...updateProfile,
     ...checkoutCart,
+    ...AddProduct,
 };
 
 export default dari;

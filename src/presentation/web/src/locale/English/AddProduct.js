@@ -9,8 +9,12 @@ const AddProduct = {
     'Product quantity': 'Product quantity',
     Category: 'Category',
     Colors: 'Colors',
-   'product Price': 'product Price',
-   'Create Product': 'Create Product',
+    'product Price': 'product Price',
+    'Create Product': 'Create Product',
+    'Drop or Select file': 'Drop or Select file',
+    'Drop files here or click': 'Drop files here or click',
+    browse: 'browse',
+    'thorough your machine': 'thorough your machine',
 
   };
   
