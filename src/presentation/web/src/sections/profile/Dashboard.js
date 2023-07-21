@@ -1,6 +1,6 @@
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Stack, Button } from '@mui/material';
+import {  Grid } from '@mui/material';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
@@ -28,7 +28,6 @@ export default function Dashboard(mydata) {
             description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
           />
         </Grid>
-
         <Grid item xs={12} md={4}>
           <AppWidgetSummary
             title="Total Active Users"
@@ -38,7 +37,6 @@ export default function Dashboard(mydata) {
             chartData={[5, 18, 12, 51, 68, 11, 39, 37, 27, 20]}
           />
         </Grid>
-       
           <Grid item xs={12} md={6}>
             <AppWidgetSummary
               title="Total Installed"
@@ -57,8 +55,6 @@ export default function Dashboard(mydata) {
               chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
               />
           </Grid>
-             
-
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentDownload
               title="Current Download"
