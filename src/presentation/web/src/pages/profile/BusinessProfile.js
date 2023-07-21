@@ -15,6 +15,7 @@ import Iconify from '../../components/Iconify';
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
 import BaseApi from '../../store/BaseApi';
+import Dashboard  from '../../sections/profile/Dashboard';
 import AccountChangePassword from '../../sections/@dashboard/user/account/AccountChangePassword';
 // ----------------------------------------------------------------------
 const TabsWrapperStyle = styled('div')(({ theme }) => ({
@@ -51,7 +52,7 @@ export default function BusinessProfile() {
     {
       value: 'Dashboard',
       icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
-      component: 'Dashboard',
+      component: <Dashboard mydata={data} />,
     },
     {
       value: 'About',
