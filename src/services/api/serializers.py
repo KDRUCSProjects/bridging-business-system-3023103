@@ -130,6 +130,36 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
         )
         return business_profile
 
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop("address")
+
+        # Update the parent object
+        instance.user = validated_data.get("user", instance.user)
+        instance.owner_phone = validated_data.get("owner_phone", instance.owner_phone)
+        instance.owner_bio = validated_data.get("owner_bio", instance.owner_bio)
+        instance.detials = validated_data.get("detials", instance.detials)
+        instance.detials = validated_data.get("detials", instance.detials)
+        instance.phone = validated_data.get("phone", instance.phone)
+        instance.avator = validated_data.get("avator", instance.avator)
+        instance.business_type = validated_data.get(
+            "business_type", instance.business_type
+        )
+        instance.avator = validated_data.get("avator", instance.avator)
+        instance.save()
+
+        address_id = instance.address.id
+        if address_id:
+            address = Address.objects.get(id=address_id)
+            address.province = address_data.get("province")
+            address.district = address_data.get("district")
+            address.area = address_data.get("area")
+            address.street = address_data.get("street")
+            address.save()
+        else:
+            Address.objects.create(parent=instance, **address_data)
+
+        return instance
+
 
 class CategorySeralizer(serializers.ModelSerializer):
     class Meta:
