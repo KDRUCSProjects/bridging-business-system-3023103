@@ -2,20 +2,10 @@
 import { useTheme } from '@mui/material/styles';
 import { Container, Grid, Stack, Button } from '@mui/material';
 // hooks
-
-import animationSetter from '../../animations/animationSetter';
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
-// sections
-// import {
-//   AppWelcome,
-//   AppFeatured,
-//   AppAreaInstalled,
-//   AppWidgetSummary,
-//   AppCurrentDownload,
-// } from '../@dashboard/general/app';
 import AppWelcome from '../@dashboard/general/app/AppWelcome';
 import AppWidgetSummary from '../@dashboard/general/app/AppWidgetSummary';
 import AppCurrentDownload from '../@dashboard/general/app/AppCurrentDownload';
