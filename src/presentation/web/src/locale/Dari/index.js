@@ -14,6 +14,7 @@ import CardDetails from './CardDetails';
 import ConfirmPassword from "./ConfirmPassword";
 import Login from "./Login";
 import UserRegister from "./UserRegister";
+import updateProfile from "./updateProfile";
 
 const dari = {
     ...Home,
@@ -25,6 +26,7 @@ const dari = {
     ...ConfirmPassword,
     ...Login,
     ...UserRegister,
+    ...updateProfile,
 };
 
 export default dari;

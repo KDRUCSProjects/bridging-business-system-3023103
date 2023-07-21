@@ -13,6 +13,7 @@ import creatprofile from './creatprofile';
 import profilepage from './profilepage';
 import resetPassword from './resetPassword';
 import UserRegister from './UserRegister';
+import updateProfile from './updateProfile';
 
 const english = {
   ...CardDetails,
@@ -23,11 +24,8 @@ const english = {
   ...Home,
   ...ConfirmPassword,
   ...Login,
-  ...CardDetails,
-  ...creatprofile,
-  ...profilepage,
-  ...resetPassword,
   ...UserRegister,
+  ...updateProfile,
 };
 
 export default english;
