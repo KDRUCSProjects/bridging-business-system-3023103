@@ -7,7 +7,6 @@ from .models import (
     Order,
     OrderDetail,
     BusinessProfile,
-    BusinessOwner,
     ProductColor,
     Category,
     Address,
@@ -49,25 +48,26 @@ class ProductSerializer(serializers.ModelSerializer):
     ratting = serializers.SerializerMethodField(
         method_name="calculated_ratting", read_only=True
     )
-    color=ProductColorSerializer(many=True,read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
-    # uploaded_images = serializers.ListField(
-    #     child=serializers.ImageField(
-    #         max_length=1000000, allow_empty_file=False, use_url=False
-    #     ),
-    #     write_only=True,
-    # )
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(
+            max_length=1000000, allow_empty_file=False, use_url=False
+        ),
+        write_only=True,
+    )
 
     class Meta:
         model = Product
         fields = "__all__"
 
-    # def create(self, validated_data):
-    #     prodcut_image_data = validated_data.pop("uploaded_images")
-    #     product = Product.objects.create(**validated_data)
-    #     for product_image in prodcut_image_data:
-    #         ProductImage.objects.create(product=product, image=product_image)
-    #     return product
+    def create(self, validated_data):
+        color = validated_data.pop("color")
+        prodcut_image_data = validated_data.pop("uploaded_images")
+        product = Product.objects.create(**validated_data)
+        product.color.set(color)
+        for product_image in prodcut_image_data:
+            ProductImage.objects.create(product=product, image=product_image)
+        return product
 
     # for ratting calculations
     def calculated_ratting(self, instance):
@@ -115,14 +115,7 @@ class OrderSerializer(serializers.ModelSerializer):
         return order
 
 
-class BusinessOwnerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BusinessOwner
-        fields = "__all__"
-
-
 class BusinessProfileSerializer(serializers.ModelSerializer):
-    business_owner = BusinessOwnerSerializer()
     address = AddressSerializer()
 
     class Meta:
@@ -130,14 +123,42 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-        business_owner = validated_data.pop("business_owner")
         address = validated_data.pop("address")
-        business_owner_obj = BusinessOwner.objects.create(**business_owner)
         address_obj = Address.objects.create(**address)
         business_profile = BusinessProfile.objects.create(
-            business_owner=business_owner_obj, address=address_obj, **validated_data
+            address=address_obj, **validated_data
         )
         return business_profile
+
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop("address")
+
+        # Update the parent object
+        instance.user = validated_data.get("user", instance.user)
+        instance.owner_phone = validated_data.get("owner_phone", instance.owner_phone)
+        instance.owner_bio = validated_data.get("owner_bio", instance.owner_bio)
+        instance.detials = validated_data.get("detials", instance.detials)
+        instance.detials = validated_data.get("detials", instance.detials)
+        instance.phone = validated_data.get("phone", instance.phone)
+        instance.avator = validated_data.get("avator", instance.avator)
+        instance.business_type = validated_data.get(
+            "business_type", instance.business_type
+        )
+        instance.avator = validated_data.get("avator", instance.avator)
+        instance.save()
+
+        address_id = instance.address.id
+        if address_id:
+            address = Address.objects.get(id=address_id)
+            address.province = address_data.get("province")
+            address.district = address_data.get("district")
+            address.area = address_data.get("area")
+            address.street = address_data.get("street")
+            address.save()
+        else:
+            Address.objects.create(parent=instance, **address_data)
+
+        return instance
 
 
 class CategorySeralizer(serializers.ModelSerializer):

@@ -20,6 +20,8 @@ import EmptyContent from '../../components/EmptyContent';
 import CheckoutSummary from './CheckoutSummary';
 import CheckoutProductList from './CheckoutProductList';
 
+import useLocales from '../../hooks/useLocales';
+
 // ----------------------------------------------------------------------
 
 export default function CheckoutCart(activeStep) {
@@ -53,6 +55,8 @@ export default function CheckoutCart(activeStep) {
     dispatch(applyDiscount(value));
   };
 
+  const {translate}=useLocales();
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={8}>
@@ -60,9 +64,9 @@ export default function CheckoutCart(activeStep) {
           <CardHeader
             title={
               <Typography variant="h6">
-                Card
+                {translate('Card')}
                 <Typography component="span" sx={{ color: 'text.secondary' }}>
-                  &nbsp;({totalItems} item)
+                  &nbsp;({totalItems} {translate('item')})
                 </Typography>
               </Typography>
             }
@@ -79,7 +83,7 @@ export default function CheckoutCart(activeStep) {
               />
             </Scrollbar>
           ) : (
-            <EmptyContent title="Cart is empty" description="Look like you have no items in your shopping cart." />
+            <EmptyContent title={translate("Cart is empty")} description={translate("Look like you have no items in your shopping cart.")} />
           )}
         </Card>
 
@@ -89,7 +93,7 @@ export default function CheckoutCart(activeStep) {
           to={'Home'}
           startIcon={<Iconify icon={'eva:arrow-ios-back-fill'} />}
         >
-          Continue Shopping
+          {translate('Continue Shopping')}
         </Button>
       </Grid>
 
@@ -109,7 +113,7 @@ export default function CheckoutCart(activeStep) {
           disabled={cart.length === 0}
           onClick={handleNextStep}
         >
-          Check Out
+          {translate('Check Out')}
         </Button>
       </Grid>
     </Grid>

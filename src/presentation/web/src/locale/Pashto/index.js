@@ -13,7 +13,9 @@ import creatprofile from "./creatprofile";
 import AddProduct from "./AddProduct";
 import UserRegister from "./UserRegister";
 import ConfirmPassword from "./ConfirmPassword";
-import Login from "./Login"
+import Login from "./Login";
+import updateProfile from "./updateProfile";
+import checkoutCart from "./checkoutCart";
 
 const pashto = {
     ...Home,
@@ -26,6 +28,8 @@ const pashto = {
     ...AddProduct,
     ...ConfirmPassword,
     ...Login,
+    ...updateProfile,
+    ...checkoutCart,
   
 };
 

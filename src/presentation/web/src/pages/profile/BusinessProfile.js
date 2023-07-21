@@ -15,6 +15,8 @@ import Iconify from '../../components/Iconify';
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
 import BaseApi from '../../store/BaseApi';
+import Dashboard  from '../../sections/profile/Dashboard';
+import AccountChangePassword from '../../sections/@dashboard/user/account/AccountChangePassword';
 // ----------------------------------------------------------------------
 const TabsWrapperStyle = styled('div')(({ theme }) => ({
   zIndex: 9,
@@ -35,44 +37,42 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function BusinessProfile() {
   const { id } = useParams();
-  const {data , isError ,isSuccess , isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${id}`);
-  const { data: newdata  } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
-  const {translate} = useLocales();
+  const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${id}`);
+  const { data: newdata } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
+  const { translate } = useLocales();
   const { themeStretch } = useSettings();
-  const { currentTab, onChangeTab } = useTabs('profile');
+  const { currentTab, onChangeTab } = useTabs('Dashboard');
   const [findFriends, setFindFriends] = useState('');
 
   const handleFindFriends = (value) => {
     setFindFriends(value);
   };
-
+  
   const PROFILE_TABS = [
-    
     {
-      value: 'profile',
+      value: 'Dashboard',
+      icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
+      component: <Dashboard mydata={data} />,
+    },
+    {
+      value: 'About',
       icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
       component: <Profile myProfile={data} posts={_userFeeds} />,
     },
     {
-      value: 'Section1',
-      icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
-      component: 'Section1',
-    },
-    {
-      value: 'Section2',
-      icon: <Iconify icon={'eva:people-fill'} width={20} height={20} />,
-      component: 'section2',
-    },
-    {
-      value: 'Proucts',
+      value: 'Products',
       icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
-      component: <ProfileProductList  gallery={_userGallery} newdata={newdata} />,
+      component: <ProfileProductList gallery={_userGallery} newdata={newdata} />,
+    },
+    {
+      value: 'change_password',
+      icon: <Iconify icon={'ic:round-vpn-key'} width={20} height={20} />,
+      component: <AccountChangePassword />,
     },
   ];
-  return (
-    (isSuccess?
+  return isSuccess ? (
     <Page title="User: Profile">
-      <Container maxWidth={themeStretch ? false : 'lg'} sx={{marginTop:"6rem" , marginBottom:"3rem" }}>
+      <Container maxWidth={themeStretch ? false : 'lg'} sx={{ marginTop: '6rem', marginBottom: '3rem' }}>
         <Card
           sx={{
             mb: 3,
@@ -101,6 +101,8 @@ export default function BusinessProfile() {
           return isMatched && <Box key={tab.value}>{tab.component}</Box>;
         })}
       </Container>
-    </Page>:"Data not found")
+    </Page>
+  ) : (
+    'Data not found'
   );
 }

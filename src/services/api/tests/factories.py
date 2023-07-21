@@ -8,6 +8,10 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
     username = "saboor hemat"
+    email="khal@gmail.com"
+    # is_verified=False
+    # otp="sdfas"
+    # is_password_changable=False
 
 
 
