@@ -1,46 +1,40 @@
 import PropTypes from 'prop-types';
-import { m } from 'framer-motion'
+import { m } from 'framer-motion';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Lottie from 'react-lottie';
 // form
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
 import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Container } from '@mui/material';
 import useLocales from '../../hooks/useLocales';
 
-import PostingProduct from '../../animations/product/postingproduct.json'
+import PostingProduct from '../../animations/product/postingproduct.json';
 
 import FormProvider from '../../components/hook-form/FormProvider';
 import RHFSelect from '../../components/hook-form/RHFSelect';
 import RHFSwitch from '../../components/hook-form/RHFSwitch';
 import RHFEditor from '../../components/hook-form/RHFEditor';
 import RHFTextField from '../../components/hook-form/RHFTextField';
-import RHFRadioGroup from '../../components/hook-form/RHFRadioGroup'
+import RHFUploadMultiFile from '../../components/hook-form/RHFUploadMultiFile';
 import { MotionContainer, varBounce } from '../../components/animate';
 import animationSetter from '../../animations/animationSetter';
+import animation from '../../animations/shared/arrow-left.json';
+import BaseApi from '../../store/BaseApi';
+
 // ----------------------------------------------------------------------
-
-
 
 const CATEGORY_OPTION = [
   { group: 'Clothing', classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather'] },
   { group: 'Tailored', classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats'] },
 ];
 
-const COLOR_OPTION = [
-  'Red',
-  'Yellow',
-  'Black',
-  'white',
-  'blue',
-
-];
+const COLOR_OPTION = ['Red', 'Yellow', 'Black', 'white', 'blue'];
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
@@ -56,6 +50,10 @@ AdProductForm.propTypes = {
 };
 
 export default function AdProductForm({ isEdit, currentProduct }) {
+  const theme = useTheme();
+  const { data } = BaseApi.useGetAllCategoriesQuery('api/category/');
+  const { data: colors } = BaseApi.useGetAllColorsQuery('api/product_color/');
+  const [CreateProduct, { isLoading }] = BaseApi.useCreateProductMutation();
   const { translate } = useLocales();
   const navigate = useNavigate();
 
@@ -64,27 +62,42 @@ export default function AdProductForm({ isEdit, currentProduct }) {
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
-    images: Yup.array().min(1, 'Images is required'),
-    price: Yup.number().moreThan(0, 'Price should not be $0.00'),
+    uploaded_images: Yup.array().min(1, 'Images is required'),
+    quantity: Yup.number().required('quantity is required'),
+    user: Yup.number().required('user is required'),
+    category: Yup.string().required('category required'),
+    color: Yup.array().min(1, 'color is required'),
+    price: Yup.number().moreThan(0, 'Price should not be af-0.00'),
   });
 
   const defaultValues = useMemo(
     () => ({
       name: currentProduct?.name || '',
       description: currentProduct?.description || '',
-      images: currentProduct?.images || [],
-      code: currentProduct?.code || '',
-      sku: currentProduct?.sku || '',
+      uploaded_images: currentProduct?.uploaded_images || [],
+      quantity: currentProduct?.quantity || undefined,
+      user: currentProduct?.user || 1,
       price: currentProduct?.price || 0,
-      priceSale: currentProduct?.priceSale || 0,
-      tags: currentProduct?.tags || [COLOR_OPTION[0]],
-      inStock: true,
-      taxes: true,
+      color: currentProduct?.color || [],
       category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
   );
+  const [snackOptions, setSnackOptions] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+    backgroundColor: undefined,
+    color: undefined,
+    animation: undefined,
+    message: undefined,
+    animationPosition: undefined,
+  });
+
+  const handleSnackClose = () => {
+    setSnackOptions({ ...snackOptions, open: false });
+  };
 
   const methods = useForm({
     resolver: yupResolver(NewProductSchema),
@@ -111,23 +124,50 @@ export default function AdProductForm({ isEdit, currentProduct }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentProduct]);
+  const selectedColor = [];
 
-  const onSubmit = async () => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
+  const notImportent = values.color.map((valueColor) => {
+    return colors?.map((gettedColor) => {
+      if (valueColor === gettedColor.name) {
+        selectedColor.push(gettedColor.id);
+      }
+      return valueColor;
+    });
+  });
+  console.log('selected colors', selectedColor);
+
+  const onSubmit = async (e) => {
+    const formData = new FormData();
+    formData.append('name', values.name);
+    const v = values.uploaded_images.map((image) => {
+      return formData.append('uploaded_images', image, image.name);
+    });
+    formData.append('description', values.description);
+    formData.append('category', values.category);
+    formData.append('user', values.user);
+    formData.append('quantity', values.quantity);
+    formData.append('price', values.price);
+    const d = selectedColor.map((color) => {
+      return formData.append('color', color);
+    });
+    const query = {
+      path: '/api/product/',
+      data: formData,
+    };
+    const res = await CreateProduct(query);
+    if (res.error) {
+      console.log(res.error);
+      enqueueSnackbar('error', { variant: 'error' });
+    } else if (res.data) {
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate('/');
-    } catch (error) {
-      console.error(error);
     }
   };
 
   const handleDrop = useCallback(
     (acceptedFiles) => {
-      const images = values.images || [];
+      const images = values.uploaded_images || [];
 
-      setValue('images', [
+      setValue('uploaded_images', [
         ...images,
         ...acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -136,27 +176,24 @@ export default function AdProductForm({ isEdit, currentProduct }) {
         ),
       ]);
     },
-    [setValue, values.images]
+    [setValue, values.uploaded_images]
   );
-
   const handleRemoveAll = () => {
-    setValue('images', []);
+    setValue('uploaded_images', []);
   };
 
   const handleRemove = (file) => {
-    const filteredItems = values.images && values.images?.filter((_file) => _file !== file);
+    const filteredItems = values.uploaded_images && values.uploaded_images?.filter((_file) => _file !== file);
 
-    setValue('images', filteredItems);
+    setValue('uploaded_images', filteredItems);
   };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Container component={MotionContainer}>
-
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <Card sx={{ p: 3 }}>
-
               <Stack spacing={3}>
                 <m.div variants={varBounce().inLeft}>
                   <RHFTextField name="name" label={translate('Product Name')} />
@@ -166,83 +203,38 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                   <LabelStyle>{translate('Description')} </LabelStyle>
                   <RHFEditor simple name="description" />
                 </div>
-                </Stack>
-              {/* <Stack spacing={3} mt={2}>
-                <Typography>
-                 {translate('Select multiple Images')} 
-                </Typography>
-              <input
-                 accept="image/*"
-                 type="file"
-                 multiple
-                
+              </Stack>
+              <div>
+                <LabelStyle>Images</LabelStyle>
+                <RHFUploadMultiFile
+                  showPreview
+                  files={values.uploaded_images}
+                  name="uploaded_images"
+                  maxSize={3145728}
+                  onDrop={handleDrop}
+                  onRemove={handleRemove}
+                  onRemoveAll={handleRemoveAll}
+                  onUpload={() => console.log('ON UPLOAD')}
                 />
-                <RHFTextField name="quantity" label={translate('Product quantity')}  type='number'/>
-                <RHFSelect name="category" label= {translate('Category')} >
-                  {CATEGORY_OPTION.map((category) => (
-                    <optgroup key={category.group} label={category.group}>
-                      {category.classify.map((classify) => (
-                        <option key={classify} value={classify}>
-                          {classify}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </RHFSelect>
-
-                <Controller
-                  name= "color"
-                  control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      {...field}
-                      multiple
-                      freeSolo
-                      onChange={(event, newValue) => field.onChange(newValue)}
-                      options={COLOR_OPTION.map((option) => option)}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
-                        ))
-                      }
-                      renderInput={(params) => <TextField label={translate('Colors')} {...params} />}
-                    />
-                  )}
-                />
-
-              </Stack> */}
+              </div>
             </Card>
-            <Lottie options={animationSetter(PostingProduct)} width={"700px"} height={"300px"} />
-
           </Grid>
 
           <Grid item xs={12} md={4}>
             <Stack spacing={3}>
               <Card sx={{ p: 3 }}>
                 <Stack spacing={3} mt={2}>
-                  <Typography>
-                    {translate('Select multiple Images')}
-                  </Typography>
-                  <input
-                    accept="image/*"
-                    type="file"
-                    multiple
+                  <Typography>{translate('Select multiple Images')}</Typography>
 
-                  />
                   <m.div variants={varBounce().inLeft}>
-
-                    <RHFTextField name="quantity" label={translate('Product quantity')} type='number' />
+                    <RHFTextField name="quantity" label={translate('Product quantity')} type="number" />
                   </m.div>
 
-                  <RHFSelect name="category" label={translate('Category')} >
-                    {CATEGORY_OPTION.map((category) => (
-                      <optgroup key={category.group} label={category.group}>
-                        {category.classify.map((classify) => (
-                          <option key={classify} value={classify}>
-                            {classify}
-                          </option>
-                        ))}
-                      </optgroup>
+                  <RHFSelect name="category" label={translate('Category')}>
+                    {data?.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
                     ))}
                   </RHFSelect>
                   <m.div variants={varBounce().inLeft}>
@@ -255,7 +247,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                           multiple
                           freeSolo
                           onChange={(event, newValue) => field.onChange(newValue)}
-                          options={COLOR_OPTION.map((option) => option)}
+                          options={colors?.map((option) => option.name)}
                           renderTags={(value, getTagProps) =>
                             value.map((option, index) => (
                               <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
@@ -266,7 +258,6 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                       )}
                     />
                   </m.div>
-
                 </Stack>
               </Card>
 
