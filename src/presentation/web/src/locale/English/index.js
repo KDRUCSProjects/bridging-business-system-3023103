@@ -14,6 +14,7 @@ import profilepage from './profilepage';
 import resetPassword from './resetPassword';
 import UserRegister from './UserRegister';
 import updateProfile from './updateProfile';
+import checkoutCart from './checkoutCart';
 
 const english = {
   ...CardDetails,
@@ -26,6 +27,7 @@ const english = {
   ...Login,
   ...UserRegister,
   ...updateProfile,
+  ...checkoutCart,
 };
 
 export default english;

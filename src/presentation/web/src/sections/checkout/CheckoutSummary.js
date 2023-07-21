@@ -17,6 +17,8 @@ import { fCurrency } from '../../utils/formatNumber';
 // components
 import Iconify from '../../components/Iconify';
 
+import useLocales from '../../hooks/useLocales';
+
 // ----------------------------------------------------------------------
 
 CheckoutSummary.propTypes = {
@@ -41,11 +43,12 @@ export default function CheckoutSummary({
   enableDiscount = false,
 }) {
   const displayShipping = shipping !== null ? 'Free' : '-';
+  const {translate}= useLocales();
 
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Order Summary"
+        title={translate("Order Summary")}
         action={
           enableEdit && (
             <Button size="small" onClick={onEdit} startIcon={<Iconify icon={'eva:edit-fill'} />}>
@@ -59,21 +62,21 @@ export default function CheckoutSummary({
         <Stack spacing={2}>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Sub Total
+              {translate('Sub Total')}
             </Typography>
             <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Discount
+              {translate('Discount')}
             </Typography>
             <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Shipping
+              {translate('Shipping')}
             </Typography>
             <Typography variant="subtitle2">{shipping ? fCurrency(shipping) : displayShipping}</Typography>
           </Stack>
@@ -81,13 +84,13 @@ export default function CheckoutSummary({
           <Divider />
 
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="subtitle1">Total</Typography>
+            <Typography variant="subtitle1">{translate('Total')}</Typography>
             <Box sx={{ textAlign: 'right' }}>
               <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
                 {fCurrency(total)}
               </Typography>
               <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                (VAT included if applicable)
+                ({translate('VAT included if applicable')})
               </Typography>
             </Box>
           </Stack>
