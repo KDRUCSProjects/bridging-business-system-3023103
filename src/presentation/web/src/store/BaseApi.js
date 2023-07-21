@@ -7,7 +7,11 @@ const BaseApi = createApi({
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
+    VerifyUser: builder.mutation(allServices.mutations.VerifyUser),
     RegisterUser: builder.mutation(allServices.mutations.RegisterUser),
+    ForgotPasswordEmail: builder.mutation(allServices.mutations.ForgotPasswordEmail),
+    VerifyPassword: builder.mutation(allServices.mutations.VerifyPassword),
+    NewPassword: builder.mutation(allServices.mutations.NewPassword),
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),
@@ -29,9 +33,9 @@ const BaseApi = createApi({
     GetAllCategories: builder.query(allServices.queries.GetAllCategories),
     GetSpecificCategory: builder.query(allServices.queries.GetSpecificCategory),
 
-       // User
-       GetAllUsers: builder.query(allServices.queries.GetAllUsers),
-       GetSpecificUser: builder.query(allServices.queries.GetSpecificUser),
+    // User
+    GetAllUsers: builder.query(allServices.queries.GetAllUsers),
+    GetSpecificUser: builder.query(allServices.queries.GetSpecificUser),
   }),
 });
 
