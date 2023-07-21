@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import (
     Address,
     Product,
-    BusinessOwner,
     ProductColor,
     ProductImage,
     Category,
@@ -21,15 +20,8 @@ from .models import (
 # Register your models here.
 
 
-class BusinessOwnerAdmin(admin.ModelAdmin):
-    list_display = ["name", "phone", "email"]
-
-    class Meta:
-        model = BusinessOwner
-
-
 class BusinessProfileAdmin(admin.ModelAdmin):
-    list_display = ["user", "business_owner", "business_type", "phone"]
+    list_display = ["user", "business_type", "phone"]
 
     class Meta:
         model = BusinessProfile
@@ -115,7 +107,6 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Address, AddressAdmin)
-admin.site.register(BusinessOwner, BusinessOwnerAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductColor, ProductColorAdmin)
 admin.site.register(Category, CategoryAdmin)

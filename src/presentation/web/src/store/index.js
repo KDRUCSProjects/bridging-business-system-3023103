@@ -8,10 +8,11 @@ import { ProfileQueries } from './services/queries/BusinessProfile';
 import { ProductQuery } from './services/queries/product';
 import { CategoryQuery } from './services/queries/category';
 import { UserQuery } from './services/queries/profile';
+import { ColorQuery } from './services/queries/color';
 
 // Services From Redux Toolkit Query
 export const allServices = {
-  queries: { ...ProfileQueries, ...ProductQuery , ...CategoryQuery , ...UserQuery},
+  queries: { ...ProfileQueries, ...ProductQuery, ...CategoryQuery, ...UserQuery, ...ColorQuery },
   mutations: { ...ProfileMutations, ...ProductMutations, ...CartMutations, RegisterUser },
 };
 
