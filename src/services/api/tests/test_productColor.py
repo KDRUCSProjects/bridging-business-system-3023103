@@ -1,6 +1,7 @@
 import pytest 
+from api.models import ProductColor
 
 
-def test_productcolor(ColorFactory):
-    product = ColorFactory.build()
-    assert product.name == "yellow"
+def test_create_productColor(db):
+    product = ProductColor.objects.create(name="red")
+    assert product.name == "red"
