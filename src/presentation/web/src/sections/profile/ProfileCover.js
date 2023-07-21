@@ -42,7 +42,7 @@ ProfileCover.propTypes = {
   myProfile: PropTypes.object,
 };
 
-export default function ProfileCover({ myProfile }) {
+export default function ProfileCover({ myProfile , userdata }) {
   const { position, cover } = myProfile;
 
   return (
@@ -67,8 +67,8 @@ export default function ProfileCover({ myProfile }) {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          <Typography variant="h4">{myProfile[0].business_owner.name}</Typography>
-          <Typography sx={{ opacity: 0.72 }}>{myProfile[0].business_owner.bio}</Typography>
+          <Typography variant="h4">{myProfile[0].business_name}</Typography>
+          <Typography sx={{ opacity: 0.72 }}>{myProfile[0].business_type}</Typography>
         </Box>
       </InfoStyle>
       <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>

@@ -15,7 +15,7 @@ import Iconify from '../../components/Iconify';
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
 import BaseApi from '../../store/BaseApi';
-import Dashboard  from '../../sections/profile/Dashboard';
+import Dashboard from '../../sections/profile/Dashboard';
 import AccountChangePassword from '../../sections/@dashboard/user/account/AccountChangePassword';
 // ----------------------------------------------------------------------
 const TabsWrapperStyle = styled('div')(({ theme }) => ({
@@ -34,9 +34,9 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
   },
 }));
 // ----------------------------------------------------------------------
-
 export default function BusinessProfile() {
   const { id } = useParams();
+  const { data: userdata } = BaseApi.useGetSpecificUserQuery(`api/users/${id}/`);
   const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${id}`);
   const { data: newdata } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
   const { translate } = useLocales();
@@ -47,17 +47,17 @@ export default function BusinessProfile() {
   const handleFindFriends = (value) => {
     setFindFriends(value);
   };
-  
+
   const PROFILE_TABS = [
     {
       value: 'Dashboard',
       icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
-      component: <Dashboard mydata={data} />,
+      component: <Dashboard id={id} />,
     },
     {
       value: 'About',
       icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
-      component: <Profile myProfile={data} posts={_userFeeds} />,
+      component: <Profile myProfile={data} userdata={userdata} posts={_userFeeds} />,
     },
     {
       value: 'Products',
@@ -80,7 +80,7 @@ export default function BusinessProfile() {
             position: 'relative',
           }}
         >
-          <ProfileCover myProfile={data} />
+          <ProfileCover myProfile={data}  />
           <TabsWrapperStyle>
             <Tabs
               allowScrollButtonsMobile

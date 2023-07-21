@@ -45,6 +45,7 @@ class Category(models.Model):
 
 class BusinessProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    business_name = models.CharField(null=True , blank=True , max_length=200)
     owner_phone = PhoneNumberField()
     owner_bio = models.TextField(blank=True, null=True)
     detials = models.TextField(blank=True, null=True)

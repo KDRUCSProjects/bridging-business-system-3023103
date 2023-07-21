@@ -12,12 +12,12 @@ Profile.propTypes = {
 };
 const aboutme = "About Me";
 const bio = "Bio";
-export default function Profile({ myProfile, posts }) {
+export default function Profile({ myProfile, userdata, posts }) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
         <Stack spacing={3}>
-          <ProfileAbout profile={myProfile} about={aboutme}/>
+          <ProfileAbout profile={myProfile} userdata={userdata} about={aboutme}/>
         </Stack>
       </Grid>
       <Grid item xs={12} md={8}>

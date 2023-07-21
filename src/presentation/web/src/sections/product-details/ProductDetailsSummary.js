@@ -159,11 +159,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             FormHelperTextProps={{
               sx: { textAlign: 'right', margin: 0, mt: 1 },
             }}
-            // helperText={
-            //   <Link underline="always" color="text.secondary">
-            //    {translate('size chart')} 
-            //   </Link>
-            // }
           >
             {sizes.map((size) => (
               <option key={size} value={size}>

@@ -76,7 +76,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
       description: currentProduct?.description || '',
       uploaded_images: currentProduct?.uploaded_images || [],
       quantity: currentProduct?.quantity || undefined,
-      user: currentProduct?.user || 1,
+      user: currentProduct?.user || 2,
       price: currentProduct?.price || 0,
       color: currentProduct?.color || [],
       category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
