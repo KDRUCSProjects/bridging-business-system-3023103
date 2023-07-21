@@ -26,7 +26,7 @@ urlpatterns = [
     path("", include(router.urls)),
     path("verify/", userVerificationAPIView.as_view()),
     path("forget/password/email/", ForgetPasswordEmailView.as_view()),
-    path("forget/password/opt/verify/", ForgetPasswordVerificationView.as_view()),
+    path("forget/password/otp/verify/", ForgetPasswordVerificationView.as_view()),
     path("change/password/", ChangePasswordView.as_view()),
     path("rest/password/", PasswordResetView.as_view()),
     path("login/", UserLoginView.as_view(), name="login"),
