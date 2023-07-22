@@ -22,7 +22,7 @@ ProfileAbout.propTypes = {
   profile: PropTypes.array,
 };
 
-export default function ProfileAbout({ profile , about }) {
+export default function ProfileAbout({ profile, userdata , about }) {
   const { translate } = useLocales();
   const { quote, country, email, role, company, school: Business } = profile;
   return (
@@ -42,7 +42,7 @@ export default function ProfileAbout({ profile , about }) {
 
         <Stack direction="row">
           <IconStyle icon={'eva:email-fill'} />
-          <Typography variant="body2">{profile[0].business_owner.email}</Typography>
+          <Typography variant="body2">{userdata.email}</Typography>
         </Stack>
 
         <Stack direction="row">
