@@ -21,10 +21,13 @@ export default function Dashboard(id) {
   const { user } = useAuth();
   const theme = useTheme();
   const totalquantities = sum(newdata?.map((item) => item.quantity));
+  const totalPrice = sum(newdata?.map((item) => item.quantity * item.price));
+  console.log('price : ',totalPrice)
   const { themeStretch } = useSettings();
   const results = newdata?.map((item) => item.quantity)
+  const prices = newdata?.map((item) => item.price)
   return (
-    <Page title="General: App">
+    <Page title="Dashboard">
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <AppWelcome
@@ -41,18 +44,27 @@ export default function Dashboard(id) {
             chartData={results}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <AppWidgetSummary
-            title="Total Installed"
+            title="Net Worth"
             percent={0.2}
-            total={4876}
+            total={totalPrice}
             chartColor={theme.palette.chart.blue[0]}
-            chartData={[20, 41, 63, 33, 28, 35, 50, 46, 11, 26]}
+            chartData={prices}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <AppWidgetSummary
-            title="Total Downloads"
+            title="Sold Products"
+            percent={-0.1}
+            total={678}
+            chartColor={theme.palette.chart.red[0]}
+            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <AppWidgetSummary
+            title="recived cash"
             percent={-0.1}
             total={678}
             chartColor={theme.palette.chart.red[0]}
@@ -61,18 +73,14 @@ export default function Dashboard(id) {
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <AppCurrentDownload
-            title="Current Download"
+            title="Statistic"
             chartColors={[
               theme.palette.primary.light,
-              theme.palette.primary.light,
-              theme.palette.primary.main,
-              theme.palette.primary.dark,
+              theme.palette.secondary.main,
             ]}
             chartData={[
-              { label: 'Mac', value: 12244 },
-              { label: 'Window', value: 53345 },
-              { label: 'iOS', value: 44313 },
-              { label: 'Android', value: 78343 },
+              { label: 'Net Worth', value: totalPrice },
+              { label: 'Recived cash', value: 3000 },
             ]}
           />
         </Grid>
