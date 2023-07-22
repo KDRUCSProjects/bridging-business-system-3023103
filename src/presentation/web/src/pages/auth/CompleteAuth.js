@@ -103,8 +103,8 @@ export default function CompleteAuth() {
             </Stepper>
           </Grid>
         </Grid>
-        {/* {activeStep === 0 && <UserRegister />}
-        {activeStep === 1 && <VerifyUser />} */}
+        {activeStep === 0 && <UserRegister />}
+        {activeStep === 0 && <VerifyUser />}
         {activeStep === 0 && <CreateProfile />}
       </Container>
     </Page>

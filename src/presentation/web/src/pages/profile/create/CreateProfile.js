@@ -7,6 +7,7 @@ import useSettings from '../../../hooks/useSettings';
 import Page from '../../../components/Page';
 // sections
 import ProfileForm from '../../../sections/profile/create/ProfileForm';
+
 // ----------------------------------------------------------------------
 
 export default function CreateProfile() {
