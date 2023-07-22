@@ -211,7 +211,7 @@ class UserSerializer(serializers.ModelSerializer):
                 "validators": [
                     validators.UniqueValidator(
                         get_user_model().objects.all(),
-                        "User with sach email already exists",
+                        "User already exists",
                     )
                 ],
             },
@@ -252,7 +252,7 @@ class ForgetPasswordEmailSerializer(serializers.Serializer):
             send_otp_via_email(email, "verification code for reset password")
             return attrs
         else:
-            raise serializers.ValidationError("you are not register")
+            raise serializers.ValidationError("You are not registered")
 
 
 class ForgetPasswordVerificationSerializer(serializers.Serializer):
@@ -272,7 +272,7 @@ class ForgetPasswordVerificationSerializer(serializers.Serializer):
                 user.save()
                 return attrs
             else:
-                serializers.ValidationError("your otp is wrong")
+                serializers.ValidationError("otp is wrong")
         else:
             serializers.ValidationError("your not register")
 
@@ -298,7 +298,7 @@ class ChangePasswordSerializer(serializers.Serializer):
                 else:
                     serializers.ValidationError("changing password isn't verified")
             else:
-                serializers.ValidationError("your otp is wrong")
+                serializers.ValidationError("otp is wrong")
         else:
             serializers.ValidationError("your not register")
 

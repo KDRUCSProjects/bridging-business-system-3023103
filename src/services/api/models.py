@@ -45,7 +45,7 @@ class Category(models.Model):
 
 class BusinessProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    business_name = models.CharField(null=True , blank=True , max_length=200)
+    business_name = models.CharField(null=True, blank=True, max_length=200)
     owner_phone = PhoneNumberField()
     owner_bio = models.TextField(blank=True, null=True)
     detials = models.TextField(blank=True, null=True)
@@ -53,6 +53,8 @@ class BusinessProfile(models.Model):
     avator = models.ImageField(blank=True, null=True)
     business_type = models.CharField(max_length=60)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.user)
@@ -75,9 +77,15 @@ class Product(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_sold = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user) + " product " + self.name
+
+    class Meta:
+        ordering = ["created_at"]
 
 
 class ProductImage(models.Model):
