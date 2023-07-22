@@ -42,8 +42,7 @@ ProfileCover.propTypes = {
   myProfile: PropTypes.object,
 };
 
-export default function ProfileCover({ myProfile , userdata }) {
-  const { position, cover } = myProfile;
+export default function ProfileCover({ myProfile  }) {
 
   return (
     <RootStyle>
