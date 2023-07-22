@@ -24,6 +24,8 @@ import { PATH_AUTH } from '../../routes/paths';
 
 //
 import LanguagePopover from './LanguagePopover';
+import AccountPopover from './AccountPopover';
+import NotificationsPopover from './NotificationsPopover';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
@@ -135,7 +137,7 @@ export default function MainHeader(props) {
   const { translate } = useLocales();
 
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
-
+const user = true;
   const theme = useTheme();
   const isRTL = theme.direction === 'rtl';
 
@@ -155,7 +157,6 @@ export default function MainHeader(props) {
   const handleSelectedOption = (event, value) => {
     setSearch(value);
   };
-  console.log(search);
   return (
     <>
       {theme.direction === 'rtl' ? (
@@ -234,6 +235,8 @@ export default function MainHeader(props) {
                     {translate('login')}
                   </Button>
                   <LanguagePopover />
+                  <NotificationsPopover />
+                  <AccountPopover />
                 </>
               )}
 
@@ -355,6 +358,8 @@ export default function MainHeader(props) {
               </form>
               {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
               <LanguagePopover />
+              <NotificationsPopover />
+              <AccountPopover />
               <Button
                 variant="contained"
                 component={routerLink}
