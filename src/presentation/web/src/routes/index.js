@@ -44,6 +44,10 @@ export default function Router() {
           element: <AddProduct />,
         },
         {
+          path: PATH_AUTH.specificProudct,
+          element: <AddProduct />,
+        },
+        {
           path: PATH_AUTH.checkOut,
           element: <CheckoutPage />,
         },
