@@ -15,7 +15,10 @@ import useSettings from '../../hooks/useSettings';
 import { useDispatch, useSelector } from '../../store/store';
 
 // sections
-import { ForgotPasswordEmail, ForgotPasswordVerify, ConfirmPassword, Login } from '.';
+import ForgotPasswordEmail from './ForgotPasswordEmail';
+import ForgotPasswordVerify from './forgotPasswordVerify';
+import ConfirmPassword from './ConfirmPassword';
+import Login from './Login';
 
 // components
 import Page from '../../components/Page';
