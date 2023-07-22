@@ -2,10 +2,12 @@
 import { Box, Typography, Stack } from '@mui/material';
 // assets
 import { UploadIllustration } from '../../assets';
+import useLocales from '../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
 export default function BlockContent() {
+  const {translate}= useLocales();
   return (
     <Stack
       spacing={2}
@@ -18,19 +20,19 @@ export default function BlockContent() {
 
       <Box sx={{ p: 3 }}>
         <Typography gutterBottom variant="h5">
-          Drop or Select file
+          {translate('Drop or Select file')}
         </Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Drop files here or click&nbsp;
+          {translate('Drop files here or click')}&nbsp;
           <Typography
             variant="body2"
             component="span"
             sx={{ color: 'primary.main', textDecoration: 'underline' }}
           >
-            browse
+            {translate('browse')}
           </Typography>
-          &nbsp;thorough your machine
+          &nbsp;{translate('thorough your machine')}
         </Typography>
       </Box>
     </Stack>
