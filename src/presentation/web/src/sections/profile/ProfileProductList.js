@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Card, IconButton, Typography, CardContent } from '@mui/material';
+import { Box, Card, IconButton, Typography, CardContent, Button, Stack, Grid } from '@mui/material';
 // utils
 import cssStyles from '../../utils/cssStyles';
 // components
@@ -41,10 +42,20 @@ export default function ProfileGallery({ gallery, newdata }) {
   };
   return (
     <Box sx={{ mt: 5 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        Gallery
-      </Typography>
-
+      <Stack>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={10}>
+            <Typography variant="h4" sx={{ mb: 3 }}>
+              All Your Products
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={2}>
+            <Button href="/user/ad/product" variant="contained">
+              My Button
+            </Button>
+          </Grid>
+        </Grid>
+      </Stack>
       <Card sx={{ p: 3 }}>
         <Box
           sx={{
