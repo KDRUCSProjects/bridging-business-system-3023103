@@ -229,7 +229,7 @@ class userVerificationAPIView(APIView):
                 token = AuthToken.objects.create(user)[1]
                 return Response(
                     {
-                        "verified user": {
+                        "verified_user": {
                             "id": user.id,
                             "username": user.username,
                             "email": user.email,

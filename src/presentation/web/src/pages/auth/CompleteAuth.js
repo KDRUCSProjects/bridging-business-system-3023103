@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
 
 // @mui
 import { styled } from '@mui/material/styles';
@@ -11,12 +10,11 @@ import useSettings from '../../hooks/useSettings';
 
 // redux
 import { useDispatch, useSelector } from '../../store/store';
-import { getCart, createBilling } from '../../store/slices/checkout/checkout';
+
 
 // sections
-import Payment from '../Payment';
-
-import { ResetPassword, UserRegister, VerifyUser, ConfirmPassword } from '.';
+import { UserRegister, VerifyUser } from '.';
+import CreateProfile from '../profile/create/CreateProfile';
 
 // components
 import Page from '../../components/Page';
@@ -28,7 +26,7 @@ QontoStepIcon.propTypes = {
   active: PropTypes.bool,
   completed: PropTypes.bool,
 };
-const STEPS = ['Register', 'verify', 'redirect'];
+const STEPS = ['Register', 'verify', 'Profile'];
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   top: 10,
@@ -74,19 +72,14 @@ function QontoStepIcon({ active, completed }) {
   );
 }
 
-export default function Checkout() {
+export default function CompleteAuth() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
-  const { checkout } = useSelector((store) => store.checkout);
-  const { cart, billing, activeStep } = checkout;
+  const { Authsteps } = useSelector((store) => store.completeAuth);
+  const {  activeStep } = Authsteps;
   const isComplete = 3;
 
-  useEffect(() => {
-    if (isMountedRef.current) {
-      dispatch(getCart(cart));
-    }
-  }, [dispatch, isMountedRef, cart]);
 
   return (
     <Page title="Afghan Business: Checkout">
@@ -112,10 +105,9 @@ export default function Checkout() {
             </Stepper>
           </Grid>
         </Grid>
-        {/* {activeStep === 0 && <UserRegister />} */}
-        {activeStep === 0 && <VerifyUser />}
-        {activeStep === 1 && <ConfirmPassword />}
-        {/* {activeStep === 3 && <ResetPassword />} */}
+        {activeStep === 0 && <UserRegister />}
+        {activeStep === 1 && <VerifyUser />}
+        {activeStep === 2 && <CreateProfile />}
       </Container>
     </Page>
   );

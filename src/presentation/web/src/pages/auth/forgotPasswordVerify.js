@@ -11,6 +11,7 @@ import { Button, Container, Typography, Box, TextField, Stack, useTheme } from '
 // Lottie
 import Lottie from 'react-lottie';
 import { FormProvider } from '../../components/hook-form';
+import useResponsive from '../../hooks/useResponsive';
 // hooks
 import useLocales from '../../hooks/useLocales';
 import newpassword from '../../animations/new/buble.json';
@@ -38,18 +39,17 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 const RegisterSchema = yup.object().shape({
   otp: yup
-  .string('otp must be number')
-  .required('Please enter Otp')
-  .matches(
-    /^\d{4}$/,  
-    '4 digit required'
-  ).length(4, 'please Enter exactly 4 digit !'),
+    .string('otp must be number')
+    .required('Please enter Otp')
+    .matches(/^\d{4}$/, '4 digit required')
+    .length(4, 'please Enter exactly 4 digit !'),
 });
 
 // ----------------------------------------------------------------------
 
-export default function VerifyUser() {
+export default function ForgotPasswordVerify() {
   const { translate } = useLocales();
+  const smDown = useResponsive('down', 'sm');
 
   const dispatch = useDispatch();
   const handleNextStep = () => {
@@ -57,7 +57,8 @@ export default function VerifyUser() {
   };
 
   const theme = useTheme();
-  const [UserVerify, { isLoading }] = BaseApi.useVerifyUserMutation();
+  const [ForgotPasswordVerifyReq, { isLoading }] = BaseApi.useVerifyPasswordMutation();
+  const [OTPAgain, OTPagainResponse] = BaseApi.useVerifyPasswordMutation();
   const [snackOptions, setSnackOptions] = useState({
     open: true,
     vertical: 'top',
@@ -88,14 +89,15 @@ export default function VerifyUser() {
     initialValues,
     validationSchema: RegisterSchema,
     onSubmit: async () => {
-      const email  = localStorage.getItem('userEmail');
-      const data ={otp:values.otp, email}
+      const EmailOfForgotPassword = localStorage.getItem('forgotPasswordEmail');
+      localStorage.setItem('forgotPasswordOtp', values.otp);
       const query = {
-        path: '/api/verify/',
-        data
-      };    
-      const res = await UserVerify(query);
+        path: '/api/forget/password/otp/verify/',
+        data: { email: EmailOfForgotPassword, otp: values.otp },
+      };
+      const res = await ForgotPasswordVerifyReq(query);
       if (res.error) {
+        console.log(res.error);
         setSnackOptions({
           open: true,
           vertical: 'top',
@@ -103,14 +105,10 @@ export default function VerifyUser() {
           backgroundColor: theme.palette.error.main,
           color: theme.palette.text.primary,
           animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: res.error.data,
+          message: 'Something Went Wrong !',
           animationPosition: { marginLeft: '-4em' },
         });
       } else if (res.data) {
-        localStorage.setItem('Token', res.data.token)
-        localStorage.setItem('user_id', res.data.verified_user.id)
-        console.log(localStorage.getItem('Token'))
-        console.log(localStorage.getItem('user_id'))
         setSnackOptions({
           open: true,
           vertical: 'top',
@@ -118,7 +116,7 @@ export default function VerifyUser() {
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.text.primary,
           animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: 'successful !',
+          message: res.data,
           animationPosition: { marginLeft: '-4em' },
         });
         setTimeout(() => {
@@ -128,27 +126,59 @@ export default function VerifyUser() {
     },
   });
 
+  const sendOtpAgain = async () => {
+    const EmailOfForgotPassword = localStorage.getItem('forgotPasswordEmail');
+    const query = {
+      path: '/api/forget/password/email/',
+      data: { email: 'safiullahjalalzai119@gmail.com' },
+    };
+    const res = await OTPAgain(query);
+    if (res.error) {
+      setSnackOptions({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+        backgroundColor: theme.palette.error.main,
+        color: theme.palette.text.primary,
+        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
+        message: res.error.data,
+        animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
+      });
+    } else if (res.data) {
+      setSnackOptions({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.text.primary,
+        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
+        message: res.data,
+        animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
+      });
+    }
+  };
+
   return (
     <Page title="Verify User">
       <Container>
-      <Snack
-            vertical={snackOptions.vertical}
-            horizontal={snackOptions.horizontal}
-            open={snackOptions.open}
-            onClose={handleSnackClose}
-            message={snackOptions.message}
-            animation={snackOptions.animation}
-            autoHideDuration={5000}
-            backgroundColor={snackOptions.backgroundColor}
-            color={snackOptions.color}
-            animationPosition={snackOptions.animationPosition}
-          />
-        <ContentStyle sx={{ textAlign: 'center' }}>
-          <Box mb={8} textAlign="center" height="300px" width={'500px'}>
-            <Lottie options={animationSetter(newpassword)} />
+        <Snack
+          vertical={snackOptions.vertical}
+          horizontal={snackOptions.horizontal}
+          open={snackOptions.open}
+          onClose={handleSnackClose}
+          message={snackOptions.message}
+          animation={snackOptions.animation}
+          autoHideDuration={5000}
+          backgroundColor={snackOptions.backgroundColor}
+          color={snackOptions.color}
+          animationPosition={snackOptions.animationPosition}
+        />
+        <ContentStyle sx={{ textAlign: 'center', marginTop: '-10em' }}>
+          <Box textAlign="center" height={!smDown ? '500px' : '300px'} width={!smDown ? '500px' : '300px'}>
+            <Lottie options={animationSetter(newpassword)} isClickToPauseDisabled />
           </Box>
-          <Typography mt={-5} variant="h3" paragraph>
-            {translate('Enter OTP !')}
+          <Typography mt={-15} variant="h3" paragraph>
+            {translate('Check your Inbox !')}
           </Typography>
           <FormProvider onSubmit={handleSubmit}>
             <Stack>
@@ -162,14 +192,11 @@ export default function VerifyUser() {
                 helperText={formError.otp ? formError.otp : undefined}
                 label="OTP"
               />
-              <Button
-                sx={{ marginTop: 1, marginBottom: 1 }}
-                type="submit"
-                fullWidth
-                size="large"
-                variant="contained"
-              >
-                {isLoading ?  <Lottie options={animationSetter(animation)} /> : ' Confirm' }
+              <Button sx={{ marginTop: 1, marginBottom: 1 }} type="submit" fullWidth size="large" variant="contained">
+                {isLoading ? <Lottie options={animationSetter(animation)} /> : ' Confirm'}
+              </Button>
+              <Button fullWidth size="large" onClick={sendOtpAgain}>
+                {translate('Resend code')}
               </Button>
             </Stack>
           </FormProvider>

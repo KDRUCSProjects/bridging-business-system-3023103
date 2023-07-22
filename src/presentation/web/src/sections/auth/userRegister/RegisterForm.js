@@ -6,7 +6,7 @@ import Lottie from 'react-lottie';
 
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Stack, IconButton, InputAdornment, TextField, Container } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField, Container ,Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 // Formik & yep
@@ -20,22 +20,20 @@ import animation from '../../../animations/shared/hms-loading.json';
 // components
 import Iconify from '../../../components/Iconify';
 import Snack from '../../../components/Snack';
-import { FormProvider, RHFTextField } from '../../../components/hook-form';
+import { FormProvider } from '../../../components/hook-form';
 import { MotionContainer, varBounce } from '../../../components/animate';
 // store
 import BaseApi from '../../../store/BaseApi';
 import useLocales from '../../../hooks/useLocales';
 // store
-import { onNextStep } from '../../../store/slices/checkout/checkout';
+import { onNextStep } from '../../../store/slices/auth/completeAuth';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({
   username: yup.string().required(),
   first_name: yup.string().required(),
-  last_name: yup.string().required(),
-
+  last_name: yup.string().required(),                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
   email: yup.string().email().required(),
-  number: yup.number().required(),
   password: yup
     .string()
     .required('Please enter your password')
@@ -52,7 +50,8 @@ export default function RegisterForm() {
   };
 
   const theme = useTheme();
-  const [RegisterUser, { isLoading }] = BaseApi.useRegisterUserMutation();
+  const [RegisterUser, response] = BaseApi.useRegisterUserMutation();
+
   const [snackOptions, setSnackOptions] = useState({
     open: false,
     vertical: 'top',
@@ -78,7 +77,7 @@ export default function RegisterForm() {
     email: '',
     password: '',
   };
-
+  const [userAllErrors , setUserAllErrors]=useState()
   const {
     values,
     errors: formError,
@@ -88,7 +87,7 @@ export default function RegisterForm() {
     handleChange,
   } = useFormik({
     initialValues,
-    // validationSchema: RegisterSchema,
+    validationSchema: RegisterSchema,
     onSubmit: async () => {
       const query = {
         path: '/api/users/',
@@ -96,6 +95,7 @@ export default function RegisterForm() {
       };
       const res = await RegisterUser(query);
       if (res.error) {
+        setUserAllErrors(res.error.data)
         setSnackOptions({
           open: true,
           vertical: 'top',
@@ -103,10 +103,12 @@ export default function RegisterForm() {
           backgroundColor: theme.palette.error.main,
           color: theme.palette.text.primary,
           animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: 'Something Went Wrong',
+          message: res.error.message,
           animationPosition: { marginLeft: '-4em' },
         });
       } else if (res.data) {
+      
+        localStorage.setItem('userEmail',values.email)
         setSnackOptions({
           open: true,
           vertical: 'top',
@@ -114,7 +116,7 @@ export default function RegisterForm() {
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.text.primary,
           animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: 'User Created SuccessFully !',
+          message: res.data.description,
           animationPosition: { marginLeft: '-4em' },
         });
         setTimeout(() => {
@@ -126,8 +128,10 @@ export default function RegisterForm() {
 
   return (
     <Container component={MotionContainer}>
+      {userAllErrors && Object.keys(userAllErrors).map((error)=>(<Typography textAlign='center' color={theme.palette.error.main} variant='subtitle2'>{ userAllErrors[error]}</Typography>)) }
+    
       <m.div variants={varBounce().inLeft}>
-        <FormProvider onSubmit={handleSubmit}>
+        <FormProvider onSubmit={handleSubmit} autocomplete={'off'}>
           <Snack
             vertical={snackOptions.vertical}
             horizontal={snackOptions.horizontal}
@@ -141,7 +145,7 @@ export default function RegisterForm() {
             animationPosition={snackOptions.animationPosition}
           />
 
-          <Stack spacing={3}>
+          <Stack spacing={3}  mt={userAllErrors ? '1em' : undefined}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <m.div variants={varBounce().inRight}>
                 <TextField
@@ -167,8 +171,11 @@ export default function RegisterForm() {
                   label="First Name"
                 />
               </m.div>
-              <m.div variants={varBounce().inRight}>
+           
+            </Stack>
+            <m.div variants={varBounce().inRight}>
                 <TextField
+                fullWidth
                   value={values.last_name}
                   name="last_name"
                   onBlur={handleBlur}
@@ -179,7 +186,6 @@ export default function RegisterForm() {
                   label="Last Name"
                 />
               </m.div>
-            </Stack>
             <m.div variants={varBounce().inLeft}>
               <TextField
                 fullWidth
@@ -218,7 +224,7 @@ export default function RegisterForm() {
             </m.div>
             <m.div variants={varBounce().inDowm}>
               <LoadingButton fullWidth size="large" type="submit" variant="contained">
-                {isLoading ? <Lottie options={animationSetter(animation)} width="15em" height="10em" /> : 'Register'}
+                {response.isLoading ? <Lottie options={animationSetter(animation)} width="15em" height="10em" /> : 'Register'}
               </LoadingButton>
             </m.div>
           </Stack>

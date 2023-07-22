@@ -4,3 +4,6 @@ export { default as NewPassword } from './NewPassword';
 export { default as ResetPassword } from './ResetPassword';
 export { default as VerifyUser } from './verifyUser';
 export { default as Login } from './Login';
+export { default as ForgotPasswordEmail } from './ForgotPasswordEmail';
+export { default as CompleteForgotPassword } from './CompleteForgotPassword';
+export { default as ForgotPasswordVerify } from './forgotPasswordVerify';

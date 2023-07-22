@@ -51,6 +51,10 @@ export default function Router() {
           path: PATH_AUTH.registerComplete,
           element: <RegisterComplete />,
         },
+        {
+          path: PATH_AUTH.CompleteForgotPassword,
+          element: <CompleteForgotPassword />,
+        },
       ],
     },
 
@@ -133,5 +137,8 @@ const ConfirmPassword = Loadable(lazy(() => import('../pages/auth/ConfirmPasswor
 // new passowrd
 const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
 
-// new passowrd
-const RegisterComplete = Loadable(lazy(() => import('../pages/auth/stepper')));
+// complete Register
+const RegisterComplete = Loadable(lazy(() => import('../pages/auth/CompleteAuth')));
+
+// complete Forgot Password
+const CompleteForgotPassword = Loadable(lazy(() => import('../pages/auth/CompleteForgotPassword')));

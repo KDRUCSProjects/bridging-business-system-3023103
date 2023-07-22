@@ -7,7 +7,11 @@ const BaseApi = createApi({
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
+    VerifyUser: builder.mutation(allServices.mutations.VerifyUser),
     RegisterUser: builder.mutation(allServices.mutations.RegisterUser),
+    ForgotPasswordEmail: builder.mutation(allServices.mutations.ForgotPasswordEmail),
+    VerifyPassword: builder.mutation(allServices.mutations.VerifyPassword),
+    NewPassword: builder.mutation(allServices.mutations.NewPassword),
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),
@@ -36,6 +40,7 @@ const BaseApi = createApi({
     // color
     GetAllColors: builder.query(allServices.queries.GetAllColors),
     GetSpecificColor: builder.query(allServices.queries.GetSpecificColor),
+
   }),
 });
 

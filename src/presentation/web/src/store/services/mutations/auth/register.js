@@ -3,6 +3,7 @@ const RegisterUser = {
     url: query.path,
     method: 'POST',
     body:query.data,
+    shoulFetch:()=>false
   }),
 };
 

@@ -5,11 +5,16 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography ,Button  } from '@mui/material';
 // animation
 import Lottie from 'react-lottie';
+
+// router 
+import { Link } from 'react-router-dom';
+
 import useLocales from '../../../hooks/useLocales';
 import userAnimation from '../../../animations/profile/116915-waves.json';
+import arrow from '../../../animations/shared/arrow-right.json';
 import animationSetter from '../../../animations/animationSetter';
 // fake-db
 import { countries } from '../../../@fake-db';
@@ -76,6 +81,7 @@ export default function ProfileForm() {
   );
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      
       <Grid container spacing={3} mb="3em">
         <Grid item xs={12} md={4}>
           <Card sx={{ py: 10, px: 3 }}>
@@ -86,12 +92,16 @@ export default function ProfileForm() {
               <RHFUploadAvatar name="avatarUrl" maxSize={3145728} onDrop={handleDrop} />
             </Box>
             <Box>
-              <Typography sx={{ color: 'primary.main' }}>{translate('uplad image')}</Typography>
+              <Typography sx={{ color: 'primary.main' }}>{translate('upload image')}</Typography>
             </Box>
           </Card>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Card sx={{ p: 3 }}>
+         
+          <Card sx={{ p: 10 , marginBottom:'3em'}}>
+          <Button component={Link} to={'/'}  sx={{position:"absolute" , top:"2%", right:"1%"}} type="submit" variant="contained" loading={isSubmitting}>
+                {translate('Skip')}<Lottie options={animationSetter(arrow)} width={'3em'} height={'2em'}/>
+              </Button>
             <Box
               sx={{
                 display: 'grid',
