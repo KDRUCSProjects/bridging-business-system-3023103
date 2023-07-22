@@ -11,7 +11,6 @@ import useSettings from '../../hooks/useSettings';
 // redux
 import { useDispatch, useSelector } from '../../store/store';
 
-
 // sections
 import { UserRegister, VerifyUser } from '.';
 import CreateProfile from '../profile/create/CreateProfile';
@@ -77,9 +76,8 @@ export default function CompleteAuth() {
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
   const { Authsteps } = useSelector((store) => store.completeAuth);
-  const {  activeStep } = Authsteps;
+  const { activeStep } = Authsteps;
   const isComplete = 3;
-
 
   return (
     <Page title="Afghan Business: Checkout">
@@ -105,9 +103,9 @@ export default function CompleteAuth() {
             </Stepper>
           </Grid>
         </Grid>
-        {activeStep === 0 && <UserRegister />}
-        {activeStep === 1 && <VerifyUser />}
-        {activeStep === 2 && <CreateProfile />}
+        {/* {activeStep === 0 && <UserRegister />}
+        {activeStep === 1 && <VerifyUser />} */}
+        {activeStep === 0 && <CreateProfile />}
       </Container>
     </Page>
   );

@@ -1,15 +1,16 @@
 import * as Yup from 'yup';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography ,Button  } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 // animation
 import Lottie from 'react-lottie';
 
-// router 
+// router
 import { Link } from 'react-router-dom';
 
 import useLocales from '../../../hooks/useLocales';
@@ -20,38 +21,55 @@ import animationSetter from '../../../animations/animationSetter';
 import { countries } from '../../../@fake-db';
 // components
 import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import Snack from '../../../components/Snack';
+
+import BaseApi from '../../../store/BaseApi';
 
 // ----------------------------------------------------------------------
 
 export default function ProfileForm() {
+  const [BusinesProfile, { isLoading }] = BaseApi.useCreateBusinesProfileMutation();
+  const theme = useTheme();
+  const [snackOptions, setSnackOptions] = useState({
+    open: true,
+    vertical: 'top',
+    horizontal: 'center',
+    backgroundColor: undefined,
+    color: undefined,
+    animation: undefined,
+    message: undefined,
+    animationPosition: undefined,
+  });
+  const handleSnackClose = () => {
+    setSnackOptions({ ...snackOptions, open: false });
+  };
   const { translate } = useLocales();
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email(),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    address: Yup.string().required('Address is required'),
-    country: Yup.string().required('country is required'),
-    company: Yup.string().required('Company is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
-    role: Yup.string().required('Role Number is required'),
+    province: Yup.string().required('province is required'),
+    district: Yup.string().required('district is required'),
+    area: Yup.string().required('Area is required'),
+    street: Yup.string().required('Street is required'),
+    business_name: Yup.string().required('Business Name is required'),
+    owner_bio: Yup.string().required('Bio is required'),
+    owner_phone: Yup.number().required('phone is required'),
+    details: Yup.string().required('Business details is required'),
+    business_type: Yup.string().required('Business Type is required'),
+    phone: Yup.number().required('phone number is required'),
     avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
   });
   const defaultValues = useMemo(
     () => ({
-      name: '',
-      email: '',
-      phoneNumber: '',
-      address: '',
-      country: '',
-      state: '',
-      city: '',
-      zipCode: '',
-      avatarUrl: '',
-      isVerified: true,
-      status: '',
-      company: '',
-      role: '',
+      province: '',
+      district: '',
+      area: '',
+      street: '',
+      business_name: '',
+      owner_phone: '',
+      owner_bio: '',
+      phone: true,
+      details: '',
+      avator: '',
+      business_type: '',
     }),
     []
   );
@@ -62,9 +80,64 @@ export default function ProfileForm() {
   const {
     setValue,
     handleSubmit,
+    watch,
     formState: { isSubmitting },
   } = methods;
-  const onSubmit = async () => {};
+
+  const values = watch();
+  console.log('data', values);
+  const onSubmit = async () => {
+    const user = localStorage.getItem('userId');
+
+    const query = {
+      path: '/api/business_profile/',
+      data,
+    };
+    const data = new FormData();
+    data.append('province', values.province);
+    data.append('district', values.district);
+    data.append('area', values.area);
+    data.append('street', values.street);
+    data.append('business_name', values.business_name);
+    data.append('owner_bio', values.owner_bio);
+    data.append('owner_bio', values.owner_bio);
+    data.append('detials', values.details);
+    data.append('business_type', values.business_type);
+    data.append('phone', values.phone);
+    data.append('avator', values.avatarUrl);
+    data.append('user');
+    const res = await BusinesProfile(query);
+    if (res.error) {
+      setSnackOptions({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+        backgroundColor: theme.palette.error.main,
+        color: theme.palette.text.primary,
+        animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+        message: res.error.data,
+        animationPosition: { marginLeft: '-4em' },
+      });
+    } else if (res.data) {
+      localStorage.setItem('Token', res.data.token);
+      localStorage.setItem('user_id', res.data.verified_user.id);
+      console.log(localStorage.getItem('Token'));
+      console.log(localStorage.getItem('user_id'));
+      setSnackOptions({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.text.primary,
+        animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+        message: 'successful !',
+        animationPosition: { marginLeft: '-4em' },
+      });
+      setTimeout(() => {
+        handleNextStep();
+      }, 2000);
+    }
+  };
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -81,7 +154,18 @@ export default function ProfileForm() {
   );
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      
+      <Snack
+        vertical={snackOptions.vertical}
+        horizontal={snackOptions.horizontal}
+        open={snackOptions.open}
+        onClose={handleSnackClose}
+        message={snackOptions.message}
+        animation={snackOptions.animation}
+        autoHideDuration={5000}
+        backgroundColor={snackOptions.backgroundColor}
+        color={snackOptions.color}
+        animationPosition={snackOptions.animationPosition}
+      />
       <Grid container spacing={3} mb="3em">
         <Grid item xs={12} md={4}>
           <Card sx={{ py: 10, px: 3 }}>
@@ -89,7 +173,7 @@ export default function ProfileForm() {
               <Lottie options={animationSetter(userAnimation)} />
             </Box>
             <Box sx={{ mb: 5 }}>
-              <RHFUploadAvatar name="avatarUrl" maxSize={3145728} onDrop={handleDrop} />
+              <RHFUploadAvatar name="avator" maxSize={3145728} onDrop={handleDrop} />
             </Box>
             <Box>
               <Typography sx={{ color: 'primary.main' }}>{translate('upload image')}</Typography>
@@ -97,11 +181,18 @@ export default function ProfileForm() {
           </Card>
         </Grid>
         <Grid item xs={12} md={8}>
-         
-          <Card sx={{ p: 10 , marginBottom:'3em'}}>
-          <Button component={Link} to={'/'}  sx={{position:"absolute" , top:"2%", right:"1%"}} type="submit" variant="contained" loading={isSubmitting}>
-                {translate('Skip')}<Lottie options={animationSetter(arrow)} width={'3em'} height={'2em'}/>
-              </Button>
+          <Card sx={{ p: 10, marginBottom: '3em' }}>
+            <Button
+              component={Link}
+              to={'/'}
+              sx={{ position: 'absolute', top: '2%', right: '1%' }}
+              type="submit"
+              variant="contained"
+              loading={isSubmitting}
+            >
+              {translate('Skip')}
+              <Lottie options={animationSetter(arrow)} width={'3em'} height={'2em'} />
+            </Button>
             <Box
               sx={{
                 display: 'grid',
@@ -110,23 +201,24 @@ export default function ProfileForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="name" label={translate('Full Name')} />
-              <RHFTextField name="email" label={translate('Email Address')} />
-              <RHFTextField name="phoneNumber" label={translate('Phone Number')} />
-              <RHFSelect name="country" label={translate('Country')} placeholder="Country">
-                <option value="" />
+              <RHFTextField name="province" label={translate('province')} />
+              <RHFTextField name="district" label={translate('District')} />
+              <RHFTextField name="area" label={translate('Area')} />
+              <RHFTextField name="street" label={translate('Street')} />
+              <RHFTextField name="business_name" label={translate('Business Name')} />
+              <RHFTextField name="owner_phone" label={translate('Owner phone')} />
+              <RHFTextField name="owner_bio" label={translate('Owner Bio')} />
+              <RHFTextField name="details" label={translate('Details')} />
+              <RHFTextField name="phone" label={translate('Phone')} />
+              {/* <RHFSelect name="country" label={translate('Country')} placeholder="Country"> */}
+              {/* <option value="" />
                 {countries.map((option) => (
                   <option key={option.code} value={option.label}>
                     {option.label}
                   </option>
                 ))}
-              </RHFSelect>
-              <RHFTextField name="state" label={translate('State/Region')} />
-              <RHFTextField name="city" label={translate('City')} />
-              <RHFTextField name="address" label={translate('Address')} />
-              <RHFTextField name="zipCode" label={translate('Zip/Code')} />
-              <RHFTextField name="company" label={translate('Company')} />
-              <RHFTextField name="role" label={translate('Role')} />
+              </RHFSelect> */}
+              <RHFTextField name="business_type" label={translate('Business Type')} />
             </Box>
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
