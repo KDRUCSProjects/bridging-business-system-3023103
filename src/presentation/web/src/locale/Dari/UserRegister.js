@@ -12,7 +12,9 @@ const UserRegister = {
     'last Name' : 'تخلص',
     'Email Address' : 'ایمیل آدرس',
     'Phone Number' : 'شماره مبایل',
-    password : 'پاسورد'
+    password : 'پاسورد',
+    UserName: 'نام کاربر',
+    Register: 'ثبت کردن',
     
   };
   
