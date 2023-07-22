@@ -66,7 +66,7 @@ from .pagination import ProductPagination
 
 class PrdocutViewSet(viewsets.ModelViewSet):
     # permission_classes = [ProductAccessPolicy]
-    queryset = Product.objects.all()
+    queryset = Product.objects.order_by("-created_at")
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ["user"]
@@ -192,7 +192,7 @@ class UserViewSet(viewsets.ModelViewSet):
         send_otp_via_email(user.email, "Your account verification email")
         return Response(
             {
-                "description": "verify user using otp code, check your email for otp code",
+                "description": "Check email for otp code",
                 "user_info": {
                     "id": user.id,
                     "username": user.username,
@@ -214,7 +214,7 @@ class userVerificationAPIView(APIView):
                 user = User.objects.filter(email=email)
                 if not user.exists():
                     return Response(
-                        "user doesn't exist with this email",
+                        "user doesn't exist",
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 if user[0].otp != otp:
@@ -241,35 +241,35 @@ class userVerificationAPIView(APIView):
                 )
 
         except:
-            return Response("some thing went ronge")
+            return Response("some thing went wronge")
 
 
 class ForgetPasswordEmailView(APIView):
     def post(self, request):
         serializer = ForgetPasswordEmailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response("otp code is sended to your email", status=status.HTTP_200_OK)
+        return Response("Check email for otp", status=status.HTTP_200_OK)
 
 
 class ForgetPasswordVerificationView(APIView):
     def post(self, request):
         serializer = ForgetPasswordVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response("otp code is verified", status=status.HTTP_200_OK)
+        return Response("otp code verified", status=status.HTTP_200_OK)
 
 
 class ChangePasswordView(APIView):
     def post(self, request):
         serializer = ChangePasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response("your password is changed", status=status.HTTP_200_OK)
+        return Response("Password is changed", status=status.HTTP_200_OK)
 
 
 class PasswordResetView(APIView):
     def post(self, request):
         serializer = PasswordResetSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response("your password is reseted", status=status.HTTP_200_OK)
+        return Response("password is reseted", status=status.HTTP_200_OK)
 
 
 class UserLoginView(KnoxLoginView):
@@ -282,7 +282,7 @@ class UserLoginView(KnoxLoginView):
         print(user.is_verified)
         if user.is_verified == False:
             return Response(
-                {"detail": "Authentication credentials were not provided."},
+                {"detail": "Not activated user."},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         login(request, user)
