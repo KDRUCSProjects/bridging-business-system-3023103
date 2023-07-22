@@ -11,14 +11,14 @@ import { useTheme } from '@mui/material/styles';
 import Lottie from 'react-lottie';
 
 // router
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import useLocales from '../../../hooks/useLocales';
 import userAnimation from '../../../animations/profile/116915-waves.json';
-import arrow from '../../../animations/shared/arrow-right.json';
+import arrow from '../../../animations/new/congruglationyellow.json';
+import animation from '../../../animations/shared/arrow-right.json';
 import animationSetter from '../../../animations/animationSetter';
-// fake-db
-import { countries } from '../../../@fake-db';
+
 // components
 import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
 import Snack from '../../../components/Snack';
@@ -28,8 +28,9 @@ import BaseApi from '../../../store/BaseApi';
 // ----------------------------------------------------------------------
 
 export default function ProfileForm() {
-  const [BusinesProfile, { isLoading }] = BaseApi.useCreateBusinesProfileMutation();
+  const [BusinesProfile, response] = BaseApi.useCreateBusinesProfileMutation();
   const theme = useTheme();
+  const navigate = useNavigate();
   const [snackOptions, setSnackOptions] = useState({
     open: true,
     vertical: 'top',
@@ -88,11 +89,7 @@ export default function ProfileForm() {
   console.log('data', values);
   const onSubmit = async () => {
     const user = localStorage.getItem('userId');
-
-    const query = {
-      path: '/api/business_profile/',
-      data,
-    };
+    console.log('user is ', user);
     const data = new FormData();
     data.append('province', values.province);
     data.append('district', values.district);
@@ -100,12 +97,17 @@ export default function ProfileForm() {
     data.append('street', values.street);
     data.append('business_name', values.business_name);
     data.append('owner_bio', values.owner_bio);
-    data.append('owner_bio', values.owner_bio);
+    data.append('owner_phone', `+93${values.owner_phone}`);
     data.append('detials', values.details);
     data.append('business_type', values.business_type);
-    data.append('phone', values.phone);
+    data.append('phone', `+93${values.phone}`);
     data.append('avator', values.avatarUrl);
-    data.append('user');
+    data.append('user', user);
+    const query = {
+      path: '/api/business_profile/',
+      data,
+    };
+
     const res = await BusinesProfile(query);
     if (res.error) {
       setSnackOptions({
@@ -134,10 +136,11 @@ export default function ProfileForm() {
         animationPosition: { marginLeft: '-4em' },
       });
       setTimeout(() => {
-        handleNextStep();
+        navigate('/');
       }, 2000);
     }
   };
+  console.log('Response', response);
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -218,6 +221,7 @@ export default function ProfileForm() {
                   </option>
                 ))}
               </RHFSelect> */}
+
               <RHFTextField name="business_type" label={translate('Business Type')} />
             </Box>
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
