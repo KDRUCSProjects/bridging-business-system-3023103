@@ -15,7 +15,7 @@ const AddProduct = {
     'Drop files here or click': 'Drop files here or click',
     browse: 'browse',
     'thorough your machine': 'thorough your machine',
-
+    Image : 'Image',
   };
   
   export default AddProduct;

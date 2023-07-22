@@ -205,7 +205,7 @@ export default function AdProductForm({ isEdit, currentProduct }) {
                 </div>
               </Stack>
               <div>
-                <LabelStyle>Images</LabelStyle>
+                <LabelStyle>{translate('Image')}</LabelStyle>
                 <RHFUploadMultiFile
                   showPreview
                   files={values.uploaded_images}

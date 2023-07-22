@@ -15,6 +15,7 @@ const AddProduct = {
     'Drop files here or click': 'فایل ها را اینجا دراپ کنید یا کلیک کنید',
     browse: 'انتخاب',
     'thorough your machine': 'از طریق دستگاه تان',
+    Image : 'تصویر',
   };
   
   export default AddProduct;

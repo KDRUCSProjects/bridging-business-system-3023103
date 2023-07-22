@@ -3,7 +3,7 @@ const AddProduct = {
     Home: `کور `,
     'Product Name': `د محصول نوم `,
     Description: 'توضیحات ',
-    'Write something awesome': 'یو په زړه پوری شی ولیکه ',
+    '...Write something awesome': 'یو په زړه پوری شی ولیکه ',
     'Select multiple Images':'له یو څخه زیات انځورونه انتخاب کړی ',
     'Choose Files':'فایلونه انتخاب کړی ',
     'Product quantity': 'د محصول مقدار ',
@@ -15,6 +15,7 @@ const AddProduct = {
     'Drop files here or click': 'دلته فایلونه پریږدئ یا کلیک وکړئ',
     browse: 'انتخاب',
     'thorough your machine': 'ستاسو دستگاه له لاري',
+    Image : 'انځور',
   };
   
   export default AddProduct;
