@@ -104,8 +104,6 @@ export default function CompleteAuth() {
           </Grid>
         </Grid>
         {activeStep === 0 && <UserRegister />}
-        {activeStep === 0 && <VerifyUser />}
-        {activeStep === 0 && <CreateProfile />}
         {activeStep === 1 && <VerifyUser />}
         {activeStep === 2 && <CreateProfile />}
       </Container>

@@ -153,10 +153,10 @@ export default function VerifyUser() {
                 name="otp"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder={translate("OTP")}
+                placeholder={translate('OTP')}
                 error={formError.otp && touched.otp}
                 helperText={formError.otp ? formError.otp : undefined}
-                label={translate("OTP")}
+                label={translate('OTP')}
               />
               <Button sx={{ marginTop: 1, marginBottom: 1 }} type="submit" fullWidth size="large" variant="contained">
                 {isLoading ? <Lottie options={animationSetter(animation)} /> : ' Confirm'}
