@@ -240,11 +240,11 @@ export default function Register() {
                           value={values.email}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          placeholder="Email Address"
+                          placeholder={translate("Email Address")}
                           error={formError.email && touched.email}
                           helperText={formError.email}
                           name="email"
-                          label="Email Address"
+                          label={translate("Email Address")}
                         />
                       </m.div>
 
@@ -267,11 +267,11 @@ export default function Register() {
                           value={values.email}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          placeholder="Email Address"
+                          placeholder={translate("Email Address")}
                           error={formError.email && touched.email}
                           helperText={formError.email}
                           name="email"
-                          label="Email Address"
+                          label={translate("Email Address")}
                         />
                       </m.div>
                       <m.div variants={varBounce().inDown}>
