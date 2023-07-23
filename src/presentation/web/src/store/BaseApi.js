@@ -7,6 +7,7 @@ const BaseApi = createApi({
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
+    LoginUser: builder.mutation(allServices.mutations.LoginUser),
     VerifyUser: builder.mutation(allServices.mutations.VerifyUser),
     RegisterUser: builder.mutation(allServices.mutations.RegisterUser),
     ForgotPasswordEmail: builder.mutation(allServices.mutations.ForgotPasswordEmail),
@@ -40,7 +41,6 @@ const BaseApi = createApi({
     // color
     GetAllColors: builder.query(allServices.queries.GetAllColors),
     GetSpecificColor: builder.query(allServices.queries.GetSpecificColor),
-
   }),
 });
 

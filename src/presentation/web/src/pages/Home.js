@@ -40,27 +40,8 @@ export default function HomePage() {
     image: item.image,
   }));
 
-  const [nweImage, setnewImage] = useState('');
-  const handleimage = (e) => {
-    e.preventDefault();
-    setnewImage(e.target.files);
-  };
-
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
-  const [snackOptions, setSnackOptions] = React.useState({
-    open: true,
-    vertical: 'top',
-    horizontal: 'center',
-    animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-    message: 'yes this is Dynamic One !',
-    animationPosition: { marginLeft: '-4em' },
-  });
-
-  const handleSnackClose = () => {
-    setSnackOptions({ ...snackOptions, open: false });
-  };
-
   return isSuccess ? (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
@@ -88,18 +69,6 @@ export default function HomePage() {
         )}
 
         <Cart />
-        <Snack
-          vertical={snackOptions.vertical}
-          horizontal={snackOptions.horizontal}
-          open={snackOptions.open}
-          onClose={handleSnackClose}
-          message={snackOptions.message}
-          animation={snackOptions.animation}
-          autoHideDuration={5000}
-          backgroundColor={snackOptions.backgroundColor}
-          color={snackOptions.color}
-          animationPosition={snackOptions.animationPosition}
-        />
         <ShopProductList />
       </ContentStyle>
     </Page>
