@@ -16,7 +16,7 @@ import MenuPopover from '../../components/MenuPopover';
 import { IconButtonAnimate } from '../../components/animate';
 
 // ----------------------------------------------------------------------
-
+const userId = localStorage.getItem('userId');
 const MENU_OPTIONS = [
   {
     label: 'Home',
@@ -24,7 +24,7 @@ const MENU_OPTIONS = [
   },
   {
     label: 'Profile',
-    linkTo: "/",
+    linkTo: `/profile/1`,
   },
   {
     label: 'Settings',
@@ -42,7 +42,8 @@ export default function AccountPopover() {
   const isMountedRef = useIsMountedRef();
 
   const { enqueueSnackbar } = useSnackbar();
-  const myphoto = 'https://media.licdn.com/dms/image/D4D03AQHasiMJ38Stxw/profile-displayphoto-shrink_800_800/0/1684679057441?e=2147483647&v=beta&t=C4_3t63mY8DjjytCvQka2n4dSmLxW81rHbBLeBwJaxc';
+  const myphoto =
+    'https://media.licdn.com/dms/image/D4D03AQHasiMJ38Stxw/profile-displayphoto-shrink_800_800/0/1684679057441?e=2147483647&v=beta&t=C4_3t63mY8DjjytCvQka2n4dSmLxW81rHbBLeBwJaxc';
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
@@ -66,8 +67,8 @@ export default function AccountPopover() {
       enqueueSnackbar('Unable to logout!', { variant: 'error' });
     }
   };
-  const userEmail1 = localStorage.getItem('userEmail')
-
+  const userEmail1 = localStorage.getItem('userEmail');
+  const userName = localStorage.getItem('userName');
   return (
     <>
       <IconButtonAnimate
@@ -106,7 +107,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {"user?.displayName"}
+            {userName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {userEmail1}

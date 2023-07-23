@@ -35,5 +35,7 @@ export const PATH_PAGE = {
   addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),
   ConfirmPassword: path(PATH_PAGE_ROOT, 'confirm/password'),
   NewPassword: path(PATH_PAGE_ROOT, 'new/password'),
+
+  UserProfile: path(PATH_PAGE_ROOT, 'userprofile/:id'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };

@@ -119,7 +119,6 @@ export default function EcommerceProductList(newdata) {
 
   return (
     <Page title="Product List">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={10}>
             <Typography variant="h4" sx={{ mb: 3 }}>
@@ -220,7 +219,6 @@ export default function EcommerceProductList(newdata) {
             />
           </Box>
         </Card>
-      </Container>
     </Page>
   );
 }
