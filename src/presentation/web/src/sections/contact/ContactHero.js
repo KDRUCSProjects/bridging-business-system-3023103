@@ -61,12 +61,12 @@ export default function ContactHero() {
       <Container component={MotionContainer} sx={{ position: 'relative', height: '100%' }}>
         <ContentStyle>
           <Grid item lg={6}>
-          <TextAnimate text="Where" sx={{ color: 'primary.main'}} variants={varFade().inRight} />
+          <TextAnimate text={translate("Where")} sx={{ color: 'primary.main'}} variants={varFade().inRight} />
           <br />
           <Box  sx={{ display: 'inline-flex', color: 'common.white' }}>
-            <TextAnimate text="to" sx={{ mr: 2 }} />
-            <TextAnimate text="find" sx={{ mr: 2 }} />
-            <TextAnimate text="us?"sx={{marginBottom:"2em"}} />
+            <TextAnimate text={translate("to")} sx={{ mr: 2 }} />
+            <TextAnimate text={translate("find")} sx={{ mr: 2 }} />
+            <TextAnimate text={translate("us?")} sx={{marginBottom:"2em"}} />
           </Box>
 
           {CONTACTS.map((contact) => (

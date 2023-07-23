@@ -10,6 +10,7 @@ import animation from '../../animations/shared/arrow-right.json';
 // hooks
 import useIsMountedRef from '../../hooks/useIsMountedRef';
 import useSettings from '../../hooks/useSettings';
+import useLocales from '../../hooks/useLocales';
 
 // redux
 import { useDispatch, useSelector } from '../../store/store';
@@ -88,6 +89,7 @@ export default function CompleteForgotPassword() {
   const { Authsteps } = useSelector((store) => store.completeAuth);
   const { activeStep } = Authsteps;
   const isComplete = 3;
+  const {translate}=useLocales();
 
   return (
     <Page title="Afghan Business:ForgotPassword">
@@ -106,7 +108,7 @@ export default function CompleteForgotPassword() {
                       },
                     }}
                   >
-                    {label}
+                    {translate(label)}
                   </StepLabel>
                 </Step>
               ))}

@@ -33,10 +33,11 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 
 // contexts
+import { PersistGate } from 'redux-persist/integration/react';
 import { SettingsProvider } from './contexts/SettingsContext';
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 // store
-import { store } from './store/store';
+import { store, persistedStore } from './store/store';
 
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -46,19 +47,21 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <Provider store={store}>
-    <HelmetProvider>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <SettingsProvider>
-          <CollapseDrawerProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </CollapseDrawerProvider>
-        </SettingsProvider>
-      </LocalizationProvider>
-    </HelmetProvider>
-  </Provider>
+  <PersistGate persistor={persistedStore}>
+    <Provider store={store}>
+      <HelmetProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <SettingsProvider>
+            <CollapseDrawerProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </CollapseDrawerProvider>
+          </SettingsProvider>
+        </LocalizationProvider>
+      </HelmetProvider>
+    </Provider>
+  </PersistGate>
 );
 
 // If you want your app to work offline and load faster, you can change

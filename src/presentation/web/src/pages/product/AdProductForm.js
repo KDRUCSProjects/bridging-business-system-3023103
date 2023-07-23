@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Lottie from 'react-lottie';
 // form
@@ -34,8 +34,6 @@ const CATEGORY_OPTION = [
   { group: 'Tailored', classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats'] },
 ];
 
-const COLOR_OPTION = ['Red', 'Yellow', 'Black', 'white', 'blue'];
-
 const LabelStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
   color: theme.palette.text.secondary,
@@ -49,14 +47,14 @@ AdProductForm.propTypes = {
   currentProduct: PropTypes.object,
 };
 
-export default function AdProductForm({ isEdit, currentProduct }) {
+export default function AdProductForm({ isEdit, currentProduct, colors }) {
   const theme = useTheme();
   const { data } = BaseApi.useGetAllCategoriesQuery('api/category/');
-  const { data: colors } = BaseApi.useGetAllColorsQuery('api/product_color/');
-  const [CreateProduct, { isLoading }] = BaseApi.useCreateProductMutation();
+  // const { data: colors } = BaseApi.useGetAllColorsQuery('api/product_color/');
+  const [CreateProduct] = BaseApi.useCreateProductMutation();
+  const [UpdateProduct] = BaseApi.useUpdateProductMutation();
   const { translate } = useLocales();
   const navigate = useNavigate();
-
   const { enqueueSnackbar } = useSnackbar();
 
   const NewProductSchema = Yup.object().shape({
@@ -69,17 +67,32 @@ export default function AdProductForm({ isEdit, currentProduct }) {
     color: Yup.array().min(1, 'color is required'),
     price: Yup.number().moreThan(0, 'Price should not be af-0.00'),
   });
+  const currentColor = [];
+  const demy = colors?.map((color) => {
+    return currentProduct?.color?.map((currentProductColor) => {
+      if (currentProductColor === color.id) {
+        currentColor.push(color.name);
+      }
+      return currentProductColor;
+    });
+  });
+  let currentImages = [];
+  if (isEdit) {
+    currentImages = currentProduct?.images.map((image) => {
+      return image.image;
+    });
+  }
 
   const defaultValues = useMemo(
     () => ({
       name: currentProduct?.name || '',
       description: currentProduct?.description || '',
-      uploaded_images: currentProduct?.uploaded_images || [],
+      uploaded_images: currentImages || [],
       quantity: currentProduct?.quantity || undefined,
       user: currentProduct?.user || 2,
       price: currentProduct?.price || 0,
-      color: currentProduct?.color || [],
-      category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
+      color: currentColor || [],
+      category: currentProduct?.category || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
@@ -114,7 +127,6 @@ export default function AdProductForm({ isEdit, currentProduct }) {
   } = methods;
 
   const values = watch();
-
   useEffect(() => {
     if (isEdit && currentProduct) {
       reset(defaultValues);
@@ -134,13 +146,34 @@ export default function AdProductForm({ isEdit, currentProduct }) {
       return valueColor;
     });
   });
-  console.log('selected colors', selectedColor);
+  // const [currentOldImages, setCurrentOldImage] = useState(null);
 
+  // const convertImageUrlToFile = (imageUrl) => {
+  //   fetch(imageUrl)
+  //     .then((response) => response.blob())
+  //     .then((blob) => {
+  //       const selectedFile = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+  //       // setFile(selectedFile);
+  //       console.log('image: ', selectedFile);
+  //       setCurrentOldImage(selectedFile);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // const extra = currentProduct?.images.map((image) => {
+  //   const imageUrl = image;
+  //   // convertImageUrlToFile(imageUrl);
+  // });
+  // console.log(currentOldImages);
   const onSubmit = async (e) => {
     const formData = new FormData();
     formData.append('name', values.name);
     const v = values.uploaded_images.map((image) => {
-      return formData.append('uploaded_images', image, image.name);
+      if (image instanceof File) {
+        return formData.append('uploaded_images', image, image.name);
+      }
+      return image;
     });
     formData.append('description', values.description);
     formData.append('category', values.category);
@@ -150,16 +183,30 @@ export default function AdProductForm({ isEdit, currentProduct }) {
     const d = selectedColor.map((color) => {
       return formData.append('color', color);
     });
-    const query = {
-      path: '/api/product/',
-      data: formData,
-    };
-    const res = await CreateProduct(query);
-    if (res.error) {
-      console.log(res.error);
-      enqueueSnackbar('error', { variant: 'error' });
-    } else if (res.data) {
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
+    if (isEdit) {
+      const query = {
+        path: `/api/product/${currentProduct.id}/`,
+        data: formData,
+      };
+      const res = await UpdateProduct(query);
+      if (res.error) {
+        console.log(res.error);
+        enqueueSnackbar('error', { variant: 'error' });
+      } else if (res.data) {
+        enqueueSnackbar('Update success!');
+      }
+    } else {
+      const query = {
+        path: '/api/product/',
+        data: formData,
+      };
+      const res = await CreateProduct(query);
+      if (res.error) {
+        console.log(res.error);
+        enqueueSnackbar('error', { variant: 'error' });
+      } else if (res.data) {
+        enqueueSnackbar('Create success!');
+      }
     }
   };
 

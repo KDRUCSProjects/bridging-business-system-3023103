@@ -44,6 +44,10 @@ export default function Router() {
           element: <AddProduct />,
         },
         {
+          path: PATH_AUTH.specificProudct,
+          element: <AddProduct />,
+        },
+        {
           path: PATH_AUTH.checkOut,
           element: <CheckoutPage />,
         },
@@ -74,6 +78,8 @@ export default function Router() {
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
         { path: PATH_PAGE.ConfirmPassword, element: <ConfirmPassword /> },
         { path: PATH_PAGE.NewPassword, element: <NewPassword /> },
+
+        { path: PATH_PAGE.UserProfile, element: <UserProfile /> },
       ],
     },
 
@@ -142,3 +148,6 @@ const RegisterComplete = Loadable(lazy(() => import('../pages/auth/CompleteAuth'
 
 // complete Forgot Password
 const CompleteForgotPassword = Loadable(lazy(() => import('../pages/auth/CompleteForgotPassword')));
+
+// UserProfile
+const UserProfile = Loadable(lazy(() => import('../pages/profile/UserProfile')));

@@ -13,8 +13,8 @@ export default function ContactForm() {
     <Stack component={MotionViewport} spacing={5}>
       <m.div variants={varFade().inUp}>
         <Typography variant="h3">
-          {translate('Feelـfreeـtoـcontactـus')} <br />
-          {translate('Weـllـbeـgladـtoـhearـfromـyou')}, {translate('buddy')}.
+          {translate('Feel free to contact us')} <br />
+          {translate('We will be glad to hear from you')}, {translate('buddy')}.
         </Typography>
       </m.div>
 
@@ -32,7 +32,7 @@ export default function ContactForm() {
         </m.div>
 
         <m.div variants={varFade().inUp}>
-          <TextField fullWidth label={translate('enter_your_message_here')} multiline rows={4} />
+          <TextField fullWidth label={translate('enter your message here')} multiline rows={4} />
         </m.div>
       </Stack>
 
