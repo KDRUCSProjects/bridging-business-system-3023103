@@ -110,6 +110,7 @@ export default function RegisterForm() {
         localStorage.setItem('userEmail', res.data.user_info.email);
         localStorage.setItem('userName', res.data.user_info.username);
         localStorage.setItem('userId', res.data.user_info.id);
+        localStorage.setItem('AuthStepsLocal', 1);
         setSnackOptions({
           open: true,
           vertical: 'top',
