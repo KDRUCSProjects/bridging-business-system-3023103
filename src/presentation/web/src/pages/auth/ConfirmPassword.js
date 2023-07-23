@@ -163,10 +163,10 @@ export default function ConfirmPassowrd() {
                 name="password"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder=" New Password"
+                placeholder={translate(" New Password")}
                 error={formError.password && touched.password}
                 helperText={formError.password ? formError.password : undefined}
-                label="New Password"
+                label={translate("New Password")}
                 sx={{ marginBottom: '1em' }}
               />
               <TextField
@@ -174,10 +174,10 @@ export default function ConfirmPassowrd() {
                 name="confirmPassowrd"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="Confirm Passowrd"
+                placeholder={translate("Confirm Passowrd")}
                 error={formError.confirmPassowrd && touched.confirmPassowrd}
                 helperText={formError.confirmPassowrd ? formError.confirmPassowrd : undefined}
-                label="Confirm Password"
+                label={translate("Confirm Password")}
               />
               <Button sx={{ marginTop: 1, marginBottom: 1 }} type="submit" fullWidth size="large" variant="contained">
                 {translate('Confirm')}

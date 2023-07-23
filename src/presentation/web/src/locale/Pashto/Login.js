@@ -7,7 +7,16 @@ const Login = {
     Email :'بریښنا‌لیک',
     Password: 'پاسورډ',
     'Forgot password?': 'خپل پټ نوم درڅخه هیر دی؟',
-    Login: 'د ننه کیدل'
+    Login: 'د ننه کیدل',
+    'Enter Your Email': 'خپل بريښنالیک داخل کړئ',
+    'Email Address': 'بریښنالیک',
+    Register: 'ثبت کول',
+    'Check your Inbox !': 'خپل ان باکس وګورئ!',
+    OTP: 'OTP اوټیپی',
+    'New Password': 'نوی پاسورډ',
+    'Confirm Password': 'پاسورډ تایید کړه',
+    'verify Password': 'پاسورډ تایید کړئ',
+    'new Password': 'نوی پاسورډ',
     
   };
   

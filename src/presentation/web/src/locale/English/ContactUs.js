@@ -6,13 +6,13 @@ const contactUS = {
     name: 'Name',
     email: 'Email',
     subject: 'Subject',
-    enter_your_message_here: 'Enter your message here',
-    where: 'Where',
+    'enter your message here': 'Enter your message here',
+    Where: 'Where',
     to: 'to',
     find: 'find',
-    us: 'us?',
-    Feelـfreeـtoـcontactـus:'Feel free to contact us',
-    Weـllـbeـgladـtoـhearـfromـyou: "We'll be glad to hear from you",
+    'us?': 'us?',
+    'Feel free to contact us':'Feel free to contact us',
+    'We will be glad to hear from you': "We'll be glad to hear from you",
     buddy: 'buddy',
     submit: 'Submit Now'
   };

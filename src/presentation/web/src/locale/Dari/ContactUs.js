@@ -6,13 +6,13 @@ const contactUs = {
     name: 'نام',
     email: 'ایمیل آدرس',
     subject: 'موضوع',
-    enter_your_message_here: 'پیام تانرا اینجا بنویسید',
-    where: 'کجا',
+    'enter your message here': 'پیام تانرا اینجا بنویسید',
+    Where: 'کجا',
     to: 'به',
     find: 'دریابید ',
-    us: 'ما را؟',
-    Feelـfreeـtoـcontactـus:'راحت با ما تماس بگیرید',
-    Weـllـbeـgladـtoـhearـfromـyou: 'ما خوشحال خواهیم شد که از شما بشنویم',
+    'us?': 'ما را؟',
+    'Feel free to contact us':'راحت با ما تماس بگیرید',
+    'We will be glad to hear from you': 'ما خوشحال خواهیم شد که از شما بشنویم',
     buddy: 'آقا/خانم',
     submit: 'پیام را بفرستید'
   };
