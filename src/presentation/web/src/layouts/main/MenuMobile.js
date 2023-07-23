@@ -1,9 +1,20 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { NavLink as RouterLink, useLocation } from 'react-router-dom';
+import { NavLink as RouterLink, Link as routerLink, useLocation } from 'react-router-dom';
 // @mui
 import { alpha, styled, useTheme } from '@mui/material/styles';
-import { Box, List, Link, Drawer, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
+import {
+  Box,
+  List,
+  Link,
+  Drawer,
+  Collapse,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
+  Grid,
+  Button,
+} from '@mui/material';
 // config
 import { NAVBAR } from '../../config';
 // components
@@ -13,6 +24,11 @@ import Scrollbar from '../../components/Scrollbar';
 import { IconButtonAnimate } from '../../components/animate';
 import { NavSectionVertical } from '../../components/nav-section';
 import navConfig from './MenuConfig';
+import AccountPopover from './AccountPopover';
+import LanguagePopover from './LanguagePopover';
+import NotificationsPopover from './NotificationsPopover';
+import { PATH_AUTH } from '../../routes/paths';
+import useLocales from '../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +40,7 @@ const ListItemStyle = styled(ListItemButton)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
+const userId = localStorage.getItem('userId');
 
 MenuMobile.propTypes = {
   isOffset: PropTypes.bool,
@@ -33,6 +50,7 @@ MenuMobile.propTypes = {
 
 export default function MenuMobile({ isOffset, isHome }) {
   const { pathname } = useLocation();
+  const { translate } = useLocales();
 
   const [open, setOpen] = useState(false);
 
@@ -75,7 +93,25 @@ export default function MenuMobile({ isOffset, isHome }) {
         ModalProps={{ keepMounted: true }}
         PaperProps={{ sx: { pb: 5, width: 260 } }}
       >
-        <Scrollbar>
+        <Grid
+          container
+          flexDirection="row"
+          justifyContent={'center'}
+          spacing={3}
+          alignItems="baseline"
+          sx={{ position: 'absolute', left: '1em', top: '8em', mb: 3 }}
+        >
+          <Grid item ml={-4}>
+            <AccountPopover />
+          </Grid>
+          <Grid item>
+            <LanguagePopover />
+          </Grid>
+          <Grid item>
+            <NotificationsPopover />
+          </Grid>
+        </Grid>
+        <Scrollbar sx={{ marginTop: '2em' }}>
           <Logo sx={{ mx: 2.5, my: 3 }} />
 
           <List disablePadding>
@@ -83,6 +119,29 @@ export default function MenuMobile({ isOffset, isHome }) {
               <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
             ))}
           </List>
+          {!userId && (
+            <List>
+              <Button
+                sx={{ marginRight: '1.5em', marginLeft: '1.5em' }}
+                variant="contained"
+                component={routerLink}
+                to={PATH_AUTH.registerComplete}
+              >
+                {translate('register')}
+              </Button>
+              <Button
+                variant="contained"
+                component={routerLink}
+                to={PATH_AUTH.login}
+                sx={{
+                  marginRight: '1.5em',
+                  marginLeft: '1.5em',
+                }}
+              >
+                {translate('login')}
+              </Button>
+            </List>
+          )}
         </Scrollbar>
       </Drawer>
     </>
@@ -117,7 +176,6 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
             sx={{ width: 16, height: 16, ml: 1 }}
           />
         </ListItemStyle>
-
         <Collapse in={isOpen} unmountOnExit>
           <Box sx={{ display: 'flex', flexDirection: 'column-reverse' }}>
             <NavSectionVertical

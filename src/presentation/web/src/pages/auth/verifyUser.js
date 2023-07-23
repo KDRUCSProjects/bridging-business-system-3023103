@@ -11,6 +11,8 @@ import { Button, Container, Typography, Box, TextField, Stack, useTheme } from '
 // Lottie
 import Lottie from 'react-lottie';
 import { FormProvider } from '../../components/hook-form';
+import useResponsive from '../../hooks/useResponsive';
+
 // hooks
 import useLocales from '../../hooks/useLocales';
 import newpassword from '../../animations/new/buble.json';
@@ -48,6 +50,7 @@ const RegisterSchema = yup.object().shape({
 
 export default function VerifyUser() {
   const { translate } = useLocales();
+  const smDown = useResponsive('down', 'sm');
 
   const dispatch = useDispatch();
   const handleNextStep = () => {
@@ -56,6 +59,8 @@ export default function VerifyUser() {
 
   const theme = useTheme();
   const [UserVerify, { isLoading }] = BaseApi.useVerifyUserMutation();
+  const [OTPAgain, OTPagainResponse] = BaseApi.useVerifyPasswordMutation();
+
   const [snackOptions, setSnackOptions] = useState({
     open: true,
     vertical: 'top',
@@ -123,6 +128,39 @@ export default function VerifyUser() {
       }
     },
   });
+  console.log(localStorage.getItem('userEmail'));
+
+  const sendOtpAgain = async () => {
+    const email = localStorage.getItem('userEmail');
+    const query = {
+      path: '/api/forget/password/email/',
+      data: { email },
+    };
+    const res = await OTPAgain(query);
+    if (res.error) {
+      setSnackOptions({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+        backgroundColor: theme.palette.error.main,
+        color: theme.palette.text.primary,
+        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
+        message: res.error.data,
+        animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
+      });
+    } else if (res.data) {
+      setSnackOptions({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.text.primary,
+        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
+        message: res.data,
+        animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
+      });
+    }
+  };
 
   return (
     <Page title="Verify User">
@@ -162,6 +200,9 @@ export default function VerifyUser() {
                 {isLoading ? <Lottie options={animationSetter(animation)} /> : ' Confirm'}
               </Button>
             </Stack>
+            <Button fullWidth size="large" onClick={sendOtpAgain}>
+              {translate('Resend code')}
+            </Button>
           </FormProvider>
         </ContentStyle>
       </Container>

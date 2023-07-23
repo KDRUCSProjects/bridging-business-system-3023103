@@ -42,8 +42,6 @@ export default function AccountPopover() {
   const isMountedRef = useIsMountedRef();
 
   const { enqueueSnackbar } = useSnackbar();
-  const myphoto =
-    'https://media.licdn.com/dms/image/D4D03AQHasiMJ38Stxw/profile-displayphoto-shrink_800_800/0/1684679057441?e=2147483647&v=beta&t=C4_3t63mY8DjjytCvQka2n4dSmLxW81rHbBLeBwJaxc';
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
@@ -69,6 +67,7 @@ export default function AccountPopover() {
   };
   const userEmail1 = localStorage.getItem('userEmail');
   const userName = localStorage.getItem('userName');
+  const userImage = localStorage.getItem('avatarImage');
   return (
     <>
       <IconButtonAnimate
@@ -88,7 +87,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <MyAvatar myphoto={myphoto} />
+        <MyAvatar myphoto={userImage} others={{ width: '10px', height: '10px' }} />
       </IconButtonAnimate>
 
       <MenuPopover
