@@ -14,7 +14,6 @@ const UserRegister = {
     'Phone Number' : 'Phone Number',
     password : 'password',
     UserName: 'UserName',
-    Register: 'Register'
     
   };
   

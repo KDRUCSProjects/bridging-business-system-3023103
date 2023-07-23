@@ -7,7 +7,6 @@ const UserRegister = {
     'Terms of Service' : 'د خدمت شرطونه',
     and : 'او',
     'Privacy Policy' : 'د پټتیا تګلاره',
-    Register : 'راجسټر',
     'First Name' : 'نوم',
     'last Name' : 'تخلص',
     'Email Address' : 'بریښنا‌لیک',

@@ -78,7 +78,6 @@ export default function ProfileForm() {
       owner_phone: '',
       details: '',
       business_type: '',
-      phone: '',
       avator: '',
     }),
     []

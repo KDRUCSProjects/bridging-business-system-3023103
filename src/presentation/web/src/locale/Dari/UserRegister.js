@@ -14,7 +14,6 @@ const UserRegister = {
     'Phone Number' : 'شماره مبایل',
     password : 'پاسورد',
     UserName: 'نام کاربر',
-    Register: 'ثبت کردن',
     
   };
   

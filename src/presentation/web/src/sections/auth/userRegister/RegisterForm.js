@@ -192,7 +192,7 @@ export default function RegisterForm() {
                   helperText={formError.last_name}
                   label={translate("last Name")}
                 />
-              </m.div>
+              <m.div
                 value={values.last_name}
                 name="last_name"
                 onBlur={handleBlur}
