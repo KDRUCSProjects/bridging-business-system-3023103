@@ -67,7 +67,8 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     color: color[0],
     size: sizes[4],
   };
-
+  const userId = localStorage.getItem('userId')
+  const uId = 2 ;
   const methods = useForm({
     defaultValues,
   });
@@ -89,7 +90,12 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       console.error(error);
     }
   };
- 
+ let linkto = '';
+ if(user !== uId ){
+  linkto = `/profile/${user}/`
+ }else{
+  linkto = `/userprofile/${user}/`
+ }
 
   const handleAddCart = async () => {
     try {
@@ -196,7 +202,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
   
          {translate('add to cart')} 
           </Button>    
-          <Button  component={Link} to={`/profile/${user}/`}  fullWidth size="large"  startIcon={<Person2Icon />} variant="contained">
+          <Button  component={Link} to={linkto}  fullWidth size="large"  startIcon={<Person2Icon />} variant="contained">
            {translate('view profile')} 
           </Button>
         </Stack>

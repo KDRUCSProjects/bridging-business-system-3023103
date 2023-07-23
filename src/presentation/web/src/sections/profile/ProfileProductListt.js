@@ -1,3 +1,4 @@
+import { paramCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 // @mui
@@ -14,17 +15,18 @@ import {
   TableContainer,
   TablePagination,
   FormControlLabel,
+  Typography,
+  Grid
 } from '@mui/material';
-// redux
-import { useDispatch, useSelector } from '../../store/store';
-import { getProducts } from '../../store/slices/checkout/checkout';
-// hooks
+
+import filterObject from '../../utils/filterObject';
 import useSettings from '../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../hooks/useTable';
 // components
 import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
+import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import {
   TableNoData,
   TableSkeleton,
@@ -33,21 +35,24 @@ import {
   TableSelectedActions,
 } from '../../components/table';
 // sections
-import { ProductTableRow, ProductTableToolbar } from '../../sections/cart';
-
+// import { ProductTableRow, ProductTableToolbar } from '../../sections/@dashboard/e-commerce/product-list';
+import ProductTableRow from '../@dashboard/e-commerce/product-list/ProductTableRow';
+import ProductTableToolbar from '../@dashboard/e-commerce/product-list/ProductTableToolbar';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Product', align: 'left' },
-  { id: 'createdAt', label: 'Create at', align: 'left' },
+  { id: 'NO', label: 'number', align: 'left', width: 150 },
+  { id: 'product', label: 'Product', align: 'left', width: 150 },
+  { id: 'createdAt', label: 'Create at', align: 'left', width: 200 },
   { id: 'inventoryType', label: 'Status', align: 'center', width: 180 },
-  { id: 'price', label: 'Price', align: 'right' },
+  { id: 'price', label: 'Price', align: 'right', width: 200 },
   { id: '' },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function ProductList() {
+export default function EcommerceProductList(newdata) {
+  const newdata1 = newdata.newdata.results;
   const {
     dense,
     page,
@@ -73,24 +78,13 @@ export default function ProductList() {
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  //   const dispatch = useDispatch();
+  const isLoading = true;
+  //   const { products, isLoading } = useSelector((state) => state.product);
 
-  const { products, isLoading } = useSelector((state) => state.checkout);
-  console.log('products', products);
-
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(newdata1);
 
   const [filterName, setFilterName] = useState('');
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (products.length) {
-      setTableData(products);
-    }
-  }, [products]);
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
@@ -110,22 +104,34 @@ export default function ProductList() {
   };
 
   const handleEditRow = (id) => {
-    navigate('hello');
+    navigate(`/user/ad/product`);
   };
-
   const dataFiltered = applySortFilter({
     tableData,
     comparator: getComparator(order, orderBy),
     filterName,
   });
-console.log('our new data ::::  ',dataFiltered)
+  console.log('filter::::', dataFiltered);
+
   const denseHeight = dense ? 60 : 80;
 
   const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
 
   return (
-    <Page title="Add To Cart">
-      <Container sx={{ marginTop: '6rem', marginBottom: '2rem' }} maxWidth={themeStretch ? false : 'lg'}>
+    <Page title="Product List">
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={10}>
+            <Typography variant="h4" sx={{ mb: 3 }}>
+              All Your Products
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={2}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} component={RouterLink} to={'/user/ad/product'}>
+              New Product
+            </Button>
+          </Grid>
+        </Grid>
+
         <Card>
           <ProductTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
@@ -169,13 +175,16 @@ console.log('our new data ::::  ',dataFiltered)
                 />
 
                 <TableBody>
-                  {(isLoading ? [...Array(rowsPerPage)] : dataFiltered)
+                  {(!isLoading ? [...Array(rowsPerPage)] : dataFiltered)
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) =>
                       row ? (
                         <ProductTableRow
                           key={row.id}
-                          row={dataFiltered}
+                          row={row}
+                          index={index}
+                          selected={selected.includes(row.id)}
+                          onSelectRow={() => onSelectRow(row.id)}
                           onDeleteRow={() => handleDeleteRow(row.id)}
                           onEditRow={() => handleEditRow(row.name)}
                         />
@@ -210,7 +219,6 @@ console.log('our new data ::::  ',dataFiltered)
             />
           </Box>
         </Card>
-      </Container>
     </Page>
   );
 }
@@ -229,7 +237,7 @@ function applySortFilter({ tableData, comparator, filterName }) {
   tableData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    tableData = tableData.filter((item) => item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
+    tableData = filterObject(tableData, { name: filterName });
   }
 
   return tableData;

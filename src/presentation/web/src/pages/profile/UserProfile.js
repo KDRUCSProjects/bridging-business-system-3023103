@@ -42,7 +42,7 @@ export default function BusinessProfile() {
   const { data: newdata } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
   const { translate } = useLocales();
   const { themeStretch } = useSettings();
-  const { currentTab, onChangeTab } = useTabs('Dashboard');
+  const { currentTab, onChangeTab } = useTabs('About');
   const [findFriends, setFindFriends] = useState('');
 
   const handleFindFriends = (value) => {
@@ -51,11 +51,6 @@ export default function BusinessProfile() {
 
   const PROFILE_TABS = [
     {
-      value: 'Dashboard',
-      icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
-      component: <Dashboard id={id} />,
-    },
-    {
       value: 'About',
       icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
       component: <Profile myProfile={data} userdata={userdata} posts={_userFeeds} />,
@@ -63,12 +58,7 @@ export default function BusinessProfile() {
     {
       value: 'Products',
       icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
-      component: <ProfileProductListt gallery={_userGallery} newdata={newdata} />,
-    },
-    {
-      value: 'change_password',
-      icon: <Iconify icon={'ic:round-vpn-key'} width={20} height={20} />,
-      component: <AccountChangePassword />,
+      component: <ProfileProductList gallery={_userGallery} newdata={newdata} />,
     },
   ];
   return isSuccess ? (
@@ -81,7 +71,7 @@ export default function BusinessProfile() {
             position: 'relative',
           }}
         >
-          <ProfileCover myProfile={data}  />
+          <ProfileCover myProfile={data} />
           <TabsWrapperStyle>
             <Tabs
               allowScrollButtonsMobile

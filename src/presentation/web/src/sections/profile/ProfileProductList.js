@@ -1,104 +1,234 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { paramCase } from 'change-case';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Card, IconButton, Typography, CardContent } from '@mui/material';
-// utils
-import cssStyles from '../../utils/cssStyles';
+import {
+  Box,
+  Card,
+  Table,
+  Button,
+  Switch,
+  Tooltip,
+  TableBody,
+  Container,
+  IconButton,
+  TableContainer,
+  TablePagination,
+  FormControlLabel,
+  Typography,
+  Grid
+} from '@mui/material';
+
+import filterObject from '../../utils/filterObject';
+import useSettings from '../../hooks/useSettings';
+import useTable, { getComparator, emptyRows } from '../../hooks/useTable';
 // components
-import Image from '../../components/Image';
+import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
-import LightboxModal from '../../components/LightboxModal';
+import Scrollbar from '../../components/Scrollbar';
+import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+import {
+  TableNoData,
+  TableSkeleton,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableSelectedActions,
+} from '../../components/table';
+// sections
+// import { ProductTableRow, ProductTableToolbar } from '../../sections/@dashboard/e-commerce/product-list';
+import ProductTableRow1 from '../@dashboard/e-commerce/product-list/ProductTableRow1';
+import ProductTableToolbar from '../@dashboard/e-commerce/product-list/ProductTableToolbar';
 // ----------------------------------------------------------------------
 
-const CaptionStyle = styled(CardContent)(({ theme }) => ({
-  ...cssStyles().bgBlur({ blur: 2, color: theme.palette.grey[900] }),
-  bottom: 0,
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  position: 'absolute',
-  justifyContent: 'space-between',
-  color: theme.palette.common.white,
-}));
+const TABLE_HEAD = [
+  { id: 'NO', label: 'number', align: 'left', width: 150 },
+  { id: 'product', label: 'Product', align: 'left', width: 150 },
+  { id: 'createdAt', label: 'Create at', align: 'left', width: 200 },
+  { id: 'inventoryType', label: 'Status', align: 'center', width: 180 },
+  { id: 'price', label: 'Price', align: 'right', width: 200 },
+  { id: '' },
+];
 
 // ----------------------------------------------------------------------
 
-ProfileGallery.propTypes = {
-  gallery: PropTypes.array.isRequired,
-};
+export default function EcommerceProductList(newdata) {
+  const newdata1 = newdata.newdata.results;
+  const {
+    dense,
+    page,
+    order,
+    orderBy,
+    rowsPerPage,
+    setPage,
+    //
+    selected,
+    setSelected,
+    onSelectRow,
+    onSelectAllRows,
+    //
+    onSort,
+    onChangeDense,
+    onChangePage,
+    onChangeRowsPerPage,
+  } = useTable({
+    defaultOrderBy: 'createdAt',
+  });
 
-export default function ProfileGallery({ gallery, newdata }) {
-  const data = newdata.results;
-  const [openLightbox, setOpenLightbox] = useState(false);
+  const { themeStretch } = useSettings();
 
-  const [selectedImage, setSelectedImage] = useState(0);
-  const imagesLightbox = data.map((item) => item.images[0]?.image);
-  const handleOpenLightbox = (url) => {
-    const selectedImage = imagesLightbox.findIndex((index) => index === url);
-    setOpenLightbox(true);
-    setSelectedImage(selectedImage);
+  const navigate = useNavigate();
+
+  //   const dispatch = useDispatch();
+  const isLoading = true;
+  //   const { products, isLoading } = useSelector((state) => state.product);
+
+  const [tableData, setTableData] = useState(newdata1);
+
+  const [filterName, setFilterName] = useState('');
+
+  const handleFilterName = (filterName) => {
+    setFilterName(filterName);
+    setPage(0);
   };
+
+  const handleDeleteRow = (id) => {
+    const deleteRow = tableData.filter((row) => row.id !== id);
+    setSelected([]);
+    setTableData(deleteRow);
+  };
+
+  const handleDeleteRows = (selected) => {
+    const deleteRows = tableData.filter((row) => !selected.includes(row.id));
+    setSelected([]);
+    setTableData(deleteRows);
+  };
+
+  const dataFiltered = applySortFilter({
+    tableData,
+    comparator: getComparator(order, orderBy),
+    filterName,
+  });
+  console.log('filter::::', dataFiltered);
+
+  const denseHeight = dense ? 60 : 80;
+
+  const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
+
   return (
-    <Box sx={{ mt: 5 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        Gallery
-      </Typography>
+    <Page title="Product List">
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={10}>
+            <Typography variant="h4" sx={{ mb: 3 }}>
+              All Your Products
+            </Typography>
+          </Grid>
+        </Grid>
 
-      <Card sx={{ p: 3 }}>
-        <Box
-          sx={{
-            display: 'grid',
-            gap: 3,
-            gridTemplateColumns: {
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-            },
-          }}
-        >
-          {data.map((item) => (
-            <GalleryItem key={item.id} item={item} onOpenLightbox={handleOpenLightbox} />
-          ))}
-        </Box>
+        <Card>
+          <ProductTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
-        <LightboxModal
-          images={imagesLightbox}
-          mainSrc={imagesLightbox[selectedImage]}
-          photoIndex={selectedImage}
-          setPhotoIndex={setSelectedImage}
-          isOpen={openLightbox}
-          onCloseRequest={() => setOpenLightbox(false)}
-        />
-      </Card>
-    </Box>
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
+              {selected.length > 0 && (
+                <TableSelectedActions
+                  dense={dense}
+                  numSelected={selected.length}
+                  rowCount={tableData.length}
+                  onSelectAllRows={(checked) =>
+                    onSelectAllRows(
+                      checked,
+                      tableData.map((row) => row.id)
+                    )
+                  }
+                  actions={
+                    <Tooltip title="Delete">
+                      <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
+                        <Iconify icon={'eva:trash-2-outline'} />
+                      </IconButton>
+                    </Tooltip>
+                  }
+                />
+              )}
+
+              <Table size={dense ? 'small' : 'medium'}>
+                <TableHeadCustom
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={tableData.length}
+                  numSelected={selected.length}
+                  onSort={onSort}
+                  onSelectAllRows={(checked) =>
+                    onSelectAllRows(
+                      checked,
+                      tableData.map((row) => row.id)
+                    )
+                  }
+                />
+
+                <TableBody>
+                  {(!isLoading ? [...Array(rowsPerPage)] : dataFiltered)
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) =>
+                      row ? (
+                        <ProductTableRow1
+                          key={row.id}
+                          row={row}
+                          index={index}
+                          selected={selected.includes(row.id)}
+                          onSelectRow={() => onSelectRow(row.id)}
+                        />
+                      ) : (
+                        !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
+                      )
+                    )}
+
+                  <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />
+
+                  <TableNoData isNotFound={isNotFound} />
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+
+          <Box sx={{ position: 'relative' }}>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={dataFiltered.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={onChangePage}
+              onRowsPerPageChange={onChangeRowsPerPage}
+            />
+
+            <FormControlLabel
+              control={<Switch checked={dense} onChange={onChangeDense} />}
+              label="Dense"
+              sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+            />
+          </Box>
+        </Card>
+    </Page>
   );
 }
 
 // ----------------------------------------------------------------------
 
-GalleryItem.propTypes = {
-  image: PropTypes.object,
-  onOpenLightbox: PropTypes.func,
-};
+function applySortFilter({ tableData, comparator, filterName }) {
+  const stabilizedThis = tableData.map((el, index) => [el, index]);
 
-function GalleryItem({ item, onOpenLightbox }) {
-  const { id, images, name } = item;
-  return (
-    <Card sx={{ cursor: 'pointer', position: 'relative' }}>
-      <Image alt="gallery image" ratio="1/1" src={images[0]?.image} onClick={() => onOpenLightbox(images[0]?.image)} />
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
 
-      <CaptionStyle>
-        <div>
-          <Typography variant="subtitle1">{name}</Typography>
-          <Typography variant="body2" sx={{ opacity: 0.72 }}>
-            {'fDate(postAt)'}
-          </Typography>
-        </div>
-        <IconButton color="inherit">
-          <Iconify icon={'eva:more-vertical-fill'} width={20} height={20} />
-        </IconButton>
-      </CaptionStyle>
-    </Card>
-  );
+  tableData = stabilizedThis.map((el) => el[0]);
+
+  if (filterName) {
+    tableData = filterObject(tableData, { name: filterName });
+  }
+
+  return tableData;
 }
