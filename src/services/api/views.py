@@ -279,7 +279,6 @@ class UserLoginView(KnoxLoginView):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
-        print(user.is_verified)
         if user.is_verified == False:
             return Response(
                 {"detail": "Not activated user."},
