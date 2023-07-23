@@ -104,7 +104,7 @@ export default function EcommerceProductList(newdata) {
   };
 
   const handleEditRow = (id) => {
-    navigate(`/user/ad/product`);
+    navigate(`/user/ad/product/${id}`);
   };
   const dataFiltered = applySortFilter({
     tableData,
@@ -186,7 +186,7 @@ export default function EcommerceProductList(newdata) {
                           selected={selected.includes(row.id)}
                           onSelectRow={() => onSelectRow(row.id)}
                           onDeleteRow={() => handleDeleteRow(row.id)}
-                          onEditRow={() => handleEditRow(row.name)}
+                          onEditRow={() => handleEditRow(row.id)}
                         />
                       ) : (
                         !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
