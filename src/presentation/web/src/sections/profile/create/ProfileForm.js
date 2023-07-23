@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import { useCallback, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 // form
 import { useForm } from 'react-hook-form';
 import 'yup-phone';
@@ -21,6 +23,8 @@ import arrow from '../../../animations/new/congruglationyellow.json';
 import animation from '../../../animations/shared/arrow-right.json';
 import animationSetter from '../../../animations/animationSetter';
 
+import { onCompleteReset } from '../../../store/slices/auth/completeAuth';
+
 // components
 import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
 import Snack from '../../../components/Snack';
@@ -32,6 +36,7 @@ import BaseApi from '../../../store/BaseApi';
 export default function ProfileForm() {
   const [BusinesProfile, response] = BaseApi.useCreateBusinesProfileMutation();
   const theme = useTheme();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLgDown = useResponsive('down', 'lg');
   const [snackOptions, setSnackOptions] = useState({
@@ -63,16 +68,16 @@ export default function ProfileForm() {
   });
   const defaultValues = useMemo(
     () => ({
-      province: 'hello',
-      district: 'hello',
-      area: 'hello',
-      street: 'hello',
-      business_name: 'hello',
-      owner_bio: 'hello',
-      owner_phone: '+93745180238',
-      details: 'hello',
-      business_type: 'hello',
-      phone: '+93745180238',
+      province: '',
+      district: '',
+      area: '',
+      street: '',
+      business_name: '',
+      owner_bio: '',
+      owner_phone: '',
+      details: '',
+      business_type: '',
+      phone: '',
       avator: '',
     }),
     []
@@ -141,6 +146,7 @@ export default function ProfileForm() {
         animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
       setTimeout(() => {
+        dispatch(onCompleteReset());
         navigate('/');
       }, 2000);
     }
@@ -190,17 +196,6 @@ export default function ProfileForm() {
         </Grid>
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 10, marginBottom: '3em' }}>
-            <Button
-              component={Link}
-              to={'/'}
-              sx={{ position: 'absolute', top: '2%', right: '1%' }}
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              {translate('Skip')}
-              <Lottie options={animationSetter(arrow)} width={'3em'} height={'2em'} />
-            </Button>
             <Box
               sx={{
                 display: 'grid',

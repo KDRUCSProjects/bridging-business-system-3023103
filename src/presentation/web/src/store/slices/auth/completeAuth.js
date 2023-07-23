@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 // ----------------------------------------------------------------------
 
 const initialState = {
@@ -13,8 +12,6 @@ const completeAuth = createSlice({
   name: 'completeAuth',
   initialState,
   reducers: {
-
-
     onBackStep(state) {
       state.Authsteps.activeStep -= 1;
     },
@@ -22,12 +19,14 @@ const completeAuth = createSlice({
     onNextStep(state) {
       state.Authsteps.activeStep += 1;
     },
+    onCompleteReset(state) {
+      state.Authsteps.activeStep = 0;
+    },
 
     onGotoStep(state, action) {
       const goToStep = action.payload;
       state.Authsteps.activeStep = goToStep;
     },
-
   },
 });
 
@@ -35,9 +34,4 @@ const completeAuth = createSlice({
 export default completeAuth;
 
 // Actions
-export const {
-  onGotoStep,
-  onBackStep,
-  onNextStep,
-} = completeAuth.actions;
-
+export const { onGotoStep, onBackStep, onNextStep, onCompleteReset } = completeAuth.actions;
