@@ -1,4 +1,4 @@
-const RegisterUser = {
+const LoginUser = {
   query: (query) => ({
     url: query.path,
     method: 'POST',
@@ -6,4 +6,4 @@ const RegisterUser = {
   }),
 };
 
-export default RegisterUser;
+export default LoginUser;

@@ -1,22 +1,29 @@
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+// Lottie
+import Lottie from 'react-lottie';
 
 // @mui
+import { useTheme } from '@mui/material/styles';
 import { Button, Link, Stack, IconButton, InputAdornment, Alert, TextField } from '@mui/material';
 // import { LoadingButton } from '@mui/lab';
 
 // Formik & yup
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import BaseApi from '../../../store/BaseApi';
+// animation
+import animationSetter from '../../../animations/animationSetter';
+import animation from '../../../animations/shared/hms-loading.json';
 
 // components
 import Iconify from '../../../components/Iconify';
-
+import Snack from '../../../components/Snack';
 import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 const loginSchema = yup.object().shape({
-  email: yup.string().email().required(),
+  username: yup.string().required(),
   password: yup
     .string()
     .required('Please enter your password')
@@ -27,15 +34,31 @@ const loginSchema = yup.object().shape({
 });
 
 export default function LoginForm() {
+  const [LoginUser, LoginUserResponse] = BaseApi.useLoginUserMutation();
   const Navigate = useNavigate();
-  const {translate}= useLocales();
+  const theme = useTheme();
+  const { translate } = useLocales();
   const [showPassword, setShowPassword] = useState(false);
-  // validation
+
+  const [snackOptions, setSnackOptions] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+    backgroundColor: undefined,
+    color: undefined,
+    animation: undefined,
+    message: undefined,
+    animationPosition: undefined,
+  });
+
+  const handleSnackClose = () => {
+    setSnackOptions({ ...snackOptions, open: false });
+  };
 
   // Collect Data from the Inputs
   const initialValues = {
-    email: '',
-    password: '',
+    username: 'wahab.cs238@gmail.com',
+    password: 'Helmand1200@',
   };
 
   const {
@@ -43,33 +66,82 @@ export default function LoginForm() {
     errors: formError,
     handleBlur,
     touched,
+    handleSubmit,
     handleChange,
   } = useFormik({
     initialValues,
     validationSchema: loginSchema,
+    onSubmit: async () => {
+      console.log('clicked');
+      const query = {
+        path: '/api/login/',
+        data: values,
+      };
+      const res = await LoginUser(query);
+      if (res.error) {
+        setSnackOptions({
+          open: true,
+          vertical: 'top',
+          horizontal: 'center',
+          backgroundColor: theme.palette.error.main,
+          color: theme.palette.text.primary,
+          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+          message: 'Wrong Credientials',
+          animationPosition: { marginLeft: '-4em' },
+        });
+      } else if (res.data) {
+        localStorage.setItem('Token', res.data.token);
+        localStorage.setItem('userEmail', res.data.user.email);
+        localStorage.setItem('userName', res.data.user.username);
+        localStorage.setItem('userId', res.data.user.id);
+        setSnackOptions({
+          open: true,
+          vertical: 'top',
+          horizontal: 'center',
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.text.primary,
+          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+          message: 'Logged In Successfull !',
+          animationPosition: { marginLeft: '-4em' },
+        });
+        setTimeout(() => {
+          Navigate('/');
+        }, 2000);
+      }
+    },
   });
+  console.log('Response of login', LoginUserResponse);
 
-  const FormiFunction = async (e) => {
-    e.preventDefault();
-  };
   return (
-    <form onSubmit={FormiFunction}>
+    <form onSubmit={handleSubmit}>
+      <Snack
+        vertical={snackOptions.vertical}
+        horizontal={snackOptions.horizontal}
+        open={snackOptions.open}
+        onClose={handleSnackClose}
+        message={snackOptions.message}
+        animation={snackOptions.animation}
+        autoHideDuration={5000}
+        backgroundColor={snackOptions.backgroundColor}
+        color={snackOptions.color}
+        animationPosition={snackOptions.animationPosition}
+      />
       <Stack spacing={3}>
         <TextField
-          value={values.email}
-          name="email"
+          value={values.username}
+          name="username"
           onBlur={handleBlur}
           onChange={handleChange}
-          label={translate("Email")}
-          placeholder={'exmple@gamil.com'}
-          error={formError.email && touched.email}
-          helperText={formError.email}
+          label={translate('Email OR UserName')}
+          placeholder={'Email Or Username'}
+          error={formError.username && touched.username}
+          helperText={formError.username}
         />
 
         <TextField
           value={values.password}
           name="password"
-          label={translate("Password")}
+          label={translate('Password')}
           placeholder={'exmple123'}
           onBlur={handleBlur}
           onChange={handleChange}

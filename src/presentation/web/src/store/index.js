@@ -7,6 +7,7 @@ import VerifyUser from './services/mutations/auth/verify';
 import ForgotPasswordEmail from './services/mutations/auth/forgotPassword/forgotPassword-Email';
 import NewPassword from './services/mutations/auth/forgotPassword/newPassword';
 import VerifyPassword from './services/mutations/auth/forgotPassword/verifyPassword';
+import LoginUser from './services/mutations/auth/login';
 
 // Queries
 import { ProfileQueries } from './services/queries/BusinessProfile';
@@ -17,7 +18,6 @@ import { ColorQuery } from './services/queries/color';
 
 // Services From Redux Toolkit Query
 export const allServices = {
-
   queries: { ...ProfileQueries, ...ProductQuery, ...CategoryQuery, ...UserQuery, ...ColorQuery },
   mutations: {
     ...ProfileMutations,
@@ -28,10 +28,8 @@ export const allServices = {
     ForgotPasswordEmail,
     NewPassword,
     VerifyPassword,
+    LoginUser,
   },
-
-
-
 };
 
 export const allSlices = {};

@@ -135,6 +135,7 @@ export default function ProfileForm() {
         animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
     } else if (res.data) {
+      localStorage.setItem('avatarImage', res.data.avator);
       setSnackOptions({
         open: true,
         vertical: 'top',
