@@ -12,33 +12,20 @@ const ICON_SIZE = {
   width: 22,
   height: 22,
 };
-const MenuConfig= () =>{
-  const {translate} = useLocales();
+const MenuConfig = () => {
+  const { translate } = useLocales();
   return [
     {
-      title: translate('home'),
+      title: translate('about us'),
       icon: <Iconify icon={'eva:home-fill'} {...ICON_SIZE} />,
       path: '/',
     },
     {
-      title: translate('pages'),
+      title: translate('contact us'),
       path: '/pages',
       icon: <Iconify icon={'eva:file-fill'} {...ICON_SIZE} />,
-      children: [
-        {
-          subheader:translate('Others'),
-          items: [
-            { title: translate('about us'), path: PATH_PAGE.about },
-            { title: translate('contact us'), path: PATH_PAGE.contact },
-          ],
-    
-        },
-      ],
     },
-  
   ];
-}
-
-
+};
 
 export default MenuConfig;

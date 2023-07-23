@@ -31,6 +31,7 @@ import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
 
 // ----------------------------------------------------------------------
+const userId = localStorage.getItem('userId');
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -49,8 +50,8 @@ const Search = styled('div')(({ theme }) => ({
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  marginRight: '1em',
-  marginTop: '-2em',
+  // marginRight: '1em',
+  // marginTop: '-2em',
   height: '100%',
   pointerEvents: 'none',
   display: 'flex',
@@ -69,6 +70,8 @@ const SearchIconWrapperMobile = styled('div')(({ theme }) => ({
 }));
 
 const StyledAutoComplete = styled(Autocomplete)(({ theme }) => ({
+  marginTop: '-1em',
+  marginRight: '.5em',
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -76,8 +79,8 @@ const StyledAutoComplete = styled(Autocomplete)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
 
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      width: '5em',
     },
   },
 }));
@@ -94,8 +97,8 @@ const StyledAutoCompleteMobile = styled(Autocomplete)(({ theme }) => ({
 }));
 const StyledAutoCompleteRtl = styled(Autocomplete)(({ theme }) => ({
   color: 'inherit',
-  marginTop: '-1em',
-  marginRight: '10em',
+  marginTop: userId ? '-1.5em' : '.8em',
+  marginRight: !userId ? '5em' : '3em',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -137,13 +140,14 @@ export default function MainHeader(props) {
   const { translate } = useLocales();
 
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
-const user = true;
+  const user = true;
   const theme = useTheme();
   const isRTL = theme.direction === 'rtl';
 
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'md');
+  const isDesktopDown = useResponsive('down', 'md');
   const isMobile = useResponsive('down', 'sm');
   const isMobileUp = useResponsive('up', 'sm');
 
@@ -177,7 +181,7 @@ const user = true;
                 justifyContent: 'space-between',
               }}
             >
-              {isMobile && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+              {isDesktopDown && userId && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
               {isMobile ? (
                 <StyledAutoCompleteMobile
@@ -222,21 +226,35 @@ const user = true;
                 />
               ) : (
                 <>
-                  {' '}
-                  <Button variant="contained" component={routerLink} to={PATH_AUTH.registerComplete}>
-                    {translate('register')}
-                  </Button>
-                  <Button
-                    variant="contained"
-                    component={routerLink}
-                    to={PATH_AUTH.login}
-                    sx={{ marginRight: isDesktop ? '-3.5em' : '1.5em', marginLeft: isDesktop ? '-3.5em' : '1.5em' }}
-                  >
-                    {translate('login')}
-                  </Button>
+                  <AccountPopover />
                   <LanguagePopover />
                   <NotificationsPopover />
-                  <AccountPopover />
+                  {!userId ? (
+                    <>
+                      {!isDesktopDown && (
+                        <>
+                          {!userId && (
+                            <>
+                              <Button variant="contained" component={routerLink} to={PATH_AUTH.registerComplete}>
+                                {translate('register')}
+                              </Button>
+                              <Button
+                                variant="contained"
+                                component={routerLink}
+                                to={PATH_AUTH.login}
+                                sx={{
+                                  marginRight: isDesktop ? '-1.5em' : '1.5em',
+                                  marginLeft: isDesktop ? '-1.5em' : '1.5em',
+                                }}
+                              >
+                                {translate('login')}
+                              </Button>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </>
+                  ) : null}
                 </>
               )}
 
@@ -319,6 +337,7 @@ const user = true;
                   freeSolo
                   id="free-solo-2-demo"
                   disableClearable
+                  sx={{ width: isMobile ? '12em' : undefined, marginRight: isDesktop ? '2em' : undefined }}
                   options={products.map((option, i) => {
                     return option.name;
                   })}
@@ -357,20 +376,35 @@ const user = true;
                 />
               </form>
               {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-              <LanguagePopover />
-              <NotificationsPopover />
-              <AccountPopover />
-              <Button
-                variant="contained"
-                component={routerLink}
-                to={PATH_AUTH.login}
-                sx={{ marginRight: isDesktop ? '1.5em' : '.5em' }}
-              >
-                {translate('login')}
-              </Button>
-              <Button variant="contained" component={routerLink} to={PATH_AUTH.registerComplete}>
-                {translate('register')}
-              </Button>
+
+              {!isMobile && (
+                <>
+                  <LanguagePopover />
+                  <NotificationsPopover />
+                  {userId && <AccountPopover />}
+                </>
+              )}
+
+              {!userId && (
+                <>
+                  {!isDesktopDown && (
+                    <>
+                      <Button
+                        variant="contained"
+                        component={routerLink}
+                        to={PATH_AUTH.login}
+                        sx={{ marginRight: isDesktop ? '1.5em' : '1em' }}
+                      >
+                        {translate('login')}
+                      </Button>
+                      <Button variant="contained" component={routerLink} to={PATH_AUTH.registerComplete}>
+                        {translate('register')}
+                      </Button>
+                    </>
+                  )}
+                </>
+              )}
+
               {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
             </Container>
           </ToolbarStyle>
