@@ -11,7 +11,7 @@ import {
   increaseQuantity,
   decreaseQuantity,
 } from '../../store/slices/checkout/checkout';
-
+import products from '../../@fake-db/products.json'
 // components
 import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
@@ -34,7 +34,7 @@ export default function CheckoutCart(activeStep) {
   const totalItems = sum(cart.map((item) => item.quantity));
 
   const isEmptyCart = cart.length === 0;
-
+console.log(products)
   const handleDeleteCart = (productId) => {
     dispatch(deleteCart(productId));
   };
@@ -73,10 +73,10 @@ export default function CheckoutCart(activeStep) {
             sx={{ mb: 3 }}
           />
 
-          {!isEmptyCart ? (
+          {isEmptyCart ? (
             <Scrollbar>
               <CheckoutProductList
-                products={cart}
+                products={products}
                 onDelete={handleDeleteCart}
                 onIncreaseQuantity={handleIncreaseQuantity}
                 onDecreaseQuantity={handleDecreaseQuantity}

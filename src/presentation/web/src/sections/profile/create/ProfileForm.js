@@ -1,7 +1,10 @@
 import * as Yup from 'yup';
 import { useCallback, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 // form
 import { useForm } from 'react-hook-form';
+import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
@@ -13,11 +16,14 @@ import Lottie from 'react-lottie';
 // router
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
+import useResponsive from '../../../hooks/useResponsive';
 import useLocales from '../../../hooks/useLocales';
 import userAnimation from '../../../animations/profile/116915-waves.json';
 import arrow from '../../../animations/new/congruglationyellow.json';
 import animation from '../../../animations/shared/arrow-right.json';
 import animationSetter from '../../../animations/animationSetter';
+
+import { onCompleteReset } from '../../../store/slices/auth/completeAuth';
 
 // components
 import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
@@ -30,7 +36,9 @@ import BaseApi from '../../../store/BaseApi';
 export default function ProfileForm() {
   const [BusinesProfile, response] = BaseApi.useCreateBusinesProfileMutation();
   const theme = useTheme();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLgDown = useResponsive('down', 'lg');
   const [snackOptions, setSnackOptions] = useState({
     open: true,
     vertical: 'top',
@@ -52,11 +60,11 @@ export default function ProfileForm() {
     street: Yup.string().required('Street is required'),
     business_name: Yup.string().required('Business Name is required'),
     owner_bio: Yup.string().required('Bio is required'),
-    owner_phone: Yup.number().required('phone is required'),
+    owner_phone: Yup.string().phone().required('Please Enter Valid Phone'),
     details: Yup.string().required('Business details is required'),
     business_type: Yup.string().required('Business Type is required'),
-    phone: Yup.number().required('phone number is required'),
-    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
+    phone: Yup.string().phone().required('Please Enter Valid Phone'),
+    avator: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
   });
   const defaultValues = useMemo(
     () => ({
@@ -65,12 +73,13 @@ export default function ProfileForm() {
       area: '',
       street: '',
       business_name: '',
-      owner_phone: '',
       owner_bio: '',
       phone: '',
+      owner_phone: '',
       details: '',
-      avator: '',
       business_type: '',
+      phone: '',
+      avator: '',
     }),
     []
   );
@@ -86,23 +95,28 @@ export default function ProfileForm() {
   } = methods;
 
   const values = watch();
-  console.log('data', values);
+  const userId = localStorage.getItem('userId');
+
   const onSubmit = async () => {
-    const user = localStorage.getItem('userId');
-    console.log('user is ', user);
     const data = new FormData();
-    data.append('province', values.province);
-    data.append('district', values.district);
-    data.append('area', values.area);
-    data.append('street', values.street);
+    const address = {
+      area: values.area,
+      district: values.district,
+      province: values.province,
+      street: values.street,
+    };
+    Object.entries(address).forEach(([key, value]) => {
+      data.append(`address.${key}`, value);
+    });
     data.append('business_name', values.business_name);
     data.append('owner_bio', values.owner_bio);
-    data.append('owner_phone', `+93${values.owner_phone}`);
+    data.append('owner_phone', values.owner_phone);
     data.append('detials', values.details);
     data.append('business_type', values.business_type);
-    data.append('phone', `+93${values.phone}`);
-    data.append('avator', values.avatarUrl);
-    data.append('user', user);
+    data.append('phone', values.phone);
+    data.append('avator', values.avator, values.avator.name);
+
+    data.append('user', userId);
     const query = {
       path: '/api/business_profile/',
       data,
@@ -110,32 +124,30 @@ export default function ProfileForm() {
 
     const res = await BusinesProfile(query);
     if (res.error) {
+      console.log(res.error);
       setSnackOptions({
         open: true,
         vertical: 'top',
         horizontal: 'center',
         backgroundColor: theme.palette.error.main,
         color: theme.palette.text.primary,
-        animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-        message: res.error.data,
-        animationPosition: { marginLeft: '-4em' },
+        animation: isLgDown ? undefined : <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+        message: res.error.data?.user ? res.error.data?.user : 'Something went wrong !',
+        animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
     } else if (res.data) {
-      localStorage.setItem('Token', res.data.token);
-      localStorage.setItem('user_id', res.data.verified_user.id);
-      console.log(localStorage.getItem('Token'));
-      console.log(localStorage.getItem('user_id'));
       setSnackOptions({
         open: true,
         vertical: 'top',
         horizontal: 'center',
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.text.primary,
-        animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-        message: 'successful !',
-        animationPosition: { marginLeft: '-4em' },
+        animation: isLgDown ? undefined : <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+        message: 'Welcome !',
+        animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
       setTimeout(() => {
+        dispatch(onCompleteReset());
         navigate('/');
       }, 2000);
     }
@@ -146,7 +158,7 @@ export default function ProfileForm() {
       const file = acceptedFiles[0];
       if (file) {
         setValue(
-          'avatarUrl',
+          'avator',
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
@@ -185,17 +197,6 @@ export default function ProfileForm() {
         </Grid>
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 10, marginBottom: '3em' }}>
-            <Button
-              component={Link}
-              to={'/'}
-              sx={{ position: 'absolute', top: '2%', right: '1%' }}
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              {translate('Skip')}
-              <Lottie options={animationSetter(arrow)} width={'3em'} height={'2em'} />
-            </Button>
             <Box
               sx={{
                 display: 'grid',

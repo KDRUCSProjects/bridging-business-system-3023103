@@ -69,6 +69,22 @@ class ProductSerializer(serializers.ModelSerializer):
             ProductImage.objects.create(product=product, image=product_image)
         return product
 
+    def update(self, instance, validated_data):
+        uploaded_images_data = validated_data.pop("uploaded_images")
+        super().update(instance, validated_data)
+
+        # Update or create child objects
+        # print(instance.images[0].id)
+        images_instances = ProductImage.objects.filter(product=instance)
+        for image_instance in images_instances:
+            image_instance.delete()
+
+        if uploaded_images_data:
+            for product_image in uploaded_images_data:
+                ProductImage.objects.create(product=instance, image=product_image)
+
+        return instance
+
     # for ratting calculations
     def calculated_ratting(self, instance):
         rattings = Ratting.objects.filter(product=instance.id)
@@ -195,7 +211,7 @@ class UserSerializer(serializers.ModelSerializer):
                 "validators": [
                     validators.UniqueValidator(
                         get_user_model().objects.all(),
-                        "User with sach email already exists",
+                        "User already exists",
                     )
                 ],
             },
@@ -236,7 +252,7 @@ class ForgetPasswordEmailSerializer(serializers.Serializer):
             send_otp_via_email(email, "verification code for reset password")
             return attrs
         else:
-            raise serializers.ValidationError("you are not register")
+            raise serializers.ValidationError("You are not registered")
 
 
 class ForgetPasswordVerificationSerializer(serializers.Serializer):
@@ -256,7 +272,7 @@ class ForgetPasswordVerificationSerializer(serializers.Serializer):
                 user.save()
                 return attrs
             else:
-                serializers.ValidationError("your otp is wrong")
+                serializers.ValidationError("otp is wrong")
         else:
             serializers.ValidationError("your not register")
 
@@ -282,7 +298,7 @@ class ChangePasswordSerializer(serializers.Serializer):
                 else:
                     serializers.ValidationError("changing password isn't verified")
             else:
-                serializers.ValidationError("your otp is wrong")
+                serializers.ValidationError("otp is wrong")
         else:
             serializers.ValidationError("your not register")
 

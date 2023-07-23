@@ -187,10 +187,10 @@ export default function ForgotPasswordVerify() {
                 name="otp"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="OTP"
+                placeholder={translate("OTP")}
                 error={formError.otp && touched.otp}
                 helperText={formError.otp ? formError.otp : undefined}
-                label="OTP"
+                label={translate("OTP")}
               />
               <Button sx={{ marginTop: 1, marginBottom: 1 }} type="submit" fullWidth size="large" variant="contained">
                 {isLoading ? <Lottie options={animationSetter(animation)} /> : ' Confirm'}

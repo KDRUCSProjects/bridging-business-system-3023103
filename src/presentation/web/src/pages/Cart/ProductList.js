@@ -118,7 +118,7 @@ export default function ProductList() {
     comparator: getComparator(order, orderBy),
     filterName,
   });
-
+console.log('our new data ::::  ',dataFiltered)
   const denseHeight = dense ? 60 : 80;
 
   const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
@@ -175,7 +175,7 @@ export default function ProductList() {
                       row ? (
                         <ProductTableRow
                           key={row.id}
-                          row={row}
+                          row={dataFiltered}
                           onDeleteRow={() => handleDeleteRow(row.id)}
                           onEditRow={() => handleEditRow(row.name)}
                         />

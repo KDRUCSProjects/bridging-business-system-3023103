@@ -106,9 +106,7 @@ export default function VerifyUser() {
         });
       } else if (res.data) {
         localStorage.setItem('Token', res.data.token);
-        localStorage.setItem('user_id', res.data.verified_user.id);
-        console.log(localStorage.getItem('Token'));
-        console.log(localStorage.getItem('user_id'));
+        console.log(res.data);
         setSnackOptions({
           open: true,
           vertical: 'top',

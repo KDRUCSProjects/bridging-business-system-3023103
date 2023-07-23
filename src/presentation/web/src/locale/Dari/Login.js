@@ -7,7 +7,16 @@ const Login = {
     Email :'ایمیل آدرس',
     Password: 'پاسورد',
     'Forgot password?': 'پاسورد را فراموش کرده اید؟',
-    Login: 'داخل شدن'
+    Login: 'داخل شدن',
+    'Enter Your Email': 'ایمیل تان را وارد کنید',
+    'Email Address': 'ایمیل آدرس',
+    Register: 'ثبت کردن',
+    'Check your Inbox !': 'صندوق ورودی خود را بررسی کنید',
+    OTP: 'OTP اوتیپی',
+    'New Password': 'پاسورد جدید',
+    'Confirm Password': 'تایید پاسورد',
+    'verify Password': 'تایید پاسورد',
+    'new Password': 'پاسورد جدید',
     
   };
   
