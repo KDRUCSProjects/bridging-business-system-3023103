@@ -44,6 +44,7 @@ const RegisterSchema = yup.object().shape({
 });
 
 export default function RegisterForm() {
+  
   const dispatch = useDispatch();
   const handleNextStep = () => {
     dispatch(onNextStep());
@@ -66,7 +67,7 @@ export default function RegisterForm() {
   const handleSnackClose = () => {
     setSnackOptions({ ...snackOptions, open: false });
   };
-
+  const registerobj='Register';
   const { translate } = useLocales();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -160,10 +161,10 @@ export default function RegisterForm() {
                   name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="UserName"
+                  placeholder={translate("UserName")}
                   error={formError.username && touched.username}
                   helperText={formError.username}
-                  label="UserName"
+                  label={translate("UserName")}
                 />
               </m.div>
               <m.div variants={varBounce().inLeft}>
@@ -172,16 +173,26 @@ export default function RegisterForm() {
                   name="first_name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="First Name"
+                  placeholder={translate("First Name")}
                   error={formError.first_name && touched.first_name}
                   helperText={formError.first_name}
-                  label="First Name"
+                  label={translate("First Name")}
                 />
               </m.div>
             </Stack>
             <m.div variants={varBounce().inRight}>
               <TextField
                 fullWidth
+                  value={values.last_name}
+                  name="last_name"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder={translate("last Name")}
+                  error={formError.last_name && touched.last_name}
+                  helperText={formError.last_name}
+                  label={translate("last Name")}
+                />
+              </m.div>
                 value={values.last_name}
                 name="last_name"
                 onBlur={handleBlur}
@@ -198,11 +209,11 @@ export default function RegisterForm() {
                 value={values.email}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="Email Address"
+                placeholder={translate("Email Address")}
                 error={formError.email && touched.email}
                 helperText={formError.email}
                 name="email"
-                label="Email Address"
+                label={translate("Email Address")}
               />
             </m.div>
             <m.div variants={varBounce().inUp}>
@@ -211,11 +222,11 @@ export default function RegisterForm() {
                 value={values.password}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="password"
+                placeholder={translate("password")}
                 error={formError.password && touched.password}
                 helperText={formError.password}
                 name="password"
-                label="Password"
+                label={translate("Password")}
                 type={showPassword ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
@@ -230,6 +241,7 @@ export default function RegisterForm() {
             </m.div>
             <m.div variants={varBounce().inDowm}>
               <LoadingButton fullWidth size="large" type="submit" variant="contained">
+                {response.isLoading ? <Lottie options={animationSetter(animation)} width="15em" height="10em" /> : registerobj}
                 {response.isLoading ? (
                   <Lottie options={animationSetter(animation)} width="15em" height="10em" />
                 ) : (

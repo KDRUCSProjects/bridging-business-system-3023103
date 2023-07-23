@@ -12,7 +12,9 @@ const UserRegister = {
     'last Name' : 'last Name',
     'Email Address' : 'Email Address',
     'Phone Number' : 'Phone Number',
-    password : 'password'
+    password : 'password',
+    UserName: 'UserName',
+    Register: 'Register'
     
   };
   
