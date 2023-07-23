@@ -74,6 +74,7 @@ export default function ProfileForm() {
       street: '',
       business_name: '',
       owner_bio: '',
+      phone: '',
       owner_phone: '',
       details: '',
       business_type: '',
