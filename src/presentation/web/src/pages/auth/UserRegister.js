@@ -92,7 +92,7 @@ export default function Register() {
           <ContentStyle>
             <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
               <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h4"  textAlign='center'>
+                <Typography variant="h4" textAlign="center">
                   {translate('Get started absolutely free.')}
                 </Typography>
               </Box>
