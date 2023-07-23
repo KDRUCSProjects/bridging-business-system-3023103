@@ -20,7 +20,7 @@ const store = configureStore({
     // redux-toolkit-reducers
     checkout: checkoutSlice.reducer,
     completeAuth: persistReducer(persistConfig, completeAuthSlice.reducer),
-    completeForgotPassword: completeForgotPasswordSlice.reducer,
+    completeForgotPassword: persistReducer(completeForgotPasswordSlice.reducer),
 
     // Rtk -reducers
     [BaseApi.reducerPath]: BaseApi.reducer,
