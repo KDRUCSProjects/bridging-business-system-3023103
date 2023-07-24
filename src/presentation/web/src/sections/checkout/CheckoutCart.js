@@ -10,6 +10,7 @@ import {
   applyDiscount,
   increaseQuantity,
   decreaseQuantity,
+  handleDirectQuantity,
 } from '../../store/slices/checkout/checkout';
 // components
 import Iconify from '../../components/Iconify';
@@ -25,6 +26,7 @@ import useLocales from '../../hooks/useLocales';
 
 export default function CheckoutCart(activeStep) {
   const productList = useSelector((store) => store.checkout.checkout.cart);
+  const quantity = useSelector((store) => store.checkout.quantity);
 
   const dispatch = useDispatch();
 
@@ -45,6 +47,9 @@ export default function CheckoutCart(activeStep) {
 
   const handleIncreaseQuantity = (productId) => {
     dispatch(increaseQuantity(productId));
+  };
+  const handleQuantity = (productId, DirectQuantity) => {
+    dispatch(handleDirectQuantity(productId, DirectQuantity));
   };
 
   const handleDecreaseQuantity = (productId) => {
@@ -77,9 +82,11 @@ export default function CheckoutCart(activeStep) {
             <Scrollbar>
               <CheckoutProductList
                 products={productList}
+                quantity={quantity}
                 onDelete={handleDeleteCart}
                 onIncreaseQuantity={handleIncreaseQuantity}
                 onDecreaseQuantity={handleDecreaseQuantity}
+                handleQuantity={handleQuantity}
               />
             </Scrollbar>
           ) : (
