@@ -1,12 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { REHYDRATE } from 'redux-persist';
 
 import { baseUri } from '../base';
 import { allServices } from '.';
 
 const BaseApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: baseUri }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: baseUri,
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      console.log('getstate', token);
 
+      // If we have a token set in state, let's assume that we should be passing it.
+      if (token) {
+        headers.set('Authorization', `Token ${token}`);
+      }
+
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
@@ -17,6 +28,7 @@ const BaseApi = createApi({
     VerifyPassword: builder.mutation(allServices.mutations.VerifyPassword),
     NewPassword: builder.mutation(allServices.mutations.NewPassword),
     Resetpassword: builder.mutation(allServices.mutations.Resetpassword),
+    LogoutUser: builder.mutation(allServices.mutations.LogoutUser),
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),
@@ -25,6 +37,8 @@ const BaseApi = createApi({
     CreateProduct: builder.mutation(allServices.mutations.CreateProduct),
     UpdateProduct: builder.mutation(allServices.mutations.UpdateProduct),
     DeleteProduct: builder.mutation(allServices.mutations.DeleteProduct),
+    // Rating Mutation
+    CreateRating: builder.mutation(allServices.mutations.CreateRating),
 
     // -----------------------------Queries-------------------------------
     // profile

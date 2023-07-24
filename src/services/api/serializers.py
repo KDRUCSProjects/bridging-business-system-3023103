@@ -59,10 +59,16 @@ class ProductSerializer(serializers.ModelSerializer):
         ),
         write_only=True,
     )
+    counter = serializers.SerializerMethodField(
+        read_only=True, method_name="counter_method"
+    )
 
     class Meta:
         model = Product
         fields = "__all__"
+
+    def couter_method(self, instance):
+        return 1
 
     def create(self, validated_data):
         color = validated_data.pop("color")

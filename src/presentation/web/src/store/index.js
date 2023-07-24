@@ -9,6 +9,9 @@ import NewPassword from './services/mutations/auth/forgotPassword/newPassword';
 import VerifyPassword from './services/mutations/auth/forgotPassword/verifyPassword';
 import LoginUser from './services/mutations/auth/login';
 import Resetpassword from './services/mutations/auth/resetPassword';
+import LogoutUser from './services/mutations/auth/logout';
+import CreateRating from './services/mutations/rating';
+
 
 // Queries
 import { ProfileQueries } from './services/queries/BusinessProfile';
@@ -25,6 +28,7 @@ export const allServices = {
     ...ProfileMutations,
     ...ProductMutations,
     ...CartMutations,
+    CreateRating,
     RegisterUser,
     VerifyUser,
     ForgotPasswordEmail,
@@ -32,6 +36,7 @@ export const allServices = {
     VerifyPassword,
     LoginUser,
     Resetpassword,
+    LogoutUser,
   },
 };
 
