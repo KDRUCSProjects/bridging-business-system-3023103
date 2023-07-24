@@ -1,9 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { REHYDRATE } from 'redux-persist';
+
 import { baseUri } from '../base';
 import { allServices } from '.';
 
 const BaseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseUri }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === REHYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
@@ -13,6 +20,7 @@ const BaseApi = createApi({
     ForgotPasswordEmail: builder.mutation(allServices.mutations.ForgotPasswordEmail),
     VerifyPassword: builder.mutation(allServices.mutations.VerifyPassword),
     NewPassword: builder.mutation(allServices.mutations.NewPassword),
+    Resetpassword: builder.mutation(allServices.mutations.Resetpassword),
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),

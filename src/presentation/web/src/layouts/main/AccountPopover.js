@@ -24,7 +24,7 @@ const MENU_OPTIONS = [
   },
   {
     label: 'Profile',
-    linkTo: `/profile/1`,
+    linkTo: `/profile/${Number(userId)}`,
   },
   {
     label: 'Settings',

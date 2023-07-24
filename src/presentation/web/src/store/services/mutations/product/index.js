@@ -20,9 +20,8 @@ const UpdateProduct = {
 };
 const DeleteProduct = {
   query: (query) => ({
-    url: query.path,
+    url: query,
     method: 'DELETE',
-    body: query.data,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
