@@ -47,21 +47,21 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <PersistGate persistor={persistedStore}>
-    <Provider store={store}>
-      <HelmetProvider>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <SettingsProvider>
-            <CollapseDrawerProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </CollapseDrawerProvider>
-          </SettingsProvider>
-        </LocalizationProvider>
-      </HelmetProvider>
-    </Provider>
-  </PersistGate>
+  // <PersistGate loading={null} persistor={persistedStore}>
+  <Provider store={store}>
+    <HelmetProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <SettingsProvider>
+          <CollapseDrawerProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </CollapseDrawerProvider>
+        </SettingsProvider>
+      </LocalizationProvider>
+    </HelmetProvider>
+  </Provider>
+  // </PersistGate>
 );
 
 // If you want your app to work offline and load faster, you can change

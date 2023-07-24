@@ -27,7 +27,7 @@ urlpatterns = [
     path("forget/password/email/", ForgetPasswordEmailView.as_view()),
     path("forget/password/otp/verify/", ForgetPasswordVerificationView.as_view()),
     path("change/password/", ChangePasswordView.as_view()),
-    path("rest/password/", PasswordResetView.as_view()),
+    path("reset/password/", PasswordResetView.as_view()),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", knox_views.LogoutView.as_view(), name="logout"),
     path("logout/all/", knox_views.LogoutAllView.as_view(), name="logout_all"),
