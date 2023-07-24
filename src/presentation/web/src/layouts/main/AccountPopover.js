@@ -15,6 +15,7 @@ import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
 import { IconButtonAnimate } from '../../components/animate';
 
+
 import BaseApi from '../../store/BaseApi';
 
 // ----------------------------------------------------------------------
@@ -38,8 +39,11 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const navigate = useNavigate();
-
   const [LogoutUser] = BaseApi.useLogoutUserMutation();
+  const userEmail1 = localStorage.getItem('userEmail');
+  const userName = localStorage.getItem('userName');
+  const userId = localStorage.getItem('userId');
+  const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${userId}`);
 
   const { user, logout } = useAuth();
 
@@ -47,11 +51,10 @@ export default function AccountPopover() {
 
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(null);
-
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
-
+// const avator = data.avator;
   const handleClose = () => {
     setOpen(null);
   };
@@ -77,12 +80,11 @@ export default function AccountPopover() {
       navigate('/');
     }
   };
-  const userEmail1 = localStorage.getItem('userEmail');
-  const userName = localStorage.getItem('userName');
-  const userImage = localStorage.getItem('avatarImage');
+  
   return (
     <>
-      <IconButtonAnimate
+{isSuccess?
+  <IconButtonAnimate
         onClick={handleOpen}
         sx={{
           p: 0,
@@ -99,8 +101,10 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <MyAvatar myphoto={userImage} others={{ width: '10px', height: '10px' }} />
-      </IconButtonAnimate>
+        <MyAvatar myphoto={data[0].avator} others={{ width: '10px', height: '10px' }} />
+      </IconButtonAnimate>:<MyAvatar myphoto={"https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg"} others={{ width: '10px', height: '10px' }} />
+}
+
 
       <MenuPopover
         open={Boolean(open)}
