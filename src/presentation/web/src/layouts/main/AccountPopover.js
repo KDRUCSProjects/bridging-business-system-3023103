@@ -14,7 +14,10 @@ import useIsMountedRef from '../../hooks/useIsMountedRef';
 import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
 import { IconButtonAnimate } from '../../components/animate';
+
+
 import BaseApi from '../../store/BaseApi';
+
 // ----------------------------------------------------------------------
 const userId = localStorage.getItem('userId');
 const MENU_OPTIONS = [
@@ -36,10 +39,12 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const navigate = useNavigate();
+  const [LogoutUser] = BaseApi.useLogoutUserMutation();
   const userEmail1 = localStorage.getItem('userEmail');
   const userName = localStorage.getItem('userName');
   const userId = localStorage.getItem('userId');
   const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${userId}`);
+
   const { user, logout } = useAuth();
 
   const isMountedRef = useIsMountedRef();
@@ -54,17 +59,25 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
+  const userToken = localStorage.getItem('Token');
   const handleLogout = async () => {
-    try {
-      await logout();
-      // navigate(AUTH.login, { replace: true });
+    const query = {
+      path: `/api/logout/`,
+      token: userToken,
+    };
+    const res = await LogoutUser(query);
+    if (res.error) {
+      enqueueSnackbar('Unable to logout!', { variant: 'error' });
+    } else {
+      console.log('logouted');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('Token');
 
+      enqueueSnackbar('logout success!');
       if (isMountedRef.current) {
         handleClose();
       }
-    } catch (error) {
-      console.error(error);
-      enqueueSnackbar('Unable to logout!', { variant: 'error' });
+      navigate('/');
     }
   };
   
