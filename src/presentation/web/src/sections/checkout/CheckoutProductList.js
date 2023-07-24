@@ -27,7 +27,11 @@ const TABLE_HEAD = [
   { id: 'product', label: 'Product' },
   { id: 'price', label: 'Price' },
   { id: 'quantity', label: 'Quantity' },
-  { id: 'totalPrice', label: 'Total Price', align: 'right' },
+  {
+    id: 'totalPrice',
+    label: `Total Price`,
+    align: 'right',
+  },
   { id: '' },
 ];
 
@@ -51,6 +55,8 @@ CheckoutProductList.propTypes = {
 };
 
 export default function CheckoutProductList({ products, onDelete, onIncreaseQuantity, onDecreaseQuantity }) {
+  console.log(products);
+
   return (
     <TableContainer sx={{ minWidth: 720 }}>
       <Table>
@@ -90,12 +96,12 @@ CheckoutProductListRow.propTypes = {
 };
 
 function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease }) {
-  const { name, size, price, color, cover, quantity, available } = row;
+  const { name, price, color, images, quantity } = row;
 
   return (
     <TableRow>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Image alt="product image" src={cover} sx={{ width: 64, height: 64, borderRadius: 1.5, mr: 2 }} />
+        <Image alt="product image" src={images[0].image} sx={{ width: 64, height: 64, borderRadius: 1.5, mr: 2 }} />
 
         <Stack spacing={0.5}>
           <Typography noWrap variant="subtitle2" sx={{ maxWidth: 240 }}>
@@ -103,15 +109,6 @@ function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease }) {
           </Typography>
 
           <Stack direction="row" alignItems="center">
-            <Typography variant="body2">
-              <Box component="span" sx={{ color: 'text.secondary' }}>
-                size:&nbsp;
-              </Box>
-              {size}
-            </Typography>
-
-            <Divider orientation="vertical" sx={{ mx: 1, height: 16 }} />
-
             <Typography variant="body2">
               <Box component="span" sx={{ color: 'text.secondary' }}>
                 color:&nbsp;
@@ -125,7 +122,7 @@ function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease }) {
       <TableCell>{fCurrency(price)}</TableCell>
 
       <TableCell>
-        <Incrementer quantity={quantity} available={available} onDecrease={onDecrease} onIncrease={onIncrease} />
+        <Incrementer quantity={quantity} available={row.quantity} onDecrease={onDecrease} onIncrease={onIncrease} />
       </TableCell>
 
       <TableCell align="right">{fCurrency(price * quantity)}</TableCell>

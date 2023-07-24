@@ -28,8 +28,7 @@ const initialState = {
     subtotal: 0,
     total: 0,
     discount: 0,
-    shipping: 0,
-    billing: null,
+    available: [],
   },
 };
 
@@ -78,16 +77,10 @@ const checkoutSlice = createSlice({
       const cart = action.payload;
 
       const subtotal = sum(cart.map((cartItem) => cartItem.price * cartItem.quantity));
-      const discount = cart.length === 0 ? 0 : state.checkout.discount;
-      const shipping = cart.length === 0 ? 0 : state.checkout.shipping;
       const billing = cart.length === 0 ? null : state.checkout.billing;
 
       state.checkout.cart = cart;
-      state.checkout.discount = discount;
-      state.checkout.shipping = shipping;
-      state.checkout.billing = billing;
-      state.checkout.subtotal = subtotal;
-      state.checkout.total = subtotal - discount;
+      state.checkout.total = subtotal;
     },
 
     addCart(state, action) {
@@ -164,6 +157,7 @@ const checkoutSlice = createSlice({
             quantity: product.quantity - 1,
           };
         }
+
         return product;
       });
 

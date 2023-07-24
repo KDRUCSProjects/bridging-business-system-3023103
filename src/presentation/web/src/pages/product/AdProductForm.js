@@ -82,14 +82,14 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
       return image.image;
     });
   }
-  const userId = localStorage.get('userId');
+  const userId = localStorage.getItem('userId');
 
   const defaultValues = useMemo(
     () => ({
       name: currentProduct?.name || '',
       description: currentProduct?.description || '',
       uploaded_images: currentImages || [],
-      quantity: currentProduct?.quantity || undefined,
+      quantity: currentProduct?.quantity || 0,
       user: currentProduct?.user || Number(userId),
       price: currentProduct?.price || 0,
       color: currentColor || [],

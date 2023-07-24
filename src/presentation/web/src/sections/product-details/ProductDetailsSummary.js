@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import { sentenceCase } from 'change-case';
-import { useNavigate,Link  } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Person2Icon from '@mui/icons-material/Person2';
 // form
 import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Box,Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
+import { Box, Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
+// redux
+import { useDispatch } from 'react-redux';
 
 // utils
 import { fShortenNumber, fCurrency } from '../../utils/formatNumber';
@@ -17,6 +19,8 @@ import { ColorSinglePicker } from '../../components/color-utils';
 import RHFSelect from '../../components/hook-form/RHFSelect';
 import FormProvider from '../../components/hook-form/FormProvider';
 import useLocales from '../../hooks/useLocales';
+
+import { addCart } from '../../store/slices/checkout/checkout';
 
 // ----------------------------------------------------------------------
 
@@ -49,17 +53,16 @@ ProductDetailsSummary.propTypes = {
 };
 
 export default function ProductDetailsSummary({ cart, product, onAddCart, onGotoStep, ...other }) {
-  const { translate} =useLocales();
+  const { translate } = useLocales();
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const { id,color, name , quantity , price ,productRatting , user, ratting } = product;
+  const { id, color, name, quantity, price, productRatting, user, ratting } = product;
 
   const alreadyProduct = cart.map((item) => item.id).includes(id);
-  const sizes = [
-    43, 44 , 45 , 56 , 47
-  ]
+  const sizes = [43, 44, 45, 56, 47];
   const defaultValues = {
     id,
     name,
@@ -67,8 +70,8 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     color: color[0],
     size: sizes[4],
   };
-  const userId = localStorage.getItem('userId')
-  const uId = 2 ;
+  const userId = localStorage.getItem('userId');
+  const uId = 2;
   const methods = useForm({
     defaultValues,
   });
@@ -90,22 +93,24 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       console.error(error);
     }
   };
- let linkto = '';
- if(user !== uId ){
-  linkto = `/profile/${user}/`
- }else{
-  linkto = `/userprofile/${user}/`
- }
+  let linkto = '';
+  if (user !== uId) {
+    linkto = `/profile/${user}/`;
+  } else {
+    linkto = `/userprofile/${user}/`;
+  }
 
   const handleAddCart = async () => {
-    try {
-      onAddCart({
-        ...values,
-        subtotal: values.price * values.quantity,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(addCart(product));
+
+    // try {
+    //   onAddCart({
+    //     ...values,
+    //     subtotal: values.price * values.quantity,
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   return (
     <RootStyle {...other}>
@@ -130,8 +135,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('color')}
-          
+            {translate('color')}
           </Typography>
 
           <Controller
@@ -155,7 +159,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('size')} 
+            {translate('size')}
           </Typography>
 
           <RHFSelect
@@ -182,7 +186,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
           <div>
             <Typography>{product.quantity}</Typography>
             <Typography variant="caption" component="div" sx={{ mt: 1, textAlign: 'right', color: 'text.secondary' }}>
-              {translate('available')} 
+              {translate('available')}
             </Typography>
           </div>
         </Stack>
@@ -190,22 +194,21 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         <Divider sx={{ borderStyle: 'dashed' }} />
       </FormProvider>
       <Stack direction="row" spacing={2} sx={{ mt: 5 }}>
-          <Button
-            fullWidth
-            size="large"
-            color="warning"
-            variant="contained"
-            startIcon={<Iconify icon={'ic:round-add-shopping-cart'} />}
-            onClick={handleAddCart}
-            sx={{ whiteSpace: 'nowrap' }}
-          >
-  
-         {translate('add to cart')} 
-          </Button>    
-          <Button  component={Link} to={linkto}  fullWidth size="large"  startIcon={<Person2Icon />} variant="contained">
-           {translate('view profile')} 
-          </Button>
-        </Stack>
+        <Button
+          fullWidth
+          size="large"
+          color="warning"
+          variant="contained"
+          startIcon={<Iconify icon={'ic:round-add-shopping-cart'} />}
+          onClick={handleAddCart}
+          sx={{ whiteSpace: 'nowrap' }}
+        >
+          {translate('add to cart')}
+        </Button>
+        <Button component={Link} to={linkto} fullWidth size="large" startIcon={<Person2Icon />} variant="contained">
+          {translate('view profile')}
+        </Button>
+      </Stack>
     </RootStyle>
   );
 }
@@ -220,6 +223,7 @@ Incrementer.propTypes = {
 };
 
 function Incrementer({ available, quantity, onIncrementQuantity, onDecrementQuantity }) {
+  console.log(available, quantity);
   return (
     <Box
       sx={{
