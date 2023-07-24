@@ -6,11 +6,7 @@ import { allServices } from '.';
 
 const BaseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseUri }),
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === REHYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
+
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
@@ -49,6 +45,10 @@ const BaseApi = createApi({
     // color
     GetAllColors: builder.query(allServices.queries.GetAllColors),
     GetSpecificColor: builder.query(allServices.queries.GetSpecificColor),
+
+    // advertisment
+    GetAllAdvertisments: builder.query(allServices.queries.GetAllAdvertisments),
+    GetSpecificAdvertisment: builder.query(allServices.queries.GetSpecificAdvertisment),
   }),
 });
 
