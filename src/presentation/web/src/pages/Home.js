@@ -35,22 +35,23 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function HomePage() {
   const { isSuccess, data, isError, isLoading } = BaseApi.useGetAllCategoriesQuery('api/category/');
+  const { data: advertisements, isSuccess: advertisementIsSuccess } =
+    BaseApi.useGetAllAdvertismentsQuery('api/advertisments/');
+
   const sliderData = data?.map((item) => ({
     title: item.name,
     image: item.image,
   }));
-
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
   return isSuccess ? (
     <Page title="Ecommerce Start Here">
       <ContentStyle>
         {/* ImageSlider */}
-        {isMatchMobile ? null : (
-          <ImageSlider
-            sliderData={ImageSliderSittings().ImageSliderData}
-            settings={ImageSliderSittings().ImageSliderConfig}
-          />
+        {isMatchMobile ? null : advertisementIsSuccess ? (
+          <ImageSlider sliderData={advertisements} settings={ImageSliderSittings().ImageSliderConfig} />
+        ) : (
+          <></>
         )}
         {/* Category */}
         {isMatchMobile ? null : (
