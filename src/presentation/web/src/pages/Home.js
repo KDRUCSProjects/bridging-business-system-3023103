@@ -48,11 +48,9 @@ export default function HomePage() {
     <Page title="Ecommerce Start Here">
       <ContentStyle>
         {/* ImageSlider */}
-        {isMatchMobile ? null : advertisementIsSuccess ? (
+        {!isMatchMobile && advertisementIsSuccess ? (
           <ImageSlider sliderData={advertisements} settings={ImageSliderSittings().ImageSliderConfig} />
-        ) : (
-          <></>
-        )}
+        ) : null}
         {/* Category */}
         {isMatchMobile ? null : (
           <CustomSlider
