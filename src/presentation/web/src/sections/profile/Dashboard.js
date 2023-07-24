@@ -22,11 +22,17 @@ export default function Dashboard(id) {
   const { user } = useAuth();
   const theme = useTheme();
   const totalquantities = sum(newdata?.map((item) => item.quantity));
+
   const totalPrice = sum(newdata?.map((item) => item.quantity * item.price));
+
   const avgrating = sum(newdata?.map((item) => item.ratting));
+
   const total = sum(newdata?.map((item) => item.productRatting.length));
   const totalrating = newdata?.map((item) => item.ratting);
+  
   const totalavg = avgrating / totalrating.length ;
+  console.log('new data :',totalavg)
+
   const { themeStretch } = useSettings();
   const results = newdata?.map((item) => item.quantity);
   const prices = newdata?.map((item) => item.price);
@@ -36,7 +42,7 @@ export default function Dashboard(id) {
         <Grid item xs={12} md={8}>
           <AppWelcome
             title={`Welcome back! \n`}
-            description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
+            description="IT IS NOT ABOUT IDEAS, IT IS ABOUT MAKING IDEAS HAPPEN {RISK}  .  LET'S START THE JOURNEY."
           />
         </Grid>
         <Grid item xs={12} md={4}>

@@ -6,11 +6,7 @@ import { allServices } from '.';
 
 const BaseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseUri }),
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === REHYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
+  
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
