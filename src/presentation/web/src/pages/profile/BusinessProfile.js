@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
 // @mui
+import { DashboardRounded } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { Tab, Box, Card, Tabs, Container } from '@mui/material';
 // hook
@@ -11,6 +12,7 @@ import useSettings from '../../hooks/useSettings';
 import { _userAbout, _userFeeds, _userGallery } from '../../@fake-db';
 // components
 import Page from '../../components/Page';
+// import DashboardRounded from '@mui/icons-material';
 import Iconify from '../../components/Iconify';
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
@@ -52,7 +54,7 @@ export default function BusinessProfile() {
   const PROFILE_TABS = [
     {
       value: 'Dashboard',
-      icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
+      icon: <DashboardRounded />,
       component: <Dashboard id={id} />,
     },
     {

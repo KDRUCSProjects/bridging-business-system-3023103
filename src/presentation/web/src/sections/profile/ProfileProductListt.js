@@ -44,7 +44,7 @@ const TABLE_HEAD = [
   { id: 'NO', label: 'number', align: 'left', width: 150 },
   { id: 'product', label: 'Product', align: 'left', width: 150 },
   { id: 'createdAt', label: 'Create at', align: 'left', width: 200 },
-  { id: 'inventoryType', label: 'Status', align: 'center', width: 180 },
+  { id: 'inventoryType', label: 'Rating', align: 'center', width: 180 },
   { id: 'price', label: 'Price', align: 'right', width: 200 },
   { id: '' },
 ];
@@ -111,7 +111,6 @@ export default function EcommerceProductList(newdata) {
     comparator: getComparator(order, orderBy),
     filterName,
   });
-  console.log('filter::::', dataFiltered);
 
   const denseHeight = dense ? 60 : 80;
 

@@ -10,22 +10,26 @@ import Page from '../../components/Page';
 import AppWelcome from '../@dashboard/general/app/AppWelcome';
 import AppWidgetSummary from '../@dashboard/general/app/AppWidgetSummary';
 import AppCurrentDownload from '../@dashboard/general/app/AppCurrentDownload';
+import RattingWidgetSum from '../@dashboard/general/app/RattingWidgetSum';
+
 import AppAreaInstalled from '../@dashboard/general/app/AppAreaInstalled';
 import BaseApi from '../../store/BaseApi';
 // ----------------------------------------------------------------------
 
 export default function Dashboard(id) {
-
   const { data } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id.id}`);
   const newdata = data?.results;
   const { user } = useAuth();
   const theme = useTheme();
   const totalquantities = sum(newdata?.map((item) => item.quantity));
   const totalPrice = sum(newdata?.map((item) => item.quantity * item.price));
-  console.log('price : ',totalPrice)
+  const avgrating = sum(newdata?.map((item) => item.ratting));
+  const total = sum(newdata?.map((item) => item.productRatting.length));
+  const totalrating = newdata?.map((item) => item.ratting);
+  const totalavg = avgrating / totalrating.length ;
   const { themeStretch } = useSettings();
-  const results = newdata?.map((item) => item.quantity)
-  const prices = newdata?.map((item) => item.price)
+  const results = newdata?.map((item) => item.quantity);
+  const prices = newdata?.map((item) => item.price);
   return (
     <Page title="Dashboard">
       <Grid container spacing={3}>
@@ -34,6 +38,9 @@ export default function Dashboard(id) {
             title={`Welcome back! \n`}
             description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
           />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <RattingWidgetSum rating={totalavg} total={total} chartColor={theme.palette.primary.main} />
         </Grid>
         <Grid item xs={12} md={4}>
           <AppWidgetSummary
@@ -55,15 +62,6 @@ export default function Dashboard(id) {
         </Grid>
         <Grid item xs={12} md={4}>
           <AppWidgetSummary
-            title="Sold Products"
-            percent={-0.1}
-            total={678}
-            chartColor={theme.palette.chart.red[0]}
-            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <AppWidgetSummary
             title="recived cash"
             percent={-0.1}
             total={678}
@@ -74,10 +72,7 @@ export default function Dashboard(id) {
         <Grid item xs={12} md={6} lg={4}>
           <AppCurrentDownload
             title="Statistic"
-            chartColors={[
-              theme.palette.primary.light,
-              theme.palette.secondary.main,
-            ]}
+            chartColors={[theme.palette.primary.light, theme.palette.secondary.main]}
             chartData={[
               { label: 'Net Worth', value: totalPrice },
               { label: 'Recived cash', value: 3000 },
