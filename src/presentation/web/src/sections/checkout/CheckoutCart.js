@@ -10,8 +10,8 @@ import {
   applyDiscount,
   increaseQuantity,
   decreaseQuantity,
+  handleDirectQuantity,
 } from '../../store/slices/checkout/checkout';
-import products from '../../@fake-db/products.json'
 // components
 import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
@@ -25,6 +25,9 @@ import useLocales from '../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 export default function CheckoutCart(activeStep) {
+  const productList = useSelector((store) => store.checkout.checkout.cart);
+  const quantity = useSelector((store) => store.checkout.quantity);
+
   const dispatch = useDispatch();
 
   const { checkout } = useSelector((store) => store.checkout);
@@ -34,7 +37,6 @@ export default function CheckoutCart(activeStep) {
   const totalItems = sum(cart.map((item) => item.quantity));
 
   const isEmptyCart = cart.length === 0;
-console.log(products)
   const handleDeleteCart = (productId) => {
     dispatch(deleteCart(productId));
   };
@@ -46,6 +48,9 @@ console.log(products)
   const handleIncreaseQuantity = (productId) => {
     dispatch(increaseQuantity(productId));
   };
+  const handleQuantity = (productId, DirectQuantity) => {
+    dispatch(handleDirectQuantity(productId, DirectQuantity));
+  };
 
   const handleDecreaseQuantity = (productId) => {
     dispatch(decreaseQuantity(productId));
@@ -55,7 +60,7 @@ console.log(products)
     dispatch(applyDiscount(value));
   };
 
-  const {translate}=useLocales();
+  const { translate } = useLocales();
 
   return (
     <Grid container spacing={3}>
@@ -73,17 +78,22 @@ console.log(products)
             sx={{ mb: 3 }}
           />
 
-          {isEmptyCart ? (
+          {!isEmptyCart ? (
             <Scrollbar>
               <CheckoutProductList
-                products={products}
+                products={productList}
+                quantity={quantity}
                 onDelete={handleDeleteCart}
                 onIncreaseQuantity={handleIncreaseQuantity}
                 onDecreaseQuantity={handleDecreaseQuantity}
+                handleQuantity={handleQuantity}
               />
             </Scrollbar>
           ) : (
-            <EmptyContent title={translate("Cart is empty")} description={translate("Look like you have no items in your shopping cart.")} />
+            <EmptyContent
+              title={translate('Cart is empty')}
+              description={translate('Look like you have no items in your shopping cart.')}
+            />
           )}
         </Card>
 

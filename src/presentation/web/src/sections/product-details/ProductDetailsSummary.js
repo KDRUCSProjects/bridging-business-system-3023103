@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { useNavigate, Link } from 'react-router-dom';
 import Person2Icon from '@mui/icons-material/Person2';
 import GradeIcon from '@mui/icons-material/Grade';
@@ -8,7 +9,11 @@ import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
 import { Box, Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
+
+// redux
+import { useDispatch } from 'react-redux';
 import { fDate } from '../../utils/formatTime';
+
 // utils
 import { fShortenNumber, fCurrency } from '../../utils/formatNumber';
 // components
@@ -17,6 +22,8 @@ import { ColorSinglePicker } from '../../components/color-utils';
 import FormProvider from '../../components/hook-form/FormProvider';
 import useLocales from '../../hooks/useLocales';
 import BaseApi from '../../store/BaseApi';
+
+import { addCart } from '../../store/slices/checkout/checkout';
 
 // ----------------------------------------------------------------------
 
@@ -49,10 +56,16 @@ ProductDetailsSummary.propTypes = {
 };
 
 export default function ProductDetailsSummary({ cart, product, onAddCart, onGotoStep, ...other }) {
+
+  const { translate } = useLocales();
+  const theme = useTheme();
+  const dispatch = useDispatch();
+
   const [CreateRating] = BaseApi.useCreateRatingMutation();
   const { translate } = useLocales();
   const theme = useTheme();
   const [rvalue, setRvalue] = useState(0);
+
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
 
@@ -60,16 +73,25 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     const value = { product: product.id, user: userId, ratting_stars: rvalue };
     const query = { path: '/api/ratting/', data: value };
 
+
+  const { id, color, name, quantity, price, productRatting, user, ratting } = product;
+  const alreadyProduct = cart.map((item) => item.id).includes(id);
+  const sizes = [43, 44, 45, 56, 47];
+
     const res = await CreateRating(query);
   };
   const { id, color, name, quantity, price, productRatting, user, ratting } = product;
   const alreadyProduct = cart.map((item) => item.id).includes(id);
+
   const defaultValues = {
     id,
     name,
     price,
     color: color[0],
   };
+
+  const userId = localStorage.getItem('userId');
+
   const uId = 2;
   const methods = useForm({
     defaultValues,
@@ -99,14 +121,16 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
   }
 
   const handleAddCart = async () => {
-    try {
-      onAddCart({
-        ...values,
-        subtotal: values.price * values.quantity,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(addCart(product));
+
+    // try {
+    //   onAddCart({
+    //     ...values,
+    //     subtotal: values.price * values.quantity,
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   return (
     <RootStyle {...other}>
@@ -155,10 +179,13 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
+
+            {translate('size')}
             {translate('Posted')}
           </Typography>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
             {fDate(product.created_at)}
+
           </Typography>
         </Stack>
 
@@ -193,6 +220,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
           {translate('view profile')}
         </Button>
       </Stack>
+
       <Typography variant="h4" sx={{ mb: 2, mt: 2 }}>
         Give Product review
       </Typography>
@@ -209,6 +237,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       <Button onClick={handlClick} fullWidth size="large" startIcon={<GradeIcon />} variant="contained">
         {translate('Submit Review')}
       </Button>
+
     </RootStyle>
   );
 }
@@ -223,6 +252,7 @@ Incrementer.propTypes = {
 };
 
 function Incrementer({ available, quantity, onIncrementQuantity, onDecrementQuantity }) {
+  console.log(available, quantity);
   return (
     <Box
       sx={{

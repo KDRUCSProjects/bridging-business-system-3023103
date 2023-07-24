@@ -43,12 +43,12 @@ export default function CheckoutSummary({
   enableDiscount = false,
 }) {
   const displayShipping = shipping !== null ? 'Free' : '-';
-  const {translate}= useLocales();
+  const { translate } = useLocales();
 
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title={translate("Order Summary")}
+        title={translate('Order Summary')}
         action={
           enableEdit && (
             <Button size="small" onClick={onEdit} startIcon={<Iconify icon={'eva:edit-fill'} />}>
@@ -60,57 +60,17 @@ export default function CheckoutSummary({
 
       <CardContent>
         <Stack spacing={2}>
-          <Stack direction="row" justifyContent="space-between">
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {translate('Sub Total')}
-            </Typography>
-            <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
-          </Stack>
-
-          <Stack direction="row" justifyContent="space-between">
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {translate('Discount')}
-            </Typography>
-            <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
-          </Stack>
-
-          <Stack direction="row" justifyContent="space-between">
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {translate('Shipping')}
-            </Typography>
-            <Typography variant="subtitle2">{shipping ? fCurrency(shipping) : displayShipping}</Typography>
-          </Stack>
-
-          <Divider />
+          <Divider sx={{ marginBottom: '2em' }} />
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="subtitle1">{translate('Total')}</Typography>
             <Box sx={{ textAlign: 'right' }}>
-              <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
-                {fCurrency(total)}
-              </Typography>
-              <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                ({translate('VAT included if applicable')})
+              <Typography variant="subtitle1">
+                <span style={{ color: 'red', fontSize: '1.5em' }}>&#1547;</span>
+                {`(${fCurrency(total)})`}
               </Typography>
             </Box>
           </Stack>
-
-          {enableDiscount && onApplyDiscount && (
-            <TextField
-              fullWidth
-              placeholder="Discount codes / Gifts"
-              value="DISCOUNT5"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Button onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
-                      Apply
-                    </Button>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          )}
         </Stack>
       </CardContent>
     </Card>
