@@ -24,6 +24,7 @@ from .models import (
     ContactUs,
     Payment,
     User,
+    Advertisement,
 )
 from .serializers import (
     ProductSerializer,
@@ -48,6 +49,7 @@ from .serializers import (
     ForgetPasswordVerificationSerializer,
     ChangePasswordSerializer,
     PasswordResetSerializer,
+    AdvertisementSerializer,
 )
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
@@ -287,3 +289,8 @@ class UserLoginView(KnoxLoginView):
             )
         login(request, user)
         return super(UserLoginView, self).post(request, format=None)
+
+
+class AdvertisementViewSet(viewsets.ModelViewSet):
+    queryset = Advertisement.objects.all()
+    serializer_class = AdvertisementSerializer

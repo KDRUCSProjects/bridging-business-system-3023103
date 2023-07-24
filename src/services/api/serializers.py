@@ -15,6 +15,7 @@ from .models import (
     Ratting,
     ContactUs,
     Payment,
+    Advertisement,
 )
 from .email import send_otp_via_email
 
@@ -370,4 +371,10 @@ class MessageSerializer(serializers.ModelSerializer):
 class MessagePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
+        fields = "__all__"
+
+
+class AdvertisementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Advertisement
         fields = "__all__"
