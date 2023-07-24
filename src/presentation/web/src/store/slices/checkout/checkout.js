@@ -163,6 +163,22 @@ const checkoutSlice = createSlice({
 
       state.checkout.cart = updateCart;
     },
+    handleDirectQuantity(state, action) {
+      const productId = action.payload.productId;
+      const exactQuantity = action.payload.product;
+      const updateCart = state.checkout.cart.map((product) => {
+        if (product.id === productId) {
+          return {
+            ...product,
+            quantity: Number(exactQuantity),
+          };
+        }
+
+        return product;
+      });
+
+      state.checkout.cart = updateCart;
+    },
 
     createBilling(state, action) {
       state.checkout.billing = action.payload;
@@ -201,6 +217,7 @@ export const {
   decreaseQuantity,
   sortByProducts,
   filterProducts,
+  handleDirectQuantity,
 } = checkoutSlice.actions;
 
 // ----------------------------------------------------------------------
