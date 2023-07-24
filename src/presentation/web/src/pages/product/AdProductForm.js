@@ -63,7 +63,7 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
     uploaded_images: Yup.array().min(1, 'Images is required'),
     quantity: Yup.number().required('quantity is required'),
     user: Yup.number().required('user is required'),
-    category: Yup.string().required('category required'),
+    category: Yup.number().required('category required'),
     color: Yup.array().min(1, 'color is required'),
     price: Yup.number().moreThan(0, 'Price should not be af-0.00'),
   });
@@ -82,8 +82,7 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
       return image.image;
     });
   }
-  const userId = localStorage.get('userId');
-
+  const userId = localStorage.getItem('userId');
   const defaultValues = useMemo(
     () => ({
       name: currentProduct?.name || '',
@@ -93,7 +92,7 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
       user: currentProduct?.user || Number(userId),
       price: currentProduct?.price || 0,
       color: currentColor || [],
-      category: currentProduct?.category || '',
+      category: currentProduct?.category || undefined,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
