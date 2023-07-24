@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { sentenceCase } from 'change-case';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, TableCell, Typography, MenuItem } from '@mui/material';
+import { TableRow, Checkbox, TableCell, Typography, MenuItem , Stack , Rating} from '@mui/material';
 // utils
 import { fDate } from '../../../../utils/formatTime';
 import { fCurrency } from '../../../../utils/formatNumber';
@@ -26,7 +26,6 @@ ProductTableRow.propTypes = {
 
 export default function ProductTableRow({ row, index, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const theme = useTheme();
-  const createdAt = 123;
   const inventoryType = 'low_stock';
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -40,9 +39,6 @@ export default function ProductTableRow({ row, index, selected, onEditRow, onSel
 
   return (
     <TableRow hover selected={selected}>
-      {/* <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell> */}
       <TableCell>
         <Typography variant="subtitle2" noWrap>
           {index + 1}
@@ -60,18 +56,12 @@ export default function ProductTableRow({ row, index, selected, onEditRow, onSel
         </Typography>
       </TableCell>
 
-      <TableCell>{fDate(createdAt)}</TableCell>
+      <TableCell>{fDate(row.created_at)}</TableCell>
 
       <TableCell align="center">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (inventoryType === 'out_of_stock' && 'error') || (inventoryType === 'low_stock' && 'warning') || 'success'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {inventoryType ? sentenceCase(inventoryType) : ''}
-        </Label>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Rating size='small' value={row.ratting} precision={0.1} readOnly />
+        </Stack>
       </TableCell>
 
       <TableCell align="right">{fCurrency(row.price)}</TableCell>

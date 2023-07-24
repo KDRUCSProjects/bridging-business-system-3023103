@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Slider from 'react-slick';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Box, Container, Typography , Link} from '@mui/material';
+import { Box, Container, Typography, Link } from '@mui/material';
 
 // components
 import Image from './Image';
@@ -17,14 +17,13 @@ import BaseApi from '../store/BaseApi';
 // ----------------------------------------------------------------------
 
 export default function TopProductSlider(props) {
-    const { isSuccess,data , isError ,isLoading} = BaseApi.useGetAllProductsQuery('api/product/');
+  const { isSuccess, data, isError, isLoading } = BaseApi.useGetAllProductsQuery('api/product/');
   const { settings, title } = props;
- 
-  if(isError){
-    <h1>Error </h1>
-  }
-  else if(isLoading){
-    <h1>Loading</h1>
+
+  if (isError) {
+    <h1>Error </h1>;
+  } else if (isLoading) {
+    <h1>Loading</h1>;
   }
   const carouselRef = useRef(null);
 
@@ -38,28 +37,28 @@ export default function TopProductSlider(props) {
     carouselRef.current?.slickNext();
   };
 
-  return (
-    (isSuccess?
-        <Container component={MotionViewport} sx={{ pb: 10, textAlign: 'center' }}>
-          <m.div variants={varFade().inRight}>
-            <Typography variant="h5" sx={{ mb: 3, textAlign: 'start' }}>
-              {title}
-            </Typography>
-          </m.div>
-    
-          <Box sx={{ position: 'relative' }}>
-            <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
-              <Slider ref={carouselRef} {...settings}>
-                {data.results.map((item) => (
-                  <Box key={item.name + item.id} component={m.div} variants={varFade().in}>
-                    <MemberCard member={item} />
-                  </Box>
-                ))}
-              </Slider>
-            </CarouselArrows>
-          </Box>
-        </Container>:"Data Not Found"
-        )
+  return isSuccess ? (
+    <Container component={MotionViewport} sx={{ pb: 10, textAlign: 'center' }}>
+      <m.div variants={varFade().inRight}>
+        <Typography variant="h5" sx={{ mb: 3, textAlign: 'start' }}>
+          {title}
+        </Typography>
+      </m.div>
+
+      <Box sx={{ position: 'relative' }}>
+        <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
+          <Slider ref={carouselRef} {...settings}>
+            {data.results.map((item) => (
+              <Link href={`/product/details/${item.id}/`} style={{ textDecoration: 'none' }}>
+                <MemberCard member={item} />
+              </Link>
+            ))}
+          </Slider>
+        </CarouselArrows>
+      </Box>
+    </Container>
+  ) : (
+    'Data Not Found'
   );
 }
 
