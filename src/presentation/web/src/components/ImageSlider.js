@@ -33,7 +33,6 @@ export default function ImageSlider(props) {
   };
 
   return (
-    
     <Container component={MotionViewport} sx={{ pb: 10, textAlign: 'center' }}>
       <m.div variants={varFade().inRight}>
         <Typography variant="h5" sx={{ mb: 3, textAlign: 'start' }}>
@@ -41,24 +40,23 @@ export default function ImageSlider(props) {
         </Typography>
       </m.div>
 
-      <Box sx={{ position: 'relative' , height: "300px" , marginTop:"4em"}}>
+      <Box sx={{ position: 'relative', height: '300px', marginTop: '4em' }}>
         <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
           <Slider ref={carouselRef} {...settings}>
             {sliderData.map((item) => (
-              <Box key={item.title + item.subTitle} component={m.div} variants={varFade().in}>
+              <Box key={item.id + item.image} component={m.div} variants={varFade().in}>
                 {/* <MemberCard member={item} /> */}
                 <img
-                                src={item.image}
-                                alt={'nothing for showing'}
-                                style={{
-                                    width: '100%',
-                                    height: '300px',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    
-                                }}
-                            />
+                  src={item.image}
+                  alt={'nothing for showing'}
+                  style={{
+                    width: '100%',
+                    height: '300px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                />
               </Box>
             ))}
           </Slider>

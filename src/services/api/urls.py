@@ -19,6 +19,7 @@ router.register(r"ratting", RattingViewSet)
 router.register(r"payment", PaymentViewSet)
 router.register(r"contact_us", ContectUsViewSet)
 router.register(r"users", UserViewSet)
+router.register(r"advertisments", AdvertisementViewSet, basename="advertisments")
 
 
 urlpatterns = [

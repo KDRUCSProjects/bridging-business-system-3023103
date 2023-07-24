@@ -60,7 +60,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
   const navigate = useNavigate();
 
   const { id, color, name, quantity, price, productRatting, user, ratting } = product;
-
   const alreadyProduct = cart.map((item) => item.id).includes(id);
   const sizes = [43, 44, 45, 56, 47];
   const defaultValues = {
@@ -75,7 +74,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
   const methods = useForm({
     defaultValues,
   });
-
   const { watch, control, setValue, handleSubmit } = methods;
 
   const values = watch();
@@ -120,9 +118,9 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         </Typography>
 
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-          <Rating value={productRatting} precision={0.1} readOnly />
+          <Rating value={ratting} precision={0.1} readOnly />
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            ({fShortenNumber(productRatting)}
+            ({fShortenNumber(productRatting.length)}
             {translate('reviews')} )
           </Typography>
         </Stack>

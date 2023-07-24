@@ -15,6 +15,7 @@ from .models import (
     Ratting,
     ContactUs,
     Payment,
+    Advertisement,
 )
 from .email import send_otp_via_email
 
@@ -48,6 +49,9 @@ class ProductSerializer(serializers.ModelSerializer):
     ratting = serializers.SerializerMethodField(
         method_name="calculated_ratting", read_only=True
     )
+    available_quantity = serializers.SerializerMethodField(
+        method_name="available_product", read_only=True
+    )
     images = ProductImageSerializer(many=True, read_only=True)
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(
@@ -68,6 +72,9 @@ class ProductSerializer(serializers.ModelSerializer):
         for product_image in prodcut_image_data:
             ProductImage.objects.create(product=product, image=product_image)
         return product
+
+    def available_product(self, instance):
+        return instance.quantity
 
     def update(self, instance, validated_data):
         uploaded_images_data = validated_data.pop("uploaded_images")
@@ -370,4 +377,10 @@ class MessageSerializer(serializers.ModelSerializer):
 class MessagePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
+        fields = "__all__"
+
+
+class AdvertisementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Advertisement
         fields = "__all__"

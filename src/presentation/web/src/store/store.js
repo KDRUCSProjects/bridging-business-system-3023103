@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
 import { combineReducers } from 'redux';
 
 // redux Toolkit
@@ -12,8 +12,10 @@ import completeForgotPasswordSlice from './slices/auth/completeForgotPassword';
 import BaseApi from './BaseApi';
 
 const persistConfig = {
-  key: 'persist-key',
+  key: 'root',
+  version: 1,
   storage,
+  blacklist: [BaseApi.reducerPath],
 };
 
 const rootReducer = combineReducers({
@@ -26,11 +28,15 @@ const rootReducer = combineReducers({
   [BaseApi.reducerPath]: BaseApi.reducer,
 });
 
+const persistReducers = persistReducer(persistConfig, rootReducer);
+
 // Store
 const store = configureStore({
-  reducer: persistReducer(persistConfig, rootReducer),
+  reducer: persistReducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false, Immutable: false }).concat(BaseApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] },
+    }).concat(BaseApi.middleware),
 });
 
 const persistedStore = persistStore(store);

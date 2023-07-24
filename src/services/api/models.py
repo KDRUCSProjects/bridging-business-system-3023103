@@ -172,3 +172,10 @@ class Payment(models.Model):
     )
     order = models.OneToOneField(Order, on_delete=models.CASCADE)
     amount = models.FloatField()
+
+
+class Advertisement(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="advertiser_user"
+    )
+    image = models.ImageField(upload_to="advertisements")
