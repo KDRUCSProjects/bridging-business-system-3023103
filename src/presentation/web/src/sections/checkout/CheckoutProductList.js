@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
@@ -12,7 +14,13 @@ import {
   Typography,
   IconButton,
   TableContainer,
+  TextField,
+  Grid,
 } from '@mui/material';
+
+// store
+import { useDispatch } from 'react-redux';
+
 // utils
 import getColorName from '../../utils/getColorName';
 import { fCurrency } from '../../utils/formatNumber';
@@ -54,9 +62,14 @@ CheckoutProductList.propTypes = {
   onIncreaseQuantity: PropTypes.func,
 };
 
-export default function CheckoutProductList({ products, onDelete, onIncreaseQuantity, onDecreaseQuantity }) {
-  console.log(products);
-
+export default function CheckoutProductList({
+  quantity,
+  products,
+  onDelete,
+  onIncreaseQuantity,
+  onDecreaseQuantity,
+  handleQuantity,
+}) {
   return (
     <TableContainer sx={{ minWidth: 720 }}>
       <Table>
@@ -67,6 +80,8 @@ export default function CheckoutProductList({ products, onDelete, onIncreaseQuan
             <CheckoutProductListRow
               key={row.id}
               row={row}
+              productId={row.id}
+              handleQuantity={handleQuantity}
               onDelete={() => onDelete(row.id)}
               onDecrease={() => onDecreaseQuantity(row.id)}
               onIncrease={() => onIncreaseQuantity(row.id)}
@@ -95,9 +110,8 @@ CheckoutProductListRow.propTypes = {
   }),
 };
 
-function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease }) {
-  const { name, price, color, images, quantity } = row;
-
+function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease, handleQuantity, productId }) {
+  const { name, price, color, images, quantity, available_quantity: available } = row;
   return (
     <TableRow>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
@@ -122,7 +136,14 @@ function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease }) {
       <TableCell>{fCurrency(price)}</TableCell>
 
       <TableCell>
-        <Incrementer quantity={quantity} available={row.quantity} onDecrease={onDecrease} onIncrease={onIncrease} />
+        <Incrementer
+          available={available}
+          quantity={quantity}
+          onDecrease={onDecrease}
+          onIncrease={onIncrease}
+          productId={productId}
+          handleQuantity={handleQuantity}
+        />
       </TableCell>
 
       <TableCell align="right">{fCurrency(price * quantity)}</TableCell>
@@ -145,24 +166,44 @@ Incrementer.propTypes = {
   onDecrease: PropTypes.func,
 };
 
-function Incrementer({ available, quantity, onIncrease, onDecrease }) {
+function Incrementer({ available, productId, handleQuantity }) {
+  const dispatch = useDispatch();
+  const [product, setProduct] = useState();
+  const [message, setMessage] = useState(false);
+
+  const handleDirectQuantityfun = async () => {
+    if (product >= available) {
+      setProduct(available);
+      setMessage(true);
+    }
+    setMessage(false);
+    await dispatch(handleQuantity({ productId, product }));
+  };
+
+  useEffect(() => {
+    handleDirectQuantityfun();
+  }, [product]);
+
   return (
-    <Box sx={{ width: 96, textAlign: 'right' }}>
-      <IncrementerStyle>
-        <IconButton size="small" color="inherit" onClick={onDecrease} disabled={quantity <= 1}>
-          <Iconify icon={'eva:minus-fill'} width={16} height={16} />
-        </IconButton>
-
-        {quantity}
-
-        <IconButton size="small" color="inherit" onClick={onIncrease} disabled={quantity >= available}>
-          <Iconify icon={'eva:plus-fill'} width={16} height={16} />
-        </IconButton>
-      </IncrementerStyle>
-
-      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-        available: {available}
-      </Typography>
+    <Box sx={{ width: 396, textAlign: 'left' }}>
+      <Grid conatiner>
+        <Grid item>
+          <TextField
+            sx={{ width: '100px' }}
+            type="number"
+            placeholder="value"
+            value={product}
+            size={'small'}
+            onChange={(e) => setProduct(e.target.value)}
+            helperText={message ? 'Count You Mentioned not Avaliable' : null}
+          />
+        </Grid>
+        <Grid item>
+          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+            available: {available}
+          </Typography>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
