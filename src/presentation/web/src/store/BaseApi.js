@@ -25,6 +25,8 @@ const BaseApi = createApi({
     CreateProduct: builder.mutation(allServices.mutations.CreateProduct),
     UpdateProduct: builder.mutation(allServices.mutations.UpdateProduct),
     DeleteProduct: builder.mutation(allServices.mutations.DeleteProduct),
+    // Rating Mutation
+    CreateRating: builder.mutation(allServices.mutations.CreateRating),
 
     // -----------------------------Queries-------------------------------
     // profile

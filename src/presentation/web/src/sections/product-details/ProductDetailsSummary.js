@@ -1,22 +1,22 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { sentenceCase } from 'change-case';
-import { useNavigate,Link  } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Person2Icon from '@mui/icons-material/Person2';
+import GradeIcon from '@mui/icons-material/Grade';
 // form
 import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Box,Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
-
+import { Box, Stack, Button, Rating, Divider, IconButton, Typography } from '@mui/material';
+import { fDate } from '../../utils/formatTime';
 // utils
 import { fShortenNumber, fCurrency } from '../../utils/formatNumber';
 // components
-import Label from '../../components/Label';
 import Iconify from '../../components/Iconify';
 import { ColorSinglePicker } from '../../components/color-utils';
-import RHFSelect from '../../components/hook-form/RHFSelect';
 import FormProvider from '../../components/hook-form/FormProvider';
 import useLocales from '../../hooks/useLocales';
+import BaseApi from '../../store/BaseApi';
 
 // ----------------------------------------------------------------------
 
@@ -49,25 +49,28 @@ ProductDetailsSummary.propTypes = {
 };
 
 export default function ProductDetailsSummary({ cart, product, onAddCart, onGotoStep, ...other }) {
-  const { translate} =useLocales();
+  const [CreateRating] = BaseApi.useCreateRatingMutation();
+  const { translate } = useLocales();
   const theme = useTheme();
-
+  const [rvalue, setRvalue] = useState(0);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
 
-  const { id,color, name , quantity , price ,productRatting , user, ratting } = product;
+  const handlClick = async () => {
+    const value = { product: product.id, user: userId, ratting_stars: rvalue };
+    const query = { path: '/api/ratting/', data: value };
+
+    const res = await CreateRating(query);
+  };
+  const { id, color, name, quantity, price, productRatting, user, ratting } = product;
   const alreadyProduct = cart.map((item) => item.id).includes(id);
-  const sizes = [
-    43, 44 , 45 , 56 , 47
-  ]
   const defaultValues = {
     id,
     name,
     price,
     color: color[0],
-    size: sizes[4],
   };
-  const userId = localStorage.getItem('userId')
-  const uId = 2 ;
+  const uId = 2;
   const methods = useForm({
     defaultValues,
   });
@@ -88,12 +91,12 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       console.error(error);
     }
   };
- let linkto = '';
- if(user !== uId ){
-  linkto = `/profile/${user}/`
- }else{
-  linkto = `/userprofile/${user}/`
- }
+  let linkto = '';
+  if (user !== uId) {
+    linkto = `/profile/${user}/`;
+  } else {
+    linkto = `/userprofile/${user}/`;
+  }
 
   const handleAddCart = async () => {
     try {
@@ -128,8 +131,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('color')}
-          
+            {translate('color')}
           </Typography>
 
           <Controller
@@ -153,23 +155,11 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-           {translate('size')} 
+            {translate('Posted')}
           </Typography>
-
-          <RHFSelect
-            name="size"
-            size="small"
-            fullWidth={false}
-            FormHelperTextProps={{
-              sx: { textAlign: 'right', margin: 0, mt: 1 },
-            }}
-          >
-            {sizes.map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </RHFSelect>
+          <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
+            {fDate(product.created_at)}
+          </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
@@ -180,7 +170,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
           <div>
             <Typography>{product.quantity}</Typography>
             <Typography variant="caption" component="div" sx={{ mt: 1, textAlign: 'right', color: 'text.secondary' }}>
-              {translate('available')} 
+              {translate('available')}
             </Typography>
           </div>
         </Stack>
@@ -188,22 +178,37 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         <Divider sx={{ borderStyle: 'dashed' }} />
       </FormProvider>
       <Stack direction="row" spacing={2} sx={{ mt: 5 }}>
-          <Button
-            fullWidth
-            size="large"
-            color="warning"
-            variant="contained"
-            startIcon={<Iconify icon={'ic:round-add-shopping-cart'} />}
-            onClick={handleAddCart}
-            sx={{ whiteSpace: 'nowrap' }}
-          >
-  
-         {translate('add to cart')} 
-          </Button>    
-          <Button  component={Link} to={linkto}  fullWidth size="large"  startIcon={<Person2Icon />} variant="contained">
-           {translate('view profile')} 
-          </Button>
-        </Stack>
+        <Button
+          fullWidth
+          size="large"
+          color="warning"
+          variant="contained"
+          startIcon={<Iconify icon={'ic:round-add-shopping-cart'} />}
+          onClick={handleAddCart}
+          sx={{ whiteSpace: 'nowrap' }}
+        >
+          {translate('add to cart')}
+        </Button>
+        <Button component={Link} to={linkto} fullWidth size="large" startIcon={<Person2Icon />} variant="contained">
+          {translate('view profile')}
+        </Button>
+      </Stack>
+      <Typography variant="h4" sx={{ mb: 2, mt: 2 }}>
+        Give Product review
+      </Typography>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
+        <Rating
+          size="large"
+          name="simple-controlled"
+          value={rvalue}
+          onChange={(event, newValue) => {
+            setRvalue(newValue);
+          }}
+        />
+      </Stack>
+      <Button onClick={handlClick} fullWidth size="large" startIcon={<GradeIcon />} variant="contained">
+        {translate('Submit Review')}
+      </Button>
     </RootStyle>
   );
 }

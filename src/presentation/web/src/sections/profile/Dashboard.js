@@ -29,9 +29,7 @@ export default function Dashboard(id) {
 
   const total = sum(newdata?.map((item) => item.productRatting.length));
   const totalrating = newdata?.map((item) => item.ratting);
-  
-  const totalavg = avgrating / totalrating.length ;
-  console.log('new data :',totalavg)
+  const totalavg = avgrating / totalrating?.length ;
 
   const { themeStretch } = useSettings();
   const results = newdata?.map((item) => item.quantity);
