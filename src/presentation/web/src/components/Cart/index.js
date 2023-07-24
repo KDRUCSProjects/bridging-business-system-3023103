@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { alpha, styled, useTheme } from '@mui/material/styles';
 import { Tooltip, Badge, Box } from '@mui/material';
@@ -36,6 +37,7 @@ const RootStyleRtl = styled('span')(({ theme }) => ({
   )}`,
 }));
 export default function Cart() {
+  const CartCount = useSelector((store) => store.checkout.checkout.cart);
   const theme = useTheme();
   const isRTL = theme.direction === 'rtl';
 
@@ -55,7 +57,10 @@ export default function Cart() {
                 },
               }}
             >
-              <Badge badgeContent="30" anchorOrigin={{ color: 'error.main', vertical: 'top', horizontal: 'left' }}>
+              <Badge
+                badgeContent={`${CartCount.length}`}
+                anchorOrigin={{ color: 'error.main', vertical: 'top', horizontal: 'left' }}
+              >
                 <Box sx={{ padding: '3px' }} component={Link} to={PATH_AUTH.checkOut}>
                   <ShoppingCartRounded sx={{ color: 'primary.main' }} />
                 </Box>
@@ -77,7 +82,10 @@ export default function Cart() {
                 },
               }}
             >
-              <Badge badgeContent="30" anchorOrigin={{ color: 'error.main', vertical: 'top', horizontal: 'left' }}>
+              <Badge
+                badgeContent={`${CartCount.length}`}
+                anchorOrigin={{ color: 'error.main', vertical: 'top', horizontal: 'left' }}
+              >
                 <Box sx={{ padding: '3px' }} component={Link} to={PATH_AUTH.checkOut}>
                   <ShoppingCartRounded sx={{ color: 'primary.main' }} />
                 </Box>
