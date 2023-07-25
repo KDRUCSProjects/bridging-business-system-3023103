@@ -56,6 +56,7 @@ from rest_framework.filters import SearchFilter
 from .access_policies.category import CategoryAccessPolicy
 from .access_policies.Product import ProductAccessPolicy
 from .pagination import ProductPagination
+from .fielters import ProductFilter
 
 # Permition:
 # isAuthuticated
@@ -67,13 +68,14 @@ from .pagination import ProductPagination
 
 
 class PrdocutViewSet(viewsets.ModelViewSet):
-    # permission_classes = [ProductAccessPolicy]
+    permission_classes = [ProductAccessPolicy]
     queryset = Product.objects.order_by("-created_at")
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ["user"]
-    search_fields = ["name", "description"]
+    filterset_class = ProductFilter
+    search_fields = ["name"]
     pagination_class = ProductPagination
+    ordering = ["id"]
 
 
 class ProductImageViewSet(viewsets.ModelViewSet):
@@ -97,7 +99,6 @@ class OrderDetailViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         product = serializer.validated_data["product"]
-        print(product.quantity)
         if product.quantity < serializer.validated_data["quantity"]:
             return Response(
                 "Stock quantity: "
@@ -106,8 +107,9 @@ class OrderDetailViewSet(viewsets.ModelViewSet):
                 + str(serializer.validated_data["quantity"]),
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
             )
-        print(product)
         product.quantity -= serializer.validated_data["quantity"]
+        if product.quantity == 0:
+            product.is_sold = True
         product.save()
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
@@ -119,7 +121,8 @@ class OrderDetailViewSet(viewsets.ModelViewSet):
 class BusinessProfileViewSet(viewsets.ModelViewSet):
     queryset = BusinessProfile.objects.all()
     serializer_class = BusinessProfileSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    search_fields = ["businessName"]
     filterset_fields = ["user"]
 
 
