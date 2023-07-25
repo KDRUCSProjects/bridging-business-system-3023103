@@ -6,9 +6,9 @@ import BaseApi from '../../store/BaseApi';
 // ----------------------------------------------------------------------
 
 export default function Users() {
-  const { data, isSuccess, isError } = BaseApi.useGetAllUsersQuery('api/business_profile/');
   const [currentPage, setCurrentPage] = useState(1);
-  const divStyle = { position: 'relative', left: '45%', };
+  const { data, isSuccess, isError } = BaseApi.useGetAllUsersQuery(`api/business_profile/?page=${currentPage}`);
+  const divStyle = { position: 'relative', left: '45%' };
   const userId = localStorage.getItem('userId');
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
@@ -32,7 +32,7 @@ export default function Users() {
           }}
         >
           {isSuccess
-            ?data.map((product) => {
+            ? data?.results.map((product) => {
                 if (product.user === Number(userId)) {
                   return null;
                 }
@@ -41,10 +41,11 @@ export default function Users() {
                     <UserList key={product.id} product={product} />
                   </>
                 );
-              }):null}
+              })
+            : null}
         </Box>
-        <div spacing={2}  style={divStyle}>
-          <Pagination count={2} color="primary" onChange={handlePageChange} />
+        <div spacing={2} style={divStyle}>
+          <Pagination count={data?.totalPages} color="primary" onChange={handlePageChange} />
         </div>
       </Container>
     </Page>

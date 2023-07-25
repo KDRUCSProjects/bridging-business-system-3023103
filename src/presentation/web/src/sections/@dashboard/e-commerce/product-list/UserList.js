@@ -21,7 +21,7 @@ export function PostContent({ product }) {
   return (
     <CardContent>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h6" component="div">
           {product.product.businessName}
         </Typography>
       </Stack>
