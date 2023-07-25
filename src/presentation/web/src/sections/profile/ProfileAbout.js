@@ -25,6 +25,7 @@ ProfileAbout.propTypes = {
 export default function ProfileAbout({ profile, userdata , about }) {
   const { translate } = useLocales();
   const { quote, country, email, role, company, school: Business } = profile;
+  console.log('profile :',profile)
   return (
     <Card>
       <CardHeader title={translate('About Me')} />
@@ -35,7 +36,7 @@ export default function ProfileAbout({ profile, userdata , about }) {
           <Typography variant="body2">
             {translate('Location')} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {profile[0].address.area + profile[0].address.street + profile[0].address.district}
+              {profile.results[0]?.address.area + profile.results[0]?.address.street + profile.results[0]?.address.district}
             </Link>
           </Typography>
         </Stack>
@@ -50,7 +51,7 @@ export default function ProfileAbout({ profile, userdata , about }) {
           <Typography variant="body2">
             {translate('Business at')}&nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {profile[0].address.province}
+              {profile.results[0]?.address.province}
             </Link>
           </Typography>
         </Stack>

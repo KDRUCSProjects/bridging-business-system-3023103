@@ -28,7 +28,7 @@ export default function ProfileAbout({ profile }) {
     <Card>
       <CardHeader title={translate('Bio')} />
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">{profile[0].detials}</Typography>
+        <Typography variant="body2">{profile.results[0]?.detials}</Typography>
       </Stack>
     </Card>
   );

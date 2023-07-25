@@ -101,7 +101,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <MyAvatar myphoto={data[0].avator} others={{ width: '10px', height: '10px' }} />
+        <MyAvatar myphoto={data.results[0].avator} others={{ width: '10px', height: '10px' }} />
       </IconButtonAnimate>:<MyAvatar myphoto={"https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg"} others={{ width: '10px', height: '10px' }} />
 }
 

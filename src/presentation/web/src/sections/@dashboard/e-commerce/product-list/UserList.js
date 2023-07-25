@@ -9,7 +9,7 @@ import TextMaxLine from '../../../../components/TextMaxLine';
 export default function ProductTableRow(product) {
   return (
     <Card sx={{ mb: 4 }}>
-      <Image alt="cover" src={product.product.avator} sx={{ height: 250 }} />
+      <Image alt="cover" src={product?.product.avator} sx={{ height: 250 }} />
       <PostContent product={product} />
     </Card>
   );

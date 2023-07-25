@@ -72,7 +72,7 @@ export default function HomePage() {
         {isMatchMobile ? null : (
           <UserSlider
             settings={UserSliderSetting().UserSliderConfig}
-            title={translate('Users')}
+            title={translate('Businesses')}
           />
         )}
 

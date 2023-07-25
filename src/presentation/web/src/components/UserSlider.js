@@ -42,15 +42,12 @@ export default function TopProductSlider(props) {
         <Typography variant="h5" sx={{ mb: 3, textAlign: 'start' }}>
           {title}
         </Typography>
-        <Link href="users" variant="h6">
-          View All
-        </Link>
       </Stack>
 
       <Box sx={{ position: 'relative' }}>
         <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
           <Slider ref={carouselRef} {...settings}>
-            {data.map((profile) => {
+            {data?.results.map((profile) => {
               if (profile.user === Number(userId)) {
                 return null;
               }
@@ -65,8 +62,7 @@ export default function TopProductSlider(props) {
       </Box>
 
       <Button href={'/users'} sx={{ mt: 1 }}>
-        View Profile
-      </Button>
+        View All Businesses</Button>
     </Container>
   ) : (
     'Data Not Found'

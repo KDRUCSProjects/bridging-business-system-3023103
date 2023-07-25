@@ -55,7 +55,7 @@ export default function ProfileCover({ myProfile }) {
             width: { xs: 80, md: 128 },
             height: { xs: 80, md: 128 },
           }}
-          myphoto={myProfile[0]?.avator}
+          myphoto={myProfile.results[0]?.avator}
         />
         <Box
           sx={{
