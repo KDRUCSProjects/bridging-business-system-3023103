@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework import validators
 from .models import (
     Product,
@@ -67,7 +69,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = "__all__"
 
-    def couter_method(self, instance):
+    def counter_method(self, instance):
         return 1
 
     def create(self, validated_data):
@@ -81,6 +83,20 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def available_product(self, instance):
         return instance.quantity
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        product_colors = []
+        for color in representation["color"]:
+            color_obj = ProductColor.objects.get(id=color)
+            object = {
+                "id": color_obj.id,
+                "name": color_obj.name,
+            }
+            product_colors.append(object)
+
+        representation["color"] = product_colors
+        return representation
 
     def update(self, instance, validated_data):
         uploaded_images_data = validated_data.pop("uploaded_images")
@@ -135,12 +151,27 @@ class OrderSerializer(serializers.ModelSerializer):
         order = Order.objects.create(address=address, **validated_data)
         for ordered_product in ordered_products:
             product = Product.objects.get(pk=ordered_product["product"])
+            if (
+                ordered_product["quantity"] > product.quantity
+                or ordered_product["quantity"] < 1
+            ):
+                order.delete()
+                return Response(
+                    "Stock quantity: "
+                    + str(product.quantity)
+                    + " Entry quantity: "
+                    + str(product["quantity"]),
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                )
+            product.quantity = product.quantity - ordered_product["quantity"]
+
             OrderDetail.objects.create(
                 order=order,
                 product=product,
                 quantity=ordered_product["quantity"],
                 price=ordered_product["price"],
             )
+            product.save()
         return order
 
 

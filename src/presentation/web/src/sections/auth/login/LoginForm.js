@@ -72,7 +72,6 @@ export default function LoginForm() {
     initialValues,
     validationSchema: loginSchema,
     onSubmit: async () => {
-      console.log('clicked');
       const query = {
         path: '/api/login/',
         data: values,
@@ -110,7 +109,6 @@ export default function LoginForm() {
       }
     },
   });
-  console.log('Response of login', LoginUserResponse);
 
   return (
     <form onSubmit={handleSubmit}>

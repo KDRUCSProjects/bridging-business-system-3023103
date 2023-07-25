@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { m } from 'framer-motion'
+import { m } from 'framer-motion';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Card, Stack, Link, Container, Typography } from '@mui/material';
@@ -13,7 +13,6 @@ import airplane from '../../animations/auth/login/airplane.json';
 //
 import animationSetter from '../../animations/animationSetter';
 
-
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 import useLocales from '../../hooks/useLocales';
@@ -23,6 +22,7 @@ import Page from '../../components/Page';
 import { MotionContainer, varBounce } from '../../components/animate';
 // sections
 import LoginForm from '../../sections/auth/login/LoginForm';
+import { PATH_AUTH } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
-  const {translate}= useLocales();
+  const { translate } = useLocales();
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
@@ -82,7 +82,7 @@ export default function Login() {
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               {translate('Don’t have an account?')}
-              <Link variant="subtitle2" component={RouterLink} to={'/user/register'}>
+              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.registerComplete}>
                 {translate('Get started')}
               </Link>
             </Typography>
@@ -90,12 +90,11 @@ export default function Login() {
         </HeaderStyle>
 
         {mdUp && (
-
-            <SectionStyle>
-              <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-                <Lottie options={animationSetter(birdFlying)} />
-              </Typography>
-            </SectionStyle>
+          <SectionStyle>
+            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+              <Lottie options={animationSetter(birdFlying)} />
+            </Typography>
+          </SectionStyle>
         )}
 
         <Container maxWidth="sm" component={MotionContainer}>
@@ -113,7 +112,6 @@ export default function Login() {
                 <Box position={'absolute'} top="20px">
                   <Lottie height={'200px'} width={'100%'} options={animationSetter(airplane)} />
                 </Box>
-
               </Box>
             </Stack>
             <m.div variants={varBounce().inLeft}>
@@ -123,7 +121,7 @@ export default function Login() {
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
                 {translate('Don’t have an account?')}{' '}
-                <Link variant="subtitle2" component={RouterLink} to={'register'}>
+                <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.registerComplete}>
                   {translate('Get started')}
                 </Link>
               </Typography>

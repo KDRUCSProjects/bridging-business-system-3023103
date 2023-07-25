@@ -190,10 +190,12 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
       };
       const res = await UpdateProduct(query);
       if (res.error) {
-        console.log(res.error);
         enqueueSnackbar('error', { variant: 'error' });
       } else if (res.data) {
-        enqueueSnackbar('Update success!');
+        enqueueSnackbar('Updating product success!');
+        setTimeout(() => {
+          navigate(`/profile/${userId}`);
+        }, 1500);
       }
     } else {
       const query = {
@@ -202,10 +204,12 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
       };
       const res = await CreateProduct(query);
       if (res.error) {
-        console.log(res.error);
         enqueueSnackbar('error', { variant: 'error' });
       } else if (res.data) {
-        enqueueSnackbar('Create success!');
+        enqueueSnackbar('Create product success!');
+        setTimeout(() => {
+          navigate(`/profile/${userId}`);
+        }, 1500);
       }
     }
   };

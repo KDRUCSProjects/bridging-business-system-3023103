@@ -97,6 +97,7 @@ class OrderDetailViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         product = serializer.validated_data["product"]
+        print(product.quantity)
         if product.quantity < serializer.validated_data["quantity"]:
             return Response(
                 "Stock quantity: "
