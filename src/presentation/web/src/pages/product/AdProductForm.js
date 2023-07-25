@@ -271,7 +271,7 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
             <Stack spacing={3}>
               <Card sx={{ p: 3 }}>
                 <Stack spacing={3} mt={2}>
-                  <Typography>{translate('Select multiple Images')}</Typography>
+                  <Typography>{translate('Quantity')}</Typography>
 
                   <m.div variants={varBounce().inLeft}>
                     <RHFTextField name="quantity" label={translate('Product quantity')} type="number" />

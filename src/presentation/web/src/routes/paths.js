@@ -37,5 +37,6 @@ export const PATH_PAGE = {
   NewPassword: path(PATH_PAGE_ROOT, 'new/password'),
 
   UserProfile: path(PATH_PAGE_ROOT, 'userprofile/:id'),
+  SearchedProducts: path(PATH_PAGE_ROOT, 'searched/products'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };

@@ -80,6 +80,7 @@ export default function Router() {
         { path: PATH_PAGE.NewPassword, element: <NewPassword /> },
 
         { path: PATH_PAGE.UserProfile, element: <UserProfile /> },
+        { path: PATH_PAGE.SearchedProducts, element: <SearchedProducts /> },
       ],
     },
 
@@ -151,3 +152,6 @@ const CompleteForgotPassword = Loadable(lazy(() => import('../pages/auth/Complet
 
 // UserProfile
 const UserProfile = Loadable(lazy(() => import('../pages/profile/UserProfile')));
+
+// Searched data list
+const SearchedProducts = Loadable(lazy(() => import('../pages/searchedProducts/SearchedProducts')));

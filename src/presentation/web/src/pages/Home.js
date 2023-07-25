@@ -45,7 +45,7 @@ export default function HomePage() {
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
   return isSuccess ? (
-    <Page title="Ecommerce Start Here">
+    <Page title="Briging Businesses">
       <ContentStyle>
         {/* ImageSlider */}
         {!isMatchMobile && advertisementIsSuccess ? (
@@ -64,6 +64,13 @@ export default function HomePage() {
           <TopProductSlider
             settings={TopProductSliderSettings().TopProductSliderConfig}
             title={translate('Top_Product')}
+          />
+        )}
+        {/* Top Product  */}
+        {isMatchMobile ? null : (
+          <TopProductSlider
+            settings={TopProductSliderSettings().TopProductSliderConfig}
+            title={translate('New Arrivals')}
           />
         )}
 

@@ -11,7 +11,7 @@ import BaseApi from '../../store/BaseApi';
 
 export default function ShopProductList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { isSuccess,data , isError ,isLoading ,totalPages} = BaseApi.useGetSpecificProductQuery(`api/product/?page=${currentPage}`);
+  const { isSuccess,data , isError ,isLoading} = BaseApi.useGetSpecificProductQuery(`api/product/?page=${currentPage}`);
     const divStyle = { position: 'relative', left: '45%' , top:"7px" };
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
@@ -45,7 +45,7 @@ export default function ShopProductList() {
         </Box>
         {/* pagination in frontend */}
         <div spacing={2} sx={{ marginTop : 5 }} style={divStyle} >
-          <Pagination count={totalPages} color='primary' onChange={handlePageChange}/>
+          <Pagination count={data?.totalPages} color='primary' onChange={handlePageChange}/>
         </div>
       </Container>
     </Page> 
