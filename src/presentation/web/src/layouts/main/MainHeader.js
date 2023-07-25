@@ -29,6 +29,7 @@ import NotificationsPopover from './NotificationsPopover';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
+import { FormProvider } from '../../components/hook-form';
 
 // ----------------------------------------------------------------------
 const userId = localStorage.getItem('userId');
@@ -95,6 +96,10 @@ const StyledAutoCompleteMobile = styled(Autocomplete)(({ theme }) => ({
     height: '30px',
   },
 }));
+const top100Films = [
+  { label: 'The Shawshank Redemption', year: 1994 },
+  { label: 'The Godfather', year: 1972 },
+];
 const StyledAutoCompleteRtl = styled(Autocomplete)(({ theme }) => ({
   color: 'inherit',
   marginTop: userId ? '-1.5em' : '.8em',
@@ -184,6 +189,7 @@ export default function MainHeader(props) {
               {isDesktopDown && userId && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
               {isMobile ? (
+                
                 <StyledAutoCompleteMobile
                   limitTags={11}
                   initial
@@ -201,7 +207,9 @@ export default function MainHeader(props) {
                       </li>
                     );
                   }}
+                  
                   onChange={handleSelectedOption}
+                  
                   renderInput={(params) => (
                     <SearchIconWrapperMobile>
                       <TextField
@@ -262,46 +270,58 @@ export default function MainHeader(props) {
               {/* <Box sx={{ flexGrow: 1 }} /> */}
               {/* Searching input field */}
               {isMobileUp ? (
-                <StyledAutoCompleteRtl
-                  limitTags={11}
-                  initial
-                  freeSolo
-                  id="free-solo-2-demo"
-                  disableClearable
-                  options={products.map((option, i) => {
-                    return option.name;
-                  })}
-                  renderOption={(props, option, index) => {
-                    const key = `listItem-${props.id}-${props.key}`;
-                    return (
-                      <li {...props} key={key}>
-                        {option}
-                      </li>
-                    );
-                  }}
-                  onChange={handleSelectedOption}
-                  renderInput={(params) => (
-                    <SearchIconWrapper>
-                      <TextField
-                        variant="standard"
-                        hiddenLabel
-                        size="small"
-                        placeholder="search..."
-                        sx={{ width: (theme) => (isMobile ? '10rem' : '12rem'), padding: 0, fontSize: '.5em' }}
-                        {...params}
-                        InputProps={{
-                          ...params.InputProps,
-                          type: 'search',
-                          startAdornment: (
-                            <InputAdornment position="end">
-                              <SearchIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </SearchIconWrapper>
-                  )}
-                />
+                <FormProvider>
+                  {/* ------------------------ */}
+                  <Autocomplete
+                    disablePortal
+                    id="list"
+                    options={top100Films}
+                    sx={{ width: 500 }}
+                    renderInput={(params) => <TextField {...params} label="Movie" />}
+                  />
+
+                  {/* ----------------------------- */}
+                  <StyledAutoCompleteRtl
+                    limitTags={11}
+                    initial
+                    freeSolo
+                    id="free-solo-2-demo"
+                    disableClearable
+                    options={products.map((option, i) => {
+                      return option.name;
+                    })}
+                    renderOption={(props, option, index) => {
+                      const key = `listItem-${props.id}-${props.key}`;
+                      return (
+                        <li {...props} key={key}>
+                          {option}
+                        </li>
+                      );
+                    }}
+                    onChange={handleSelectedOption}
+                    renderInput={(params) => (
+                      <SearchIconWrapper>
+                        <TextField
+                          variant="standard"
+                          hiddenLabel
+                          size="small"
+                          placeholder="search..."
+                          sx={{ width: (theme) => (isMobile ? '10rem' : '12rem'), padding: 0, fontSize: '.5em' }}
+                          {...params}
+                          InputProps={{
+                            ...params.InputProps,
+                            type: 'search',
+                            startAdornment: (
+                              <InputAdornment position="end">
+                                <SearchIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </SearchIconWrapper>
+                    )}
+                  />
+                </FormProvider>
               ) : null}
 
               <Logo sx={{ marginTop: !isDesktop ? '1em' : undefined }} />
