@@ -26,7 +26,6 @@ ProductTableRow.propTypes = {
 
 export default function ProductTableRow({ row, index, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const theme = useTheme();
-  const inventoryType = 'low_stock';
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {

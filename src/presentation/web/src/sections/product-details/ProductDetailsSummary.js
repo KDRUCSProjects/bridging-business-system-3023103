@@ -62,8 +62,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
   const dispatch = useDispatch();
 
   const [CreateRating] = BaseApi.useCreateRatingMutation();
-  const { translate } = useLocales();
-  const theme = useTheme();
   const [rvalue, setRvalue] = useState(0);
 
   const navigate = useNavigate();
@@ -90,8 +88,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     color: color[0],
   };
 
-  const userId = localStorage.getItem('userId');
-
   const uId = 2;
   const methods = useForm({
     defaultValues,
@@ -114,7 +110,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     }
   };
   let linkto = '';
-  if (user !== uId) {
+  if (user !== userId) {
     linkto = `/profile/${user}/`;
   } else {
     linkto = `/userprofile/${user}/`;
