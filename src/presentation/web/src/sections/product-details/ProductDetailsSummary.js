@@ -56,12 +56,11 @@ ProductDetailsSummary.propTypes = {
 };
 
 export default function ProductDetailsSummary({ cart, product, onAddCart, onGotoStep, ...other }) {
-
   const { translate } = useLocales();
-  const theme = useTheme();
   const dispatch = useDispatch();
 
   const [CreateRating] = BaseApi.useCreateRatingMutation();
+  const theme = useTheme();
   const [rvalue, setRvalue] = useState(0);
 
   const navigate = useNavigate();
@@ -71,10 +70,9 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     const value = { product: product.id, user: userId, ratting_stars: rvalue };
     const query = { path: '/api/ratting/', data: value };
 
-
-  const { id, color, name, quantity, price, productRatting, user, ratting } = product;
-  const alreadyProduct = cart.map((item) => item.id).includes(id);
-  const sizes = [43, 44, 45, 56, 47];
+    const { id, color, name, quantity, price, productRatting, user, ratting } = product;
+    const alreadyProduct = cart.map((item) => item.id).includes(id);
+    const sizes = [43, 44, 45, 56, 47];
 
     const res = await CreateRating(query);
   };
@@ -175,13 +173,11 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-
             {translate('size')}
             {translate('Posted')}
           </Typography>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
             {fDate(product.created_at)}
-
           </Typography>
         </Stack>
 
@@ -233,7 +229,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       <Button onClick={handlClick} fullWidth size="large" startIcon={<GradeIcon />} variant="contained">
         {translate('Submit Review')}
       </Button>
-
     </RootStyle>
   );
 }

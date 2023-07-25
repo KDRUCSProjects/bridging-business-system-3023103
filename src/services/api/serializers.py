@@ -100,6 +100,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         uploaded_images_data = validated_data.pop("uploaded_images")
+        if validated_data["quantity"] != 0:
+            validated_data["is_sold"] = True
         super().update(instance, validated_data)
 
         # Update or create child objects
