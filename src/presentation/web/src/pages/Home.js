@@ -10,6 +10,8 @@ import Page from '../components/Page';
 import { categorySlider } from '../sections/home';
 import ImageSliderSittings from '../sections/home/ImageSlider';
 import TopProductSliderSettings from '../sections/home/TopProductSliderSettings';
+import UserSliderSetting from '../sections/home/UserSliderSetting';
+
 // hooks
 import useLocales from '../hooks/useLocales';
 import useResponsive from '../hooks/useResponsive';
@@ -17,7 +19,7 @@ import CustomSlider from '../components/CustomSlider';
 import Cart from '../components/Cart';
 import ImageSlider from '../components/ImageSlider';
 import TopProductSlider from '../components/TopProductSlider';
-import Snack from '../components/Snack';
+import UserSlider from '../components/UserSlider';
 // Card
 import ShopProductList from '../sections/shop/ShopProductList';
 // store
@@ -66,11 +68,11 @@ export default function HomePage() {
             title={translate('Top_Product')}
           />
         )}
-        {/* Top Product  */}
+        {/* User Slider  */}
         {isMatchMobile ? null : (
-          <TopProductSlider
-            settings={TopProductSliderSettings().TopProductSliderConfig}
-            title={translate('New Arrivals')}
+          <UserSlider
+            settings={UserSliderSetting().UserSliderConfig}
+            title={translate('Users')}
           />
         )}
 

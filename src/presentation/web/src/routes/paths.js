@@ -38,5 +38,6 @@ export const PATH_PAGE = {
 
   UserProfile: path(PATH_PAGE_ROOT, 'userprofile/:id'),
   SearchedProducts: path(PATH_PAGE_ROOT, 'searched/products'),
+  Users: path(PATH_PAGE_ROOT, 'users'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };

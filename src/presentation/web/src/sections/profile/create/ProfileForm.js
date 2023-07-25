@@ -58,7 +58,7 @@ export default function ProfileForm() {
     district: Yup.string().required('district is required'),
     area: Yup.string().required('Area is required'),
     street: Yup.string().required('Street is required'),
-    business_name: Yup.string().required('Business Name is required'),
+    businessName: Yup.string().required('Business Name is required'),
     owner_bio: Yup.string().required('Bio is required'),
     owner_phone: Yup.string().phone().required('Please Enter Valid Phone'),
     details: Yup.string().required('Business details is required'),
@@ -72,7 +72,7 @@ export default function ProfileForm() {
       district: '',
       area: '',
       street: '',
-      business_name: '',
+      businessName: '',
       owner_bio: '',
       phone: '',
       owner_phone: '',
@@ -107,7 +107,7 @@ export default function ProfileForm() {
     Object.entries(address).forEach(([key, value]) => {
       data.append(`address.${key}`, value);
     });
-    data.append('business_name', values.business_name);
+    data.append('businessName', values.businessName);
     data.append('owner_bio', values.owner_bio);
     data.append('owner_phone', values.owner_phone);
     data.append('detials', values.details);
@@ -209,7 +209,7 @@ export default function ProfileForm() {
               <RHFTextField name="district" label={translate('District')} />
               <RHFTextField name="area" label={translate('Area')} />
               <RHFTextField name="street" label={translate('Street')} />
-              <RHFTextField name="business_name" label={translate('Business Name')} />
+              <RHFTextField name="businessName" label={translate('Business Name')} />
               <RHFTextField name="owner_phone" label={translate('Owner phone')} />
               <RHFTextField name="owner_bio" label={translate('Owner Bio')} />
               <RHFTextField name="details" label={translate('Details')} />

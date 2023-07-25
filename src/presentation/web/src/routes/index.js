@@ -81,6 +81,7 @@ export default function Router() {
 
         { path: PATH_PAGE.UserProfile, element: <UserProfile /> },
         { path: PATH_PAGE.SearchedProducts, element: <SearchedProducts /> },
+        { path: PATH_PAGE.Users, element: <Users /> },
       ],
     },
 
@@ -155,3 +156,6 @@ const UserProfile = Loadable(lazy(() => import('../pages/profile/UserProfile')))
 
 // Searched data list
 const SearchedProducts = Loadable(lazy(() => import('../pages/searchedProducts/SearchedProducts')));
+
+// User data list
+const Users = Loadable(lazy(() => import('../pages/userlist/Users')));

@@ -13,10 +13,8 @@ import useLocales from '../../hooks/useLocales';
 import Page from '../../components/Page';
 
 // // sections
-import {
-  ProductDetailsSummary,
-  ProductDetailsCarousel,
-} from '../../sections/product-details';
+import ProductDetailsCarousel from '../../sections/product-details/ProductDetailsCarousel';
+import ProductDetailsSummary from '../../sections/product-details/ProductDetailsSummary';
 import BaseApi from '../../store/BaseApi';
 // // ----------------------------------------------------------------------
 

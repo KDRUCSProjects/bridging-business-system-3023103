@@ -108,7 +108,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     }
   };
   let linkto = '';
-  if (user !== uId) {
+  if (user !== userId) {
     linkto = `/profile/${user}/`;
   } else {
     linkto = `/userprofile/${user}/`;
