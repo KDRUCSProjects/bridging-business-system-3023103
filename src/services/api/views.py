@@ -55,7 +55,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from .access_policies.category import CategoryAccessPolicy
 from .access_policies.Product import ProductAccessPolicy
-from .pagination import ProductPagination
+from .pagination import ProductPagination, BusinessPagination
 from .fielters import ProductFilter
 
 # Permition:
@@ -121,6 +121,7 @@ class OrderDetailViewSet(viewsets.ModelViewSet):
 class BusinessProfileViewSet(viewsets.ModelViewSet):
     queryset = BusinessProfile.objects.all()
     serializer_class = BusinessProfileSerializer
+    pagination_class = BusinessPagination
     filter_backends = [DjangoFilterBackend, SearchFilter]
     search_fields = ["businessName"]
     filterset_fields = ["user"]
