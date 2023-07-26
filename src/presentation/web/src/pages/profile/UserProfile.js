@@ -37,6 +37,7 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 export default function BusinessProfile() {
   const { id } = useParams();
+  console.log('id : ',id)
   const { data: userdata } = BaseApi.useGetSpecificUserQuery(`api/users/${id}/`);
   const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${id}`);
   const { data: newdata } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);

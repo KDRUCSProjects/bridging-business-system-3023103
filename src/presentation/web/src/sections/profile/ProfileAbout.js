@@ -22,28 +22,28 @@ ProfileAbout.propTypes = {
   profile: PropTypes.array,
 };
 
-export default function ProfileAbout({ profile, userdata , about }) {
+export default function ProfileAbout({ profile, userdata, about }) {
   const { translate } = useLocales();
   const { quote, country, email, role, company, school: Business } = profile;
-  console.log('profile :',profile)
   return (
     <Card>
       <CardHeader title={translate('About Me')} />
       <Stack spacing={2} sx={{ p: 3 }}>
-
         <Stack direction="row">
           <IconStyle icon={'eva:pin-fill'} />
           <Typography variant="body2">
             {translate('Location')} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {profile.results[0]?.address.area + profile.results[0]?.address.street + profile.results[0]?.address.district}
+              {profile.results[0]?.address.area +
+                profile.results[0]?.address.street +
+                profile.results[0]?.address.district}
             </Link>
           </Typography>
         </Stack>
 
         <Stack direction="row">
           <IconStyle icon={'eva:email-fill'} />
-          <Typography variant="body2">{userdata.email}</Typography>
+          <Typography variant="body2">{userdata?.email}</Typography>
         </Stack>
 
         <Stack direction="row">

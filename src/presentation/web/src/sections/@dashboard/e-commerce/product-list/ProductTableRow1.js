@@ -24,10 +24,9 @@ ProductTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
 };
 
-export default function ProductTableRow({ row, index, selected, onEditRow, onSelectRow, onDeleteRow }) {
+export default function ProductTableRow({ row, index, selected }) {
   const theme = useTheme();
-  const createdAt = 123;
-  const inventoryType = 'low_stock';
+
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -40,9 +39,6 @@ export default function ProductTableRow({ row, index, selected, onEditRow, onSel
 
   return (
     <TableRow hover selected={selected}>
-      {/* <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell> */}
       <TableCell>
         <Typography variant="subtitle2" noWrap>
           {index + 1}
@@ -60,18 +56,10 @@ export default function ProductTableRow({ row, index, selected, onEditRow, onSel
         </Typography>
       </TableCell>
 
-      <TableCell>{fDate(createdAt)}</TableCell>
+      <TableCell>{fDate(row.created_at)}</TableCell>
 
       <TableCell align="center">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (inventoryType === 'out_of_stock' && 'error') || (inventoryType === 'low_stock' && 'warning') || 'success'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {inventoryType ? sentenceCase(inventoryType) : ''}
-        </Label>
+       <Typography>Table cell</Typography>
       </TableCell>
 
       <TableCell align="right">{fCurrency(row.price)}</TableCell>
