@@ -4,16 +4,16 @@ import { m } from 'framer-motion';
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Grid, Button, Container, Typography, LinearProgress } from '@mui/material';
 // lottie
-import Lottie  from 'react-lottie';
+import Lottie from 'react-lottie';
 // animtion
-import growth from '../../animations/about/company.json'
+import growth from '../../animations/about/company2.json';
 // hooks
 
 import useResponsive from '../../hooks/useResponsive';
 // utils
 import { fPercent } from '../../utils/formatNumber';
 
-import {_skills} from '../../@fake-db'
+import { _skills } from '../../@fake-db';
 // components
 import Image from '../../components/Image';
 import Iconify from '../../components/Iconify';
@@ -32,12 +32,11 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-
 export default function AboutWhat() {
   const theme = useTheme();
 
-   // lottie configration
-   const growthAnimationConfig = {
+  // lottie configration
+  const growthAnimationConfig = {
     loop: true,
     autoplay: true,
     animationData: growth,
@@ -53,19 +52,22 @@ export default function AboutWhat() {
   return (
     <RootStyle>
       <Container component={MotionViewport}>
-        <Grid container spacing={3} flexDirection={isMobile ?'column-reverse':"undefiend"}>
-          
-            <Grid item  xs={12} md={6} lg={7} sx={{ pr: { md: 7 } }}>
-                  <m.div variants={varFade().inUp}>
-                  <Lottie options={growthAnimationConfig}  width={isMobile ? '200px':'400px'}  height={isMobile ? '200px':'400px'}/>
-                  </m.div>
-            </Grid>
-       
+        <Grid container spacing={3} flexDirection={isMobile ? 'column-reverse' : 'undefiend'}>
+          <Grid item xs={12} md={6} lg={7} sx={{ pr: { md: 7 } }}>
+            <m.div variants={varFade().inUp}>
+              <Lottie
+                options={growthAnimationConfig}
+                width={isMobile ? '200px' : '400px'}
+                height={isMobile ? '200px' : '400px'}
+                isClickToPauseDisabled
+              />
+            </m.div>
+          </Grid>
 
           <Grid item xs={12} md={6} lg={5}>
             <m.div variants={varFade().inRight}>
               <Typography variant="h2" sx={{ mb: 3 }}>
-                What is Ecommerce?
+                What About Afghan-Business?
               </Typography>
             </m.div>
 
@@ -75,7 +77,9 @@ export default function AboutWhat() {
                   color: (theme) => (theme.palette.mode === 'light' ? 'text.secondary' : 'common.white'),
                 }}
               >
-            Electronic commerce (ecommerce) refers to companies and individuals that buy and sell goods and services over the Internet. Ecommerce operates in different types of market segments and can be conducted over computers, tablets, smartphones, and other smart devices. Nearly every imaginable product and service
+                Electronic commerce (ecommerce) refers to companies and individuals that buy and sell goods and services
+                over the Internet. Ecommerce operates in different types of market segments and can be conducted over
+                computers, tablets, smartphones, and other smart devices. Nearly every imaginable product and service
               </Typography>
             </m.div>
           </Grid>

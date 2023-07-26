@@ -15,7 +15,72 @@ import { MotionViewport, varFade } from '../../components/animate';
 
 import { _carouselsMembers } from '../../@fake-db';
 
+// images
+import khalidAhmad from '../../assets/team/Khalid Ahmad.jpg';
+import Safiullah from '../../assets/team/Safiullah.jpg';
+import Abdulwahab from '../../assets/team/wahab.jpeg';
+import AbdulSaboor from '../../assets/team/abdulsaboor.jpg';
+import MohammadHaroon from '../../assets/team/Haroon.jpeg';
+
 // ----------------------------------------------------------------------
+
+const Team = [
+  {
+    name: 'Abdul Wahab Adil',
+    avatar: Abdulwahab,
+    role: 'Full Stack Developer',
+    link: {
+      facebook: 'https://www.facebook.com/search/top/?q=Wahab%20Adil',
+      linkedIn: 'https://af.linkedin.com/in/wahab-adil-81b3b2256',
+      github: 'https://github.com/Wahab-Adil',
+      soloLearn: 'https://www.sololearn.com/profile/15871215',
+    },
+  },
+  {
+    name: 'Khalid Ahamd Mubariz',
+    avatar: khalidAhmad,
+    role: 'BackendEnd Developer',
+    link: {
+      facebook: 'https://www.facebook.com/khaled.mabaraze?mibextid=ZbWKwL',
+      linkedIn: 'https://www.linkedin.com/in/khalid-ahmad-mubariz-aa6514237',
+      github: 'https://github.com/KhalidMubaraze',
+      soloLearn: '',
+    },
+  },
+  {
+    name: 'Safiullah Jalalzai',
+    avatar: Safiullah,
+    role: 'BackendEnd Developer',
+    link: {
+      facebook: '',
+      linkedIn: '',
+      github: '',
+      soloLearn: '',
+    },
+  },
+  {
+    name: 'Mohammad Haroon Khoshal',
+    avatar: MohammadHaroon,
+    role: 'FrontEnd Developer',
+    link: {
+      facebook: 'https://www.facebook.com/mohammadharoon.jalal.56?mibextid=ZbWKwL',
+      linkedIn: 'https://www.linkedin.com/in/mohammad-haroon-khoshal-24b847237',
+      github: 'https://github.com/Haroon500?tab=followers',
+      soloLearn: 'https://sololearn.onelink.me/MfgO/htl0b86t',
+    },
+  },
+  {
+    name: 'Abdul Saboor Hemat',
+    avatar: AbdulSaboor,
+    role: 'FrontEnd Developer',
+    link: {
+      facebook: '',
+      linkedIn: '',
+      github: '',
+      soloLearn: '',
+    },
+  },
+];
 
 export default function AboutTeam() {
   const carouselRef = useRef(null);
@@ -82,9 +147,9 @@ export default function AboutTeam() {
       <Box sx={{ position: 'relative' }}>
         <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
           <Slider ref={carouselRef} {...settings}>
-            {_carouselsMembers.map((member) => (
+            {Team.map((member) => (
               <Box key={member.id} component={m.div} variants={varFade().in} sx={{ px: 1.5, py: 10 }}>
-                <MemberCard member={member} />
+                <MemberCard member={member} link={member.link} />
               </Box>
             ))}
           </Slider>
@@ -104,7 +169,7 @@ MemberCard.propTypes = {
   }),
 };
 
-function MemberCard({ member }) {
+function MemberCard({ member, link }) {
   const { name, role, avatar } = member;
 
   return (
@@ -117,7 +182,7 @@ function MemberCard({ member }) {
       </Typography>
       <Image alt={name} src={avatar} ratio="1/1" sx={{ borderRadius: 1.5 }} />
       <Stack alignItems="center" sx={{ mt: 2, mb: 1 }}>
-        <SocialsButton sx={{ color: 'action.active' }} />
+        <SocialsButton sx={{ color: 'action.active' }} links={link} />
       </Stack>
     </Card>
   );

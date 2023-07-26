@@ -6,6 +6,9 @@ import { Box, Grid, Link, Paper, Rating, Container, Typography } from '@mui/mate
 
 // lottie
 import Lottie from 'react-lottie';
+
+import BaseApi from '../../store/BaseApi';
+
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // utils
@@ -78,13 +81,15 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 export default function AboutTestimonials() {
   const isDesktop = useResponsive('up', 'md');
+  const { data: AllMessages, isSuccess } = BaseApi.useAllContactMessageQuery('/api/contact_us/');
 
-    // lottie configration
-    const ratingAnimationConfig = {
-      loop: true,
-      autoplay: true,
-      animationData: ratinAnimation,
-    };
+  console.log(AllMessages);
+  // lottie configration
+  const ratingAnimationConfig = {
+    loop: true,
+    autoplay: true,
+    animationData: ratinAnimation,
+  };
 
   return (
     <RootStyle>
@@ -107,26 +112,18 @@ export default function AboutTestimonials() {
               <m.div variants={varFade().inUp}>
                 <Typography variant="h2" sx={{ mb: 3, color: 'common.white' }}>
                   Who love <br />
-                  my work
+                  Our work
                 </Typography>
               </m.div>
 
               <m.div variants={varFade().inUp}>
-                <Lottie  options={ratingAnimationConfig} width={'200px'} height={'200px'}/>
-                <Typography sx={{ color: 'common.white' , marginTop:"-2em" }}>
+                <Lottie options={ratingAnimationConfig} width={'200px'} height={'200px'} />
+                <Typography sx={{ color: 'common.white', marginTop: '-2em' }}>
                   Our goal is to create a product and service that you’re satisfied with and use it every day. This is
                   why we’re constantly working on our services to make it better every day and really listen to what our
                   users has to say.
                 </Typography>
               </m.div>
-
-              {!isDesktop && (
-                <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
-                  <m.div variants={varFade().inUp}>
-                    <TestimonialLink />
-                  </m.div>
-                </Box>
-              )}
             </Box>
           </Grid>
 
@@ -138,35 +135,31 @@ export default function AboutTestimonials() {
             sx={{
               right: { md: 24 },
               position: { md: 'absolute' },
+              width: '100%',
             }}
           >
             <Grid container spacing={isDesktop ? 3 : 0} alignItems="center">
               <Grid item xs={12} md={6}>
-                {TESTIMONIALS.slice(0, 3).map((testimonial) => (
-                  <m.div key={testimonial.name} variants={varFade().inUp}>
-                    <TestimonialCard testimonial={testimonial} />
-                  </m.div>
-                ))}
+                {isSuccess &&
+                  AllMessages.slice(0, 3).map((testimonial) => (
+                    <m.div key={testimonial.name} variants={varFade().inUp}>
+                      <TestimonialCard testimonial={testimonial} />
+                    </m.div>
+                  ))}
               </Grid>
 
               <Grid item xs={12} md={6}>
-                {TESTIMONIALS.slice(3, 6).map((testimonial) => (
-                  <m.div key={testimonial.name} variants={varFade().inUp}>
-                    <TestimonialCard testimonial={testimonial} />
-                  </m.div>
-                ))}
+                {isSuccess &&
+                  AllMessages.length > 3 &&
+                  AllMessages.slice(3, 6).map((testimonial) => (
+                    <m.div key={testimonial.name} variants={varFade().inUp}>
+                      <TestimonialCard testimonial={testimonial} />
+                    </m.div>
+                  ))}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-
-        {isDesktop && (
-          <Box sx={{ bottom: 60, position: 'absolute' }}>
-            <m.div variants={varFade().inLeft}>
-              <TestimonialLink />
-            </m.div>
-          </Box>
-        )}
       </Container>
     </RootStyle>
   );
@@ -186,7 +179,7 @@ TestimonialCard.propTypes = {
 function TestimonialCard({ testimonial }) {
   const theme = useTheme();
 
-  const { name, rating, dateCreate, content } = testimonial;
+  const { name, create_at: Created, subject, message } = testimonial;
 
   return (
     <Paper
@@ -201,29 +194,17 @@ function TestimonialCard({ testimonial }) {
       }}
     >
       <Typography variant="subtitle1" gutterBottom>
-        {name}
+        Name {name}
       </Typography>
-
-      <Typography gutterBottom component="div" variant="caption" sx={{ color: 'grey.500' }}>
-        {fDate(dateCreate)}
+      <Typography variant="subtitle1" gutterBottom>
+        Subject: {subject}
       </Typography>
-
-      <Rating value={rating} readOnly size="small" />
 
       <Typography variant="body2" sx={{ mt: 1.5 }}>
-        {content}
+        Message {message}
       </Typography>
     </Paper>
   );
 }
 
 // ----------------------------------------------------------------------
-
-function TestimonialLink() {
-  return (
-    <Link href="#" variant="subtitle2" sx={{ display: 'flex', alignItems: 'center' }}>
-      Read more testimonials
-      <Iconify icon={'ic:round-arrow-right-alt'} sx={{ ml: 1, width: 20, height: 20 }} />
-    </Link>
-  );
-}
