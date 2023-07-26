@@ -162,7 +162,6 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-            {translate('size')}
             {translate('Posted')}
           </Typography>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
