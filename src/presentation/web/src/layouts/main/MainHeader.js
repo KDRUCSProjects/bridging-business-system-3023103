@@ -189,7 +189,6 @@ export default function MainHeader(props) {
               {isDesktopDown && userId && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
               {isMobile ? (
-                
                 <StyledAutoCompleteMobile
                   limitTags={11}
                   initial
@@ -207,9 +206,7 @@ export default function MainHeader(props) {
                       </li>
                     );
                   }}
-                  
                   onChange={handleSelectedOption}
-                  
                   renderInput={(params) => (
                     <SearchIconWrapperMobile>
                       <TextField
@@ -271,15 +268,6 @@ export default function MainHeader(props) {
               {/* Searching input field */}
               {isMobileUp ? (
                 <FormProvider>
-                  {/* ------------------------ */}
-                  <Autocomplete
-                    disablePortal
-                    id="list"
-                    options={top100Films}
-                    sx={{ width: 500 }}
-                    renderInput={(params) => <TextField {...params} label="Movie" />}
-                  />
-
                   {/* ----------------------------- */}
                   <StyledAutoCompleteRtl
                     limitTags={11}

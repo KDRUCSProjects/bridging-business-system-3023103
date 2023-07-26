@@ -76,7 +76,7 @@ class BusinessFavoriteProductAdmin(admin.ModelAdmin):
 
 
 class ContactUsAdmin(admin.ModelAdmin):
-    list_display = ["user", "create_at", "text"]
+    list_display = ["name","subject","email", "create_at", "message"]
 
     class Meta:
         model = ContactUs

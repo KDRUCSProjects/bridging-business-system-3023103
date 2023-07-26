@@ -117,15 +117,17 @@ class BusinessFavoriteProduct(models.Model):
 
 
 class ContactUs(models.Model):
-    text = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject=models.TextField(max_length=50,null=True)
+    name=models.TextField(max_length=50,null=True)
+    email=models.EmailField(null=True)
+    message = models.TextField(null=True)
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.name)
 
 
-class Ratting(models.Model):
+class Ratting(models.Model): 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="ratting_bussiness"
     )
