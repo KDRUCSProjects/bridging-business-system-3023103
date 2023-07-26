@@ -8,6 +8,7 @@ import { Box, Grid, Step, Stepper, Container, StepLabel, StepConnector } from '@
 // hooks
 import useIsMountedRef from '../../hooks/useIsMountedRef';
 import useSettings from '../../hooks/useSettings';
+import useResponsive from '../../hooks/useResponsive';
 
 // redux
 import { useDispatch, useSelector } from '../../store/store';
@@ -20,6 +21,7 @@ import { CheckoutOrderComplete, CheckoutNewAddressForm, CheckoutCart } from '../
 
 // components
 import Page from '../../components/Page';
+import Logo from '../../components/Logo';
 import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
@@ -75,6 +77,7 @@ function QontoStepIcon({ active, completed }) {
 }
 
 export default function Checkout() {
+  const isDesktop = useResponsive('up', 'md');
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
@@ -90,9 +93,12 @@ export default function Checkout() {
 
   return (
     <Page title="Afghan Business: Checkout">
+      <Box ml={isDesktop ? 14 : undefined} mb={isDesktop ? undefined : 4}>
+        <Logo />
+      </Box>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <Grid container justifyContent={isComplete ? 'center' : 'flex-start'}>
-          <Grid item xs={12} md={8} sx={{ mb: 5 }}>
+          <Grid item xs={12} md={8} sx={{ mt: -5, mb: 5 }}>
             <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
               {STEPS.map((label) => (
                 <Step key={label}>

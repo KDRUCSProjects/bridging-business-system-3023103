@@ -4,7 +4,7 @@ import { Box, Grid, Container, Typography } from '@mui/material';
 
 // Lottie
 import Lottie from 'react-lottie';
-import paymentAnimation from '../animations/payment/money-fall.json';
+import paymentAnimation from '../animations/profile/update/cosmos-planets.json';
 import animationSetter from '../animations/animationSetter';
 // hooks
 import useResponsive from '../hooks/useResponsive';
@@ -24,7 +24,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 const AnimationBox = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: '33%',
-  left: '50%',
+  left: '20%',
   zIndex: -1,
   transform: `translate(-${50}%,-${50}%)`,
 }));
@@ -40,7 +40,12 @@ export default function Payment() {
         <Container>
           <Box sx={{ mt: -13 }}>
             <AnimationBox>
-              <Lottie options={animationSetter(paymentAnimation)} height={'300px'} width={'100%'} />
+              <Lottie
+                options={animationSetter(paymentAnimation)}
+                height={'400px'}
+                width={'100%'}
+                isClickToPauseDisabled
+              />
             </AnimationBox>
             <Typography variant="h3" align="center" paragraph>
               Let's finish powering you up!

@@ -29,7 +29,6 @@ export const PATH_PAGE = {
   businessProfile: path(PATH_PAGE_ROOT, 'profile/:id/'),
   createProfile: path(PATH_PAGE_ROOT, 'create/profile'),
   updateProfile: path(PATH_PAGE_ROOT, 'update/profile'),
-  payment: path(PATH_PAGE_ROOT, 'payment'),
   prodcutdetails: path(PATH_PAGE_ROOT, `product/details/:id/`),
   invoicecreate: path(PATH_PAGE_ROOT, 'invoice/create'),
   addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),

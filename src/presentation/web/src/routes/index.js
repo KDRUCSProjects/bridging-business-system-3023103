@@ -73,7 +73,7 @@ export default function Router() {
         { path: PATH_PAGE.createProfile, element: <CreateProfile /> },
         { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
         { path: PATH_PAGE.updateProfile, element: <UpdateProfile /> },
-        { path: PATH_PAGE.payment, element: <PaymentPage /> },
+        // { path: PATH_PAGE.payment, element: <PaymentPage /> },
         { path: PATH_PAGE.addToCart, element: <AddToCart /> },
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
         { path: PATH_PAGE.ConfirmPassword, element: <ConfirmPassword /> },
@@ -120,9 +120,6 @@ const CreateProfile = Loadable(lazy(() => import('../pages/profile/create/Create
 
 // UpdateProfile
 const UpdateProfile = Loadable(lazy(() => import('../pages/profile/update/UpdateProfile')));
-
-// businessProfile
-const PaymentPage = Loadable(lazy(() => import('../pages/Payment')));
 
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));

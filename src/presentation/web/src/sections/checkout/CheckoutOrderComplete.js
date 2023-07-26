@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Divider, Typography, Stack } from '@mui/material';
+import Lottie from 'react-lottie';
+
 // redux
 import { useDispatch } from '../../store/store';
 import { onGotoStep } from '../../store/slices/checkout/checkout';
@@ -9,6 +11,9 @@ import { onGotoStep } from '../../store/slices/checkout/checkout';
 // components
 import Iconify from '../../components/Iconify';
 import { DialogAnimate } from '../../components/animate';
+import animationSetter from '../../animations/animationSetter';
+import ThanYouAnimation from '../../animations/payment/voyage.json';
+import useResponsive from '../../hooks/useResponsive';
 // assets
 
 // ----------------------------------------------------------------------
@@ -27,6 +32,7 @@ const DialogStyle = styled(DialogAnimate)(({ theme }) => ({
 
 export default function CheckoutOrderComplete() {
   const navigate = useNavigate();
+  const isSmall = useResponsive('down', 'sm');
 
   const dispatch = useDispatch();
 
@@ -40,18 +46,19 @@ export default function CheckoutOrderComplete() {
 
   return (
     <DialogStyle fullScreen open>
-      <Box sx={{ p: 4, maxWidth: 480, margin: 'auto' }}>
+      <Lottie
+        options={animationSetter(ThanYouAnimation)}
+        width={isSmall ? '100%' : '400px'}
+        height={isSmall ? '100%' : '400px'}
+      />
+      <Box sx={{ p: 4, maxWidth: 580, margin: 'auto' }}>
         <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h4" paragraph>
+          <Typography variant="h3" paragraph>
             Thank you for your purchase!
           </Typography>
-          nEXT Level
-          <Typography align="left" paragraph>
-            Thanks for placing order &nbsp;
-            <Link href="#">01dc1370-3df6-11eb-b378-0242ac130002</Link>
-          </Typography>
+          Our app is complete purchase system In Afghanistan
           <Typography align="left" sx={{ color: 'text.secondary' }}>
-            We will send you a notification within 5 days when it ships.
+            Your Trust , Make as More Motivate To Made This More Good
             <br /> <br /> If you have any question or queries then fell to get in contact us. <br /> <br /> All the
             best,
           </Typography>
