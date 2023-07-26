@@ -136,6 +136,7 @@ class Ratting(models.Model):
 
 
 class Order(models.Model):
+    is_visited = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.ForeignKey(
         Address, on_delete=models.CASCADE, related_name="address"
