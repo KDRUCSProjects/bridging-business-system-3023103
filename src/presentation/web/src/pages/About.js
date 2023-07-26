@@ -3,9 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Divider } from '@mui/material';
 // components
 import Page from '../components/Page';
-import { AboutHero, AboutWhat, AboutTeam, AboutVision, AboutTestimonials } from '../sections/about';
-
-
+import { AboutHero, AboutWhat, AboutTeam, AboutTestimonials } from '../sections/about';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(8),
@@ -23,8 +21,6 @@ export default function About() {
         <AboutHero />
 
         <AboutWhat />
-
-        <AboutVision />
 
         <Divider orientation="vertical" sx={{ my: 10, mx: 'auto', width: 2, height: 40 }} />
 

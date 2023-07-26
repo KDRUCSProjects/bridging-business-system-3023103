@@ -36,10 +36,6 @@ export default function Router() {
           element: <UserRegister />,
         },
         {
-          path: PATH_AUTH.resetPassword,
-          element: <ResetPassword />,
-        },
-        {
           path: PATH_AUTH.adproduct,
           element: <AddProduct />,
         },
@@ -73,11 +69,9 @@ export default function Router() {
         { path: PATH_PAGE.createProfile, element: <CreateProfile /> },
         { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
         { path: PATH_PAGE.updateProfile, element: <UpdateProfile /> },
-        { path: PATH_PAGE.payment, element: <PaymentPage /> },
+        // { path: PATH_PAGE.payment, element: <PaymentPage /> },
         { path: PATH_PAGE.addToCart, element: <AddToCart /> },
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },
-        { path: PATH_PAGE.ConfirmPassword, element: <ConfirmPassword /> },
-        { path: PATH_PAGE.NewPassword, element: <NewPassword /> },
 
         { path: PATH_PAGE.UserProfile, element: <UserProfile /> },
         { path: PATH_PAGE.SearchedProducts, element: <SearchedProducts /> },
@@ -121,9 +115,6 @@ const CreateProfile = Loadable(lazy(() => import('../pages/profile/create/Create
 // UpdateProfile
 const UpdateProfile = Loadable(lazy(() => import('../pages/profile/update/UpdateProfile')));
 
-// businessProfile
-const PaymentPage = Loadable(lazy(() => import('../pages/Payment')));
-
 // adProduct page
 const AddProduct = Loadable(lazy(() => import('../pages/product/AdProduct')));
 
@@ -138,12 +129,6 @@ const AddToCart = Loadable(lazy(() => import('../pages/Cart/ProductList')));
 
 // Not Found page
 const NotFoundPage = Loadable(lazy(() => import('../pages/Page404')));
-
-// confirm passowrd
-const ConfirmPassword = Loadable(lazy(() => import('../pages/auth/ConfirmPassword')));
-
-// new passowrd
-const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
 
 // complete Register
 const RegisterComplete = Loadable(lazy(() => import('../pages/auth/CompleteAuth')));

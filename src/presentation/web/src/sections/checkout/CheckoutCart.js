@@ -94,7 +94,7 @@ export default function CheckoutCart(activeStep) {
           size="large"
           type="submit"
           variant="contained"
-          disabled={cart.length === 0}
+          // disabled={cart.length === 0}
           onClick={handleNextStep}
         >
           {translate('Check Out')}

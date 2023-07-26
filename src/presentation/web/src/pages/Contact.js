@@ -29,10 +29,6 @@ export default function Contact() {
             <Grid item xs={12} md={6}>
               <ContactForm />
             </Grid>
-
-            <Grid item xs={12} md={6}>
-              <ContactMap contacts={_mapContact} />
-            </Grid>
           </Grid>
         </Container>
       </RootStyle>

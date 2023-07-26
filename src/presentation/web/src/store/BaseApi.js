@@ -40,9 +40,15 @@ const BaseApi = createApi({
     // Rating Mutation
     CreateRating: builder.mutation(allServices.mutations.CreateRating),
 
+    // Rating Mutation
+    CreateContactMessage: builder.mutation(allServices.mutations.CreateContactMessage),
+
     // -----------------------------Queries-------------------------------
     // profile
     GetBusinessProfile: builder.query(allServices.queries.GetProfile),
+
+    // contact
+    AllContactMessage: builder.query(allServices.queries.AllContactMessage),
 
     // Product
     GetAllProducts: builder.query(allServices.queries.GetAllProducts),

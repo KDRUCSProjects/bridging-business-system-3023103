@@ -15,6 +15,9 @@ import BaseApi from '../../../store/BaseApi';
 // animation
 import animationSetter from '../../../animations/animationSetter';
 import animation from '../../../animations/shared/hms-loading.json';
+import LoadingAnimation from '../../../animations/auth/completeAuth/loading.json';
+import ErrorAnimation from '../../../animations/auth/completeAuth/error.json';
+import SuccessFulAnimation from '../../../animations/auth/completeAuth/successful.json';
 
 // components
 import Iconify from '../../../components/Iconify';
@@ -82,9 +85,9 @@ export default function LoginForm() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.error.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+          animation: <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" />,
           message: 'Wrong Credientials',
           animationPosition: { marginLeft: '-4em' },
         });
@@ -97,9 +100,9 @@ export default function LoginForm() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+          animation: <Lottie options={animationSetter(SuccessFulAnimation)} width="12em" height="4em" />,
           message: 'Logged In Successfull !',
           animationPosition: { marginLeft: '-4em' },
         });
@@ -159,13 +162,17 @@ export default function LoginForm() {
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <Link component={RouterLink} variant="subtitle2" to={'reset-password'}>
+        <Link component={RouterLink} variant="subtitle2" to={'/user/complete-forgotpassword'}>
           {translate('Forgot password?')}
         </Link>
       </Stack>
 
       <Button type="submit" fullWidth size="large" variant="contained" loading={'LOADING'}>
-        {translate('Login')}
+        {LoginUserResponse.isLoading ? (
+          <Lottie options={animationSetter(LoadingAnimation)} width={'150px'} height={'150px'} />
+        ) : (
+          translate('Login')
+        )}
       </Button>
     </form>
   );

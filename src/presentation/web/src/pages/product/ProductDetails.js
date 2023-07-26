@@ -4,8 +4,6 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box, Tab, Card, Grid, Divider, Container, Typography } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-
-
 import { useParams } from 'react-router';
 import useLocales from '../../hooks/useLocales';
 
@@ -34,41 +32,37 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ProductDetails() {
-  
   const { id } = useParams();
-  const { isSuccess,data , isError ,isLoading } = BaseApi.useGetSpecificProductQuery(`api/product/${id}`);
+  const { isSuccess, data, isError, isLoading } = BaseApi.useGetSpecificProductQuery(`api/product/${id}`);
 
- const {translate} =useLocales();
-  const cart = [
-    "one"
-  ]
+  const { translate } = useLocales();
+  const cart = ['one'];
 
   const [value, setValue] = useState('1');
 
-  return (
-    (isSuccess?
+  return isSuccess ? (
     <Page title="Product Details">
-      <Container sx={{marginTop:"6em"}}>
-       <Typography variant={'h3'} gutterBottom > {translate('product details')} </Typography>
+      <Container sx={{ marginTop: '6em' }}>
+        <Typography variant={'h3'} gutterBottom>
+          {' '}
+          {translate('product details')}{' '}
+        </Typography>
         {data && (
           <>
             <Card>
-              <Grid container sx={{marginBottom:"3em"}}>
+              <Grid container sx={{ marginBottom: '3em' }}>
                 <Grid item xs={12} md={6} lg={7}>
                   <ProductDetailsCarousel product={data} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={5}>
-                  <ProductDetailsSummary
-                    product={data}
-                    cart={cart}
-                  />
+                  <ProductDetailsSummary product={data} cart={cart} />
                 </Grid>
               </Grid>
             </Card>
-            <Box sx={{marginTop:"2rem" , marginBottom:"2rem"}}>
+            <Box sx={{ marginTop: '2rem', marginBottom: '2rem' }}>
               <Card>
                 <TabContext value={value}>
-                  <Box sx={{ px: 3, bgcolor: 'background.neutral'}}>
+                  <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                     <TabList onChange={(e, value) => setValue(value)}>
                       <Tab disableRipple value="1" label={translate('discription')} />
                     </TabList>
@@ -76,7 +70,7 @@ export default function ProductDetails() {
                   <Divider />
                   <TabPanel value="1">
                     <Box sx={{ p: 3 }}>
-                      <Typography>{data.description}</Typography>
+                      <div dangerouslySetInnerHTML={{ __html: data.description }} />
                     </Box>
                   </TabPanel>
                 </TabContext>
@@ -85,6 +79,8 @@ export default function ProductDetails() {
           </>
         )}
       </Container>
-    </Page>:"No Data Found")
+    </Page>
+  ) : (
+    'No Data Found'
   );
 }

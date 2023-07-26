@@ -15,11 +15,14 @@ import { useFormik } from 'formik';
 
 // animation
 import animationSetter from '../../../animations/animationSetter';
-import animation from '../../../animations/shared/hms-loading.json';
+import SuccessAnimation from '../../../animations/auth/completeAuth/successful.json';
+import LoadingAnimation from '../../../animations/auth/login/loginLoading.json';
+import ErrorAnimation from '../../../animations/auth/completeAuth/error.json';
 
 // components
 import Iconify from '../../../components/Iconify';
 import Snack from '../../../components/Snack';
+import useResponsive from '../../../hooks/useResponsive';
 import { FormProvider } from '../../../components/hook-form';
 import { MotionContainer, varBounce } from '../../../components/animate';
 // store
@@ -44,11 +47,11 @@ const RegisterSchema = yup.object().shape({
 });
 
 export default function RegisterForm() {
-  
   const dispatch = useDispatch();
   const handleNextStep = () => {
     dispatch(onNextStep());
   };
+  const isMobile = useResponsive('down', 'sm');
 
   const theme = useTheme();
   const [RegisterUser, response] = BaseApi.useRegisterUserMutation();
@@ -67,7 +70,7 @@ export default function RegisterForm() {
   const handleSnackClose = () => {
     setSnackOptions({ ...snackOptions, open: false });
   };
-  const registerobj='Register';
+  const registerobj = 'Register';
   const { translate } = useLocales();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -101,10 +104,10 @@ export default function RegisterForm() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.error.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: 'Check Inbox',
+          animation: <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" />,
+          message: 'Something Went Wrong',
           animationPosition: { marginLeft: '-4em' },
         });
       } else if (res.data) {
@@ -116,9 +119,9 @@ export default function RegisterForm() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+          animation: <Lottie options={animationSetter(SuccessAnimation)} width="12em" height="4em" />,
           message: res.data.description,
           animationPosition: { marginLeft: '-4em' },
         });
@@ -132,8 +135,8 @@ export default function RegisterForm() {
   return (
     <Container component={MotionContainer}>
       {userAllErrors &&
-        Object.keys(userAllErrors).map((error) => (
-          <Typography textAlign="center" color={theme.palette.error.main} variant="subtitle2">
+        Object.keys(userAllErrors).map((error, key) => (
+          <Typography key={key + error} textAlign="center" color={theme.palette.error.main} variant="subtitle2">
             {userAllErrors[error]}
           </Typography>
         ))}
@@ -157,41 +160,43 @@ export default function RegisterForm() {
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <m.div variants={varBounce().inRight}>
                 <TextField
+                  fullWidth={isMobile}
                   value={values.username}
                   name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder={translate("UserName")}
+                  placeholder={translate('UserName')}
                   error={formError.username && touched.username}
                   helperText={formError.username}
-                  label={translate("UserName")}
+                  label={translate('UserName')}
                 />
               </m.div>
               <m.div variants={varBounce().inLeft}>
                 <TextField
+                  fullWidth={isMobile}
                   value={values.first_name}
                   name="first_name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder={translate("First Name")}
+                  placeholder={translate('First Name')}
                   error={formError.first_name && touched.first_name}
                   helperText={formError.first_name}
-                  label={translate("First Name")}
+                  label={translate('First Name')}
                 />
               </m.div>
             </Stack>
             <m.div variants={varBounce().inRight}>
               <TextField
                 fullWidth
-                  value={values.last_name}
-                  name="last_name"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  placeholder={translate("last Name")}
-                  error={formError.last_name && touched.last_name}
-                  helperText={formError.last_name}
-                  label={translate("last Name")}
-                />
+                value={values.last_name}
+                name="last_name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder={translate('last Name')}
+                error={formError.last_name && touched.last_name}
+                helperText={formError.last_name}
+                label={translate('last Name')}
+              />
               <m.div
                 value={values.last_name}
                 name="last_name"
@@ -209,11 +214,11 @@ export default function RegisterForm() {
                 value={values.email}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder={translate("Email Address")}
+                placeholder={translate('Email Address')}
                 error={formError.email && touched.email}
                 helperText={formError.email}
                 name="email"
-                label={translate("Email Address")}
+                label={translate('Email Address')}
               />
             </m.div>
             <m.div variants={varBounce().inUp}>
@@ -222,11 +227,11 @@ export default function RegisterForm() {
                 value={values.password}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder={translate("password")}
+                placeholder={translate('password')}
                 error={formError.password && touched.password}
                 helperText={formError.password}
                 name="password"
-                label={translate("Password")}
+                label={translate('Password')}
                 type={showPassword ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
@@ -241,9 +246,8 @@ export default function RegisterForm() {
             </m.div>
             <m.div variants={varBounce().inDowm}>
               <LoadingButton fullWidth size="large" type="submit" variant="contained">
-                {response.isLoading ? <Lottie options={animationSetter(animation)} width="15em" height="10em" /> : registerobj}
                 {response.isLoading ? (
-                  <Lottie options={animationSetter(animation)} width="15em" height="10em" />
+                  <Lottie options={animationSetter(LoadingAnimation)} width="10em" height="10em" />
                 ) : (
                   'Register'
                 )}

@@ -89,7 +89,7 @@ export default function CompleteForgotPassword() {
   const { Authsteps } = useSelector((store) => store.completeAuth);
   const { activeStep } = Authsteps;
   const isComplete = 3;
-  const {translate}=useLocales();
+  const { translate } = useLocales();
 
   return (
     <Page title="Afghan Business:ForgotPassword">

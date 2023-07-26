@@ -1,4 +1,3 @@
-
 import { m } from 'framer-motion';
 // @mui
 import { styled } from '@mui/material/styles';
@@ -7,7 +6,7 @@ import Lottie from 'react-lottie';
 //
 import { TextAnimate, MotionContainer, varFade } from '../../components/animate';
 
-import contactUsAnimation from '../../animations/contact/contactUS.json' 
+import contactUsAnimation from '../../animations/contact/contactUs2.json';
 // hooks
 import useLocales from '../../hooks/useLocales';
 
@@ -22,7 +21,7 @@ const CONTACTS = [
 ];
 
 const RootStyle = styled('div')(({ theme }) => ({
-  marginTop:"10em",
+  marginTop: '10em',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   padding: theme.spacing(10, 0),
@@ -33,9 +32,9 @@ const RootStyle = styled('div')(({ theme }) => ({
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
-  display:"flex",
-  flexDirection:"row",
-  justifyContent:"space-between",
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
   textAlign: 'center',
   [theme.breakpoints.up('md')]: {
     textAlign: 'left',
@@ -47,38 +46,45 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ContactHero() {
-
   const { translate } = useLocales();
-   // lottie configration
-   const contactUsAnimationConfig = {
+  // lottie configration
+  const contactUsAnimationConfig = {
     loop: true,
     autoplay: true,
     animationData: contactUsAnimation,
   };
   return (
     <RootStyle>
-       
       <Container component={MotionContainer} sx={{ position: 'relative', height: '100%' }}>
         <ContentStyle>
           <Grid item lg={6}>
-          <TextAnimate text={translate("Where")} sx={{ color: 'primary.main'}} variants={varFade().inRight} />
-          <br />
-          <Box  sx={{ display: 'inline-flex', color: 'common.white' }}>
-            <TextAnimate text={translate("to")} sx={{ mr: 2 }} />
-            <TextAnimate text={translate("find")} sx={{ mr: 2 }} />
-            <TextAnimate text={translate("us?")} sx={{marginBottom:"2em"}} />
-          </Box>
+            <Typography variant="h2" sx={{ color: 'primary.main' }} variants={varFade().inRight}>
+              {translate('Where')}
+            </Typography>
+            <br />
+            <Box sx={{ display: 'inline-flex', color: 'common.white' }}>
+              <Typography variant="h2" sx={{ mr: 2 }}>
+                {translate('to')}
+              </Typography>
+              <Typography variant="h2" sx={{ mr: 2 }}>
+                {' '}
+                {translate('find')}
+              </Typography>
+              <Typography variant="h2" sx={{ marginBottom: '2em' }}>
+                {translate('us?')}
+              </Typography>
+            </Box>
 
-          {CONTACTS.map((contact) => (
+            {CONTACTS.map((contact) => (
               <Grid key={contact.country} item xs={12} sm={6} md={3} lg={2} sx={{ pr: { md: 5 } }}>
                 <m.div variants={varFade().in}>
                   <Typography variant="h4" paragraph>
-                  {translate('country')}
+                    {translate('country')}
                   </Typography>
                 </m.div>
                 <m.div variants={varFade().inRight}>
                   <Typography variant="h6">
-                  {translate('address')}
+                    {translate('address')}
                     <br /> {translate('phoneNumber')}
                   </Typography>
                 </m.div>
@@ -86,10 +92,8 @@ export default function ContactHero() {
             ))}
           </Grid>
 
-
           <Grid item lg={6} container spacing={5} sx={{ mt: 5, color: 'common.white' }}>
-           
-            <Lottie options={contactUsAnimationConfig}  width={'800px'} />
+            <Lottie options={contactUsAnimationConfig} width={'600px'} isClickToPauseDisabled />
           </Grid>
         </ContentStyle>
       </Container>

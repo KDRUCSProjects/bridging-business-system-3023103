@@ -22,6 +22,9 @@ import userAnimation from '../../../animations/profile/116915-waves.json';
 import arrow from '../../../animations/new/congruglationyellow.json';
 import animation from '../../../animations/shared/arrow-right.json';
 import animationSetter from '../../../animations/animationSetter';
+import LoadingAnimation from '../../../animations/auth/completeAuth/loading.json';
+import SuccessAnimation from '../../../animations/auth/completeAuth/successful.json';
+import ErrorAnimation from '../../../animations/auth/completeAuth/error.json';
 
 import { onCompleteReset } from '../../../store/slices/auth/completeAuth';
 
@@ -128,9 +131,11 @@ export default function ProfileForm() {
         open: true,
         vertical: 'top',
         horizontal: 'center',
-        backgroundColor: theme.palette.error.main,
+        backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        animation: isLgDown ? undefined : <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+        animation: isLgDown ? undefined : (
+          <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" />
+        ),
         message: res.error.data?.user ? res.error.data?.user : 'Something went wrong !',
         animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
@@ -140,9 +145,11 @@ export default function ProfileForm() {
         open: true,
         vertical: 'top',
         horizontal: 'center',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        animation: isLgDown ? undefined : <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+        animation: isLgDown ? undefined : (
+          <Lottie options={animationSetter(SuccessAnimation)} width="12em" height="4em" />
+        ),
         message: 'Welcome !',
         animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
@@ -152,7 +159,6 @@ export default function ProfileForm() {
       }, 2000);
     }
   };
-  console.log('Response', response);
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -226,7 +232,7 @@ export default function ProfileForm() {
               <RHFTextField name="business_type" label={translate('Business Type')} />
             </Box>
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+              <LoadingButton type="submit" variant="contained" loading={response.isLoading}>
                 {translate('create user')}
               </LoadingButton>
             </Stack>
