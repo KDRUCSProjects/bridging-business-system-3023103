@@ -30,11 +30,7 @@ export const PATH_PAGE = {
   createProfile: path(PATH_PAGE_ROOT, 'create/profile'),
   updateProfile: path(PATH_PAGE_ROOT, 'update/profile'),
   prodcutdetails: path(PATH_PAGE_ROOT, `product/details/:id/`),
-  invoicecreate: path(PATH_PAGE_ROOT, 'invoice/create'),
   addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),
-  ConfirmPassword: path(PATH_PAGE_ROOT, 'confirm/password'),
-  NewPassword: path(PATH_PAGE_ROOT, 'new/password'),
-
   UserProfile: path(PATH_PAGE_ROOT, 'userprofile/:id'),
   SearchedProducts: path(PATH_PAGE_ROOT, 'searched/products'),
   Users: path(PATH_PAGE_ROOT, 'users'),

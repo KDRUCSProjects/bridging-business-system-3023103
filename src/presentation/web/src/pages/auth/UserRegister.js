@@ -1,12 +1,13 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useState } from 'react';
 
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography } from '@mui/material';
+import { Box, Card, Link, Container, Typography, Checkbox } from '@mui/material';
 // /lottie
 import Lottie from 'react-lottie';
 import useResponsive from '../../hooks/useResponsive';
-import register from '../../animations/auth/userRegister/feather-writing.json';
+import register from '../../animations/auth/login/glassAnimation.json';
 import animationSetter from '../../animations/animationSetter';
 import UserRegisterForm from '../../sections/auth/userRegister/RegisterForm';
 
@@ -65,26 +66,27 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Register() {
   const { translate } = useLocales();
   const smUp = useResponsive('up', 'sm');
+  const smDown = useResponsive('down', 'md');
 
   const mdUp = useResponsive('up', 'md');
+  const [checkBoxBValue, setCheckBoxValue] = useState(true);
+  console.log(checkBoxBValue);
 
   return (
     <Page title="Register">
       <RootStyle>
         <HeaderStyle>
-          {smUp && (
-            <Typography variant="body2" sx={{ mt: { md: 13 } }}>
-              {translate('Already have an account?')} {''}
-              <Link variant="subtitle2" component={RouterLink} to={'/user/login'}>
-                {translate('login')}
-              </Link>
-            </Typography>
-          )}
+          <Typography variant="body2" sx={{ mt: smDown ? 10 : 13, textAlign: smDown ? 'center' : undefined }}>
+            {translate('Already have an account?')} {''}
+            <Link variant="subtitle2" component={RouterLink} to={'/user/login'}>
+              {translate('login')}
+            </Link>
+          </Typography>
         </HeaderStyle>
 
         {mdUp && (
           <SectionStyle>
-            <Lottie options={animationSetter(register)} width={'100%'} height={'100%'} />
+            <Lottie options={animationSetter(register)} direction={-1} width={'100%'} height={'100%'} />
           </SectionStyle>
         )}
 
@@ -99,7 +101,8 @@ export default function Register() {
             </Box>
             <UserRegisterForm />
 
-            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            {/* <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+              <Checkbox value={checkBoxBValue} onClick={(e) => setCheckBoxValue(!checkBoxBValue)} />
               {translate('By registering, I agree to Afghan Business')}&nbsp;
               <Link underline="always" color="primary" href="#">
                 {translate('Terms of Service')}
@@ -111,7 +114,7 @@ export default function Register() {
                 {translate('Privacy Policy')}
               </Link>
               .
-            </Typography>
+            </Typography> */}
 
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>

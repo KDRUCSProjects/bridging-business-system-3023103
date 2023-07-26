@@ -12,7 +12,9 @@ import { FormProvider } from '../../components/hook-form';
 import useLocales from '../../hooks/useLocales';
 import confirmpasswordanimation from '../../animations/auth/code1.json';
 import animationSetter from '../../animations/animationSetter';
-import animation from '../../animations/shared/arrow-left.json';
+import ErrorAnimation from '../../animations/auth/completeAuth/error.json';
+import SuccessFulAnimation from '../../animations/auth/completeAuth/successful.json';
+import LoadingAnimation from '../../animations/auth/completeAuth/loading.json';
 
 // redux
 import { useDispatch, useSelector } from '../../store/store';
@@ -105,10 +107,10 @@ export default function ConfirmPassowrd() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.error.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: res.error.data,
+          animation: <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" />,
+          message: 'something Went Wrong !',
           animationPosition: { marginLeft: '-4em' },
         });
       } else if (res.data) {
@@ -117,10 +119,10 @@ export default function ConfirmPassowrd() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: res.data,
+          animation: <Lottie options={animationSetter(SuccessFulAnimation)} width="12em" height="4em" />,
+          message: 'Password Changed !',
           animationPosition: { marginLeft: '-4em' },
         });
         setTimeout(() => {
@@ -129,7 +131,6 @@ export default function ConfirmPassowrd() {
       }
     },
   });
-  console.log(values.password);
 
   return (
     <Page title="Confirm Password">
@@ -163,10 +164,10 @@ export default function ConfirmPassowrd() {
                 name="password"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder={translate(" New Password")}
+                placeholder={translate(' New Password')}
                 error={formError.password && touched.password}
                 helperText={formError.password ? formError.password : undefined}
-                label={translate("New Password")}
+                label={translate('New Password')}
                 sx={{ marginBottom: '1em' }}
               />
               <TextField
@@ -174,13 +175,17 @@ export default function ConfirmPassowrd() {
                 name="confirmPassowrd"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder={translate("Confirm Passowrd")}
+                placeholder={translate('Confirm Passowrd')}
                 error={formError.confirmPassowrd && touched.confirmPassowrd}
                 helperText={formError.confirmPassowrd ? formError.confirmPassowrd : undefined}
-                label={translate("Confirm Password")}
+                label={translate('Confirm Password')}
               />
               <Button sx={{ marginTop: 1, marginBottom: 1 }} type="submit" fullWidth size="large" variant="contained">
-                {translate('Confirm')}
+                {newPasswordResponse.isLoading ? (
+                  <Lottie options={animationSetter(LoadingAnimation)} width={'150px'} height={'150px'} />
+                ) : (
+                  translate('Confirm')
+                )}
               </Button>
             </Stack>
           </FormProvider>

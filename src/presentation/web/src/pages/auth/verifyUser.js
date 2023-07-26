@@ -18,6 +18,9 @@ import useLocales from '../../hooks/useLocales';
 import newpassword from '../../animations/new/buble.json';
 import animationSetter from '../../animations/animationSetter';
 import animation from '../../animations/shared/arrow-left.json';
+import LoadingAnimation from '../../animations/auth/completeAuth/loading.json';
+import SuccessAnimation from '../../animations/auth/completeAuth/successful.json';
+import ErrorAnimation from '../../animations/auth/completeAuth/error.json';
 // components
 import Page from '../../components/Page';
 import BaseApi from '../../store/BaseApi';
@@ -103,23 +106,22 @@ export default function VerifyUser() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.error.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: res.error.data,
+          animation: <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" />,
+          message: 'Invalid or Expired OTP',
           animationPosition: { marginLeft: '-4em' },
         });
       } else if (res.data) {
         localStorage.setItem('Token', res.data.token);
-        console.log(res.data);
         setSnackOptions({
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
-          message: 'successful !',
+          animation: <Lottie options={animationSetter(SuccessAnimation)} width="12em" height="4em" />,
+          message: 'Successful !',
           animationPosition: { marginLeft: '-4em' },
         });
         setTimeout(() => {
@@ -128,7 +130,6 @@ export default function VerifyUser() {
       }
     },
   });
-  console.log(localStorage.getItem('userEmail'));
 
   const sendOtpAgain = async () => {
     const email = localStorage.getItem('userEmail');
@@ -142,10 +143,10 @@ export default function VerifyUser() {
         open: true,
         vertical: 'top',
         horizontal: 'center',
-        backgroundColor: theme.palette.error.main,
+        backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
-        message: res.error.data,
+        animation: !smDown ? <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" /> : undefined,
+        message: 'OOps Something Went Wrong !',
         animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
       });
     } else if (res.data) {
@@ -153,10 +154,12 @@ export default function VerifyUser() {
         open: true,
         vertical: 'top',
         horizontal: 'center',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
-        message: res.data,
+        animation: !smDown ? (
+          <Lottie options={animationSetter(SuccessAnimation)} width="12em" height="4em" />
+        ) : undefined,
+        message: 'Please Check Inbox',
         animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
       });
     }
@@ -197,11 +200,19 @@ export default function VerifyUser() {
                 label={translate('OTP')}
               />
               <Button sx={{ marginTop: 1, marginBottom: 1 }} type="submit" fullWidth size="large" variant="contained">
-                {isLoading ? <Lottie options={animationSetter(animation)} /> : ' Confirm'}
+                {isLoading ? (
+                  <Lottie options={animationSetter(animation)} width={'250px'} height={'250px'} />
+                ) : (
+                  ' Confirm'
+                )}
               </Button>
             </Stack>
             <Button fullWidth size="large" onClick={sendOtpAgain}>
-              {translate('Resend code')}
+              {OTPagainResponse.isLoading ? (
+                <Lottie options={animationSetter(LoadingAnimation)} width={'250px'} height={'250px'} />
+              ) : (
+                'Resend code'
+              )}
             </Button>
           </FormProvider>
         </ContentStyle>

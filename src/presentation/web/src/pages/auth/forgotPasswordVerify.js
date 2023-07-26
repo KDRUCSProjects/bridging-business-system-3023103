@@ -16,7 +16,9 @@ import useResponsive from '../../hooks/useResponsive';
 import useLocales from '../../hooks/useLocales';
 import newpassword from '../../animations/new/buble.json';
 import animationSetter from '../../animations/animationSetter';
-import animation from '../../animations/shared/arrow-left.json';
+import loadingAnimation from '../../animations/auth/completeAuth/loading.json';
+import SuccessAnimation from '../../animations/auth/completeAuth/successful.json';
+import ErrorAnimation from '../../animations/auth/completeAuth/error.json';
 // components
 import Page from '../../components/Page';
 import BaseApi from '../../store/BaseApi';
@@ -102,9 +104,9 @@ export default function ForgotPasswordVerify() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.error.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+          animation: <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" />,
           message: 'Something Went Wrong !',
           animationPosition: { marginLeft: '-4em' },
         });
@@ -113,9 +115,9 @@ export default function ForgotPasswordVerify() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
-          animation: <Lottie options={animationSetter(animation)} width="12em" height="4em" />,
+          animation: <Lottie options={animationSetter(SuccessAnimation)} width="12em" height="4em" />,
           message: res.data,
           animationPosition: { marginLeft: '-4em' },
         });
@@ -138,10 +140,10 @@ export default function ForgotPasswordVerify() {
         open: true,
         vertical: 'top',
         horizontal: 'center',
-        backgroundColor: theme.palette.error.main,
+        backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
-        message: res.error.data,
+        animation: !smDown ? <Lottie options={animationSetter(ErrorAnimation)} width="12em" height="4em" /> : undefined,
+        message: 'something Went Wrong !',
         animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
       });
     } else if (res.data) {
@@ -149,10 +151,12 @@ export default function ForgotPasswordVerify() {
         open: true,
         vertical: 'top',
         horizontal: 'center',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
-        message: res.data,
+        animation: !smDown ? (
+          <Lottie options={animationSetter(SuccessAnimation)} width="12em" height="4em" />
+        ) : undefined,
+        message: 'Check Inbox',
         animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
       });
     }
@@ -187,16 +191,24 @@ export default function ForgotPasswordVerify() {
                 name="otp"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder={translate("OTP")}
+                placeholder={translate('OTP')}
                 error={formError.otp && touched.otp}
                 helperText={formError.otp ? formError.otp : undefined}
-                label={translate("OTP")}
+                label={translate('OTP')}
               />
               <Button sx={{ marginTop: 1, marginBottom: 1 }} type="submit" fullWidth size="large" variant="contained">
-                {isLoading ? <Lottie options={animationSetter(animation)} /> : ' Confirm'}
+                {isLoading ? (
+                  <Lottie options={animationSetter(loadingAnimation)} width={'150px'} height={'150px'} />
+                ) : (
+                  translate('Confirm')
+                )}
               </Button>
               <Button fullWidth size="large" onClick={sendOtpAgain}>
-                {translate('Resend code')}
+                {OTPagainResponse.isLoading ? (
+                  <Lottie options={animationSetter(loadingAnimation)} width={'150px'} height={'150px'} />
+                ) : (
+                  translate('Resend code')
+                )}
               </Button>
             </Stack>
           </FormProvider>

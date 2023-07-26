@@ -19,7 +19,10 @@ import Lottie from 'react-lottie';
 import { FormProvider } from '../../components/hook-form';
 import { MotionContainer, varBounce } from '../../components/animate';
 import useResponsive from '../../hooks/useResponsive';
-import register from '../../animations/auth/userRegister/feather-writing.json';
+import register from '../../animations/auth/completeAuth/email1.json';
+import Email from '../../animations/auth/completeAuth/email3.json';
+import EmailError from '../../animations/auth/completeAuth/error.json';
+import EmailSuccess from '../../animations/auth/completeAuth/email2.json';
 // animation
 import animationSetter from '../../animations/animationSetter';
 import animation from '../../animations/shared/hms-loading.json';
@@ -71,6 +74,7 @@ const SectionStyle = styled(Card)(({ theme }) => ({
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 480,
   margin: 'auto',
+  marginTop: '-3em',
   minHeight: '100vh',
   display: 'flex',
   justifyContent: 'center',
@@ -144,9 +148,9 @@ export default function Register() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.error.main,
-          color: theme.palette.text.primary,
-          animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.error.main,
+          animation: !smDown ? <Lottie options={animationSetter(EmailError)} width="12em" height="4em" /> : undefined,
           message: Object.values(res.error.data),
           animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
         });
@@ -156,9 +160,9 @@ export default function Register() {
           open: true,
           vertical: 'top',
           horizontal: 'center',
-          backgroundColor: theme.palette.primary.main,
-          color: theme.palette.text.primary,
-          animation: !smDown ? <Lottie options={animationSetter(animation)} width="12em" height="4em" /> : undefined,
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.success.main,
+          animation: !smDown ? <Lottie options={animationSetter(EmailSuccess)} width="12em" height="4em" /> : undefined,
           message: res.data,
           animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
         });
@@ -212,6 +216,7 @@ export default function Register() {
             </Typography>
           )}
           <ContentStyle>
+            <Lottie options={animationSetter(Email)} width={'250px'} height={'250px'} />
             <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h4" textAlign="center">
@@ -240,11 +245,11 @@ export default function Register() {
                           value={values.email}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          placeholder={translate("Email Address")}
+                          placeholder={translate('Email Address')}
                           error={formError.email && touched.email}
                           helperText={formError.email}
                           name="email"
-                          label={translate("Email Address")}
+                          label={translate('Email Address')}
                         />
                       </m.div>
 
@@ -267,11 +272,11 @@ export default function Register() {
                           value={values.email}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          placeholder={translate("Email Address")}
+                          placeholder={translate('Email Address')}
                           error={formError.email && touched.email}
                           helperText={formError.email}
                           name="email"
-                          label={translate("Email Address")}
+                          label={translate('Email Address')}
                         />
                       </m.div>
                       <m.div variants={varBounce().inDown}>

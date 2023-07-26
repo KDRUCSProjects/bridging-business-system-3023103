@@ -9,6 +9,7 @@ import Lottie from 'react-lottie';
 // animation
 import birdFlying from '../../animations/auth/login/bird-flying.json';
 import airplane from '../../animations/auth/login/airplane.json';
+import blur from '../../animations/new/avatar/animation_lkawr9g2.json';
 
 //
 import animationSetter from '../../animations/animationSetter';
@@ -80,10 +81,10 @@ export default function Login() {
       <RootStyle>
         <HeaderStyle>
           {smUp && (
-            <Typography variant="body2" sx={{ mt: { md: -2 } }}>
+            <Typography variant="body2" sx={{ mt: 8 }}>
               {translate('Don’t have an account?')}
               <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.registerComplete}>
-                {translate('Get started')}
+                {translate(' Get started')}
               </Link>
             </Typography>
           )}
@@ -110,9 +111,10 @@ export default function Login() {
                 </Typography>
 
                 <Box position={'absolute'} top="20px">
-                  <Lottie height={'200px'} width={'100%'} options={animationSetter(airplane)} />
+                  {/* <Lottie height={'200px'} width={'100%'} options={animationSetter(airplane)} /> */}
                 </Box>
               </Box>
+              <Lottie height={'200px'} width={'100%'} options={animationSetter(blur)} />
             </Stack>
             <m.div variants={varBounce().inLeft}>
               <LoginForm />
