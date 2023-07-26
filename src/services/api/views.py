@@ -54,6 +54,7 @@ from .serializers import (
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from .access_policies.category import CategoryAccessPolicy
+from .access_policies.order import OrderAccessPolicy
 from .access_policies.Product import ProductAccessPolicy
 from .pagination import ProductPagination, BusinessPagination
 from .fielters import ProductFilter
@@ -91,7 +92,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 
 class OrderDetailViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [OrderAccessPolicy]
     queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailSerializer
 
