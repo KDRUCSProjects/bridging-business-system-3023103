@@ -11,9 +11,10 @@ ColorSinglePicker.propTypes = {
 };
 
 export default function ColorSinglePicker({ colors, ...other }) {
+  const colorArray = colors?.map((color) => color.name)
   return (
     <RadioGroup row {...other}>
-      {colors.map((color) => {
+      {colorArray?.map((color) => {
         const isWhite = color === '#FFFFFF' || color === 'white';
 
         return (

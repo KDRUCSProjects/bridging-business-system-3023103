@@ -4,14 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Grid, Card, Button, CardHeader, Typography } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../store/store';
-import {
-  deleteCart,
-  onNextStep,
-  applyDiscount,
-  increaseQuantity,
-  decreaseQuantity,
-  handleDirectQuantity,
-} from '../../store/slices/checkout/checkout';
+import { deleteCart, onNextStep, handleDirectQuantity } from '../../store/slices/checkout/checkout';
 // components
 import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
@@ -32,7 +25,7 @@ export default function CheckoutCart(activeStep) {
 
   const { checkout } = useSelector((store) => store.checkout);
 
-  const { cart, total, discount, subtotal } = checkout;
+  const { cart, total, subtotal } = checkout;
 
   const totalItems = sum(cart.map((item) => item.quantity));
 
@@ -44,21 +37,10 @@ export default function CheckoutCart(activeStep) {
   const handleNextStep = () => {
     dispatch(onNextStep());
   };
-
-  const handleIncreaseQuantity = (productId) => {
-    dispatch(increaseQuantity(productId));
-  };
   const handleQuantity = (productId, DirectQuantity) => {
     dispatch(handleDirectQuantity(productId, DirectQuantity));
   };
-
-  const handleDecreaseQuantity = (productId) => {
-    dispatch(decreaseQuantity(productId));
-  };
-
-  const handleApplyDiscount = (value) => {
-    dispatch(applyDiscount(value));
-  };
+  console.log(quantity);
 
   const { translate } = useLocales();
 
@@ -84,8 +66,6 @@ export default function CheckoutCart(activeStep) {
                 products={productList}
                 quantity={quantity}
                 onDelete={handleDeleteCart}
-                onIncreaseQuantity={handleIncreaseQuantity}
-                onDecreaseQuantity={handleDecreaseQuantity}
                 handleQuantity={handleQuantity}
               />
             </Scrollbar>
@@ -108,13 +88,7 @@ export default function CheckoutCart(activeStep) {
       </Grid>
 
       <Grid item xs={12} md={4}>
-        <CheckoutSummary
-          enableDiscount
-          total={total}
-          discount={discount}
-          subtotal={subtotal}
-          onApplyDiscount={handleApplyDiscount}
-        />
+        <CheckoutSummary total={total} subtotal={subtotal} />
         <Button
           fullWidth
           size="large"

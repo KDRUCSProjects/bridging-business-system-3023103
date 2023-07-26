@@ -28,6 +28,7 @@ import { fCurrency } from '../../utils/formatNumber';
 import Image from '../../components/Image';
 import Iconify from '../../components/Iconify';
 import { TableHeadCustom } from '../../components/table';
+import { ColorPreview } from '../../components/color-utils';
 
 // ----------------------------------------------------------------------
 
@@ -62,14 +63,7 @@ CheckoutProductList.propTypes = {
   onIncreaseQuantity: PropTypes.func,
 };
 
-export default function CheckoutProductList({
-  quantity,
-  products,
-  onDelete,
-  onIncreaseQuantity,
-  onDecreaseQuantity,
-  handleQuantity,
-}) {
+export default function CheckoutProductList({ quantity, products, onDelete, handleQuantity }) {
   return (
     <TableContainer sx={{ minWidth: 720 }}>
       <Table>
@@ -83,8 +77,6 @@ export default function CheckoutProductList({
               productId={row.id}
               handleQuantity={handleQuantity}
               onDelete={() => onDelete(row.id)}
-              onDecrease={() => onDecreaseQuantity(row.id)}
-              onIncrease={() => onIncreaseQuantity(row.id)}
             />
           ))}
         </TableBody>
@@ -92,7 +84,6 @@ export default function CheckoutProductList({
     </TableContainer>
   );
 }
-
 // ----------------------------------------------------------------------
 
 CheckoutProductListRow.propTypes = {
@@ -110,7 +101,7 @@ CheckoutProductListRow.propTypes = {
   }),
 };
 
-function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease, handleQuantity, productId }) {
+function CheckoutProductListRow({ row, onDelete, handleQuantity, productId }) {
   const { name, price, color, images, quantity, available_quantity: available } = row;
   return (
     <TableRow>
@@ -127,7 +118,7 @@ function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease, handleQ
               <Box component="span" sx={{ color: 'text.secondary' }}>
                 color:&nbsp;
               </Box>
-              {getColorName(color)}
+              <ColorPreview colors={color} />
             </Typography>
           </Stack>
         </Stack>
@@ -136,14 +127,7 @@ function CheckoutProductListRow({ row, onDelete, onDecrease, onIncrease, handleQ
       <TableCell>{fCurrency(price)}</TableCell>
 
       <TableCell>
-        <Incrementer
-          available={available}
-          quantity={quantity}
-          onDecrease={onDecrease}
-          onIncrease={onIncrease}
-          productId={productId}
-          handleQuantity={handleQuantity}
-        />
+        <Incrementer available={available} quantity={quantity} productId={productId} handleQuantity={handleQuantity} />
       </TableCell>
 
       <TableCell align="right">{fCurrency(price * quantity)}</TableCell>

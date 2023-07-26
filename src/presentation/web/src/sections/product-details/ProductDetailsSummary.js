@@ -76,7 +76,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
   };
   const { id, color, name, quantity, price, productRatting, user, ratting } = product;
   const alreadyProduct = cart.map((item) => item.id).includes(id);
-
+  const colors = ['red', 'blue'];
   const defaultValues = {
     id,
     name,
