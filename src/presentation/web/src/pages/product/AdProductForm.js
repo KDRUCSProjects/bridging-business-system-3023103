@@ -242,6 +242,9 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Container component={MotionContainer}>
+        <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
+          Create New Product
+        </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <Card sx={{ p: 3 }}>

@@ -18,7 +18,7 @@ export default function AdProduct() {
   const idEdit = true;
 
   return (
-    <Page title="Ecommerce: Create a new product">
+    <Page title="Create a new product">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {id && isSuccess && colorSuccess ? (
           <AdProductForm currentProduct={data} isEdit={idEdit} colors={colors} />

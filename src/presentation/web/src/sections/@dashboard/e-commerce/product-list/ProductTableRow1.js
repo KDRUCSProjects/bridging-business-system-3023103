@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { sentenceCase } from 'change-case';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { TableRow, Checkbox, TableCell, Typography, MenuItem, IconButton } from '@mui/material';
+import { TableRow, Checkbox, TableCell, Typography, MenuItem, IconButton, Button } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -50,46 +50,33 @@ export default function ProductTableRow({ row, index, selected }) {
   return (
     <TableRow hover selected={selected}>
       <TableCell>
-        <Link to={`/product/details/${row.id}/`} style={{ textDecoration: 'none' }}>
-          <Typography variant="subtitle2" noWrap>
-            {index + 1}
-          </Typography>
-        </Link>
+        <Typography variant="subtitle2" noWrap>
+          {index + 1}
+        </Typography>
       </TableCell>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Link to={`/product/details/${row.id}/`} style={{ textDecoration: 'none' }}>
+        <Button component={Link} to={`/product/details/${row.id}/`}>
           <Image
             disabledEffect
             alt={row.name}
             src={row.images[0]?.image}
             sx={{ borderRadius: 1.5, width: 48, height: 48, mr: 2 }}
           />
-          <Typography variant="subtitle2" noWrap>
-            {row.name}
-          </Typography>
-        </Link>
+        </Button>
+
+        <Typography variant="subtitle2" noWrap>
+          {row.name}
+        </Typography>
       </TableCell>
 
-      <TableCell>
-        <Link to={`/product/details/${row.id}/`} style={{ textDecoration: 'none' }}>
-          {fDate(row.created_at)}
-        </Link>
-      </TableCell>
+      <TableCell>{fDate(row.created_at)}</TableCell>
       <TableCell align="center">
         <IconButton color="primary" aria-label="add to shopping cart" onClick={handleAddCart}>
           <AddShoppingCartIcon />
         </IconButton>
       </TableCell>
-      <TableCell align="right">
-        <Link to={`/product/details/${row.id}/`} style={{ textDecoration: 'none' }}>
-          {row.quantity}
-        </Link>
-      </TableCell>
-      <TableCell align="right">
-        <Link to={`/product/details/${row.id}/`} style={{ textDecoration: 'none' }}>
-          {fCurrency(row.price)}
-        </Link>
-      </TableCell>
+      <TableCell align="right">{row.quantity}</TableCell>
+      <TableCell align="right">{fCurrency(row.price)}</TableCell>
     </TableRow>
   );
 }

@@ -18,11 +18,11 @@ const MenuConfig = () => {
     {
       title: translate('about us'),
       icon: <Iconify icon={'eva:home-fill'} {...ICON_SIZE} />,
-      path: '/',
+      path: '/about-us',
     },
     {
       title: translate('contact us'),
-      path: '/pages',
+      path: '/contact-us',
       icon: <Iconify icon={'eva:file-fill'} {...ICON_SIZE} />,
     },
   ];

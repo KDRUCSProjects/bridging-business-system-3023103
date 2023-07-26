@@ -4,7 +4,8 @@ import { useRef } from 'react';
 import Slider from 'react-slick';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Box, Stack, Card, Button, Container, Typography } from '@mui/material';
+import { Box, Stack, Card, Container, Typography, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 // components
 import Image from './Image';
@@ -14,7 +15,6 @@ import SocialsButton from './SocialsButton';
 import { MotionViewport, varFade } from './animate';
 
 import { _carouselsMembers } from '../@fake-db';
-
 // ----------------------------------------------------------------------
 
 export default function CustomSlider(props) {
@@ -70,7 +70,9 @@ function MemberCard({ member }) {
 
   return (
     <Box key={title + image} sx={{ px: 0.5, mx: 0.5 }}>
-      <Image alt={title + image} src={image} ratio="1/1" sx={{ borderRadius: 1 }} />
+      <Button component={Link} to={`/searched/products`}>
+        <Image alt={title + image} src={image} ratio="1/1" sx={{ borderRadius: 1 }} />
+      </Button>
       <Typography variant="subtitle1" sx={{ mt: 2, mb: 0.5, color: 'primary.dark', fontSize: '80%' }}>
         {title}
       </Typography>

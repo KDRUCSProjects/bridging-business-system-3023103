@@ -172,6 +172,7 @@ export default function EcommerceProductList(newdata) {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) =>
                     row ? (
+                      
                       <ProductTableRow1
                         key={row.id}
                         row={row}

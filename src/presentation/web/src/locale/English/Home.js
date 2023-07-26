@@ -9,8 +9,8 @@ const Home = {
     login: `Login `,
     
     Others: ' Other  ',
-    'About us' :'About us ',
-    'Contact us' :'Contact us ',
+    'about us' :'About us ',
+    'contact us' :'Contact us ',
     categories: 'Categories',
     Top_Product:'Top Product',
     Search: 'Search',
