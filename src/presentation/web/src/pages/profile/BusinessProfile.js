@@ -16,6 +16,7 @@ import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
+import Orders from '../orderList/Order';
 import ProfileProductListt from '../../sections/profile/ProfileProductListt';
 import BaseApi from '../../store/BaseApi';
 import Dashboard from '../../sections/profile/Dashboard';
@@ -68,8 +69,13 @@ export default function BusinessProfile() {
       component: <ProfileProductListt gallery={_userGallery} newdata={newdata} />,
     },
     {
+      value: 'Orders',
+      icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
+      component: <Orders />,
+    },
+    {
       value: 'change_password',
-      icon: <Iconify icon={'ic:round-vpn-key'} width={20} height={20} />,
+      icon: <Iconify icon={'ic:round-vpn-key'} width={15} height={20} />,
       component: <AccountChangePassword />,
     },
   ];
