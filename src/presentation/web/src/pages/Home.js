@@ -39,6 +39,8 @@ export default function HomePage() {
   const { isSuccess, data, isError, isLoading } = BaseApi.useGetAllCategoriesQuery('api/category/');
   const { data: advertisements, isSuccess: advertisementIsSuccess } =
     BaseApi.useGetAllAdvertismentsQuery('api/advertisments/');
+  const { isSuccess: topProductIsSeccess, data: topProduct } =
+    BaseApi.useGetAllProductsQuery('/api/ratting/top_product/');
 
   const sliderData = data?.map((item) => ({
     title: item.name,
@@ -62,18 +64,17 @@ export default function HomePage() {
           />
         )}
         {/* Top Product  */}
-        {isMatchMobile ? null : (
+        {!isMatchMobile && topProductIsSeccess ? (
           <TopProductSlider
             settings={TopProductSliderSettings().TopProductSliderConfig}
             title={translate('Top_Product')}
+            data={topProduct}
+            isSuccess={topProductIsSeccess}
           />
-        )}
+        ) : null}
         {/* User Slider  */}
         {isMatchMobile ? null : (
-          <UserSlider
-            settings={UserSliderSetting().UserSliderConfig}
-            title={translate('Businesses')}
-          />
+          <UserSlider settings={UserSliderSetting().UserSliderConfig} title={translate('Businesses')} />
         )}
 
         <Cart />

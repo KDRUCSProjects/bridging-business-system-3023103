@@ -69,6 +69,10 @@ const BaseApi = createApi({
     // advertisment
     GetAllAdvertisments: builder.query(allServices.queries.GetAllAdvertisments),
     GetSpecificAdvertisment: builder.query(allServices.queries.GetSpecificAdvertisment),
+
+    // Ratting
+    GetAllRattings: builder.query(allServices.queries.GetAllRattings),
+    GetSpecificRatting: builder.query(allServices.queries.GetSpecificRatting),
   }),
 });
 
