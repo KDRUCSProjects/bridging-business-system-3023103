@@ -1,10 +1,13 @@
-import { useLocation, Link as routerLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useLocation, Link as routerLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 // @mui
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import { Box, Button, AppBar, Toolbar, Container, Autocomplete, TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+
+import { productActions } from '../../store/slices/product/product';
 
 import products from '../../@fake-db/products.json';
 // hooks
@@ -143,6 +146,7 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 
 export default function MainHeader(props) {
   const { translate } = useLocales();
+  const dispatch = useDispatch();
 
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
   const user = true;
@@ -158,13 +162,15 @@ export default function MainHeader(props) {
 
   const isHome = pathname === '/';
   // ------------------ Searching  --------------------------------
-  const [search, setSearch] = useState('');
   const handleSearchForm = (e) => {
     e.preventDefault();
   };
 
+  const navigate = useNavigate();
+
   const handleSelectedOption = (event, value) => {
-    setSearch(value);
+    dispatch(productActions.getSearchedProductValue(value));
+    navigate(`searched/products/${value}`);
   };
   return (
     <>

@@ -57,7 +57,7 @@ from .access_policies.category import CategoryAccessPolicy
 from .access_policies.order import OrderAccessPolicy
 from .access_policies.Product import ProductAccessPolicy
 from .pagination import ProductPagination, BusinessPagination
-from .fielters import ProductFilter
+from .filters import ProductFilter
 
 # Permition:
 # isAuthuticated

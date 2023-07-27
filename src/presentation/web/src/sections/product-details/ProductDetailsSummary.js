@@ -72,6 +72,8 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
     const { id, color, name, quantity, price, productRatting, user, ratting } = product;
     const alreadyProduct = cart.map((item) => item.id).includes(id);
+    const sizes = [43, 44, 45, 56, 47];
+
     const res = await CreateRating(query);
   };
   const { id, color, name, quantity, price, productRatting, user, ratting } = product;
@@ -84,6 +86,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     color: color[0],
   };
 
+  const uId = 2;
   const methods = useForm({
     defaultValues,
   });

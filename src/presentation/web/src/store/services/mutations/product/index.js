@@ -13,9 +13,6 @@ const UpdateProduct = {
     method: 'PUT',
     body: query.data,
     formData: true,
-    // headers: {
-    //   'Content-type': 'application/json; charset=UTF-8',
-    // },
   }),
 };
 const DeleteProduct = {

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { paramCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
+import { useSelector, useDispatch } from 'react-redux';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Card, Avatar, Typography, CardContent, Stack, Rating, Grid } from '@mui/material';
@@ -46,38 +47,40 @@ const post = {
   createdAt: '123',
 };
 
-export default function SearchedProducts() {
+export default function SearchedProducts({ searchProducts }) {
   const isDesktop = useResponsive('up', 'md');
-
-  const { cover, title, view, comment, share, author, createdAt } = post;
 
   return (
     <>
       {isDesktop ? (
-        <Card sx={{ height: 250 }}>
-          <Grid container spacing={0}>
-            <Grid item xs={12} md={5}>
-              <Image
-                alt="cover"
-                src={'https://imagescdn.dealercarsearch.com/DealerImages/ImageLibrary/1920x800/05b4a5f5.jpg'}
-                sx={{ height: 250 }}
-              />
-            </Grid>
-            <Grid item xs={12} md={7}>
-              <PostContent />
-            </Grid>
-          </Grid>
-        </Card>
+        <>
+          {searchProducts.results?.map((product) => {
+            return (
+              <Card sx={{ height: 250, marginBottom: '2em' }}>
+                <Grid container spacing={0}>
+                  <Grid item xs={12} md={5}>
+                    <Image alt="cover" src={product.images[0].image} sx={{ height: 250 }} />
+                  </Grid>
+                  <Grid item xs={12} md={7} py={2}>
+                    <PostContent productContent={product} />
+                  </Grid>
+                </Grid>
+              </Card>
+            );
+          })}
+        </>
       ) : (
         <>
-          <Card sx={{mb:4}}>
-            <Image
-              alt="cover"
-              src={'https://imagescdn.dealercarsearch.com/DealerImages/ImageLibrary/1920x800/05b4a5f5.jpg'}
-              sx={{ height: 250 }}
-            />
-            <PostContent />
-          </Card>
+          {searchProducts.results?.map((product) => {
+            return (
+              <>
+                <Card sx={{ mb: 4 }}>
+                  <Image alt="cover" src={product.images[0].image} sx={{ height: 250 }} />
+                  <PostContent productContent={product} />
+                </Card>
+              </>
+            );
+          })}
         </>
       )}
     </>
@@ -94,41 +97,46 @@ PostContent.propTypes = {
   view: PropTypes.number,
 };
 
-export function PostContent({ title, view, comment, share, createdAt }) {
+export function PostContent({ productContent }) {
+  const { name, quantity, ratting, description, price, created_at: created, color, is_sold: sold } = productContent;
   const isDesktop = useResponsive('up', 'md');
-
+  console.log(productContent);
   return (
     <CardContent>
-      <Stack mb={2} direction="row" alignItems="center" justifyContent="space-between">
+      <Stack mb={1} direction="row" alignItems="center" justifyContent="space-between">
         <Typography gutterBottom variant="h5" component="div">
-          {'Bugatti Car'}
+          {name}
         </Typography>
         <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-          {232}
+          price({price})
         </Typography>
       </Stack>
       <TextMaxLine variant={'subtitle2'} line={2} persistent>
-        {
-          'my name is khan laksjdflkasjdflkajsdlfkjaslkdf skd flsadjf lkasjdf lkasjf lkas jflkajsdflkajsdfkljaskldfjalsjdflaksj dflkaj fklsj dfklas jf'
-        }
+        {description}
       </TextMaxLine>
       <Stack mt={1} mb={1} direction="row" alignItems="center" spacing={1}>
         <PersonIcon />
-        <Typography sx={{ mt: 1, mb: 1, typography: 'caption' }}>{'person posted the product'}</Typography>
+        <Typography sx={{ mt: 1, mb: 1, typography: 'caption' }}>{created}</Typography>
+      </Stack>
+      <Stack>
+        <Rating name="read-only" size="small" value={ratting} readOnly />
+
+        <Typography sx={{ color: !sold ? 'primary.main' : 'error.main', fontWeight: 'bold' }}>
+          {!sold ? 'In stack' : 'sold'}
+        </Typography>
       </Stack>
 
-      <Rating name="read-only" size="small" value={4} readOnly />
       <Stack
         flexWrap="wrap"
         direction="row"
         justifyContent="space-between"
         sx={{
-          mt: 3,
+          mt: 1,
           color: 'text.disabled',
         }}
       >
-        <ColorPreview colors={['red' , 'blue' , 'black']} />
-        {'2022/4/2'}
+        <ColorPreview colors={color} />
+        items({quantity})
       </Stack>
     </CardContent>
   );
