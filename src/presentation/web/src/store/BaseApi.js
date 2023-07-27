@@ -8,7 +8,6 @@ const BaseApi = createApi({
     baseUrl: baseUri,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
-      console.log('getstate', token);
 
       // If we have a token set in state, let's assume that we should be passing it.
       if (token) {
@@ -53,6 +52,7 @@ const BaseApi = createApi({
     // Product
     GetAllProducts: builder.query(allServices.queries.GetAllProducts),
     GetSpecificProduct: builder.query(allServices.queries.GetSpecificProduct),
+    SearchProduct: builder.query(allServices.queries.SearchProduct),
 
     // category
     GetAllCategories: builder.query(allServices.queries.GetAllCategories),

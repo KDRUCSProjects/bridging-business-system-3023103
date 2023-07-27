@@ -32,7 +32,8 @@ export const PATH_PAGE = {
   prodcutdetails: path(PATH_PAGE_ROOT, `product/details/:id/`),
   addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),
   UserProfile: path(PATH_PAGE_ROOT, 'userprofile/:id'),
-  SearchedProducts: path(PATH_PAGE_ROOT, 'searched/products'),
   Users: path(PATH_PAGE_ROOT, 'users'),
+  SearchedProducts: path(PATH_PAGE_ROOT, 'searched/products/'),
+  SearchedProductsByName: path(PATH_PAGE_ROOT, 'searched/products/:productName'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };

@@ -8,5 +8,11 @@ const GetSpecificProduct = {
     url: path,
   }),
 };
+const SearchProduct = {
+  query: (query) => ({
+    url: query,
+    method: 'GET',
+  }),
+};
 
-export const ProductQuery = { GetAllProducts, GetSpecificProduct };
+export const ProductQuery = { GetAllProducts, GetSpecificProduct, SearchProduct };

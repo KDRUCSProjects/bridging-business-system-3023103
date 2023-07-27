@@ -9,6 +9,7 @@ import checkoutSlice from './slices/checkout/checkout';
 import completeAuthSlice from './slices/auth/completeAuth';
 import completeForgotPasswordSlice from './slices/auth/completeForgotPassword';
 import auth from './slices/auth/getToken';
+import products from './slices/product/product';
 // Rtk Query
 import BaseApi from './BaseApi';
 
@@ -16,12 +17,13 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: [BaseApi.reducerPath],
+  blacklist: [BaseApi.reducerPath, products, auth],
 };
 
 const rootReducer = combineReducers({
   // redux-toolkit-reducers
   auth: auth.reducer,
+  products: products.reducer,
   checkout: checkoutSlice.reducer,
   completeAuth: completeAuthSlice.reducer,
   completeForgotPassword: completeForgotPasswordSlice.reducer,
@@ -34,7 +36,7 @@ const persistReducers = persistReducer(persistConfig, rootReducer);
 
 // Store
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistReducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] },
