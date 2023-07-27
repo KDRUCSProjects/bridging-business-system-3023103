@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -17,14 +17,12 @@ import BaseApi from '../store/BaseApi';
 // ----------------------------------------------------------------------
 
 export default function TopProductSlider(props) {
-  const { isSuccess, data, isError, isLoading } = BaseApi.useGetAllProductsQuery('api/product/');
-  const { settings, title } = props;
-
-  if (isError) {
-    <h1>Error </h1>;
-  } else if (isLoading) {
-    <h1>Loading</h1>;
-  }
+  const [topProduct, setTopproduct] = useState([]);
+  const { settings, title, data, isSuccess } = props;
+  useEffect(() => {
+    const sorted = [...data].sort((a, b) => b.ratting - a.ratting);
+    setTopproduct(sorted);
+  }, []);
   const carouselRef = useRef(null);
 
   const theme = useTheme();
@@ -48,8 +46,8 @@ export default function TopProductSlider(props) {
       <Box sx={{ position: 'relative' }}>
         <CarouselArrows filled onNext={handleNext} onPrevious={handlePrevious}>
           <Slider ref={carouselRef} {...settings}>
-            {data.results.map((item) => (
-              <Link href={`/product/details/${item.id}/`} style={{ textDecoration: 'none' }}>
+            {topProduct.map((item) => (
+              <Link key={item.id + item.name} href={`/product/details/${item.id}/`} style={{ textDecoration: 'none' }}>
                 <MemberCard member={item} />
               </Link>
             ))}

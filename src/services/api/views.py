@@ -58,6 +58,8 @@ from .access_policies.order import OrderAccessPolicy
 from .access_policies.Product import ProductAccessPolicy
 from .pagination import ProductPagination, BusinessPagination
 from .filters import ProductFilter
+from rest_framework.decorators import action
+from django.db.models import Avg
 
 # Permition:
 # isAuthuticated
@@ -168,9 +170,31 @@ class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
 
 class RattingViewSet(viewsets.ModelViewSet):
     queryset = Ratting.objects.all()
-    serializer_class = RattingSerializer
+    # serializer_class = RattingSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["product"]
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == "top_product":
+            return ProductSerializer
+        else:
+            return RattingSerializer
+
+    @action(detail=False, methods=["get"])
+    def top_product(self, request):
+        ratted_products = (
+            Ratting.objects.values("product")
+            .annotate(avg_ratting=Avg("ratting_stars"))
+            .order_by("-avg_ratting")
+        )
+        ids = []
+        print(ratted_products)
+        for product in ratted_products:
+            p = product
+            ids.append(p["product"])
+        product = Product.objects.filter(id__in=ids)
+        serializer = ProductSerializer(product, many=True)
+        return Response(serializer.data)
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
