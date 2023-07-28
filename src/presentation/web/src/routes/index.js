@@ -12,6 +12,11 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 
 // ----------------------------------------------------------------------
 
+import HomeScreen from '../pages/chat/screens/home/HomeScreen';
+import LoginScreen from '../pages/chat/screens/auth/login/LoginScreen';
+import SignupScreen from '../pages/chat/screens/auth/signup/SignupScreen';
+// import AppPaths from '../lib/appPaths';
+
 const Loadable = (Component) => (props) => {
   return (
     <Suspense fallback={<LoadingScreen />}>
@@ -77,6 +82,9 @@ export default function Router() {
         { path: PATH_PAGE.SearchedProducts, element: <SearchedProducts /> },
         { path: PATH_PAGE.Users, element: <Users /> },
         { path: PATH_PAGE.SearchedProductsByName, element: <SearchedProductsByName /> },
+        { path: 'chat/signup', element: <SignupScreen /> },
+        { path: 'chat/signin', element: <LoginScreen /> },
+        { path: 'chat/home', element: <HomeScreen /> },
       ],
     },
 
