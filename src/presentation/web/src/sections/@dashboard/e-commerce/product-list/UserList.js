@@ -26,10 +26,10 @@ export function PostContent({ product }) {
         </Typography>
       </Stack>
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography sx={{ typography: 'caption' }}>{'person posted the product'}</Typography>
+        <Typography sx={{ typography: 'caption' }}>Type: {product.product.business_type}</Typography>
       </Stack>
-      <TextMaxLine variant={'subtitle2'} line={2} persistent>
-        {product.product.detials}
+      <TextMaxLine variant={'subtitle2'} line={1} persistent>
+        {product.product.address.province}
       </TextMaxLine>
       <Button href={`/userprofile/${product.product.user}/`} sx={{ mt: 2 }} fullWidth variant="outlined">
         View Profile
