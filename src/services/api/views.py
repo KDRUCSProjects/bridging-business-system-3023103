@@ -57,7 +57,7 @@ from .access_policies.category import CategoryAccessPolicy
 from .access_policies.order import OrderAccessPolicy
 from .access_policies.Product import ProductAccessPolicy
 from .pagination import ProductPagination, BusinessPagination
-from .filters import ProductFilter
+from .filters import ProductFilter, BusinessProfileFilter
 from rest_framework.decorators import action
 from django.db.models import Avg
 
@@ -127,7 +127,7 @@ class BusinessProfileViewSet(viewsets.ModelViewSet):
     pagination_class = BusinessPagination
     filter_backends = [DjangoFilterBackend, SearchFilter]
     search_fields = ["businessName"]
-    filterset_fields = ["user"]
+    filterset_class = BusinessProfileFilter
 
 
 class ProductColorViewSet(viewsets.ModelViewSet):
