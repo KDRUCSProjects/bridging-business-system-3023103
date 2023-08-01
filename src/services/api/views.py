@@ -89,12 +89,14 @@ class ProductImageViewSet(viewsets.ModelViewSet):
 
 class OrderViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["user"]
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 
 class OrderDetailViewSet(viewsets.ModelViewSet):
-    permission_classes = [OrderAccessPolicy]
+    # permission_classes = [OrderAccessPolicy]
     queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailSerializer
 
