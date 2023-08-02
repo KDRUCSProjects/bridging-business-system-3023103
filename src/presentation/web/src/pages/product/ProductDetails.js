@@ -7,6 +7,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useParams } from 'react-router';
 import useLocales from '../../hooks/useLocales';
 
+import RelatedProducts from '../../sections/shop/RelatedProducts';
 // components
 import Page from '../../components/Page';
 
@@ -75,6 +76,8 @@ export default function ProductDetails() {
                   </TabPanel>
                 </TabContext>
               </Card>
+
+              <RelatedProducts title={'Related Products'} category={data.category} productId={data.id} />
             </Box>
           </>
         )}

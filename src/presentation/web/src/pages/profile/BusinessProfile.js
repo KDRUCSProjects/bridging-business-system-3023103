@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { DashboardRounded } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { Tab, Box, Card, Tabs, Container } from '@mui/material';
+import ViewListIcon from '@mui/icons-material/ViewList';
 // hook
 import useLocales from '../../hooks/useLocales';
 import useTabs from '../../hooks/useTabs';
@@ -70,7 +71,7 @@ export default function BusinessProfile() {
     },
     {
       value: 'Orders',
-      icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
+      icon: <ViewListIcon width={20} height={20} />,
       component: <Orders orderdata={orderdata} />,
     },
     {
