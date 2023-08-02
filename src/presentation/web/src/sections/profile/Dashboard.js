@@ -18,18 +18,19 @@ import BaseApi from '../../store/BaseApi';
 
 export default function Dashboard(id) {
   const { data } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id.id}`);
+  const { data: orderdata } = BaseApi.useGetAllOrdersQuery('api/order_detial/');
+  // -------------------------- getting products data ----------------------------------------
   const newdata = data?.results;
   const { user } = useAuth();
   const theme = useTheme();
   const totalquantities = sum(newdata?.map((item) => item.quantity));
-
   const totalPrice = sum(newdata?.map((item) => item.quantity * item.price));
-
   const avgrating = sum(newdata?.map((item) => item.ratting));
-
   const total = sum(newdata?.map((item) => item.productRatting.length));
   const totalrating = newdata?.map((item) => item.ratting);
-  const totalavg = avgrating / totalrating?.length ;
+  const totalavg = avgrating / totalrating?.length;
+  // -------------------------------------------------------------------------------------------
+  // ------------------------ getting order list data ------------------------------------------
 
   const { themeStretch } = useSettings();
   const results = newdata?.map((item) => item.quantity);
@@ -49,7 +50,6 @@ export default function Dashboard(id) {
         <Grid item xs={12} md={4}>
           <AppWidgetSummary
             title="Total Products"
-            percent={2.6}
             total={totalquantities}
             chartColor={theme.palette.primary.main}
             chartData={results}
@@ -58,16 +58,31 @@ export default function Dashboard(id) {
         <Grid item xs={12} md={4}>
           <AppWidgetSummary
             title="Net Worth"
-            percent={0.2}
             total={totalPrice}
             chartColor={theme.palette.chart.blue[0]}
             chartData={prices}
           />
         </Grid>
+
         <Grid item xs={12} md={4}>
           <AppWidgetSummary
-            title="recived cash"
-            percent={-0.1}
+            title="Purchased Products"
+            total={678}
+            chartColor={theme.palette.chart.red[0]}
+            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <AppWidgetSummary
+            title="Expenses"
+            total={678}
+            chartColor={theme.palette.chart.red[0]}
+            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <AppWidgetSummary
+            title="unDefine"
             total={678}
             chartColor={theme.palette.chart.red[0]}
             chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}

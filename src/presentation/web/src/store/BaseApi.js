@@ -73,6 +73,10 @@ const BaseApi = createApi({
     // Ratting
     GetAllRattings: builder.query(allServices.queries.GetAllRattings),
     GetSpecificRatting: builder.query(allServices.queries.GetSpecificRatting),
+
+    // Ratting
+    GetAllOrders: builder.query(allServices.queries.GetAllOrders),
+    GetSpecificOrder: builder.query(allServices.queries.GetSpecificOrder),
   }),
 });
 
