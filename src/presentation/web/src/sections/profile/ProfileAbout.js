@@ -24,7 +24,6 @@ ProfileAbout.propTypes = {
 
 export default function ProfileAbout({ profile, userdata, about }) {
   const { translate } = useLocales();
-  const { quote, country, email, role, company, school: Business } = profile;
   return (
     <Card>
       <CardHeader title={translate('About Me')} />

@@ -37,30 +37,20 @@ import { InvoiceTableRow, InvoiceTableToolbar } from '../../sections/@dashboard/
 
 // ----------------------------------------------------------------------
 
-const SERVICE_OPTIONS = [
-  'all',
-  'full stack development',
-  'backend development',
-  'ui design',
-  'ui/ux design',
-  'front end development',
-];
-
 const TABLE_HEAD = [
   { id: 'number', label: 'NO', align: 'left', width: 100 },
-  { id: 'invoiceNumber', label: 'Business', align: 'left' },
+  { id: 'invoiceNumber', label: 'ORDER ID', align: 'left' },
   { id: 'createDate', label: 'OrderDat', align: 'left' },
-  { id: 'price', label: 'Price', align: 'center', width: 140 },
-  { id: 'amounts', label: 'amounts', align: 'left' },
-  { id: 'status', label: 'Status', align: 'left' },
+  { id: 'price', label: 'Price', align: 'left', width: 100 },
+  { id: 'amounts', label: 'amounts', align: 'left', width: 100 },
+  { id: 'status', label: 'Status', align: 'right' },
   { id: '' },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function Orders() {
+export default function Orders(orderdata) {
   const theme = useTheme();
-
   const { themeStretch } = useSettings();
 
   const navigate = useNavigate();
@@ -84,42 +74,7 @@ export default function Orders() {
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: 'createDate' });
 
-  const inv = [
-    {
-      name: 'saboor',
-      create: '1234/45/45',
-      due: '24234/34/34',
-      amount: 23424,
-      status: 'paid',
-      price: 123,
-    },
-    {
-      name: 'saboor',
-      create: '1234/45/45',
-      due: '24234/34/34',
-      amount: 23424,
-      status: 'paid',
-      price: 123,
-    },
-    {
-      name: 'saboor',
-      create: '1234/45/45',
-      due: '24234/34/34',
-      amount: 23424,
-      status: 'paid',
-      price: 123,
-    },
-    {
-      name: 'saboor',
-      create: '1234/45/45',
-      due: '24234/34/34',
-      amount: 23424,
-      status: 'paid',
-      price: 123,
-    },
-  ];
-
-  const [tableData, setTableData] = useState(inv);
+  const [tableData, setTableData] = useState(orderdata.orderdata);
 
   const [filterName, setFilterName] = useState('');
 
@@ -130,35 +85,6 @@ export default function Orders() {
   const [filterEndDate, setFilterEndDate] = useState(null);
 
   const { currentTab: filterStatus, onChangeTab: onFilterStatus } = useTabs('all');
-
-  const handleFilterName = (filterName) => {
-    setFilterName(filterName);
-    setPage(0);
-  };
-
-  const handleFilterService = (event) => {
-    setFilterService(event.target.value);
-  };
-
-  const handleDeleteRow = (id) => {
-    const deleteRow = tableData.filter((row) => row.id !== id);
-    setSelected([]);
-    setTableData(deleteRow);
-  };
-
-  const handleDeleteRows = (selected) => {
-    const deleteRows = tableData.filter((row) => !selected.includes(row.id));
-    setSelected([]);
-    setTableData(deleteRows);
-  };
-
-  const handleEditRow = (id) => {
-    navigate('PATH_DASHBOARD.invoice.edit(id)');
-  };
-
-  const handleViewRow = (id) => {
-    navigate('PATH_DASHBOARD.invoice.view(id)');
-  };
 
   const dataFiltered = applySortFilter({
     tableData,
@@ -191,53 +117,14 @@ export default function Orders() {
         </Typography>
         <Card>
           <Divider />
-
-          <InvoiceTableToolbar
-            filterName={filterName}
-            filterService={filterService}
-            filterStartDate={filterStartDate}
-            filterEndDate={filterEndDate}
-            onFilterName={handleFilterName}
-            onFilterService={handleFilterService}
-            onFilterStartDate={(newValue) => {
-              setFilterStartDate(newValue);
-            }}
-            onFilterEndDate={(newValue) => {
-              setFilterEndDate(newValue);
-            }}
-            optionsService={SERVICE_OPTIONS}
-          />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
               <Table size={dense ? 'small' : 'medium'}>
-                <TableHeadCustom
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={tableData.length}
-                  numSelected={selected.length}
-                  onSort={onSort}
-                  onSelectAllRows={(checked) =>
-                    onSelectAllRows(
-                      checked,
-                      tableData.map((row) => row.id)
-                    )
-                  }
-                />
+                <TableHeadCustom order={order} orderBy={orderBy} headLabel={TABLE_HEAD} rowCount={tableData.length} />
 
                 <TableBody>
                   {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-                    <InvoiceTableRow
-                      key={row.id}
-                      index={index}
-                      row={row}
-                      selected={selected.includes(row.id)}
-                      onSelectRow={() => onSelectRow(row.id)}
-                      onViewRow={() => handleViewRow(row.id)}
-                      onEditRow={() => handleEditRow(row.id)}
-                      onDeleteRow={() => handleDeleteRow(row.id)}
-                    />
+                    <InvoiceTableRow key={row.id} index={index} row={row} />
                   ))}
 
                   <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />

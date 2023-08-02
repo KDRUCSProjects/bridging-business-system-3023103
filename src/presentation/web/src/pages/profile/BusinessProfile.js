@@ -43,6 +43,7 @@ export default function BusinessProfile() {
   const { data: userdata } = BaseApi.useGetSpecificUserQuery(`api/users/${id}/`);
   const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${id}`);
   const { data: newdata } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
+  const { data: orderdata, isSuccess: orderSuccess } = BaseApi.useGetAllOrdersQuery(`api/order/?user=${id}`);
   const { translate } = useLocales();
   const { themeStretch } = useSettings();
   const { currentTab, onChangeTab } = useTabs('Dashboard');
@@ -51,12 +52,11 @@ export default function BusinessProfile() {
   const handleFindFriends = (value) => {
     setFindFriends(value);
   };
-
   const PROFILE_TABS = [
     {
       value: 'Dashboard',
       icon: <DashboardRounded />,
-      component: <Dashboard id={id} />,
+      component: <Dashboard id={id} orderdata={orderdata} />,
     },
     {
       value: 'About',
@@ -71,7 +71,7 @@ export default function BusinessProfile() {
     {
       value: 'Orders',
       icon: <Iconify icon={'ic:round-perm-media'} width={20} height={20} />,
-      component: <Orders />,
+      component: <Orders orderdata={orderdata} />,
     },
     {
       value: 'change_password',
@@ -79,7 +79,7 @@ export default function BusinessProfile() {
       component: <AccountChangePassword />,
     },
   ];
-  return isSuccess ? (
+  return isSuccess && orderSuccess ? (
     <Page title="User: Profile">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ marginTop: '6rem', marginBottom: '3rem' }}>
         <Card
@@ -89,7 +89,7 @@ export default function BusinessProfile() {
             position: 'relative',
           }}
         >
-          <ProfileCover myProfile={data}  />
+          <ProfileCover myProfile={data} />
           <TabsWrapperStyle>
             <Tabs
               allowScrollButtonsMobile

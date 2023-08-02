@@ -27,8 +27,6 @@ InvoiceTableRow.propTypes = {
 export default function InvoiceTableRow({ row, index, selected, onSelectRow, onViewRow, onEditRow, onDeleteRow }) {
   const theme = useTheme();
 
-  // const { sent, invoiceNumber, createDate, dueDate, status, invoiceTo, totalPrice } = row;
-
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -38,7 +36,6 @@ export default function InvoiceTableRow({ row, index, selected, onSelectRow, onV
   const handleCloseMenu = () => {
     setOpenMenuActions(null);
   };
-
   return (
     <TableRow hover selected={selected}>
       <TableCell padding="checkbox">
@@ -46,86 +43,27 @@ export default function InvoiceTableRow({ row, index, selected, onSelectRow, onV
       </TableCell>
 
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar alt={row.name} color={createAvatar(row.name).color} sx={{ mr: 2 }}>
-          {createAvatar(row.name).name}
-        </Avatar>
-
         <Stack>
-          <Typography variant="subtitle2" noWrap>
-            {row.name}
-          </Typography>
-
           <Link noWrap variant="body2" onClick={onViewRow} sx={{ color: 'text.disabled', cursor: 'pointer' }}>
-            {`INV-${row.sent}`}
+            {`ORDER-${row.id}`}
           </Link>
         </Stack>
       </TableCell>
 
-      <TableCell align="left">{fDate(3242)}</TableCell>
+      <TableCell align="left">{fDate(row.create_at)}</TableCell>
 
-      <TableCell align="left">{fDate(2342)}</TableCell>
+      <TableCell align="left">{row.total}</TableCell>
 
-      <TableCell align="center">{fCurrency(row.price)}</TableCell>
-
-      <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
-        {row.sent}
-      </TableCell>
-
-      <TableCell align="left">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={
-            (row.status === 'paid' && 'success') ||
-            (row.status === 'unpaid' && 'warning') ||
-            (row.status === 'overdue' && 'error') ||
-            'default'
-          }
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {row.status}
-        </Label>
-      </TableCell>
+      <TableCell align="center">{fCurrency(row.order_details.length)}</TableCell>
 
       <TableCell align="right">
-        <TableMoreMenu
-          open={openMenu}
-          onOpen={handleOpenMenu}
-          onClose={handleCloseMenu}
-          actions={
-            <>
-              <MenuItem
-                onClick={() => {
-                  onDeleteRow();
-                  handleCloseMenu();
-                }}
-                sx={{ color: 'error.main' }}
-              >
-                <Iconify icon={'eva:trash-2-outline'} />
-                Delete
-              </MenuItem>
-
-              <MenuItem
-                onClick={() => {
-                  onViewRow();
-                  handleCloseMenu();
-                }}
-              >
-                <Iconify icon={'eva:eye-fill'} />
-                View
-              </MenuItem>
-
-              <MenuItem
-                onClick={() => {
-                  onEditRow();
-                  handleCloseMenu();
-                }}
-              >
-                <Iconify icon={'eva:edit-fill'} />
-                Edit
-              </MenuItem>
-            </>
-          }
-        />
+        <Label
+          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+          color={(row.is_visited === 'is_visited' && 'success') || 'default'}
+          sx={{ textTransform: 'capitalize' }}
+        >
+          {row.is_visited}
+        </Label>
       </TableCell>
     </TableRow>
   );
