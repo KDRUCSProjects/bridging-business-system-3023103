@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { DashboardRounded } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { Tab, Box, Card, Tabs, Container } from '@mui/material';
+import ViewListIcon from '@mui/icons-material/ViewList';
 // hook
 import useLocales from '../../hooks/useLocales';
 import useTabs from '../../hooks/useTabs';
@@ -16,6 +17,7 @@ import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
 // sections
 import { Profile, ProfileCover, ProfileProductList } from '../../sections/profile';
+import Orders from '../orderList/Order';
 import ProfileProductListt from '../../sections/profile/ProfileProductListt';
 import BaseApi from '../../store/BaseApi';
 import Dashboard from '../../sections/profile/Dashboard';
@@ -42,6 +44,7 @@ export default function BusinessProfile() {
   const { data: userdata } = BaseApi.useGetSpecificUserQuery(`api/users/${id}/`);
   const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${id}`);
   const { data: newdata } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
+  const { data: orderdata, isSuccess: orderSuccess } = BaseApi.useGetAllOrdersQuery(`api/order/?user=${id}`);
   const { translate } = useLocales();
   const { themeStretch } = useSettings();
   const { currentTab, onChangeTab } = useTabs('Dashboard');
@@ -50,12 +53,11 @@ export default function BusinessProfile() {
   const handleFindFriends = (value) => {
     setFindFriends(value);
   };
-
   const PROFILE_TABS = [
     {
       value: 'Dashboard',
       icon: <DashboardRounded />,
-      component: <Dashboard id={id} />,
+      component: <Dashboard id={id} orderdata={orderdata} />,
     },
     {
       value: 'About',
@@ -68,12 +70,17 @@ export default function BusinessProfile() {
       component: <ProfileProductListt gallery={_userGallery} newdata={newdata} />,
     },
     {
+      value: 'Orders',
+      icon: <ViewListIcon width={20} height={20} />,
+      component: <Orders orderdata={orderdata} />,
+    },
+    {
       value: 'change_password',
-      icon: <Iconify icon={'ic:round-vpn-key'} width={20} height={20} />,
+      icon: <Iconify icon={'ic:round-vpn-key'} width={15} height={20} />,
       component: <AccountChangePassword />,
     },
   ];
-  return isSuccess ? (
+  return isSuccess && orderSuccess ? (
     <Page title="User: Profile">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ marginTop: '6rem', marginBottom: '3rem' }}>
         <Card
@@ -83,7 +90,7 @@ export default function BusinessProfile() {
             position: 'relative',
           }}
         >
-          <ProfileCover myProfile={data}  />
+          <ProfileCover myProfile={data} />
           <TabsWrapperStyle>
             <Tabs
               allowScrollButtonsMobile

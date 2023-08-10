@@ -16,9 +16,8 @@ import AppAreaInstalled from '../@dashboard/general/app/AppAreaInstalled';
 import BaseApi from '../../store/BaseApi';
 // ----------------------------------------------------------------------
 
-export default function Dashboard(id) {
+export default function Dashboard({ id, orderdata }) {
   const { data } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id.id}`);
-  const { data: orderdata } = BaseApi.useGetAllOrdersQuery('api/order_detial/');
   // -------------------------- getting products data ----------------------------------------
   const newdata = data?.results;
   const { user } = useAuth();
@@ -29,12 +28,32 @@ export default function Dashboard(id) {
   const total = sum(newdata?.map((item) => item.productRatting.length));
   const totalrating = newdata?.map((item) => item.ratting);
   const totalavg = avgrating / totalrating?.length;
-  // -------------------------------------------------------------------------------------------
-  // ------------------------ getting order list data ------------------------------------------
-
-  const { themeStretch } = useSettings();
   const results = newdata?.map((item) => item.quantity);
   const prices = newdata?.map((item) => item.price);
+  // -------------------------------------------------------------------------------------------
+  // ------------------------ getting order list data ------------------------------------------
+  const ordersum = sum(orderdata?.map((item) => item.total));
+  const ordersPrices = orderdata?.map((item) => item.total);
+
+  const purchasedProducts = sum(
+    orderdata?.map((item) => {
+      return sum(
+        item.order_details.map((item1) => {
+          return item1.quantity;
+        })
+      );
+    })
+  );
+
+  const purchasedProductsPerOrder = orderdata?.map((item) => {
+    return sum(
+      item.order_details.map((item1) => {
+        return item1.quantity;
+      })
+    );
+  });
+  // ---------------------------------------------------------------------------------------------
+  const { themeStretch } = useSettings();
   return (
     <Page title="Dashboard">
       <Grid container spacing={3}>
@@ -67,17 +86,17 @@ export default function Dashboard(id) {
         <Grid item xs={12} md={4}>
           <AppWidgetSummary
             title="Purchased Products"
-            total={678}
+            total={purchasedProducts}
             chartColor={theme.palette.chart.red[0]}
-            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
+            chartData={purchasedProductsPerOrder}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <AppWidgetSummary
             title="Expenses"
-            total={678}
+            total={ordersum}
             chartColor={theme.palette.chart.red[0]}
-            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
+            chartData={ordersPrices}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -94,7 +113,7 @@ export default function Dashboard(id) {
             chartColors={[theme.palette.primary.light, theme.palette.secondary.main]}
             chartData={[
               { label: 'Net Worth', value: totalPrice },
-              { label: 'Recived cash', value: 3000 },
+              { label: 'Expenses', value: ordersum },
             ]}
           />
         </Grid>

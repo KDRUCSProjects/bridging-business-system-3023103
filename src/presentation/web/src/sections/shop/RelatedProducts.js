@@ -9,7 +9,7 @@ import ShopProductCard from './ShopProductCard';
 import Page from '../../components/Page';
 import BaseApi from '../../store/BaseApi';
 
-export default function ShopProductList({ title }) {
+export default function RelatedProducts({ title, category, productId }) {
   const [currentPage, setCurrentPage] = useState(1);
   const { isSuccess, data, isError, isLoading } = BaseApi.useGetSpecificProductQuery(
     `api/product/?page=${currentPage}`
@@ -27,7 +27,7 @@ export default function ShopProductList({ title }) {
     <Page title="Ecommerce: Shop">
       <Container>
         <div variants={'h5'}>
-          <Typography variant="h5" sx={{ mb: 3, textAlign: 'start' }}>
+          <Typography variant="h5" sx={{ mt: 3, mb: 3, textAlign: 'start' }}>
             {title}
           </Typography>
         </div>
@@ -44,15 +44,20 @@ export default function ShopProductList({ title }) {
           }}
         >
           {isSuccess
-            ? data.results?.map((product) => (
-                <Link
-                  key={product.id + product.name}
-                  to={`product/details/${product.id}/`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <ShopProductCard product={product} />
-                </Link>
-              ))
+            ? data.results?.map((product) => {
+                if (product.category === category && product.id !== productId) {
+                  return (
+                    <Link
+                      key={product.id + product.name}
+                      to={`/product/details/${product.id}/`}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <ShopProductCard product={product} />
+                    </Link>
+                  );
+                }
+                return null;
+              })
             : 'NO data'}
         </Box>
         {/* pagination in frontend */}
