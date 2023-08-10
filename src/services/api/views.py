@@ -71,7 +71,7 @@ from django.db.models import Avg
 
 
 class PrdocutViewSet(viewsets.ModelViewSet):
-    permission_classes = [ProductAccessPolicy]
+    # permission_classes = [ProductAccessPolicy]
     queryset = Product.objects.order_by("-created_at")
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
