@@ -76,7 +76,7 @@ export default function HomePage() {
         )}
 
         <Cart />
-        <ShopProductList title={'New Arrivals'} />
+        <ShopProductList title={translate('New Arrivals')} />
       </ContentStyle>
     </Page>
   ) : (

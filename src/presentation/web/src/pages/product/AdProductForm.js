@@ -259,10 +259,10 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
       <Container component={MotionContainer}>
         <Stack direction={'row'} justifyContent={'space-between'}>
           <Button sx={{ mb: 2 }} variant="contained" onClick={goBack}>
-            Back
+            {translate('Back')}
           </Button>
           <Typography sx={{ mb: 1 }} variant="h4">
-            Create New Product
+            {translate('Create New Product')}
           </Typography>
         </Stack>
         <Grid container spacing={3}>

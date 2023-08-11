@@ -77,7 +77,7 @@ export default function ProductDetails() {
                 </TabContext>
               </Card>
 
-              <RelatedProducts title={'Related Products'} category={data.category} productId={data.id} />
+              <RelatedProducts title={translate('Related Products')} category={data.category} productId={data.id} />
             </Box>
           </>
         )}

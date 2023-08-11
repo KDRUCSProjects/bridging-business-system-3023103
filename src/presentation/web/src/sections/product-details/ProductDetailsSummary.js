@@ -207,7 +207,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       </Stack>
 
       <Typography variant="h4" sx={{ mb: 2, mt: 2 }}>
-        Give Product review
+        {translate('Give Product review')}
       </Typography>
       <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
         <Rating
