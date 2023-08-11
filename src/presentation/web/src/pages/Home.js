@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 // @mui
-import Lottie from 'react-lottie';
 import { styled } from '@mui/material';
-import animationSetter from '../animations/animationSetter';
-import animation from '../animations/shop/cart (2).json';
+
 // components
 import Page from '../components/Page';
 // sections

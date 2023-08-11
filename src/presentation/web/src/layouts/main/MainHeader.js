@@ -237,9 +237,6 @@ export default function MainHeader(props) {
                 />
               ) : (
                 <>
-                  <AccountPopover />
-                  <LanguagePopover />
-                  <NotificationsPopover />
                   {!userId ? (
                     <>
                       {!isDesktopDown && (
@@ -265,7 +262,14 @@ export default function MainHeader(props) {
                         </>
                       )}
                     </>
-                  ) : null}
+                  ) : (
+                    <>
+                      {' '}
+                      <AccountPopover />
+                      <NotificationsPopover />
+                    </>
+                  )}
+                  <LanguagePopover />
                 </>
               )}
 
