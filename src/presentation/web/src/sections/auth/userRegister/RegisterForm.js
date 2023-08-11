@@ -30,6 +30,7 @@ import BaseApi from '../../../store/BaseApi';
 import useLocales from '../../../hooks/useLocales';
 // store
 import { onNextStep } from '../../../store/slices/auth/completeAuth';
+// import { chatCredientialsActions } from '../../../store/slices/chat';
 
 // ----------------------------------------------------------------------
 const RegisterSchema = yup.object().shape({
@@ -97,6 +98,15 @@ export default function RegisterForm() {
         path: '/api/users/',
         data: values,
       };
+      // const chatInfo = {
+      //   firstname: values.first_name,
+      //   lastname: values.last_name,
+      //   email: values.email,
+      //   password: values.password,
+      //   confirmPassword: values.password,
+      // };
+
+      // dispatch(chatCredientialsActions.setChatInfo(chatInfo));
       const res = await RegisterUser(query);
       if (res.error) {
         setUserAllErrors(res.error.data);

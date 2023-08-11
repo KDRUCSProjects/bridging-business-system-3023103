@@ -1,7 +1,7 @@
 const Home = {
   home: `Home`,
   pages: `Pages `,
-  register: `Resister`,
+  register: `Register`,
   login: `Login `,
 
   Others: ' Other  ',

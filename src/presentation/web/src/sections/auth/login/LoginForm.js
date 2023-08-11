@@ -11,6 +11,7 @@ import { Button, Link, Stack, IconButton, InputAdornment, Alert, TextField } fro
 // Formik & yup
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
 import BaseApi from '../../../store/BaseApi';
 // animation
 import animationSetter from '../../../animations/animationSetter';
@@ -18,6 +19,7 @@ import animation from '../../../animations/shared/hms-loading.json';
 import LoadingAnimation from '../../../animations/auth/completeAuth/loading.json';
 import ErrorAnimation from '../../../animations/auth/completeAuth/error.json';
 import SuccessFulAnimation from '../../../animations/auth/completeAuth/successful.json';
+import { isloggedActions } from '../../../store/slices/islogged';
 
 // components
 import Iconify from '../../../components/Iconify';
@@ -37,6 +39,7 @@ const loginSchema = yup.object().shape({
 });
 
 export default function LoginForm() {
+  const dispatch = useDispatch();
   const [LoginUser, LoginUserResponse] = BaseApi.useLoginUserMutation();
   const Navigate = useNavigate();
   const theme = useTheme();
@@ -60,7 +63,7 @@ export default function LoginForm() {
 
   // Collect Data from the Inputs
   const initialValues = {
-    username: 'someone@example.com',
+    username: 'programmer',
     password: 'Helmand1200@',
   };
 
@@ -92,6 +95,7 @@ export default function LoginForm() {
           animationPosition: { marginLeft: '-4em' },
         });
       } else if (res.data) {
+        dispatch(isloggedActions.setIsLogged(true));
         localStorage.setItem('Token', res.data.token);
         localStorage.setItem('userEmail', res.data.user.email);
         localStorage.setItem('userName', res.data.user.username);

@@ -68,6 +68,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
   const userId = localStorage.getItem('userId');
 
   const handlClick = async () => {
+    window.location.reload();
     const value = { product: product.id, user: userId, ratting_stars: rvalue };
     const query = { path: '/api/ratting/', data: value };
 
