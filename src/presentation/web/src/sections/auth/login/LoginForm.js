@@ -60,7 +60,7 @@ export default function LoginForm() {
 
   // Collect Data from the Inputs
   const initialValues = {
-    username: 'wahab.cs238@gmail.com',
+    username: 'someone@example.com',
     password: 'Helmand1200@',
   };
 
