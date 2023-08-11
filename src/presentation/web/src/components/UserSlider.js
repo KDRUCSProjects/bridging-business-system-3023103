@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Box, Container, Typography, Link, Button, Stack, Card } from '@mui/material';
-
+import useLocales from '../hooks/useLocales';
 // components
 import Image from './Image';
 import { CarouselArrows } from './carousel';
@@ -19,6 +19,7 @@ import BaseApi from '../store/BaseApi';
 export default function TopProductSlider(props) {
   const { isSuccess, data, isError, isLoading } = BaseApi.useGetAllUsersQuery('api/business_profile/');
   const { settings, title } = props;
+  const { translate } = useLocales();
   const userId = localStorage.getItem('userId');
   if (isError) {
     <h1>Error </h1>;
@@ -62,7 +63,8 @@ export default function TopProductSlider(props) {
       </Box>
 
       <Button href={'/users'} sx={{ mt: 1 }}>
-        View All Businesses</Button>
+        {translate('View All Businesses')}
+      </Button>
     </Container>
   ) : (
     'Data Not Found'
@@ -81,6 +83,7 @@ MemberCard.propTypes = {
 
 function MemberCard({ member, linkto }) {
   const { businessName, avator } = member;
+  const { translate } = useLocales();
   return (
     <Card sx={{ ml: 0.5 }}>
       <Box sx={{ position: 'relative' }}>
@@ -92,7 +95,7 @@ function MemberCard({ member, linkto }) {
         </Typography>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Button href={linkto} variant="outlined" fullWidth>
-            View Profile
+            {translate('View Profile')}
           </Button>
         </Stack>
       </Stack>

@@ -84,9 +84,6 @@ class Product(models.Model):
     def __str__(self):
         return str(self.user) + " product " + self.name
 
-    class Meta:
-        ordering = ["created_at"]
-
 
 class ProductImage(models.Model):
     image = models.ImageField(blank=True, null=True)
@@ -117,9 +114,9 @@ class BusinessFavoriteProduct(models.Model):
 
 
 class ContactUs(models.Model):
-    subject=models.TextField(max_length=50,null=True)
-    name=models.TextField(max_length=50,null=True)
-    email=models.EmailField(null=True)
+    subject = models.TextField(max_length=50, null=True)
+    name = models.TextField(max_length=50, null=True)
+    email = models.EmailField(null=True)
     message = models.TextField(null=True)
     create_at = models.DateTimeField(auto_now_add=True)
 
@@ -127,7 +124,7 @@ class ContactUs(models.Model):
         return str(self.name)
 
 
-class Ratting(models.Model): 
+class Ratting(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="ratting_bussiness"
     )

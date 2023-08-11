@@ -1,3 +1,3 @@
 // ----------------------------------------------------------------------
 
-export const email = ['wahab.cs238@gmail.com'];
+export const email = ['someone@example.com'];

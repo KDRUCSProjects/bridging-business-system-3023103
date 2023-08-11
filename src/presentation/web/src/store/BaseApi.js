@@ -9,6 +9,7 @@ const BaseApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
 
+
       // If we have a token set in state, let's assume that we should be passing it.
       if (token) {
         headers.set('Authorization', `Token ${token}`);
@@ -31,6 +32,7 @@ const BaseApi = createApi({
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),
+    UpdateBusinesProfile: builder.mutation(allServices.mutations.UpdateProfile),
 
     // Product
     CreateProduct: builder.mutation(allServices.mutations.CreateProduct),
@@ -45,7 +47,7 @@ const BaseApi = createApi({
     // -----------------------------Queries-------------------------------
     // profile
     GetBusinessProfile: builder.query(allServices.queries.GetProfile),
-
+    GetSpecificProfile: builder.query(allServices.queries.GetSpecificProfile),
     // contact
     AllContactMessage: builder.query(allServices.queries.AllContactMessage),
 
@@ -69,6 +71,14 @@ const BaseApi = createApi({
     // advertisment
     GetAllAdvertisments: builder.query(allServices.queries.GetAllAdvertisments),
     GetSpecificAdvertisment: builder.query(allServices.queries.GetSpecificAdvertisment),
+
+    // Ratting
+    GetAllRattings: builder.query(allServices.queries.GetAllRattings),
+    GetSpecificRatting: builder.query(allServices.queries.GetSpecificRatting),
+
+    // Ratting
+    GetAllOrders: builder.query(allServices.queries.GetAllOrders),
+    GetSpecificOrder: builder.query(allServices.queries.GetSpecificOrder),
   }),
 });
 

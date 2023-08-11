@@ -21,10 +21,13 @@ import { UserQuery } from './services/queries/profile';
 import { ColorQuery } from './services/queries/color';
 import { AdvetismentQuery } from './services/queries/advertisement';
 import { AllContactMessage } from './services/queries/contact';
+import { RattingQuery } from './services/queries/Ratting';
+import { OrderQuery } from './services/queries/Order';
 
 // Services From Redux Toolkit Query
 export const allServices = {
   queries: {
+    ...OrderQuery,
     ...ProfileQueries,
     ...ProductQuery,
     ...CategoryQuery,
@@ -32,6 +35,7 @@ export const allServices = {
     ...ColorQuery,
     ...AdvetismentQuery,
     AllContactMessage,
+    RattingQuery,
   },
   mutations: {
     ...ProfileMutations,

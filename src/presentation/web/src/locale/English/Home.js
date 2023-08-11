@@ -1,21 +1,20 @@
-
-
-
-
 const Home = {
-    home: `Home`,
-    pages: `Pages `,
-    register: `Resister`,
-    login: `Login `,
-    
-    Others: ' Other  ',
-    'about us' :'About us ',
-    'contact us' :'Contact us ',
-    categories: 'Categories',
-    Top_Product:'Top Product',
-    Search: 'Search',
+  home: `Home`,
+  pages: `Pages `,
+  register: `Resister`,
+  login: `Login `,
 
+  Others: ' Other  ',
+  'about us': 'About us ',
+  'contact us': 'Contact us ',
+  categories: 'Categories',
+  Top_Product: 'Top Product',
+  Search: 'Search',
+  Businesses: 'Businesses',
+  'New Arrivals': 'New Arrivals',
+  'View All Businesses': 'View All Businesses',
 
-  };
-  
-  export default Home;
+  'View Profile': 'View Profile',
+};
+
+export default Home;

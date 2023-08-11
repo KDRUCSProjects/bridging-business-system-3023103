@@ -57,7 +57,9 @@ from .access_policies.category import CategoryAccessPolicy
 from .access_policies.order import OrderAccessPolicy
 from .access_policies.Product import ProductAccessPolicy
 from .pagination import ProductPagination, BusinessPagination
-from .filters import ProductFilter
+from .filters import ProductFilter, BusinessProfileFilter
+from rest_framework.decorators import action
+from django.db.models import Avg
 
 # Permition:
 # isAuthuticated
@@ -87,12 +89,14 @@ class ProductImageViewSet(viewsets.ModelViewSet):
 
 class OrderViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["user"]
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 
 class OrderDetailViewSet(viewsets.ModelViewSet):
-    permission_classes = [OrderAccessPolicy]
+    # permission_classes = [OrderAccessPolicy]
     queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailSerializer
 
@@ -125,7 +129,7 @@ class BusinessProfileViewSet(viewsets.ModelViewSet):
     pagination_class = BusinessPagination
     filter_backends = [DjangoFilterBackend, SearchFilter]
     search_fields = ["businessName"]
-    filterset_fields = ["user"]
+    filterset_class = BusinessProfileFilter
 
 
 class ProductColorViewSet(viewsets.ModelViewSet):
@@ -168,9 +172,31 @@ class BusinessFavoriteProductViewSet(viewsets.ModelViewSet):
 
 class RattingViewSet(viewsets.ModelViewSet):
     queryset = Ratting.objects.all()
-    serializer_class = RattingSerializer
+    # serializer_class = RattingSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["product"]
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.action == "top_product":
+            return ProductSerializer
+        else:
+            return RattingSerializer
+
+    @action(detail=False, methods=["get"])
+    def top_product(self, request):
+        ratted_products = (
+            Ratting.objects.values("product")
+            .annotate(avg_ratting=Avg("ratting_stars"))
+            .order_by("-avg_ratting")
+        )
+        ids = []
+        print(ratted_products)
+        for product in ratted_products:
+            p = product
+            ids.append(p["product"])
+        product = Product.objects.filter(id__in=ids)
+        serializer = ProductSerializer(product, many=True)
+        return Response(serializer.data)
 
 
 class PaymentViewSet(viewsets.ModelViewSet):

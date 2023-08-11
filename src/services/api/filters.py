@@ -1,5 +1,5 @@
 import django_filters
-from .models import Product
+from .models import Product, BusinessProfile
 
 
 class ProductFilter(django_filters.FilterSet):
@@ -13,3 +13,14 @@ class ProductFilter(django_filters.FilterSet):
             "user",
             "category",
         ]
+
+
+class BusinessProfileFilter(django_filters.FilterSet):
+    # exact must remove
+    business_type = django_filters.CharFilter(
+        field_name="business_type", lookup_expr="contains"
+    )
+
+    class Meta:
+        model = BusinessProfile
+        fields = ["business_type", "user"]

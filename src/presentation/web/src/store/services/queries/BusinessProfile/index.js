@@ -3,5 +3,10 @@ const GetProfile = {
     url: path,
   }),
 };
+const GetSpecificProfile = {
+  query: (path) => ({
+    url: path,
+  }),
+};
 
-export const ProfileQueries = { GetProfile };
+export const ProfileQueries = { GetProfile, GetSpecificProfile };

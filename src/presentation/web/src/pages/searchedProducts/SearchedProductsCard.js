@@ -108,7 +108,7 @@ export function PostContent({ productContent }) {
           {name}
         </Typography>
         <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-          price({price})
+          {price} AF
         </Typography>
       </Stack>
       <TextMaxLine variant={'subtitle2'} line={2} persistent>
@@ -135,8 +135,7 @@ export function PostContent({ productContent }) {
           color: 'text.disabled',
         }}
       >
-        <ColorPreview colors={color} />
-        items({quantity})
+        <ColorPreview colors={color} />({quantity})items
       </Stack>
     </CardContent>
   );

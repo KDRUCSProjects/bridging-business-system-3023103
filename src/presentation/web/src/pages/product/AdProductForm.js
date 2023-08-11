@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Lottie from 'react-lottie';
 // form
@@ -11,7 +11,18 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Container } from '@mui/material';
+import {
+  Card,
+  Chip,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+  Autocomplete,
+  InputAdornment,
+  Container,
+  Button,
+} from '@mui/material';
 import useLocales from '../../hooks/useLocales';
 
 import PostingProduct from '../../animations/product/postingproduct.json';
@@ -49,6 +60,7 @@ AdProductForm.propTypes = {
 
 export default function AdProductForm({ isEdit, currentProduct, colors }) {
   const theme = useTheme();
+  const { refetch } = BaseApi.useGetAllProductsQuery('/api/product/');
   const { data } = BaseApi.useGetAllCategoriesQuery('api/category/');
   // const { data: colors } = BaseApi.useGetAllColorsQuery('api/product_color/');
   const [CreateProduct] = BaseApi.useCreateProductMutation();
@@ -212,6 +224,7 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
         }, 1500);
       }
     }
+    refetch();
   };
 
   const handleDrop = useCallback(
@@ -238,13 +251,20 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
 
     setValue('uploaded_images', filteredItems);
   };
-
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Container component={MotionContainer}>
-        <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
-          Create New Product
-        </Typography>
+        <Stack direction={'row'} justifyContent={'space-between'}>
+          <Button sx={{ mb: 2 }} variant="contained" onClick={goBack}>
+            {translate('Back')}
+          </Button>
+          <Typography sx={{ mb: 1 }} variant="h4">
+            {translate('Create New Product')}
+          </Typography>
+        </Stack>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <Card sx={{ p: 3 }}>

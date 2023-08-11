@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Typography, Card, CardContent } from '@mui/material';
 import Lottie from 'react-lottie';
 import animationSetter from '../../../../animations/animationSetter';
-import welcome from '../../../../animations/wellcome2.json';
+import welcome from '../../../../animations/dash.json';
 
 // ----------------------------------------------------------------------
 
@@ -47,9 +47,8 @@ export default function AppWelcome({ title, description, action, img, ...other }
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
           {description}
         </Typography>
-
       </CardContent>
-        <Lottie options={animationSetter(welcome)} width={'25%'} />
+      <Lottie options={animationSetter(welcome)} width={'25%'} />
     </RootStyle>
   );
 }

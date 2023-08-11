@@ -1,4 +1,4 @@
-import { Typography, Card, CardContent, Stack , Button } from '@mui/material';
+import { Typography, Card, CardContent, Stack, Button } from '@mui/material';
 import useResponsive from '../../../../hooks/useResponsive';
 
 // components
@@ -9,7 +9,7 @@ import TextMaxLine from '../../../../components/TextMaxLine';
 export default function ProductTableRow(product) {
   return (
     <Card sx={{ mb: 4 }}>
-      <Image alt="cover" src={product?.product.avator} sx={{ height: 250 }} />
+      <Image alt="cover" src={product?.product.avator} sx={{ height: 240 }} />
       <PostContent product={product} />
     </Card>
   );
@@ -26,15 +26,14 @@ export function PostContent({ product }) {
         </Typography>
       </Stack>
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography sx={{typography: 'caption' }}>{'person posted the product'}</Typography>
+        <Typography sx={{ typography: 'caption' }}>{'person posted the product'}</Typography>
       </Stack>
       <TextMaxLine variant={'subtitle2'} line={2} persistent>
-        {
-          product.product.detials
-        }
+        {product.product.detials}
       </TextMaxLine>
-        <Button href={`/userprofile/${product.product.user}/`} sx={{mt:2}} fullWidth variant='outlined' >View Profile</Button>
-      
+      <Button href={`/userprofile/${product.product.user}/`} sx={{ mt: 2 }} fullWidth variant="outlined">
+        View Profile
+      </Button>
     </CardContent>
   );
 }

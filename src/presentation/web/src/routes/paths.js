@@ -20,6 +20,7 @@ export const PATH_AUTH = {
   checkOut: path(ROOTS_AUTH, '/checkout'),
   registerComplete: path(ROOTS_AUTH, '/complete-register'),
   CompleteForgotPassword: path(ROOTS_AUTH, '/complete-forgotpassword'),
+  welcomepage: path(ROOTS_AUTH, '/welcomepage'),
 };
 
 // Root Pages
@@ -28,12 +29,14 @@ export const PATH_PAGE = {
   contact: path(PATH_PAGE_ROOT, 'contact-us'),
   businessProfile: path(PATH_PAGE_ROOT, 'profile/:id/'),
   createProfile: path(PATH_PAGE_ROOT, 'create/profile'),
-  updateProfile: path(PATH_PAGE_ROOT, 'update/profile'),
+  updateProfile: path(PATH_PAGE_ROOT, 'update/profile/:id/'),
   prodcutdetails: path(PATH_PAGE_ROOT, `product/details/:id/`),
   addToCart: path(PATH_PAGE_ROOT, 'addto/cart'),
   UserProfile: path(PATH_PAGE_ROOT, 'userprofile/:id'),
   Users: path(PATH_PAGE_ROOT, 'users'),
   SearchedProducts: path(PATH_PAGE_ROOT, 'searched/products/'),
   SearchedProductsByName: path(PATH_PAGE_ROOT, 'searched/products/:productName'),
+
+  // welcomepage: path(PATH_PAGE_ROOT, 'welcomepage'),
   notFound: path(PATH_PAGE_ROOT, '404'),
 };

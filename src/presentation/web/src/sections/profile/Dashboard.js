@@ -16,24 +16,45 @@ import AppAreaInstalled from '../@dashboard/general/app/AppAreaInstalled';
 import BaseApi from '../../store/BaseApi';
 // ----------------------------------------------------------------------
 
-export default function Dashboard(id) {
-  const { data } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id.id}`);
+export default function Dashboard({ id, orderdata }) {
+  const { data } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
+
+  // -------------------------- getting products data ----------------------------------------
   const newdata = data?.results;
   const { user } = useAuth();
   const theme = useTheme();
   const totalquantities = sum(newdata?.map((item) => item.quantity));
-
   const totalPrice = sum(newdata?.map((item) => item.quantity * item.price));
-
   const avgrating = sum(newdata?.map((item) => item.ratting));
-
   const total = sum(newdata?.map((item) => item.productRatting.length));
   const totalrating = newdata?.map((item) => item.ratting);
-  const totalavg = avgrating / totalrating?.length ;
-
-  const { themeStretch } = useSettings();
+  const totalavg = avgrating / totalrating?.length;
   const results = newdata?.map((item) => item.quantity);
   const prices = newdata?.map((item) => item.price);
+  // -------------------------------------------------------------------------------------------
+  // ------------------------ getting order list data ------------------------------------------
+  const ordersum = sum(orderdata?.map((item) => item.total));
+  const ordersPrices = orderdata?.map((item) => item.total);
+
+  const purchasedProducts = sum(
+    orderdata?.map((item) => {
+      return sum(
+        item.order_details.map((item1) => {
+          return item1.quantity;
+        })
+      );
+    })
+  );
+
+  const purchasedProductsPerOrder = orderdata?.map((item) => {
+    return sum(
+      item.order_details.map((item1) => {
+        return item1.quantity;
+      })
+    );
+  });
+  // ---------------------------------------------------------------------------------------------
+  const { themeStretch } = useSettings();
   return (
     <Page title="Dashboard">
       <Grid container spacing={3}>
@@ -46,64 +67,47 @@ export default function Dashboard(id) {
         <Grid item xs={12} md={4}>
           <RattingWidgetSum rating={totalavg} total={total} chartColor={theme.palette.primary.main} />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <AppWidgetSummary
             title="Total Products"
-            percent={2.6}
             total={totalquantities}
             chartColor={theme.palette.primary.main}
             chartData={results}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <AppWidgetSummary
             title="Net Worth"
-            percent={0.2}
             total={totalPrice}
             chartColor={theme.palette.chart.blue[0]}
             chartData={prices}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+
+        <Grid item xs={12} md={6}>
           <AppWidgetSummary
-            title="recived cash"
-            percent={-0.1}
-            total={678}
+            title="Purchased Products"
+            total={purchasedProducts}
             chartColor={theme.palette.chart.red[0]}
-            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
+            chartData={purchasedProductsPerOrder}
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6}>
+          <AppWidgetSummary
+            title="Expenses"
+            total={ordersum}
+            chartColor={theme.palette.chart.red[0]}
+            chartData={ordersPrices}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={8} lg={6}>
           <AppCurrentDownload
             title="Statistic"
             chartColors={[theme.palette.primary.light, theme.palette.secondary.main]}
             chartData={[
               { label: 'Net Worth', value: totalPrice },
-              { label: 'Recived cash', value: 3000 },
-            ]}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={6} lg={8}>
-          <AppAreaInstalled
-            title="Area Installed"
-            subheader="(+43%) than last year"
-            chartLabels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']}
-            chartData={[
-              {
-                year: '2019',
-                data: [
-                  { name: 'Asia', data: [10, 41, 35, 51, 49, 62, 69, 91, 148] },
-                  { name: 'America', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] },
-                ],
-              },
-              {
-                year: '2020',
-                data: [
-                  { name: 'Asia', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-                  { name: 'America', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] },
-                ],
-              },
+              { label: 'Expenses', value: ordersum },
             ]}
           />
         </Grid>
