@@ -176,7 +176,7 @@ class RattingViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["product"]
 
-    def get_serializer(self, *args, **kwargs):
+    def get_serializer_class(self, *args, **kwargs):
         if self.action == "top_product":
             return ProductSerializer
         else:

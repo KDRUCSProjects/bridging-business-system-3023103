@@ -56,6 +56,7 @@ ProductDetailsSummary.propTypes = {
 };
 
 export default function ProductDetailsSummary({ cart, product, onAddCart, onGotoStep, ...other }) {
+  const { refetch } = BaseApi.useGetAllProductsQuery('/api/ratting/');
   const { translate } = useLocales();
   const dispatch = useDispatch();
 
@@ -75,6 +76,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     const sizes = [43, 44, 45, 56, 47];
 
     const res = await CreateRating(query);
+    refetch();
   };
   const { id, color, name, quantity, price, productRatting, user, ratting } = product;
   const alreadyProduct = cart.map((item) => item.id).includes(id);

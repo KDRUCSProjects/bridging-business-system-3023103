@@ -55,6 +55,7 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 export default function EcommerceProductList(newdata) {
+  const { refetch } = BaseApi.useGetAllProductsQuery('/api/product/');
   const newdata1 = newdata.newdata.results;
   const {
     dense,
@@ -101,6 +102,7 @@ export default function EcommerceProductList(newdata) {
     setSelected([]);
     DeleteProduct(`/api/product/${deleteRow[0].id}/`);
     setTableData(RemindRow);
+    refetch();
   };
 
   const handleDeleteRows = (selected) => {

@@ -60,6 +60,7 @@ AdProductForm.propTypes = {
 
 export default function AdProductForm({ isEdit, currentProduct, colors }) {
   const theme = useTheme();
+  const { refetch } = BaseApi.useGetAllProductsQuery('/api/product/');
   const { data } = BaseApi.useGetAllCategoriesQuery('api/category/');
   // const { data: colors } = BaseApi.useGetAllColorsQuery('api/product_color/');
   const [CreateProduct] = BaseApi.useCreateProductMutation();
@@ -223,6 +224,7 @@ export default function AdProductForm({ isEdit, currentProduct, colors }) {
         }, 1500);
       }
     }
+    refetch();
   };
 
   const handleDrop = useCallback(

@@ -71,7 +71,7 @@ export default function BusinessProfile() {
             position: 'relative',
           }}
         >
-          <ProfileCover myProfile={data} />
+          <ProfileCover myProfile={data} condition={true} />
           <TabsWrapperStyle>
             <Tabs
               allowScrollButtonsMobile
