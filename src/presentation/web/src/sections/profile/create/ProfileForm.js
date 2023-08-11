@@ -86,7 +86,7 @@ export default function ProfileForm() {
     []
   );
   const methods = useForm({
-    resolver: yupResolver(NewUserSchema),
+    // resolver: yupResolver(NewUserSchema),
     defaultValues,
   });
   const {

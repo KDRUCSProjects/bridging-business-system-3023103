@@ -34,7 +34,7 @@ import Page from '../../components/Page';
 import Snack from '../../components/Snack';
 
 // store
-import BaseApi from '../../store/BaseApi';
+import noTokenApi from '../../store/noTokenApi';
 import { onNextStep } from '../../store/slices/auth/completeForgotPassword';
 
 // ----------------------------------------------------------------------
@@ -103,7 +103,7 @@ export default function Register() {
   };
 
   const theme = useTheme();
-  const [ForgotPasswordEmail, response] = BaseApi.useForgotPasswordEmailMutation();
+  const [ForgotPasswordEmail, response] = noTokenApi.useForgotPasswordEmailMutation();
 
   const [snackOptions, setSnackOptions] = useState({
     open: false,
@@ -151,7 +151,7 @@ export default function Register() {
           backgroundColor: theme.palette.background.paper,
           color: theme.palette.error.main,
           animation: !smDown ? <Lottie options={animationSetter(EmailError)} width="12em" height="4em" /> : undefined,
-          message: Object.values(res.error.data),
+          message: 'something Went Wrong',
           animationPosition: { marginLeft: !smDown ? '-4em' : undefined },
         });
       } else if (res.data) {

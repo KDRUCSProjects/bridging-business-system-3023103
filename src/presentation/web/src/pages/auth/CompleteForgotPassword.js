@@ -31,12 +31,7 @@ QontoStepIcon.propTypes = {
   active: PropTypes.bool,
   completed: PropTypes.bool,
 };
-const STEPS = [
-  'Email',
-  'verify Password',
-  'new Password',
-  <Lottie options={animationSetter(animation)} width={'100px'} height={'50px'} />,
-];
+const STEPS = ['Email', 'verify Password', 'new Password'];
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   top: 20,
@@ -97,7 +92,7 @@ export default function CompleteForgotPassword() {
         <Grid container justifyContent={isComplete ? 'center' : 'flex-start'}>
           <Grid item xs={12} md={8} sx={{ mb: 5 }}>
             <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
-              {STEPS.map((label) => (
+              {STEPS.map((label, i) => (
                 <Step key={label}>
                   <StepLabel
                     StepIconComponent={QontoStepIcon}
@@ -112,11 +107,24 @@ export default function CompleteForgotPassword() {
                   </StepLabel>
                 </Step>
               ))}
+              <Step>
+                <StepLabel
+                  StepIconComponent={QontoStepIcon}
+                  sx={{
+                    '& .MuiStepLabel-label': {
+                      typography: 'subtitle2',
+                      color: 'text.disabled',
+                    },
+                  }}
+                >
+                  <Lottie options={animationSetter(animation)} width={'100px'} height={'50px'} />
+                </StepLabel>
+              </Step>
             </Stepper>
           </Grid>
         </Grid>
-        {activeStep === 0 && <ForgotPasswordEmail />}
-        {activeStep === 1 && <ForgotPasswordVerify />}
+        {/* {activeStep === 0 && <ForgotPasswordEmail />} */}
+        {activeStep === 0 && <ForgotPasswordVerify />}
         {activeStep === 2 && <ConfirmPassword />}
         {activeStep === 3 && <Login />}
       </Container>

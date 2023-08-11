@@ -20,12 +20,6 @@ const BaseApi = createApi({
   endpoints: (builder) => ({
     // -----------------------------Mutations-----------------------------
     // Auth
-    LoginUser: builder.mutation(allServices.mutations.LoginUser),
-    VerifyUser: builder.mutation(allServices.mutations.VerifyUser),
-    RegisterUser: builder.mutation(allServices.mutations.RegisterUser),
-    ForgotPasswordEmail: builder.mutation(allServices.mutations.ForgotPasswordEmail),
-    VerifyPassword: builder.mutation(allServices.mutations.VerifyPassword),
-    NewPassword: builder.mutation(allServices.mutations.NewPassword),
     Resetpassword: builder.mutation(allServices.mutations.Resetpassword),
     LogoutUser: builder.mutation(allServices.mutations.LogoutUser),
 

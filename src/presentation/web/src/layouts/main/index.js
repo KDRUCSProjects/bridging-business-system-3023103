@@ -37,7 +37,7 @@ export default function MainLayout() {
             <Logo sx={{ mb: 1, mx: 'auto' }} />
 
             <Typography variant="caption" component="p">
-              Developed with Love❤Adil
+              Developed with Love ❤ By Raqib Yoon
             </Typography>
           </Container>
         </Box>

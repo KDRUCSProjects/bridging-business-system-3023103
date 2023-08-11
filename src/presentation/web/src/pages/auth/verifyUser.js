@@ -23,7 +23,7 @@ import SuccessAnimation from '../../animations/auth/completeAuth/successful.json
 import ErrorAnimation from '../../animations/auth/completeAuth/error.json';
 // components
 import Page from '../../components/Page';
-import BaseApi from '../../store/BaseApi';
+import noTokenApi from '../../store/noTokenApi';
 import Snack from '../../components/Snack';
 
 // store
@@ -61,8 +61,8 @@ export default function VerifyUser() {
   };
 
   const theme = useTheme();
-  const [UserVerify, { isLoading }] = BaseApi.useVerifyUserMutation();
-  const [OTPAgain, OTPagainResponse] = BaseApi.useVerifyPasswordMutation();
+  const [UserVerify, { isLoading }] = noTokenApi.useVerifyUserMutation();
+  const [OTPAgain, OTPagainResponse] = noTokenApi.useVerifyPasswordMutation();
 
   const [snackOptions, setSnackOptions] = useState({
     open: true,

@@ -21,6 +21,7 @@ export default function CheckoutCart(activeStep) {
   const productList = useSelector((store) => store.checkout.checkout.cart);
   const quantity = useSelector((store) => store.checkout.quantity);
 
+
   const dispatch = useDispatch();
 
   const { checkout } = useSelector((store) => store.checkout);

@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import { useEffect } from 'react';
+import _ from 'lodash';
 
 // @mui
 import { styled } from '@mui/material/styles';
@@ -20,6 +21,7 @@ import Payment from '../Payment';
 import { CheckoutOrderComplete, CheckoutNewAddressForm, CheckoutCart } from '../../sections/checkout';
 
 // components
+
 import Page from '../../components/Page';
 import Logo from '../../components/Logo';
 import Iconify from '../../components/Iconify';
@@ -30,6 +32,7 @@ QontoStepIcon.propTypes = {
   active: PropTypes.bool,
   completed: PropTypes.bool,
 };
+
 const STEPS = ['Cart', 'Address', 'Payment'];
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
@@ -118,7 +121,6 @@ export default function Checkout() {
             </Stepper>
           </Grid>
         </Grid>
-
         {activeStep === 0 && <CheckoutCart />}
         {activeStep === 1 && <CheckoutNewAddressForm />}
         {activeStep === 2 && <Payment />}
