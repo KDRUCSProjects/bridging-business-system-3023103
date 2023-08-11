@@ -40,6 +40,8 @@ const BaseApi = createApi({
     DeleteProduct: builder.mutation(allServices.mutations.DeleteProduct),
     // Rating Mutation
     CreateRating: builder.mutation(allServices.mutations.CreateRating),
+    // Order Mutation
+    CreateOrder: builder.mutation(allServices.mutations.CreateOrder),
 
     // Rating Mutation
     CreateContactMessage: builder.mutation(allServices.mutations.CreateContactMessage),

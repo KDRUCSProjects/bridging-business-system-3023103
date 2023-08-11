@@ -12,6 +12,7 @@ import Resetpassword from './services/mutations/auth/resetPassword';
 import LogoutUser from './services/mutations/auth/logout';
 import CreateRating from './services/mutations/rating';
 import { CreateContactMessage } from './services/mutations/contact';
+import { CreateOrder } from './services/mutations/order';
 
 // Queries
 import { ProfileQueries } from './services/queries/BusinessProfile';
@@ -51,6 +52,7 @@ export const allServices = {
     LoginUser,
     Resetpassword,
     LogoutUser,
+    CreateOrder,
   },
 };
 

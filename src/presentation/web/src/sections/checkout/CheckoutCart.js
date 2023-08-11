@@ -25,7 +25,7 @@ export default function CheckoutCart(activeStep) {
 
   const { checkout } = useSelector((store) => store.checkout);
 
-  const { cart, total, subtotal } = checkout;
+  const { cart, total } = checkout;
 
   const totalItems = sum(cart.map((item) => item.quantity));
 
@@ -40,7 +40,6 @@ export default function CheckoutCart(activeStep) {
   const handleQuantity = (productId, DirectQuantity) => {
     dispatch(handleDirectQuantity(productId, DirectQuantity));
   };
-  console.log(quantity);
 
   const { translate } = useLocales();
 
@@ -88,7 +87,7 @@ export default function CheckoutCart(activeStep) {
       </Grid>
 
       <Grid item xs={12} md={4}>
-        <CheckoutSummary total={total} subtotal={subtotal} />
+        <CheckoutSummary total={total} />
         <Button
           fullWidth
           size="large"
