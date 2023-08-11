@@ -31,6 +31,7 @@ const BaseApi = createApi({
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),
+    UpdateBusinesProfile: builder.mutation(allServices.mutations.UpdateProfile),
 
     // Product
     CreateProduct: builder.mutation(allServices.mutations.CreateProduct),
@@ -45,7 +46,7 @@ const BaseApi = createApi({
     // -----------------------------Queries-------------------------------
     // profile
     GetBusinessProfile: builder.query(allServices.queries.GetProfile),
-
+    GetSpecificProfile: builder.query(allServices.queries.GetSpecificProfile),
     // contact
     AllContactMessage: builder.query(allServices.queries.AllContactMessage),
 

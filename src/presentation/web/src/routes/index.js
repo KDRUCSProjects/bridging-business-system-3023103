@@ -68,7 +68,7 @@ export default function Router() {
         { path: PATH_PAGE.contact, element: <Contact /> },
         { path: PATH_PAGE.createProfile, element: <CreateProfile /> },
         { path: PATH_PAGE.businessProfile, element: <BusinessProfile /> },
-        { path: PATH_PAGE.updateProfile, element: <UpdateProfile /> },
+        { path: PATH_PAGE.updateProfile, element: <CreateProfile /> },
         // { path: PATH_PAGE.payment, element: <PaymentPage /> },
         { path: PATH_PAGE.addToCart, element: <AddToCart /> },
         { path: PATH_PAGE.prodcutdetails, element: <ProductDetails /> },

@@ -7,5 +7,13 @@ const CreateProfile = {
     formData: true,
   }),
 };
+const UpdateProfile = {
+  query: (query) => ({
+    url: query.path,
+    method: 'PUT',
+    body: query.data,
+    formData: true,
+  }),
+};
 
-export const ProfileMutations = { CreateProfile };
+export const ProfileMutations = { CreateProfile, UpdateProfile };
