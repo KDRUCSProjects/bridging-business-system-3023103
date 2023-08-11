@@ -65,8 +65,8 @@ export default function ProfileCover({ myProfile }) {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          <Typography variant="h4">{myProfile[0]?.businessName}</Typography>
-          <Typography sx={{ opacity: 0.72 }}>{myProfile[0]?.business_type}</Typography>
+          <Typography variant="h4">{myProfile.results[0]?.businessName}</Typography>
+          <Typography sx={{ opacity: 0.72 }}>{myProfile.results[0]?.business_type}</Typography>
         </Box>
       </InfoStyle>
       <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
