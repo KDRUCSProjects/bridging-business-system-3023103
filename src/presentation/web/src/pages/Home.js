@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material';
 
 // components
+
+import { useSelector } from 'react-redux';
 import Page from '../components/Page';
 // sections
 import { categorySlider } from '../sections/home';
@@ -20,6 +22,7 @@ import TopProductSlider from '../components/TopProductSlider';
 import UserSlider from '../components/UserSlider';
 // Card
 import ShopProductList from '../sections/shop/ShopProductList';
+
 // store
 import BaseApi from '../store/BaseApi';
 
@@ -46,6 +49,23 @@ export default function HomePage() {
   }));
   const { translate } = useLocales();
   const isMatchMobile = useResponsive('down', 'sm');
+  const isLogged = useSelector((store) => store.islogged.isLogged);
+
+  if (isLogged) {
+    window.location.reload();
+  }
+  // const onChat = () => {
+  //   const data = {
+  //     firtanme: 'adiljan',
+  //     lastname: 'adil',
+  //     email: 'adil@gmail.com',
+  //     password: 'helmand',
+  //     confirmPassword: 'helmand',
+  //     image: 'hem',
+  //   };
+  //   const result = axios.post('http://localhost:8002', data).then((res) => res.data);
+  //   console.log(result);
+  // };
   return isSuccess ? (
     <Page title="Briging Businesses">
       <ContentStyle>

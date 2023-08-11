@@ -25,6 +25,8 @@ import animationSetter from '../../../animations/animationSetter';
 import LoadingAnimation from '../../../animations/auth/completeAuth/loading.json';
 import SuccessAnimation from '../../../animations/auth/completeAuth/successful.json';
 import ErrorAnimation from '../../../animations/auth/completeAuth/error.json';
+import { isloggedActions } from '../../../store/slices/islogged';
+// import { chatCredientialsActions } from '../../../store/slices/chat';
 
 import { onCompleteReset } from '../../../store/slices/auth/completeAuth';
 
@@ -140,7 +142,9 @@ export default function ProfileForm() {
         animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
     } else if (res.data) {
+      // dispatch(chatCredientialsActions.setChatImage(values.avator));
       localStorage.setItem('avatarImage', res.data.avator);
+      dispatch(isloggedActions.setIsLogged(true));
       setSnackOptions({
         open: true,
         vertical: 'top',
@@ -194,7 +198,7 @@ export default function ProfileForm() {
               <Lottie options={animationSetter(userAnimation)} />
             </Box>
             <Box sx={{ mb: 5 }}>
-              <RHFUploadAvatar name="avator" maxSize={3145728} onDrop={handleDrop} />
+              <RHFUploadAvatar name="avator" maxSize={23145728} onDrop={handleDrop} />
             </Box>
             <Box>
               <Typography sx={{ color: 'primary.main' }}>{translate('upload image')}</Typography>

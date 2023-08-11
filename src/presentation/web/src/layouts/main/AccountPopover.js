@@ -31,6 +31,11 @@ export default function AccountPopover() {
     `api/business_profile/?user=${userId}`
   );
 
+  const handleReload = () => {
+    console.log('clicked');
+    window.location.reload();
+  };
+
   const MENU_OPTIONS = [
     {
       label: 'Home',
@@ -73,6 +78,7 @@ export default function AccountPopover() {
     if (res.error) {
       enqueueSnackbar('Unable to logout!', { variant: 'error' });
     } else {
+      handleReload();
       console.log('logouted');
       localStorage.removeItem('userId');
       localStorage.removeItem('Token');

@@ -10,6 +10,8 @@ import completeAuthSlice from './slices/auth/completeAuth';
 import completeForgotPasswordSlice from './slices/auth/completeForgotPassword';
 import auth from './slices/auth/getToken';
 import products from './slices/product/product';
+import islogged from './slices/islogged';
+import chatCredientials from './slices/chat';
 // Rtk Query
 import BaseApi from './BaseApi';
 
@@ -27,7 +29,8 @@ const rootReducer = combineReducers({
   checkout: checkoutSlice.reducer,
   completeAuth: completeAuthSlice.reducer,
   completeForgotPassword: completeForgotPasswordSlice.reducer,
-
+  islogged : islogged.reducer,
+  chatCredientials:chatCredientials.reducer,
   // Rtk -reducers
   [BaseApi.reducerPath]: BaseApi.reducer,
 });
