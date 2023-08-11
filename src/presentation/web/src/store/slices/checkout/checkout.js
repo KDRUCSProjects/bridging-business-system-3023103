@@ -110,13 +110,9 @@ const checkoutSlice = createSlice({
     },
 
     resetCart(state) {
-      state.checkout.activeStep = 0;
+      // state.checkout.activeStep = 0;
       state.checkout.cart = [];
       state.checkout.total = 0;
-      state.checkout.subtotal = 0;
-      state.checkout.discount = 0;
-      state.checkout.shipping = 0;
-      state.checkout.billing = null;
     },
 
     onBackStep(state) {

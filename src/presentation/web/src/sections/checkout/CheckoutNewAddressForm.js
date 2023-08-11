@@ -19,7 +19,7 @@ import animationSetter from '../../animations/animationSetter';
 import LoadingAnimation from '../../animations/auth/completeAuth/loading.json';
 import SuccessAnimation from '../../animations/auth/completeAuth/successful.json';
 import ErrorAnimation from '../../animations/auth/completeAuth/error.json';
-import { onNextStep, onBackStep } from '../../store/slices/checkout/checkout';
+import { onNextStep, onBackStep, resetCart } from '../../store/slices/checkout/checkout';
 import BaseApi from '../../store/BaseApi';
 import useResponsive from '../../hooks/useResponsive';
 import { useSelector, useDispatch } from '../../store/store';
@@ -86,6 +86,7 @@ export default function CheckoutNewAddressForm() {
   } = methods;
 
   const onSubmit = async () => {
+    const userId = localStorage.getItem('userId');
     const productDetails = [];
     productList.map((product) => {
       const obj = {
@@ -99,27 +100,26 @@ export default function CheckoutNewAddressForm() {
         price: product.price,
       });
     });
+    console.log('productDetails:', productDetails);
 
-    const data = new FormData();
-    const address = {
-      area: values.area,
-      district: values.district,
-      province: values.province,
-      street: values.street,
+    const data = {
+      address: {
+        area: values.area,
+        district: values.district,
+        province: values.province,
+        street: values.street,
+      },
+      total,
+      uploaded_order_products: productDetails,
+      user: userId,
     };
-    Object.entries(address).forEach(([key, value]) => {
-      data.append(`address.${key}`, value);
-    });
-    data.append('total', total);
-    data.append('uploaded_order_products', JSON.stringify(productDetails));
-    data.append('user', userId);
+
     const query = {
       path: '/api/order/',
       data,
     };
 
     const res = await createOrder(query);
-    console.log('res of', res);
     if (res.error) {
       setSnackOptions({
         open: true,
@@ -134,6 +134,7 @@ export default function CheckoutNewAddressForm() {
         animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
     } else if (res.data) {
+      dispatch(resetCart());
       setSnackOptions({
         open: true,
         vertical: 'top',
@@ -143,12 +144,12 @@ export default function CheckoutNewAddressForm() {
         animation: isLgDown ? undefined : (
           <Lottie options={animationSetter(SuccessAnimation)} width="12em" height="4em" />
         ),
-        message: 'Welcome !',
+        message: 'Order is done',
         animationPosition: isLgDown ? undefined : { marginLeft: '-4em' },
       });
-    }
 
-    // dispatch(onNextStep());
+      dispatch(onNextStep());
+    }
   };
   const onPreStep = () => {
     dispatch(onBackStep());
