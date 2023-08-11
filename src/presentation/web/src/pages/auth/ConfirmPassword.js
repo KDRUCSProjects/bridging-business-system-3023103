@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from '../../store/store';
 // components
 import Page from '../../components/Page';
 import Snack from '../../components/Snack';
-import BaseApi from '../../store/BaseApi';
+import noTokenApi from '../../store/noTokenApi';
 
 // store
 import { onNextStep } from '../../store/slices/auth/completeAuth';
@@ -54,7 +54,7 @@ const ConfirmPasswordSchema = yup.object().shape({
 // ----------------------------------------------------------------------
 
 export default function ConfirmPassowrd() {
-  const [NewPassword, newPasswordResponse] = BaseApi.useNewPasswordMutation();
+  const [NewPassword, newPasswordResponse] = noTokenApi.useNewPasswordMutation();
 
   const { translate } = useLocales();
 

@@ -64,6 +64,7 @@ CheckoutProductList.propTypes = {
 };
 
 export default function CheckoutProductList({ quantity, products, onDelete, handleQuantity }) {
+  console.log('POER', products);
   return (
     <TableContainer sx={{ minWidth: 720 }}>
       <Table>

@@ -70,7 +70,6 @@ export default function Register() {
 
   const mdUp = useResponsive('up', 'md');
   const [checkBoxBValue, setCheckBoxValue] = useState(true);
-  console.log(checkBoxBValue);
 
   return (
     <Page title="Register">

@@ -12,12 +12,13 @@ import auth from './slices/auth/getToken';
 import products from './slices/product/product';
 // Rtk Query
 import BaseApi from './BaseApi';
+import noTokenApi from './noTokenApi';
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: [BaseApi.reducerPath, products, auth],
+  blacklist: [BaseApi.reducerPath, products, auth, noTokenApi.reducerPath],
 };
 
 const rootReducer = combineReducers({
@@ -36,11 +37,11 @@ const persistReducers = persistReducer(persistConfig, rootReducer);
 
 // Store
 const store = configureStore({
-  reducer: persistReducers,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] },
-    }).concat(BaseApi.middleware),
+    }).concat([BaseApi.middleware, noTokenApi.middleware]),
 });
 
 const persistedStore = persistStore(store);

@@ -5,3 +5,5 @@ export { default as CheckoutNewAddressForm } from './CheckoutNewAddressForm';
 export { default as CheckoutOrderComplete } from './CheckoutOrderComplete';
 export { default as CheckoutProductList } from './CheckoutProductList';
 export { default as CheckoutSummary } from './CheckoutSummary';
+export { default as CheckoutCompany } from './CheckoutCompany';
+export { default as CompanyList } from './CompanyList';
