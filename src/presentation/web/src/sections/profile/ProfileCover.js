@@ -72,7 +72,7 @@ export default function ProfileCover({ myProfile, condition }) {
             <Typography variant="h4">{myProfile.results[0]?.businessName}</Typography>
             <Typography sx={{ opacity: 0.72 }}>{myProfile.results[0]?.business_type}</Typography>
           </Box>
-          {condition ? (
+          {condition === 1 ? (
             <Button
               endIcon={<ChatIcon />}
               variant="contained"
