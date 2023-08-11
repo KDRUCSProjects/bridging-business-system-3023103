@@ -18,7 +18,7 @@ export default function ResetPasswordForm() {
 
   const methods = useForm({
     resolver: yupResolver(ResetPasswordSchema),
-    defaultValues: { email: 'wahab.cs238@gmail.com' },
+    defaultValues: { email: 'someone@example.com' },
   });
 
   const {
@@ -27,7 +27,7 @@ export default function ResetPasswordForm() {
   } = methods;
 
   const onSubmit = async () => {};
-  const {translate }=useLocales()
+  const { translate } = useLocales();
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -36,7 +36,6 @@ export default function ResetPasswordForm() {
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
           {translate('send request')}
-    
         </LoadingButton>
       </Stack>
     </FormProvider>
