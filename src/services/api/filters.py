@@ -23,4 +23,4 @@ class BusinessProfileFilter(django_filters.FilterSet):
 
     class Meta:
         model = BusinessProfile
-        fields = ["business_type"]
+        fields = ["business_type", "user"]

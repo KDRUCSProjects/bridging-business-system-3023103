@@ -15,36 +15,40 @@ import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
 import { IconButtonAnimate } from '../../components/animate';
 
-
 import BaseApi from '../../store/BaseApi';
 
 // ----------------------------------------------------------------------
-const userId = localStorage.getItem('userId');
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    linkTo: '/',
-  },
-  {
-    label: 'Profile',
-    linkTo: `/profile/${Number(userId)}`,
-  },
-  {
-    label: 'Settings',
-    linkTo: '/',
-  },
-];
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
   const [LogoutUser] = BaseApi.useLogoutUserMutation();
   const userEmail1 = localStorage.getItem('userEmail');
   const userName = localStorage.getItem('userName');
-  const userId = localStorage.getItem('userId');
-  const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(`api/business_profile/?user=${userId}`);
+  const { data, isError, isSuccess, isLoading } = BaseApi.useGetSpecificUserQuery(
+    `api/business_profile/?user=${userId}`
+  );
 
+  const MENU_OPTIONS = [
+    {
+      label: 'Home',
+      linkTo: '/',
+    },
+    {
+      label: 'Profile',
+      linkTo: `/profile/${Number(userId)}`,
+    },
+    {
+      label: 'Settings',
+      linkTo: '/',
+    },
+    {
+      label: 'Edit profile',
+      linkTo: `/update/profile/${data?.results[0].id}`,
+    },
+  ];
   const { user, logout } = useAuth();
 
   const isMountedRef = useIsMountedRef();
@@ -54,7 +58,7 @@ export default function AccountPopover() {
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
-// const avator = data.avator;
+  // const avator = data.avator;
   const handleClose = () => {
     setOpen(null);
   };
@@ -80,31 +84,35 @@ export default function AccountPopover() {
       navigate('/');
     }
   };
-  
+
   return (
     <>
-{isSuccess?
-  <IconButtonAnimate
-        onClick={handleOpen}
-        sx={{
-          p: 0,
-          ...(open && {
-            '&:before': {
-              zIndex: 1,
-              content: "''",
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
-            },
-          }),
-        }}
-      >
-        <MyAvatar myphoto={data.results[0].avator} others={{ width: '10px', height: '10px' }} />
-      </IconButtonAnimate>:<MyAvatar myphoto={"https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg"} others={{ width: '10px', height: '10px' }} />
-}
-
+      {isSuccess ? (
+        <IconButtonAnimate
+          onClick={handleOpen}
+          sx={{
+            p: 0,
+            ...(open && {
+              '&:before': {
+                zIndex: 1,
+                content: "''",
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                position: 'absolute',
+                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+              },
+            }),
+          }}
+        >
+          <MyAvatar myphoto={data.results[0].avator} others={{ width: '10px', height: '10px' }} />
+        </IconButtonAnimate>
+      ) : (
+        <MyAvatar
+          myphoto={'https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg'}
+          others={{ width: '10px', height: '10px' }}
+        />
+      )}
 
       <MenuPopover
         open={Boolean(open)}

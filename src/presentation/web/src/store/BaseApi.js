@@ -8,7 +8,7 @@ const BaseApi = createApi({
     baseUrl: baseUri,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
-      console.log(token);
+
 
       // If we have a token set in state, let's assume that we should be passing it.
       if (token) {
@@ -32,6 +32,7 @@ const BaseApi = createApi({
 
     // Profile
     CreateBusinesProfile: builder.mutation(allServices.mutations.CreateProfile),
+    UpdateBusinesProfile: builder.mutation(allServices.mutations.UpdateProfile),
 
     // Product
     CreateProduct: builder.mutation(allServices.mutations.CreateProduct),
@@ -46,7 +47,7 @@ const BaseApi = createApi({
     // -----------------------------Queries-------------------------------
     // profile
     GetBusinessProfile: builder.query(allServices.queries.GetProfile),
-
+    GetSpecificProfile: builder.query(allServices.queries.GetSpecificProfile),
     // contact
     AllContactMessage: builder.query(allServices.queries.AllContactMessage),
 
