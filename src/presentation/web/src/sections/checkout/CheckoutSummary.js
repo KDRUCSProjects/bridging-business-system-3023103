@@ -23,40 +23,16 @@ import useLocales from '../../hooks/useLocales';
 
 CheckoutSummary.propTypes = {
   total: PropTypes.number,
-  discount: PropTypes.number,
   subtotal: PropTypes.number,
-  shipping: PropTypes.number,
   onEdit: PropTypes.func,
-  enableEdit: PropTypes.bool,
-  onApplyDiscount: PropTypes.func,
-  enableDiscount: PropTypes.bool,
 };
 
-export default function CheckoutSummary({
-  total,
-  onEdit,
-  discount,
-  subtotal,
-  shipping,
-  onApplyDiscount,
-  enableEdit = false,
-  enableDiscount = false,
-}) {
-  const displayShipping = shipping !== null ? 'Free' : '-';
+export default function CheckoutSummary({ total, onEdit }) {
   const { translate } = useLocales();
 
   return (
     <Card sx={{ mb: 3 }}>
-      <CardHeader
-        title={translate('Order Summary')}
-        action={
-          enableEdit && (
-            <Button size="small" onClick={onEdit} startIcon={<Iconify icon={'eva:edit-fill'} />}>
-              Edit
-            </Button>
-          )
-        }
-      />
+      <CardHeader title={translate('Order Summary')} />
 
       <CardContent>
         <Stack spacing={2}>

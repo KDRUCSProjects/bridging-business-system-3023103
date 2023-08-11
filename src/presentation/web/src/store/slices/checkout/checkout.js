@@ -77,7 +77,6 @@ const checkoutSlice = createSlice({
       const cart = action.payload;
 
       const subtotal = sum(cart.map((cartItem) => cartItem.price * cartItem.quantity));
-      const billing = cart.length === 0 ? null : state.checkout.billing;
 
       state.checkout.cart = cart;
       state.checkout.total = subtotal;
@@ -176,6 +175,7 @@ const checkoutSlice = createSlice({
 
         return product;
       });
+      console.log('updated Product', updateCart);
 
       state.checkout.cart = updateCart;
     },
