@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 // @mui
-import { styled, Typography } from '@mui/material';
+import { styled } from '@mui/material';
+
+// components
 import Page from '../components/Page';
 // sections
 import { categorySlider } from '../sections/home';
