@@ -55,6 +55,10 @@ export default function Router() {
           path: PATH_AUTH.CompleteForgotPassword,
           element: <CompleteForgotPassword />,
         },
+        {
+          path: PATH_AUTH.welcomepage,
+          element: <WelcomePage />,
+        },
       ],
     },
 
@@ -77,6 +81,7 @@ export default function Router() {
         { path: PATH_PAGE.SearchedProducts, element: <SearchedProducts /> },
         { path: PATH_PAGE.Users, element: <Users /> },
         { path: PATH_PAGE.SearchedProductsByName, element: <SearchedProductsByName /> },
+        // { path: PATH_PAGE.welcomepage, element: <WelcomePage /> },
       ],
     },
 
@@ -147,3 +152,6 @@ const SearchedProducts = Loadable(lazy(() => import('../pages/searchedProducts/S
 const Users = Loadable(lazy(() => import('../pages/userlist/Users')));
 // Searched data list
 const SearchedProductsByName = Loadable(lazy(() => import('../pages/searchedProducts/SearchedProducts')));
+
+// welcome
+const WelcomePage = Loadable(lazy(() => import('../pages/welcomepage/WelcomePage')));

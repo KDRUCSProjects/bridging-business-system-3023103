@@ -5,6 +5,7 @@ import { Container } from '@mui/material';
 // components
 import { useParams } from 'react-router';
 import Page from '../../components/Page';
+import Logo from '../../components/Logo';
 import AdProductForm from './AdProductForm';
 import useSettings from '../../hooks/useSettings';
 import BaseApi from '../../store/BaseApi';
@@ -20,6 +21,7 @@ export default function AdProduct() {
   return (
     <Page title="Create a new product">
       <Container maxWidth={themeStretch ? false : 'lg'}>
+        <Logo />
         {id && isSuccess && colorSuccess ? (
           <AdProductForm currentProduct={data} isEdit={idEdit} colors={colors} />
         ) : (

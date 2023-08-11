@@ -43,6 +43,7 @@ ProfileCover.propTypes = {
 };
 
 export default function ProfileCover({ myProfile }) {
+  console.log('::', myProfile);
   return (
     <RootStyle>
       <InfoStyle>

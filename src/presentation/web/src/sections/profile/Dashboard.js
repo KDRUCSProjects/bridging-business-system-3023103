@@ -17,7 +17,8 @@ import BaseApi from '../../store/BaseApi';
 // ----------------------------------------------------------------------
 
 export default function Dashboard({ id, orderdata }) {
-  const { data } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id.id}`);
+  const { data } = BaseApi.useGetAllProductsQuery(`api/product/?user=${id}`);
+
   // -------------------------- getting products data ----------------------------------------
   const newdata = data?.results;
   const { user } = useAuth();
@@ -66,7 +67,7 @@ export default function Dashboard({ id, orderdata }) {
         <Grid item xs={12} md={4}>
           <RattingWidgetSum rating={totalavg} total={total} chartColor={theme.palette.primary.main} />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <AppWidgetSummary
             title="Total Products"
             total={totalquantities}
@@ -74,7 +75,7 @@ export default function Dashboard({ id, orderdata }) {
             chartData={results}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <AppWidgetSummary
             title="Net Worth"
             total={totalPrice}
@@ -83,7 +84,7 @@ export default function Dashboard({ id, orderdata }) {
           />
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <AppWidgetSummary
             title="Purchased Products"
             total={purchasedProducts}
@@ -99,45 +100,14 @@ export default function Dashboard({ id, orderdata }) {
             chartData={ordersPrices}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <AppWidgetSummary
-            title="unDefine"
-            total={678}
-            chartColor={theme.palette.chart.red[0]}
-            chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+
+        <Grid item xs={12} md={8} lg={6}>
           <AppCurrentDownload
             title="Statistic"
             chartColors={[theme.palette.primary.light, theme.palette.secondary.main]}
             chartData={[
               { label: 'Net Worth', value: totalPrice },
               { label: 'Expenses', value: ordersum },
-            ]}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={6} lg={8}>
-          <AppAreaInstalled
-            title="Area Installed"
-            subheader="(+43%) than last year"
-            chartLabels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']}
-            chartData={[
-              {
-                year: '2019',
-                data: [
-                  { name: 'Asia', data: [10, 41, 35, 51, 49, 62, 69, 91, 148] },
-                  { name: 'America', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] },
-                ],
-              },
-              {
-                year: '2020',
-                data: [
-                  { name: 'Asia', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-                  { name: 'America', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] },
-                ],
-              },
             ]}
           />
         </Grid>
