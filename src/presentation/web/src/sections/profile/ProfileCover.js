@@ -43,6 +43,9 @@ const InfoStyle = styled('div')(({ theme }) => ({
 ProfileCover.propTypes = {
   myProfile: PropTypes.object,
 };
+const handleRedirect = () => {
+  window.open('http://localhost:3000/login', '_blank');
+};
 
 export default function ProfileCover({ myProfile, condition }) {
   return (
@@ -72,18 +75,16 @@ export default function ProfileCover({ myProfile, condition }) {
             <Typography variant="h4">{myProfile.results[0]?.businessName}</Typography>
             <Typography sx={{ opacity: 0.72 }}>{myProfile.results[0]?.business_type}</Typography>
           </Box>
-          {condition === 1 ? (
+          {condition === 1 ? null : (
             <Button
               endIcon={<ChatIcon />}
               variant="contained"
               sx={{ position: 'absolute', left: '9rem', bottom: '1.1em', width: '200' }}
-              component={Link}
-              to={'/'}
-              target="_blank"
+              onClick={handleRedirect}
             >
               Chat
             </Button>
-          ) : null}
+          )}
         </Stack>
       </InfoStyle>
       <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>

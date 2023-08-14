@@ -36,7 +36,7 @@ export default function Users() {
   useEffect(() => {
     axios
       .get(
-        `http://127.0.0.1:8000/api/business_profile/?search=${searchValue.businessName}&business_type=${searchValue.businessType}&page=${currentPage}`
+        `http://127.0.0.1:8002/api/business_profile/?search=${searchValue.businessName}&business_type=${searchValue.businessType}&page=${currentPage}`
       )
       .then((res) => {
         setSearchData(res.data);

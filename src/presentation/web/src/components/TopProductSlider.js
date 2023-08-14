@@ -72,9 +72,10 @@ MemberCard.propTypes = {
 
 function MemberCard({ member }) {
   const { name, images } = member;
+  const img = `http://127.0.0.1:8002${images[0]?.image}`;
   return (
     <Box key={name + images} sx={{ px: 0.5, mx: 0.5 }}>
-      <Image alt={name + images} src={images[0]?.image} ratio="1/1" sx={{ borderRadius: 1 }} />
+      <Image alt={name + images} src={img} ratio="1/1" sx={{ borderRadius: 1 }} />
       <Typography variant="subtitle1" sx={{ mt: 2, mb: 0.5, color: 'primary.dark', fontSize: '80%' }}>
         {name}
       </Typography>
