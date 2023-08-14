@@ -56,7 +56,7 @@ export default function SearchedProducts() {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/product/?search=${searchValue}`)
+      .get(`http://127.0.0.1:8002/api/product/?search=${searchValue}`)
       .then((res) => {
         setSearchedProducts(res.data);
         setProductSearchSuccess(true);
@@ -79,7 +79,7 @@ export default function SearchedProducts() {
     e.preventDefault();
     axios
       .get(
-        `http://127.0.0.1:8000/api/product/?user=&category=${input.category ? input.category : ''}&color=${
+        `http://127.0.0.1:8002/api/product/?user=&category=${input.category ? input.category : ''}&color=${
           input.color ? input.color : ''
         }&price__gt=${input.maxPrice ? input.maxPrice : ''}&price__lt=${
           input.minPrice ? input.minPrice : ''
