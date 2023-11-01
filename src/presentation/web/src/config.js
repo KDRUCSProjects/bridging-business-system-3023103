@@ -12,8 +12,6 @@ export const HEADER = {
   DASHBOARD_DESKTOP_OFFSET_HEIGHT: 92 - 32,
 };
 
-export const MAPBOX_API = process.env.REACT_APP_MAPBOX_API;
-
 export const NAVBAR = {
   BASE_WIDTH: 260,
   DASHBOARD_WIDTH: 280,
