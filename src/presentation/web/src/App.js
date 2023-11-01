@@ -10,6 +10,7 @@ import './locale/i18n';
 // theme
 import ThemeProvider from './theme';
 
+
 // ----------------------------------------------------------------------
 
 export default function App() {
